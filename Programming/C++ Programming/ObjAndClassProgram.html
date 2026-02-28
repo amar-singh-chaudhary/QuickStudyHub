@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class Bix
+{
+    public:
+      int x;
+};
+int main()
+{
+    Bix *p = new Bix();
+
+    (*p).x = 10;
+    cout<< (*p).x << " " << p->x << " " ;
+
+    p->x = 20;
+    cout<< (*p).x << " " << p->x ;
+
+    return 0;
+}`,
+options:[
+"10 10 20 20",
+"Garbage garbage 20 20",
+"10 10 Garbage garbage",
+"Garbage garbage Garbage garbage"
+],
+answer:0,
+explanation:"Both (*p).x and p->x refer to the same member variable. First it prints 10 10, then after updating to 20 it prints 20 20."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class IndiaBix
+{
+    static int x; 
+    public:
+    static void SetData(int xx)
+    {
+        x = xx; 
+    }
+    void Display() 
+    {
+        cout<< x ;
+    }
+};
+int IndiaBix::x = 0; 
+int main()
+{
+    IndiaBix::SetData(33);
+    IndiaBix::Display();
+    return 0; 
+}`,
+options:[
+"The program will print the output 0.",
+"The program will print the output 33.",
+"The program will print the output Garbage.",
+"The program will report compile time error."
+],
+answer:3,
+explanation:"Display() is a non-static member function but is being called using the class name without creating an object. This causes a compile-time error."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class IndiaBix
+{
+    static int x; 
+    public:
+    static void SetData(int xx)
+    {
+        x = xx; 
+    }
+    static void Display() 
+    {
+        cout<< x ;
+    }
+};
+int IndiaBix::x = 0; 
+int main()
+{
+    IndiaBix::SetData(44);
+    IndiaBix::Display();
+    return 0; 
+}`,
+options:[
+"The program will print the output 0.",
+"The program will print the output 44.",
+"The program will print the output Garbage.",
+"The program will report compile time error."
+],
+answer:1,
+explanation:"Both functions are static and operate on static variable x. After setting x to 44, Display() prints 44."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class BixTeam
+{
+    int x, y; 
+    public:
+    BixTeam(int xx)
+    {
+        x = ++xx;
+    }
+    void Display()
+    {
+        cout<< --x << " ";
+    }
+};
+int main()
+{
+    BixTeam objBT(45);
+    objBT.Display();
+    int *p = (int*)&objBT;
+    *p = 23;
+    objBT.Display();
+    return 0; 
+}`,
+options:[
+"45 22",
+"46 22",
+"45 23",
+"46 23"
+],
+answer:0,
+explanation:"Initially xx=45, so x=46. First Display() prints --x → 45. Then pointer modifies x to 23. Second Display() prints --x → 22."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class IndiaBix
+{
+    static int x; 
+    public:
+    static void SetData(int xx)
+    {
+        this->x = xx; 
+    }
+    static void Display() 
+    {
+        cout<< x ;
+    }
+};
+int IndiaBix::x = 0; 
+int main()
+{
+    IndiaBix::SetData(22);
+    IndiaBix::Display();
+    return 0; 
+}`,
+options:[
+"The program will print the output 0.",
+"The program will print the output 22.",
+"The program will print the output Garbage.",
+"The program will report compile time error."
+],
+answer:3,
+explanation:"Static member functions do not have a 'this' pointer. Using this->x inside a static function causes a compile-time error."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class BixBase
+{
+    int x, y; 
+    public:
+    BixBase(int xx = 10, int yy = 10)
+    {
+        x = xx;
+        y = yy;
+    }
+    void Show()
+    {
+        cout<< x * y << endl;
+    }
+};
+class BixDerived : public BixBase
+{
+    private:
+        BixBase objBase; 
+    public:
+    BixDerived(int xx, int yy) : BixBase(xx, yy), objBase(yy, yy)
+    {
+        objBase.Show();
+    }
+};
+int main()
+{
+    BixDerived objDev(10, 20);
+    return 0; 
+}`,
+options:[
+"The program will print the output 100.",
+"The program will print the output 200.",
+"The program will print the output 400.",
+"The program will print the output Garbage-value.",
+"The program will report compile time error."
+],
+answer:2,
+explanation:"objBase is initialized with (yy, yy) → (20,20). Show() prints 20*20 = 400."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class Point
+{
+    int x, y; 
+    public:
+    Point(int xx = 10, int yy = 20)
+    {
+        x = xx;
+        y = yy; 
+    }
+    Point operator + (Point objPoint)
+    {
+        Point objTmp;
+        objTmp.x = objPoint.x + this->x; 
+        objTmp.y = objPoint.y + this->y;
+        return objTmp;
+    }
+    void Display(void)
+    {
+        cout<< x << " " << y;
+    }
+};
+int main()
+{
+    Point objP1;
+    Point objP2(1, 2);
+    Point objP3 = objP1 + objP2;
+    objP3.Display(); 
+    return 0; 
+}`,
+options:[
+"1 2",
+"10 20",
+"11 22",
+"Garbage Garbage",
+"The program will report compile time error."
+],
+answer:2,
+explanation:"objP1 defaults to (10,20). objP2 is (1,2). Addition results in (11,22)."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h>
+#include<string.h> 
+class IndiaBix
+{
+    char str[50]; 
+    char tmp[50]; 
+    public:
+    IndiaBix(char *s)
+    {
+        strcpy(str, s);
+    }
+    int BixFunction()
+    {
+        int i = 0, j = 0; 
+        while(*(str + i))
+        {
+            if(*(str + i++) == ' ')
+                *(tmp + j++) = *(str + i);
+        }
+        *(tmp + j) = 0; 
+        return strlen(tmp); 
+    }
+};
+int main()
+{
+    char txt[] = "Welcome to IndiaBix.com!";
+    IndiaBix objBix(txt); 
+    cout<< objBix.BixFunction();
+    return 0;
+}`,
+options:[
+"1",
+"2",
+"24",
+"25"
+],
+answer:1,
+explanation:"The string has two spaces. For each space, the next character is copied into tmp ('t' and 'I'), so length of tmp becomes 2."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class IndiaBix
+{
+    static int count; 
+    public:
+    static void First(void)
+    {
+        count = 10;
+    }
+    static void Second(int x)
+    {
+        count = count + x; 
+    }
+    static void Display(void)
+    {
+        cout<< count << endl;
+    } 
+};
+int IndiaBix::count = 0; 
+int main()
+{
+    IndiaBix :: First();
+    IndiaBix :: Second(5);
+    IndiaBix :: Display();
+    return 0; 
+}`,
+options:[
+"0",
+"5",
+"10",
+"15",
+"The program will report compile time error."
+],
+answer:3,
+explanation:"First() sets count to 10. Second(5) adds 5 making it 15. Display() prints 15."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class BixBase
+{
+    public:
+        float x; 
+}; 
+class BixDerived : public BixBase
+{
+    public: 
+        char ch; 
+        void Process()
+        {
+            ch = (int)((x=12.0)/3.0);
+        }
+        void Display()
+        {
+            cout<< (int)ch;
+        } 
+}; 
+int main()
+{
+    class BixDerived  *objDev = new BixDerived;
+    objDev->Process();
+    objDev->Display();
+    return 0; 
+}`,
+options:[
+"The program will print the output 4.",
+"The program will print the ASCII value of 4.",
+"The program will print the output 0.",
+"The program will print the output garbage."
+],
+answer:0,
+explanation:"x becomes 12.0, divided by 3.0 gives 4.0. It is cast to int (4) and stored in ch. Display prints 4."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h>
+#include<process.h> 
+class IndiaBix
+{
+    static int x; 
+    public:
+    IndiaBix()
+    {
+        if(x == 1)
+            exit(0); 
+        else
+            x++;
+    }
+    void Display()
+    {
+        cout<< x << " ";
+    }
+};
+int IndiaBix::x = 0; 
+int main()
+{
+    IndiaBix objBix1; 
+    objBix1.Display(); 
+    IndiaBix objBix2; 
+    objBix2.Display(); 
+    return 0; 
+}`,
+options:[
+"The program will print the output 1 2.",
+"The program will print the output 0 1.",
+"The program will print the output 1 1.",
+"The program will print the output 1.",
+"The program will report compile time error."
+],
+answer:3,
+explanation:"First object increments x to 1 and prints 1. When second object is created, x == 1 so exit(0) is called before second Display(). Output is 1."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class BixBase
+{
+    int x, y; 
+    public:
+    BixBase(int xx = 10, int yy = 10)
+    {
+        x = xx;
+        y = yy;
+    }
+    void Show()
+    {
+        cout<< x * y << endl;
+    }
+};
+class BixDerived
+{
+    private:
+        BixBase objBase; 
+    public:
+    BixDerived(int xx, int yy) : objBase(xx, yy)
+    {
+        objBase.Show();
+    }
+};
+int main()
+{
+    BixDerived objDev(10, 20);
+    return 0; 
+}`,
+options:[
+"The program will print the output 100.",
+"The program will print the output 200.",
+"The program will print the output Garbage-value.",
+"The program will report compile time error."
+],
+answer:1,
+explanation:"objBase is initialized with (10,20). Show() prints 10*20 = 200."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class BixBase
+{
+    int x, y; 
+    public:
+    BixBase(int xx = 10, int yy = 10)
+    {
+        x = xx;
+        y = yy;
+    }
+    void Show()
+    {
+        cout<< x * y << endl;
+    }
+};
+class BixDerived : public BixBase
+{
+    private:
+        BixBase objBase; 
+    public:
+    BixDerived(int xx, int yy) : BixBase(xx, yy)
+    {
+        objBase.Show();
+    }
+};
+int main()
+{
+    BixDerived objDev(10, 20);
+    return 0; 
+}`,
+options:[
+"The program will print the output 100.",
+"The program will print the output 200.",
+"The program will print the output Garbage-value.",
+"The program will report compile time error."
+],
+answer:2,
+explanation:"objBase is default constructed with (10,10). Show() prints 10*10 = 100."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class India
+{
+    public:
+    struct Bix
+    {
+        int   x;
+        float y;
+        void Function(void)
+        {
+            y = x = (x = 4*4); 
+            y = --y * y;
+        }
+        void Display()
+        {
+            cout<< y << endl;
+        } 
+    }B; 
+}I; 
+int main()
+{
+    I.B.Display(); 
+    return 0;
+}`,
+options:[
+"0",
+"1",
+"-1",
+"Garbage value"
+],
+answer:3,
+explanation:"Function() is never called, so y is uninitialized. Display() prints an undefined (garbage) value."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h>
+#include<string.h> 
+class IndiaBix
+{
+    int val; 
+    public:
+    void SetValue(char *str1, char *str2)
+    {
+        val = strcspn(str1, str2);
+    }
+    void ShowValue()
+    {
+        cout<< val;
+    } 
+};
+int main() 
+{
+    IndiaBix objBix;
+    objBix.SetValue((char*)"India", (char*)"Bix"); 
+    objBix.ShowValue(); 
+    return 0; 
+}`,
+options:[
+"2",
+"3",
+"5",
+"8"
+],
+answer:2,
+explanation:"strcspn returns the length of the initial segment of str1 that contains no characters from str2. 'India' has no characters from 'Bix', so result is 5."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h>
+#include<string.h> 
+class IndiaBix
+{
+    public:
+    void GetData(char *s, int x, int y )
+    {
+        int i = 0;
+        for (i = x-1; y>0; i++)
+        {
+            cout<< s[i];
+            y--; 
+        } 
+    }
+}; 
+int main()
+{
+    IndiaBix objBix;
+    objBix.GetData((char*)"Welcome!", 1, 3);
+    return 0; 
+}`,
+options:[
+"The program will print the output me!.",
+"The program will print the output Wel.",
+"The program will print the output !em.",
+"The program will print the output Welcome!.",
+"The program will result in a compile time error."
+],
+answer:1,
+explanation:"x=1 so starting index is 0. It prints 3 characters: 'W', 'e', 'l'. Output is Wel."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class BixData
+{
+    int x, y, z; 
+    public:
+    BixData(int xx, int yy, int zz)
+    {
+        x = ++xx;
+        y = ++yy;
+        z = ++zz;
+    }
+    void Show()
+    {
+        cout<< "" << x++ << " " << y++ << " " << z++;
+    } 
+}; 
+int main()
+{
+    BixData objData(1, 2, 3);
+    objData.Show();
+    return 0; 
+}`,
+options:[
+"The program will print the output 1 2 3.",
+"The program will print the output 2 3 4 .",
+"The program will print the output 4 5 6.",
+"The program will report compile time error."
+],
+answer:1,
+explanation:"Constructor increments values to (2,3,4). Show() prints current values before post-increment effect is visible externally."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class IndiaBix
+{
+    int x; 
+    float y; 
+    public:
+    void Function()
+    {
+        x = 4; 
+        y = 2.50; delete this;
+    }
+    void Display()
+    {
+        cout<< x << " " << y;
+    } 
+}; 
+int main()
+{
+    IndiaBix *pBix = new IndiaBix();
+    pBix->Function(); 
+    pBix->Function(); 
+    pBix->Display(); 
+    return 0; 
+}`,
+options:[
+"The program will print the output 4 2.5.",
+"The program will print the output 4.",
+"The program will report runtime error.",
+"The program will report compile time error."
+],
+answer:2,
+explanation:"Function() deletes the current object. Calling Function() again and then Display() on the deleted object causes undefined behavior (runtime error)."
+}
+
+
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>

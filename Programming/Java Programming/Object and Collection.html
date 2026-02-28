@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+q:"Which interface provides the capability to store objects using a key-value pair?",
+code:``,
+options:[
+"Java.util.Map",
+"Java.util.Set",
+"Java.util.List",
+"Java.util.Collection"
+],
+answer:1,
+explanation:"Map interface stores objects as key-value pairs. A Map cannot contain duplicate keys."
+},
+{
+q:"Which collection class allows you to associate its elements with key values, and allows you to retrieve objects in FIFO (first-in, first-out) sequence?",
+code:``,
+options:[
+"java.util.ArrayList",
+"java.util.LinkedHashMap",
+"java.util.HashMap",
+"java.util.TreeMap"
+],
+answer:2,
+explanation:"LinkedHashMap maintains insertion order (FIFO). It is commonly used for caching."
+},
+{
+q:"Which collection class allows you to access its elements by associating a key with an element's value, and provides synchronization?",
+code:``,
+options:[
+"java.util.SortedMap",
+"java.util.TreeMap",
+"java.util.TreeSet",
+"java.util.Hashtable"
+],
+answer:4,
+explanation:"Hashtable provides synchronized methods and stores key-value pairs."
+},
+{
+q:"Which is valid declaration of a float?",
+code:``,
+options:[
+"float f = 1F;",
+"float f = 1.0;",
+"float f = \"1\";",
+"float f = 1.0d;"
+],
+answer:1,
+explanation:"Float literals must end with F or f. Decimal numbers are double by default in Java."
+},
+{
+q:"What line of code should replace the missing statement to make this program compile?",
+code:`public class foo 
+{
+    public static void main(String[]args)throws Exception 
+    {
+        java.io.PrintWriter out = new java.io.PrintWriter(); 
+        new java.io.OutputStreamWriter(System.out,true); 
+        out.println("Hello"); 
+    } 
+}`,
+options:[
+"No statement required.",
+"import java.io.*;",
+"include java.io.*;",
+"import java.io.PrintWriter;"
+],
+answer:1,
+explanation:"No import statement is required because fully qualified class names are already used."
+},
+{
+q:"Suppose that you would like to create an instance of a new Map that has an iteration order that is the same as the iteration order of an existing instance of a Map. Which concrete implementation of the Map interface should be used for the new instance?",
+code:``,
+options:[
+"TreeMap",
+"HashMap",
+"LinkedHashMap",
+"The answer depends on the implementation of the existing instance."
+],
+answer:3,
+explanation:"LinkedHashMap maintains iteration order based on insertion order. When constructed from an existing Map, it preserves the iteration order of that Map."
+},
+{
+q:"Which class does not override the equals() and hashCode() methods, inheriting them directly from class Object?",
+code:``,
+options:[
+"java.lang.String",
+"java.lang.Double",
+"java.lang.StringBuffer",
+"java.lang.Character"
+],
+answer:3,
+explanation:"java.lang.StringBuffer does not override equals() and hashCode(), so it inherits them directly from Object."
+},
+{
+q:"Which collection class allows you to grow or shrink its size and provides indexed access to its elements, but whose methods are not synchronized?",
+code:``,
+options:[
+"java.util.HashSet",
+"java.util.LinkedHashSet",
+"java.util.List",
+"java.util.ArrayList"
+],
+answer:4,
+explanation:"ArrayList allows dynamic resizing, provides indexed access, and its methods are not synchronized."
+},
+{
+q:"You need to store elements in a collection that guarantees that no duplicates are stored and all elements can be accessed in natural order. Which interface provides that capability?",
+code:``,
+options:[
+"java.util.Map",
+"java.util.Set",
+"java.util.List",
+"java.util.Collection"
+],
+answer:2,
+explanation:"Set does not allow duplicate elements. Implementations like TreeSet maintain elements in natural sorted order."
+},
+{
+q:"Which interface does java.util.Hashtable implement?",
+code:``,
+options:[
+"Java.util.Map",
+"Java.util.List",
+"Java.util.HashTable",
+"Java.util.Collection"
+],
+answer:1,
+explanation:"Hashtable is a hash table based implementation of the Map interface."
+},
+{
+q:"What will be the output of the program?\npublic class Test {\n    public static void main (String[] args) {\n        String foo = args[1];\n        String bar = args[2];\n        String baz = args[3];\n        System.out.println(\"baz = \" + baz);\n    }\n}\nCommand: java Test red green blue",
+code:``,
+options:[
+"baz =",
+"baz = null",
+"baz = blue",
+"Runtime Exception"
+],
+answer:4,
+explanation:"Command line arguments are zero-based. args[0]=red, args[1]=green, args[2]=blue. Accessing args[3] causes ArrayIndexOutOfBoundsException at runtime."
+},
+{
+q:"What will be the output of the program?\npublic class Test {\n    public static void main (String args[]) {\n        String str = NULL;\n        System.out.println(str);\n    }\n}",
+code:``,
+options:[
+"NULL",
+"Compile Error",
+"Code runs but no output",
+"Runtime Exception"
+],
+answer:2,
+explanation:"Java uses lowercase null. 'NULL' is invalid and causes a compile-time error."
+},
+{
+q:"What will be the output of the program?\npackage foo;\nimport java.util.Vector;\nprivate class MyVector extends Vector {\n    int i = 1;\n    public MyVector() { i = 2; }\n}\npublic class MyNewVector extends MyVector {\n    public MyNewVector () { i = 4; }\n    public static void main (String args []) {\n        MyVector v = new MyNewVector();\n    }\n}",
+code:``,
+options:[
+"Compilation will succeed.",
+"Compilation will fail at line 3.",
+"Compilation will fail at line 5.",
+"Compilation will fail at line 15."
+],
+answer:2,
+explanation:"A top-level class cannot be declared private. The compiler error occurs at line 3: modifier private not allowed here."
+},
+{
+q:"What will be the output of the program?\npublic class Test {\n    private static int[] x;\n    public static void main(String[] args) {\n        System.out.println(x[0]);\n    }\n}",
+code:``,
+options:[
+"0",
+"null",
+"Compile Error",
+"NullPointerException at runtime"
+],
+answer:4,
+explanation:"Array reference x is declared but not initialized. Accessing x[0] causes NullPointerException at runtime."
+},
+{
+q:"What will be the output of the program?\nimport java.util.*;\nclass I {\n    public static void main (String[] args) {\n        Object i = new ArrayList().iterator();\n        System.out.print((i instanceof List)+\",\");\n        System.out.print((i instanceof Iterator)+\",\");\n        System.out.print(i instanceof ListIterator);\n    }\n}",
+code:``,
+options:[
+"Prints: false, false, false",
+"Prints: false, false, true",
+"Prints: false, true, false",
+"Prints: false, true, true"
+],
+answer:3,
+explanation:"iterator() returns an Iterator object. It is not a List or ListIterator. So output is false, true, false."
+}
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>

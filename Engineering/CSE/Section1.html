@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar - MCQ</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+}
+
+.container{
+    max-width:800px;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+}
+
+h2{
+    margin-bottom:10px;
+}
+
+.topic-list{
+    margin-bottom:20px;
+}
+
+.topic-list div{
+    margin:5px 0;
+}
+
+.question{
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:10px 0;
+    padding:6px;
+    border-radius:4px;
+}
+
+.options label{
+    cursor:pointer;
+}
+
+.explanation{
+    display:none;
+    margin-top:10px;
+    background:#f9fff3;
+    padding:10px;
+    border-left:4px solid green;
+}
+
+.nav{
+    margin-top:20px;
+    text-align:center;
+}
+
+.nav button{
+    padding:6px 12px;
+    margin:0 5px;
+}
+
+.correct{
+    background:#4d6753;
+    color:white;
+}
+
+.wrong{
+    background:#ac0815;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Exercise : Calender - General Questions</h2>
+
+<div class="topic-list">
+    <div>Calender - Formulas</div>
+    <div><b>Calender - General Questions</b></div>
+    <div>Calender - Data Sufficiency 1</div>
+</div>
+</div>
+
+<div id="quiz-container"></div>
+
+<div class="nav">
+    <button onclick="prevPage()">Prev</button>
+    <span id="pageNumbers"></span>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+<script>
+
+// QUESTIONS
+const questions = [
+{
+    question: "6. The tracks on a disk which can be accessed without repositioning the R/W heads is",
+    options: ["Surface", "Cylinder", "Cluster", "All of the above", "None of the above"],
+    correct: 1,
+    explanation: "A cylinder consists of all tracks located at the same position on different platters. These tracks can be accessed without moving the read/write head, so the correct answer is Cylinder."
+},
+{
+    question: "7. Which of the following is the 1's complement of 10?",
+    options: ["01", "110", "11", "10", "None of the above"],
+    correct: 0,
+    explanation: "1's complement is obtained by changing all 1s to 0s and 0s to 1s. The binary number 10 becomes 01 after taking 1's complement."
+},
+{
+    question: "8. A section of code to which control is transferred when a processor is interrupted is known as",
+    options: ["M", "SVC", "IP", "MDR", "None of the above"],
+    correct: 1,
+    explanation: "When an interrupt occurs, control is transferred to a predefined routine known as Supervisor Call (SVC) or Interrupt Service Routine. Hence, the correct answer is SVC."
+},
+{
+    question: "9. Which part interprets program instructions and initiate control operations.",
+    options: ["Input", "Storage unit", "Logic unit", "Control unit", "None of the above"],
+    correct: 3,
+    explanation: "The Control Unit interprets program instructions and directs the operation of other components of the computer system."
+},
+{
+    question: "10. The binary system uses powers of",
+    options: ["2", "10", "8", "16", "None of the above"],
+    correct: 0,
+    explanation: "The binary number system is based on base 2, meaning it uses powers of 2."
+},
+{
+    question: "1. Which of the following languages is more suited to a structured program?",
+    options: ["PL/1", "FORTRAN", "BASIC", "PASCAL", "None of the above"],
+    correct: 3,
+    explanation: "PASCAL is specifically designed to support structured programming concepts such as procedures, functions, and control structures. Hence, it is more suited for structured programming."
+},
+{
+    question: "2. A computer assisted method for the recording and analyzing of existing or hypothetical systems is",
+    options: ["Data transmission", "Data flow", "Data capture", "Data processing", "None of the above"],
+    correct: 1,
+    explanation: "Data flow refers to a computer-assisted method used for recording and analyzing existing or hypothetical systems, often represented using Data Flow Diagrams (DFDs)."
+},
+{
+    question: "3. The brain of any computer system is",
+    options: ["ALU", "Memory", "CPU", "Control unit", "None of the above"],
+    correct: 2,
+    explanation: "The CPU (Central Processing Unit) is considered the brain of the computer because it performs calculations and controls all operations of the system."
+},
+{
+    question: "4. What difference does the 5th generation computer have from other generation computers?",
+    options: ["Technological advancement", "Scientific code", "Object Oriented Programming", "All of the above", "None of the above"],
+    correct: 0,
+    explanation: "The fifth generation computers are mainly based on artificial intelligence and advanced technologies, representing a major technological advancement over previous generations."
+},
+{
+    question: "5. Which of the following computer language is used for artificial intelligence?",
+    options: ["FORTRAN", "PROLOG", "C", "COBOL", "None of the above"],
+    correct: 1,
+    explanation: "PROLOG is a general-purpose logic programming language associated with artificial intelligence and computational linguistics."
+},
+{
+    question: "21. Which type of system puts the user into direct conversation with the computer through a keyboard?",
+    options: ["Real time processing", "Interactive computer", "Batch processing", "Time sharing", "None of the above"],
+    correct: 1,
+    explanation: "An interactive computer system allows the user to communicate directly with the computer through input devices like a keyboard, providing immediate responses."
+},
+{
+    question: "22. The term referring to evacuating the content of some part of the machine is known as",
+    options: ["Dump", "Enhancement", "Down", "Compiler", "None of the above"],
+    correct: 0,
+    explanation: "Dump refers to the process of copying or evacuating the contents of memory or another part of the system, usually for backup or debugging purposes."
+},
+{
+    question: "23. A single packet on a data link is known as",
+    options: ["Path", "Frame", "Block", "Group", "None of the above"],
+    correct: 1,
+    explanation: "In data communication, a single unit of data transmitted over a data link layer is called a frame."
+},
+{
+    question: "24. The process of communicating with a file from a terminal is",
+    options: ["Interactive", "Interrogation", "Heuristic", "All of the above", "None of the above"],
+    correct: 1,
+    explanation: "Interrogation refers to the process of querying or communicating with a file or database from a terminal."
+},
+{
+    question: "25. A common boundary between two systems is called",
+    options: ["Interdiction", "Interface", "Surface", "None of the above"],
+    correct: 1,
+    explanation: "An interface is a shared boundary across which two systems communicate and interact with each other."
+},
+{
+    question: "16. Any type of storage that is used for holding information between steps in its processing is",
+    options: ["CPU", "Primary storage", "Intermediate storage", "Internal storage", "None of the above"],
+    correct: 2,
+    explanation: "Intermediate storage is used to hold data temporarily between different steps of processing before the final result is produced."
+},
+{
+    question: "17. A name applied by Intel corp. to high speed MOS technology is called",
+    options: ["HDLC", "LAP", "HMOS", "SDLC", "None of the above"],
+    correct: 2,
+    explanation: "HMOS (High-density, short-channel MOS) is the name used by Intel Corporation for its high-speed MOS technology."
+},
+{
+    question: "18. A program component that allows structuring of a program in an unusual way is known as",
+    options: ["Correlation", "Coroutine", "Diagonalization", "Quene", "None of the above"],
+    correct: 1,
+    explanation: "A coroutine is a program component that generalizes subroutines and allows cooperative multitasking, enabling unusual control flow structures."
+},
+{
+    question: "19. The radian of a number system",
+    options: ["Is variable", "Has nothing to do with digit position value", "Equals the number of its distinct counting digits", "Is always an even number", "None of the above"],
+    correct: 2,
+    explanation: "The radix (base) of a number system equals the number of distinct digits, including zero, used in that number system."
+},
+{
+    question: "20. The section of the CPU that selects, interprets and sees to the execution of program instructions",
+    options: ["Memory", "Register unit", "Control unit", "ALU", "None of the above"],
+    correct: 2,
+    explanation: "The Control Unit selects, interprets, and directs the execution of program instructions within the CPU."
+},
+{
+    question: "11. A computer program that converts assembly language to machine language is",
+    options: ["Compiler", "Interpreter", "Assembler", "Comparator", "None of the above"],
+    correct: 2,
+    explanation: "An assembler is a program that translates assembly language instructions into machine language code that the computer can execute."
+},
+{
+    question: "12. The time required for the fetching and execution of one simple machine instruction is",
+    options: ["Delay time", "CPU cycle", "Real time", "Seek time", "None of the above"],
+    correct: 1,
+    explanation: "A CPU cycle refers to the time taken to fetch and execute a single machine instruction."
+},
+{
+    question: "13. The time for which a piece of equipment operates is called",
+    options: ["Seek time", "Effective time", "Access time", "Real time", "None of the above"],
+    correct: 1,
+    explanation: "Effective time refers to the actual operating time of a piece of equipment while it is performing useful work."
+},
+{
+    question: "14. Binary numbers need more places for counting because",
+    options: ["They are always big numbers", "Any no. of 0's can be added in front of them", "Binary base is small", "0's and l's have to be properly spaced apart", "None of the above"],
+    correct: 2,
+    explanation: "Binary numbers use base 2, which is smaller than decimal (base 10), so more digits are required to represent the same value."
+},
+{
+    question: "15. Which access method is used for obtaining a record from a cassette tape?",
+    options: ["Direct", "Sequential", "Random", "All of the above", "None of the above"],
+    correct: 1,
+    explanation: "Cassette tapes use sequential access, meaning records are accessed in order from the beginning to the desired point."
+},
+{
+    question: "36. The average time necessary for the correct sector of a disk to arrive at the read write head is _____",
+    options: ["Down time", "Seek time", "Rotational delay", "Access time", "None of the above"],
+    correct: 2,
+    explanation: "Rotational delay (latency) is the average time required for the desired sector of a rotating disk to come under the read/write head."
+},
+{
+    question: "37. A number that is used to control the form of another number is known as",
+    options: ["Map", "Mask", "Mamtossa", "Marker", "None of the above"],
+    correct: 1,
+    explanation: "A mask is a binary pattern used to control or modify the form of another binary number through bitwise operations."
+},
+{
+    question: "38. A general purpose single-user microcomputer designed to be operated by one person at a time is",
+    options: ["Special-purpose computer", "KIPS", "M", "PC", "None of the above"],
+    correct: 3,
+    explanation: "PC (Personal Computer) is a general-purpose single-user microcomputer intended to be operated by one person at a time."
+},
+{
+    question: "39. ASCII stands for",
+    options: ["American standard code for information interchange", "All purpose scientific code for information interchange", "American security code for information interchange", "American Scientific code for information interchange", "None of the above"],
+    correct: 0,
+    explanation: "ASCII stands for American Standard Code for Information Interchange, a character encoding standard used in computers."
+},
+{
+    question: "40. Which device of computer operation dispenses with the use of the keyboard?",
+    options: ["Joystick", "Light pen", "Mouse", "Touch", "None of the above"],
+    correct: 3,
+    explanation: "Touch (touch screen) allows users to interact directly with the display, eliminating the need for a keyboard."
+},
+{
+    question: "31. The 2's complement of a binary no. is obtained by adding.....to its 1's complement.",
+    options: ["0", "1", "10", "12", "None of the above"],
+    correct: 1,
+    explanation: "To obtain the 2's complement of a binary number, first find its 1's complement (invert all bits) and then add 1 to the result."
+},
+{
+    question: "32. A systems programming language for microcomputers in the Intel family is",
+    options: ["PL/C", "PL/CT", "PL/M", "PLA", "None of the above"],
+    correct: 2,
+    explanation: "PL/M (Programming Language for Microcomputers) is a systems programming language developed by Intel for microprocessors."
+},
+{
+    question: "33. A datum that indicates some important state in the content of input or output is",
+    options: ["Sequence", "Sentinel", "SIO", "Sibling", "None of the above"],
+    correct: 1,
+    explanation: "A sentinel is a special value used to indicate the end of data or an important state in input/output processing."
+},
+{
+    question: "34. Which is a non-standard version of a computing language?",
+    options: ["PROLOG", "APL", "Army", "PL/1", "None of the above"],
+    correct: 2,
+    explanation: "Army is not a standard computing language, whereas PROLOG, APL, and PL/1 are recognized programming languages."
+},
+{
+    question: "35. Which of the following is still useful for adding numbers?",
+    options: ["EDSAC", "ENIAC", "Abacus", "UNIVAC", "None of the above"],
+    correct: 2,
+    explanation: "The Abacus is an ancient calculating device that is still useful for performing arithmetic operations such as addition."
+},
+{
+    question: "26. The examination and changing of single bits or small groups of bits within a word is called",
+    options: ["Bit", "Byte", "Bit manipulation", "Bit slice", "None of the above"],
+    correct: 2,
+    explanation: "Bit manipulation refers to the process of examining, setting, clearing, or modifying individual bits or small groups of bits within a word."
+},
+{
+    question: "27. Which computer has been designed to be as compact as possible?",
+    options: ["Mini", "Super computer", "Micro computer", "Mainframe", "None of the above"],
+    correct: 2,
+    explanation: "A microcomputer is designed to be small and compact, typically intended for individual use."
+},
+{
+    question: "28. Which method is used to connect a remote computer?",
+    options: ["Device", "Dialup", "Diagnostic", "Logic circuit", "None of the above"],
+    correct: 1,
+    explanation: "Dialup is a communication method used to connect a remote computer through telephone lines."
+},
+{
+    question: "29. How many bit code is used by Murray code for TELEPRINTER machines.",
+    options: ["4", "5", "9", "25", "None of the above"],
+    correct: 1,
+    explanation: "Murray code, also known as Baudot code, is a 5-bit character encoding system used in teleprinter machines."
+},
+{
+    question: "30. The symbols used in an assembly language are",
+    options: ["Codes", "Mnemonics", "Assembler", "All of the above", "None of the above"],
+    correct: 1,
+    explanation: "Mnemonics are symbolic names used in assembly language to represent machine instructions."
+},
+{
+    question: "41. The microcomputer, Intel MCS-80 is based on the widely used Intel",
+    options: ["8080 microprocessor", "8085 microprocessor", "8086 microprocessor", "8082 microprocessor", "None of the above"],
+    correct: 0,
+    explanation: "The Intel MCS-80 microcomputer system is based on the Intel 8080 microprocessor, one of the earliest widely used 8-bit processors."
+},
+{
+    question: "42. Which is a machine-oriented high-level language for the GEC 4080 series machines.",
+    options: ["LOGO", "SNOBOL", "Babbage", "ALGOL", "None of the above"],
+    correct: 2,
+    explanation: "Babbage is a machine-oriented high-level language developed for the GEC 4080 series computers."
+},
+{
+    question: "43. A program that is employed in the development, repair or enhancement of other programs is known as",
+    options: ["System software", "Software tool", "Applications program", "Utility program", "None of the above"],
+    correct: 1,
+    explanation: "A software tool is a program used for developing, repairing, debugging, or enhancing other programs."
+},
+{
+    question: "44. Any storage device added to a computer beyond the immediately usable main storage is known as",
+    options: ["Floppy disk", "Hard disk", "Backing store", "Punched card", "None of the above"],
+    correct: 2,
+    explanation: "Backing store refers to secondary storage devices used to store data beyond the main memory."
+},
+{
+    question: "45. Which output device is used for translating information from a computer into pictorial form on paper.",
+    options: ["Mouse", "Plotter", "Touch panel", "Card punch", "None of the above"],
+    correct: 1,
+    explanation: "A plotter is an output device used to produce high-quality graphical or pictorial representations on paper."
+},  
+
+];
+
+const questionsPerPage = 20;
+let currentPage = 1;
+
+function loadQuestions() {
+
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = "";
+
+    const start = (currentPage - 1) * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    const pageQuestions = questions.slice(start, end);
+
+    pageQuestions.forEach((q, index) => {
+
+        const questionNumber = start + index;
+
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <div class="question">${q.question}</div>
+            <ul class="options">
+                ${q.options.map((opt, i) => `
+                    <li>
+                        <label>
+                            <input type="radio" name="q${questionNumber}" value="${i}">
+                            ${String.fromCharCode(65 + i)}. ${opt}
+                        </label>
+                    </li>
+                `).join("")}
+            </ul>
+            <button onclick="checkAnswer(${questionNumber}, ${q.correct}, \`${q.explanation}\`)">
+                Check Answer
+            </button>
+            <div class="explanation" id="exp${questionNumber}"></div>
+            <hr>
+        `;
+        container.appendChild(div);
+    });
+
+    createPageNumbers();
+}
+
+function checkAnswer(qIndex, correctIndex, explanationText) {
+
+    const explanation = document.getElementById(`exp${qIndex}`);
+
+    // TOGGLE SHOW/HIDE
+    if (explanation.style.display === "block") {
+        explanation.style.display = "none";
+        return;
+    }
+
+    const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+    const options = document.querySelectorAll(`input[name="q${qIndex}"]`);
+
+    if (!selected) {
+        alert("Please select an option.");
+        return;
+    }
+
+    let userLetter = "";
+    let correctLetter = "";
+
+    options.forEach(option => {
+        const li = option.closest("li");
+        const letter = String.fromCharCode(65 + parseInt(option.value));
+
+        // Reset colors
+        li.classList.remove("correct", "wrong");
+
+        if (parseInt(option.value) === correctIndex) {
+            li.classList.add("correct");
+            correctLetter = letter;
+        }
+
+        if (option.checked) {
+            userLetter = letter;
+
+            if (parseInt(option.value) !== correctIndex) {
+                li.classList.add("wrong");
+            }
+        }
+    });
+
+    explanation.innerHTML = `
+        <p style="font-weight:bold;">
+            ${parseInt(selected.value) === correctIndex ? "✔ Correct Answer!" : "❌ Wrong Answer!"}
+        </p>
+        <p><b>Your Option:</b> ${userLetter}</p>
+        <p><b>Correct Option:</b> ${correctLetter}</p>
+        <p><b>Explanation:</b> ${explanationText}</p>
+    `;
+
+    explanation.style.display = "block";
+}
+
+function createPageNumbers() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    const pageNumbers = document.getElementById("pageNumbers");
+    pageNumbers.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.innerText = i;
+        btn.onclick = () => {
+            currentPage = i;
+            loadQuestions();
+        };
+
+        if (i === currentPage) {
+            btn.style.background = "#333";
+            btn.style.color = "white";
+        }
+
+        pageNumbers.appendChild(btn);
+    }
+}
+
+function prevPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        loadQuestions();
+    }
+}
+
+function nextPage() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    if (currentPage < totalPages) {
+        currentPage++;
+        loadQuestions();
+    }
+}
+
+loadQuestions();
+
+</script>
+
+
+</body>
+</html>

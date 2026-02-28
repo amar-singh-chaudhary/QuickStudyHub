@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"A resistance of 3.3 MΩ is connected across a 500 V source. The resulting current is approximately",
+options:["15.1 µA","151 µA","66 mA","660 mA"],
+answer:2,
+explanation:"Using Ohm’s Law, I = V/R = 500 / 3.3MΩ = 500 / 3,300,000 ≈ 0.000151 A = 151 µA."
+},
+{
+q:"You are measuring the current in a circuit that is operated on an 18 V battery. The ammeter reads 40 mA. Later you notice the current has dropped to 20 mA. How much has the voltage changed?",
+options:["9 V","900 mV","0 V","18 V"],
+answer:3,
+explanation:"If resistance remains constant, V ∝ I. When current drops from 40 mA to 20 mA (half), voltage also becomes half: 18V ÷ 2 = 9V. Change = 18V - 9V = 9V."
+},
+{
+q:"The current through a flashlight bulb is 40 mA and the total battery voltage is 4.5 V. The resistance of the bulb is approximately",
+options:["112 Ω","11.2 Ω","1.2 Ω","18 Ω"],
+answer:1,
+explanation:"Using R = V/I = 4.5 / 0.04 = 112.5 Ω ≈ 112 Ω."
+},
+{
+q:"If you wish to increase the amount of current in a resistor from 120 mA to 160 mA by changing the 24 V source, what should the new voltage setting be?",
+options:["8 V","320 V","3.2 V","32 V"],
+answer:4,
+explanation:"Since V ∝ I, New Voltage = (160/120) × 24 = (4/3) × 24 = 32 V."
+},
+{
+q:"If 24 V are applied across a resistor and there are 10.9 mA of current, the resistance is",
+options:["220 kΩ","22 kΩ","2.2 kΩ","220 Ω"],
+answer:3,
+explanation:"Using R = V/I = 24 / 0.0109 ≈ 2201 Ω ≈ 2.2 kΩ."
+},
+{
+q:"How much resistance is required to limit the current from a 12 V battery to 3.6 mA?",
+options:["3.3 kΩ","33 kΩ","2.2 kΩ","22 kΩ"],
+answer:1,
+explanation:"Using Ohm’s Law, R = V/I = 12 / 0.0036 = 3333 Ω ≈ 3.3 kΩ."
+},
+{
+q:"What is the voltage source for a circuit carrying 2 A of current through a 36 Ω resistor?",
+options:["1.8 V","18 V","7.2 V","72 V"],
+answer:4,
+explanation:"Using V = IR = 2 × 36 = 72 V."
+},
+{
+q:"What is the approximate resistance setting of a rheostat in which 650 mA of current flows with a 150 V source?",
+options:["9.7 Ω","97 Ω","23 Ω","230 Ω"],
+answer:4,
+explanation:"Using R = V/I = 150 / 0.65 ≈ 230.7 Ω ≈ 230 Ω."
+},
+{
+q:"How much voltage is needed to produce 2.5 A of current through a 200 Ω resistor?",
+options:["50 V","500 V","80 V","8 V"],
+answer:2,
+explanation:"Using V = IR = 2.5 × 200 = 500 V."
+},
+{
+q:"When there is 12 mA of current through a 1.2 kΩ resistor, the voltage across the resistor is",
+options:["14.4 V","1.4 V","100 V","10 V"],
+answer:1,
+explanation:"Using V = IR = 12 × 10⁻³ × 1.2 × 10³ = 12 × 1.2 = 14.4 V."
+},
+{
+q:"An electric heater draws 3.5 A from a 110 V source. The resistance of the heating element is approximately",
+options:["385 Ω","38.5 Ω","3.1 Ω","31 Ω"],
+answer:4,
+explanation:"Using Ohm’s Law, R = V/I = 110 / 3.5 ≈ 31.4 Ω ≈ 31 Ω."
+},
+{
+q:"If 750 µA is flowing through 11 kΩ of resistance, what is the voltage drop across the resistor?",
+options:["8.25 V","82.5 V","14.6 V","146 V"],
+answer:1,
+explanation:"Using V = IR = 750 × 10⁻⁶ × 11 × 10³ = 8.25 V."
+},
+{
+q:"The formula to find I when the values of V and R are known is",
+options:["I = VR","I = R/V","V = IR","I = V/R"],
+answer:4,
+explanation:"From Ohm’s Law, I = V/R."
+},
+{
+q:"A resistor is connected across a 50 V source. What is the current in the resistor if the color code is red, orange, orange, silver?",
+options:["2 mA","2.2 mA","214 mA","21.4 mA"],
+answer:1,
+explanation:"Red = 2, Orange = 3, Orange multiplier = 10³ → 23 × 10³ = 23 kΩ. Using I = V/R = 50 / 23000 ≈ 0.00217 A ≈ 2 mA."
+},
+{
+q:"Approximately how many milliamperes of current flow through a circuit with a 40 V source and 6.8 kΩ of resistance?",
+options:["27.2 mA","59 mA","5.9 mA","590 mA"],
+answer:3,
+explanation:"Using I = V/R = 40 / 6800 ≈ 0.0059 A = 5.9 mA."
+},
+{
+q:"When 12 V are applied across a 68 Ω resistor, the current is",
+options:["816 mA","17.6 mA","176 mA","8.16 mA"],
+answer:3,
+explanation:"Using Ohm’s Law, I = V/R = 12 / 68 ≈ 0.176 A = 176 mA."
+},
+{
+q:"Approximately how much current flows through a 3.3 MΩ resistor across a 30 V source?",
+options:["9 µA","90 µA","900 µA","9000 µA"],
+answer:1,
+explanation:"Using I = V/R = 30 / 3,300,000 ≈ 0.000009 A = 9 µA."
+},
+{
+q:"A 120 V lamp-dimming circuit is controlled by a rheostat and protected from excessive current by a 3 A fuse. To what minimum resistance value can the rheostat be set without blowing the fuse? Assume a lamp resistance of 20 ohms.",
+options:["40 Ω","4 Ω","2 Ω","20 Ω"],
+answer:4,
+explanation:"Maximum current allowed = 3 A. Minimum total resistance = V/I = 120 / 3 = 40 Ω. Since lamp already has 20 Ω, rheostat minimum = 40 − 20 = 20 Ω."
+},
+{
+q:"What is the approximate filament resistance of a light bulb if it operates from a 110 V source and 0.6 A of current is flowing?",
+options:["183 Ω","18.3 Ω","66 Ω","6.6 Ω"],
+answer:1,
+explanation:"Using R = V/I = 110 / 0.6 ≈ 183 Ω."
+},
+{
+q:"What is the approximate resistance of a rheostat if the voltage source is 18 V and the current is 220 mA?",
+options:["8.2 kΩ","820 Ω","8.2 Ω","82 Ω"],
+answer:4,
+explanation:"Using R = V/I = 18 / 0.22 ≈ 81.8 Ω ≈ 82 Ω."
+},
+{
+q:"How much resistance is needed to draw 17.6 mA from a 12 volt source?",
+options:["212 Ω","6.8 kΩ","68 Ω","680 Ω"],
+answer:4,
+explanation:"Using Ohm’s Law, R = V/I = 12 / 0.0176 ≈ 681.8 Ω ≈ 680 Ω."
+},
+{
+q:"How much current is produced by a voltage of 18 kV across a 15 kΩ resistance?",
+options:["1.2 A","12 A","120 mA","12 mA"],
+answer:1,
+explanation:"Convert 18 kV = 18000 V. Using I = V/R = 18000 / 15000 = 1.2 A."
+},
+{
+q:"A current of 200 µA through a 6.8 kΩ resistor produces a voltage drop of",
+options:["34.4 V","340 V","13.6 V","1.36 V"],
+answer:4,
+explanation:"Using V = IR = 200 × 10⁻⁶ × 6.8 × 10³ = 1.36 V."
+},
+{
+q:"Four amperes of current are measured through a 24 Ω resistor connected across a voltage source. How much voltage does the source produce?",
+options:["960 V","9.6 V","96 V","8 V"],
+answer:3,
+explanation:"Using V = IR = 4 × 24 = 96 V."
+},
+{
+q:"Twelve volts are applied across a resistor. A current of 3 mA is measured. What is the value of the resistor?",
+options:["4 Ω","400 Ω","4 kΩ","4.4 Ω"],
+answer:3,
+explanation:"Using R = V/I = 12 / 0.003 = 4000 Ω = 4 kΩ."
+}
+
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"Which of the following elements of electrical engineering cannot be analyzed using Ohm’s law?",
+options:["Capacitors","Inductors","Transistors","Resistance"],
+answer:3,
+explanation:"Ohm’s law is not applicable to unilateral devices. A transistor is a unilateral device, so Ohm’s law cannot properly analyze it."
+},
+{
+q:"What is constant for a charged spherical shell according to basic electrical energy?",
+options:[
+"Electrical potential outside the spherical shell",
+"Electrical potential inside the spherical shell",
+"Electrical field outside the spherical shell",
+"Electrical field inside the spherical shell"
+],
+answer:2,
+explanation:"The electrical potential inside a charged spherical shell is constant and equal to the surface potential."
+},
+{
+q:"Where does electro-static shielding occur in a charged spherical shell?",
+options:[
+"When electrical potential outside spherical shell is zero",
+"When electrical potential inside the spherical shell is zero",
+"When electrical field outside the spherical shell is zero",
+"Electrical field inside the spherical shell"
+],
+answer:4,
+explanation:"Electrostatic shielding occurs because the electric field inside a charged spherical shell is zero."
+},
+{
+q:"Which of the following is a correct representation of peak value in an AC Circuit?",
+options:[
+"RMS value/Peak factor",
+"RMS value*Form factor",
+"RMS value/Form factor",
+"RMS value*Peak factor"
+],
+answer:4,
+explanation:"Peak factor (crest factor) = Peak value / RMS value. Therefore, Peak value = RMS value × Peak factor."
+},
+{
+q:"Which of the following according to fundamentals of electrical energy is incorrect about alternating current?",
+options:[
+"Frequency is zero",
+"Magnitude changes with time",
+"Can be transported to larger distances with less loss in power",
+"Flows in both directions"
+],
+answer:1,
+explanation:"AC has a definite frequency (not zero). Zero frequency applies to DC."
+},
+{
+q:"How many cycles will an AC signal make in 2 seconds if its frequency is 100 Hz?",
+options:["50","100","150","200"],
+answer:4,
+explanation:"Frequency = cycles/second. 100 Hz means 100 cycles per second. In 2 seconds: 100 × 2 = 200 cycles."
+},
+{
+q:"What will be the direction of the drift velocity of electrons change with respect to the electric field?",
+options:[
+"Same as that of electric field",
+"Opposite to that of electric field",
+"Perpendicular to that of the electric field in a positive direction",
+"Perpendicular to that of the electric field in a negative direction"
+],
+answer:2,
+explanation:"Electrons are negatively charged, so their drift velocity is opposite to the direction of the electric field."
+},
+{
+q:"What will be the current density of metal if a current of 30A is passed through a cross-sectional area of 0.5m²?",
+options:["7.5 A/m²","15 A/m²","60 A/m²","120 A/m²"],
+answer:3,
+explanation:"Current density J = I/A = 30 / 0.5 = 60 A/m²."
+},
+{
+q:"Which of the following is correct about the power consumed by R1 and R2 connected in series if R1 > R2?",
+options:[
+"R1 will consume more power",
+"R2 will consume more power",
+"R1 and R2 will consume the same power",
+"The relationship cannot be established"
+],
+answer:1,
+explanation:"In series, current is same. Power P = I²R. Larger resistance consumes more power."
+},
+{
+q:"What is zero for a charged spherical shell?",
+options:[
+"Electrical potential outside the spherical shell",
+"Electrical potential inside the spherical shell",
+"Electrical field outside the spherical shell",
+"Electrical field inside the spherical shell"
+],
+answer:4,
+explanation:"The electric field inside a charged spherical shell is zero."
+},
+{
+q:"What kind of quantity is an Electric potential?",
+options:["Vector quantity","Tensor quantity","Scalar quantity","Dimensionless quantity"],
+answer:3,
+explanation:"Electric potential has magnitude only, no direction. Hence it is a scalar quantity."
+},
+{
+q:"What do crowded lines of force indicate?",
+options:[
+"Strong electric field",
+"Weak electric field",
+"Strong electric potential",
+"Weak electric potential"
+],
+answer:1,
+explanation:"Closer field lines indicate stronger electric field intensity."
+},
+{
+q:"What is the direction of the electric field at a point?",
+options:[
+"Along the line perpendicular to the electric field",
+"Along the line tangent to the electric field",
+"Electric field has no direction",
+"Electric field has a random direction"
+],
+answer:2,
+explanation:"Electric field direction is along the tangent to the field line at that point."
+},
+{
+q:"What is the magnitude of mutually induced emf E2 in a transformer?",
+options:[
+"Directly proportional to rate of change of flux and number of secondary turns",
+"Inversely proportional to rate of change of flux and number of secondary turns",
+"Proportional to rate of change of flux and inversely proportional to number of secondary turns",
+"Inversely proportional to rate of change of flux and proportional to number of secondary turns"
+],
+answer:1,
+explanation:"E2 ∝ N2 × (dΦ/dt)."
+},
+{
+q:"What happens in a transformer when secondary turns are less than primary turns?",
+options:[
+"The voltage gets stepped up",
+"The voltage gets stepped down",
+"The power gets stepped up",
+"The power gets stepped down"
+],
+answer:2,
+explanation:"If Ns < Np, then Vs < Vp. It is a step-down transformer."
+},
+{
+q:"What is the number of primary turns in a 200/1000 V transformer if emf per turn is 10V?",
+options:["5","10","20","40"],
+answer:3,
+explanation:"Primary voltage = 200V. Turns = 200/10 = 20."
+},
+{
+q:"Correct representation of average value in AC circuit?",
+options:[
+"RMS value/Form factor",
+"RMS value*Form factor",
+"RMS value/Peak factor",
+"RMS value*Peak factor"
+],
+answer:1,
+explanation:"Form factor = RMS/Average. So Average = RMS/Form factor."
+},
+{
+q:"Who defined electric current and devised a method to measure it?",
+options:[
+"Michael Faraday",
+"Andre-Marie Ampere",
+"Nikola Tesla",
+"Alessandro Volta"
+],
+answer:2,
+explanation:"Andre-Marie Ampere defined electric current and developed its measurement."
+},
+{
+q:"How many electrons constitute 2 Coulombs of charge?",
+options:[
+"6.24 × 10^18 electrons",
+"12.48 × 10^18 electrons",
+"1.602 × 10^19 electrons",
+"3.204 × 10^19 electrons"
+],
+answer:2,
+explanation:"1 Coulomb = 6.24 × 10^18 electrons. For 2C: 12.48 × 10^18 electrons."
+},
+{
+q:"Which is correct about direct current?",
+options:[
+"Magnitude is constant",
+"Frequency is zero",
+"Can be transported to larger distances with less loss",
+"Flows in one direction"
+],
+answer:2,
+explanation:"DC does not vary with time. Therefore, its frequency is zero."
+},
+{
+q:"Who first witnessed the effect of magnetism due to electric current?",
+options:[
+"Hans Christian Orsted",
+"Alexander Graham Bell",
+"Michael Faraday",
+"Gustav Kirchhoff"
+],
+answer:1,
+explanation:"Hans Christian Orsted discovered that electric current produces a magnetic field."
+},
+{
+q:"Electrical conductivity is:",
+options:[
+"Ratio of current density to electric field",
+"Product of current density and electric field",
+"Ratio of electric field to current density",
+"Reciprocal of product of current density and electric field"
+],
+answer:1,
+explanation:"From point form of Ohm’s law, σ = J/E."
+},
+{
+q:"What is responsible for current flow?",
+options:["Protons","Electrons","Nucleus","Protons and Electrons"],
+answer:2,
+explanation:"Electrons move under potential difference to produce current."
+},
+{
+q:"According to KCL what must be zero?",
+options:[
+"Algebraic sum of currents in closed-loop",
+"Algebraic sum of power in closed-loop",
+"Algebraic sum of currents entering and leaving a junction",
+"Algebraic sum of voltages across input and output"
+],
+answer:3,
+explanation:"KCL states algebraic sum of currents at a junction is zero."
+},
+{
+q:"How many directions can electric field at a point have?",
+options:["Zero","One","Two","Many"],
+answer:2,
+explanation:"Electric field at a point has only one definite direction."
+},
+{
+q:"If secondary turns are greater than primary turns?",
+options:[
+"The voltage gets stepped up",
+"The voltage gets stepped down",
+"The power gets stepped up",
+"The power gets stepped down"
+],
+answer:1,
+explanation:"If Ns > Np, Vs > Vp. It is a step-up transformer."
+},
+{
+q:"Voltage transformation ratio is:",
+options:[
+"Primary turns/Secondary turns",
+"Secondary emf/Primary emf",
+"Secondary current/Primary current",
+"Primary power/Secondary power"
+],
+answer:2,
+explanation:"Transformation ratio = Vs/Vp = Ns/Np."
+},
+{
+q:"Induced emf in primary of transformer is:",
+options:[
+"Ratio of primary turns to emf per turn",
+"Product of primary turns and emf per turn",
+"Ratio of secondary turns to emf per turn",
+"Product of secondary turns and emf per turn"
+],
+answer:2,
+explanation:"E = N × emf per turn."
+},
+{
+q:"Current drawn by primary of ideal transformer when secondary is open?",
+options:[
+"Secondary current",
+"Leakage current",
+"Magnetizing current",
+"Working current"
+],
+answer:3,
+explanation:"Only magnetizing current flows when secondary is open."
+},
+{
+q:"Positive power in an electrical element indicates:",
+options:[
+"Element absorbing power",
+"Element supplying power",
+"Element may absorb or supply power",
+"Element neither absorbing nor supplying"
+],
+answer:1,
+explanation:"Positive power means the element is absorbing power."
+},
+{
+q:"How does induced emf in DC motor react to supply voltage?",
+options:[
+"It aids supply voltage",
+"It is double supply voltage",
+"It opposes supply voltage",
+"It is half supply voltage"
+],
+answer:3,
+explanation:"By Lenz’s law, induced emf opposes the applied voltage."
+},
+{
+q:"Which type of circuit cannot be analyzed using Ohm’s law?",
+options:["Unilateral","Bilateral","Linear","Conductors"],
+answer:1,
+explanation:"Ohm’s law is not valid for unilateral devices."
+},
+{
+q:"According to KVL what must be zero?",
+options:[
+"Algebraic sum of currents in closed-loop",
+"Algebraic sum of power in closed-loop",
+"Algebraic sum of losses in closed-loop",
+"Algebraic sum of voltages in closed-loop"
+],
+answer:4,
+explanation:"KVL states algebraic sum of voltages in a closed loop is zero."
+}
+]
+
+// ........Section-3............
+
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

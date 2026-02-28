@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+
+{
+q:"What will be the output of the program if characters 'a', 'b' and 'c' are supplied as input?",
+code:`#include<stdio.h>
+
+int main()
+{
+    void fun();
+    fun();
+    printf("\\n");
+    return 0;
+}
+void fun()
+{
+    char c;
+    if((c = getchar())!= '\\n')
+        fun();
+    printf("%c", c);
+}`,
+options:[
+"abc abc",
+"bca",
+"Infinite loop",
+"cba"
+],
+answer:3,
+explanation:"The function reads characters recursively until newline, then prints them while returning. So characters are printed in reverse order: cba."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    printf("India", "BIX\\n");
+    return 0;
+}`,
+options:[
+"Error",
+"India BIX",
+"India",
+"BIX"
+],
+answer:2,
+explanation:"printf prints only the first string because there is no format specifier. So output is 'India'."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str[7] = "IndiaBIX";
+    printf("%s\\n", str);
+    return 0;
+}`,
+options:[
+"Error",
+"IndiaBIX",
+"Cannot predict",
+"None of above"
+],
+answer:0,
+explanation:"Array size is 7 but 'IndiaBIX' needs 9 bytes including null terminator. This causes compile-time error (initializer string too long)."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char *names[] = { "Suresh", "Siva", "Sona", "Baiju", "Ritu"};
+    int i;
+    char *t;
+    t = names[3];
+    names[3] = names[4];
+    names[4] = t;
+    for(i=0; i<=4; i++)
+        printf("%s,", names[i]);
+    return 0;
+}`,
+options:[
+"Suresh, Siva, Sona, Baiju, Ritu",
+"Suresh, Siva, Sona, Ritu, Baiju",
+"Suresh, Siva, Baiju, Sona, Ritu",
+"Suresh, Siva, Ritu, Sona, Baiju"
+],
+answer:1,
+explanation:"names[3] (Baiju) and names[4] (Ritu) are swapped. Final order: Suresh, Siva, Sona, Ritu, Baiju."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    char str[] = "India\\0\\BIX\\0";
+    printf("%d\\n", strlen(str));
+    return 0;
+}`,
+options:[
+"10",
+"6",
+"5",
+"11"
+],
+answer:2,
+explanation:"strlen counts characters until first null character. 'India' has 5 characters, so output is 5."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    char str1[20] = "Hello", str2[20] = " World";
+    printf("%s\\n", strcpy(str2, strcat(str1, str2)));
+    return 0;
+}`,
+options:[
+"Hello",
+"World",
+"Hello World",
+"WorldHello"
+],
+answer:2,
+explanation:"strcat appends str2 to str1 making 'Hello World'. strcpy copies it into str2. So it prints 'Hello World'."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char p[] = "%d\\n";
+    p[1] = 'c';
+    printf(p, 65);
+    return 0;
+}`,
+options:[
+"A",
+"a",
+"c",
+"65"
+],
+answer:0,
+explanation:"p becomes '%c\\n'. printf('%c', 65) prints ASCII 65 which is 'A'."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    printf("%d\\n", strlen("123456"));
+    return 0;
+}`,
+options:[
+"6",
+"12",
+"7",
+"2"
+],
+answer:0,
+explanation:"strlen counts characters before null terminator. '123456' has 6 characters."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    printf(5+"Good Morning\\n");
+    return 0;
+}`,
+options:[
+"Good Morning",
+"Good",
+"M",
+"Morning"
+],
+answer:3,
+explanation:"Pointer arithmetic skips first 5 characters of 'Good Morning'. It starts printing from index 5, which is 'Morning'."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    char str[] = "India\\0\\BIX\\0";
+    printf("%s\\n", str);
+    return 0;
+}`,
+options:[
+"BIX",
+"India",
+"India BIX",
+"India\\0BIX"
+],
+answer:1,
+explanation:"String printing stops at first null character. So only 'India' is printed."
+},
+[
+{
+q:"If char=1, int=4, and float=4 bytes size, what will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char ch = 'A';
+    printf("%d, %d, %d", sizeof(ch), sizeof('A'), sizeof(3.14f));
+    return 0;
+}`,
+options:[
+"1, 2, 4",
+"1, 4, 4",
+"2, 2, 4",
+"2, 4, 8"
+],
+answer:1,
+explanation:"sizeof(ch)=1 (char). Character constant 'A' is of type int, so sizeof('A')=4. sizeof(3.14f)=4 (float). Output: 1, 4, 4."
+},
+{
+q:"If the size of pointer is 32 bits, what will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char a[] = "Visual C++";
+    char *b = "Visual C++";
+    printf("%d, %d\\n", sizeof(a), sizeof(b));
+    printf("%d, %d", sizeof(*a), sizeof(*b));
+    return 0;
+}`,
+options:[
+"10, 2\n2, 2",
+"10, 4\n1, 2",
+"11, 4\n1, 1",
+"12, 2\n2, 2"
+],
+answer:2,
+explanation:"sizeof(a) counts total array size including null terminator (11). sizeof(b) is pointer size (4 bytes in 32-bit). sizeof(*a) and sizeof(*b) are char size (1)."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    static char mess[6][30] = {"Don't walk in front of me...", 
+                               "I may not follow;", 
+                               "Don't walk behind me...", 
+                               "Just walk beside me...", 
+                               "And be my friend." };
+
+    printf("%c, %c\\n", *(mess[2]+9), *(*(mess+2)+9));
+    return 0;
+}`,
+options:[
+"t, t",
+"k, k",
+"n, k",
+"m, f"
+],
+answer:0,
+explanation:"mess[2] is 'Don't walk behind me...'. The 9th index character is 't'. Both expressions access the same character. Output: t, t."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str1[] = "Hello";
+    char str2[10];
+    char *t, *s;
+    s = str1;
+    t = str2;
+    while(*t=*s)
+        *t++ = *s++;
+    printf("%s\\n", str2);
+    return 0;
+}`,
+options:[
+"Hello",
+"HelloHello",
+"No output",
+"ello"
+],
+answer:0,
+explanation:"Characters from str1 are copied to str2 until null terminator. So str2 becomes 'Hello'."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str[] = "India\\0BIX\\0";
+    printf("%d\\n", sizeof(str));
+    return 0;
+}`,
+options:[
+"10",
+"6",
+"5",
+"11"
+],
+answer:3,
+explanation:"sizeof counts all characters including internal and final null characters. 'India'(5)+1+'BIX'(3)+1+1 = 11."
+}
+],
+[
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    static char str1[] = "dills";
+    static char str2[20];
+    static char str3[] = "Daffo";
+    int i;
+    i = strcmp(strcat(str3, strcpy(str2, str1)), "Daffodills");
+    printf("%d\\n", i);
+    return 0;
+}`,
+options:[
+"0",
+"1",
+"2",
+"4"
+],
+answer:0,
+explanation:"strcpy copies 'dills' into str2. strcat appends str2 to str3 making 'Daffodills'. strcmp compares with 'Daffodills' and returns 0 because both strings are equal."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    static char s[] = "Hello!";
+    printf("%d\\n", *(s+strlen(s)));
+    return 0;
+}`,
+options:[
+"8",
+"0",
+"16",
+"Error"
+],
+answer:1,
+explanation:"strlen('Hello!') is 6. s+6 points to the null terminator '\\0'. ASCII value of '\\0' is 0."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    static char s[25] = "The cocaine man";
+    int i=0;
+    char ch;
+    ch = s[++i];
+    printf("%c", ch);
+    ch = s[i++];
+    printf("%c", ch);
+    ch = i++[s];
+    printf("%c", ch);
+    ch = ++i[s];
+    printf("%c", ch);
+    return 0;
+}`,
+options:[
+"hhe!",
+"he c",
+"The c",
+"Hhec"
+],
+answer:1,
+explanation:"s='The cocaine man'. Stepwise evaluation prints: s[1]='h', s[1]='h' (after increment logic results in 'e'), i++[s] and ++i[s] follow pointer equivalence rule (i[s] same as s[i]). Final output is 'he c'."
+},
+{
+q:"What will be the output of the program in 16-bit platform (Turbo C under DOS)?",
+code:`#include<stdio.h>
+
+int main()
+{
+    printf("%d, %d, %d", sizeof(3.0f), sizeof('3'), sizeof(3.0));
+    return 0;
+}`,
+options:[
+"8, 1, 4",
+"4, 2, 8",
+"4, 2, 4",
+"10, 3, 4"
+],
+answer:1,
+explanation:"In 16-bit Turbo C: sizeof(float)=4, character constant '3' is int so size=2, sizeof(double)=8. Output: 4, 2, 8."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int i;
+    char a[] = "\\0";
+    if(printf("%s", a))
+        printf("The string is empty\\n");
+    else
+        printf("The string is not empty\\n");
+    return 0;
+}`,
+options:[
+"The string is empty",
+"The string is not empty",
+"No output",
+"0"
+],
+answer:1,
+explanation:"printf('%s', a) prints nothing and returns 0 because string is empty. So if condition fails and else part executes."
+}
+],
+[
+{
+q:"If char=1, int=4, and float=4 bytes size, what will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char ch = 'A';
+    printf("%d, %d, %d", sizeof(ch), sizeof('A'), sizeof(3.14f));
+    return 0;
+}`,
+options:[
+"1, 2, 4",
+"1, 4, 4",
+"2, 2, 4",
+"2, 4, 8"
+],
+answer:1,
+explanation:"sizeof(ch)=1. Character constant 'A' is of type int so sizeof('A')=4. sizeof(3.14f)=4. Hence output is 1, 4, 4."
+},
+{
+q:"If the size of pointer is 32 bits, what will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char a[] = "Visual C++";
+    char *b = "Visual C++";
+    printf("%d, %d\\n", sizeof(a), sizeof(b));
+    printf("%d, %d", sizeof(*a), sizeof(*b));
+    return 0;
+}`,
+options:[
+"10, 2\n2, 2",
+"10, 4\n1, 2",
+"11, 4\n1, 1",
+"12, 2\n2, 2"
+],
+answer:2,
+explanation:"'Visual C++' has 10 characters + 1 null terminator = 11. So sizeof(a)=11. Pointer size in 32-bit system is 4. sizeof(*a) and sizeof(*b) are size of char = 1."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    static char mess[6][30] = {"Don't walk in front of me...", 
+                               "I may not follow;", 
+                               "Don't walk behind me...", 
+                               "Just walk beside me...", 
+                               "And be my friend." };
+
+    printf("%c, %c\\n", *(mess[2]+9), *(*(mess+2)+9));
+    return 0;
+}`,
+options:[
+"t, t",
+"k, k",
+"n, k",
+"m, f"
+],
+answer:0,
+explanation:"mess[2] is 'Don't walk behind me...'. The character at index 9 is 't'. Both expressions access same character. Output: t, t."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str1[] = "Hello";
+    char str2[10];
+    char *t, *s;
+    s = str1;
+    t = str2;
+    while(*t=*s)
+        *t++ = *s++;
+    printf("%s\\n", str2);
+    return 0;
+}`,
+options:[
+"Hello",
+"HelloHello",
+"No output",
+"ello"
+],
+answer:0,
+explanation:"Characters from str1 are copied into str2 until null character. So str2 becomes 'Hello'."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str[] = "India\\0BIX\\0";
+    printf("%d\\n", sizeof(str));
+    return 0;
+}`,
+options:[
+"10",
+"6",
+"5",
+"11"
+],
+answer:3,
+explanation:"sizeof counts all characters including internal and final null characters. 5 (India) +1 +3 (BIX) +1 +1 = 11."
+}
+],
+[
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str[25] = "IndiaBIX";
+    printf("%s\\n", &str+2);
+    return 0;
+}`,
+options:[
+"Garbage value",
+"Error",
+"No output",
+"diaBIX"
+],
+answer:0,
+explanation:"&str is pointer to whole array. &str+2 moves beyond allocated memory block. Printing it as string causes undefined behavior (garbage value)."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str = "IndiaBIX";
+    printf("%s\\n", str);
+    return 0;
+}`,
+options:[
+"Error",
+"IndiaBIX",
+"Base address of str",
+"No output"
+],
+answer:0,
+explanation:"char str = \"IndiaBIX\"; is invalid because a string cannot be assigned to a single char variable. Compile-time error."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str[] = "Nagpur";
+    str[0]='K';
+    printf("%s, ", str);
+    str = "Kanpur";
+    printf("%s", str+1);
+    return 0;
+}`,
+options:[
+"Kagpur, Kanpur",
+"Nagpur, Kanpur",
+"Kagpur, anpur",
+"Error"
+],
+answer:3,
+explanation:"Array name 'str' cannot be reassigned (str = \"Kanpur\" is invalid). This causes compile-time error."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    printf(5+"IndiaBIX\\n");
+    return 0;
+}`,
+options:[
+"Error",
+"IndiaBIX",
+"BIX",
+"None of above"
+],
+answer:2,
+explanation:"Pointer arithmetic skips first 5 characters of 'IndiaBIX'. It prints from index 5 onward: 'BIX'."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    char sentence[80];
+    int i;
+    printf("Enter a line of text\\n");
+    gets(sentence);
+    for(i=strlen(sentence)-1; i >=0; i--)
+        putchar(sentence[i]);
+    return 0;
+}`,
+options:[
+"The sentence will get printed in same order as it entered",
+"The sentence will get printed in reverse order",
+"Half of the sentence will get printed",
+"None of above"
+],
+answer:1,
+explanation:"The loop starts from last character and prints each character backwards. So the sentence is printed in reverse order."
+}
+],
+{
+q:"31. What will be the output of the program in Turbo C?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str[10] = "India";
+    str[6] = "BIX";
+    printf("%s\\n", str);
+    return 0;
+}`,
+options:[
+"India BIX",
+"BIX",
+"India",
+"Error"
+],
+answer:3,
+explanation:"str[6] is a single character location but \"BIX\" is a string literal. Assigning a string to a single character causes a compilation error (nonportable pointer conversion)."
+},
+{
+q:"32. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str1[] = "Hello";
+    char str2[] = "Hello";
+    if(str1 == str2)
+        printf("Equal\\n");
+    else
+        printf("Unequal\\n");
+    return 0;
+}`,
+options:[
+"Equal",
+"Unequal",
+"Error",
+"None of above"
+],
+answer:1,
+explanation:"str1 and str2 are two different arrays stored at different memory locations. The == operator compares addresses, not string contents, so the result is Unequal."
+},
+{
+q:"33. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char t;
+    char *p1 = "India", *p2;
+    p2 = p1;
+    p1 = "BIX";
+    printf("%s %s\\n", p1, p2);
+    return 0;
+}`,
+options:[
+"India BIX",
+"BIX India",
+"India India",
+"BIX BIX"
+],
+answer:1,
+explanation:"Initially p1 points to \"India\" and p2 is assigned the same address. After p1 is changed to \"BIX\", p2 still points to \"India\". So output is BIX India."
+},
+{
+q:"34. What will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    printf("%c\\n", "abcdefgh"[4]);
+    return 0;
+}`,
+options:[
+"Error",
+"d",
+"e",
+"abcdefgh"
+],
+answer:2,
+explanation:"String indexing starts from 0. \"abcdefgh\"[4] refers to the 5th character, which is 'e'."
+},
+{
+q:"35. What will be the output of the program in 16-bit platform assuming that 1022 is memory address of the string \"Hello1\"?",
+code:`#include<stdio.h>
+
+int main()
+{
+    printf("%u %s\\n", &"Hello1", &"Hello2");
+    return 0;
+}`,
+options:[
+"1022 Hello2",
+"Hello1 1022",
+"Hello1 Hello2",
+"1022 1022",
+"Error"
+],
+answer:0,
+explanation:"%u prints the memory address of \"Hello1\" which is 1022. %s prints the string \"Hello2\". Hence the output is 1022 Hello2."
+},
+{
+q:"28. If the size of pointer is 4 bytes then what will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    char *str[] = {"Frogs", "Do", "Not", "Die", "They", "Croak!"};
+    printf("%d, %d", sizeof(str), strlen(str[0]));
+    return 0;
+}`,
+options:[
+"22, 4",
+"25, 5",
+"24, 5",
+"20, 2"
+],
+answer:2,
+explanation:"str is an array of 6 pointers. If pointer size is 4 bytes, sizeof(str) = 6 × 4 = 24 bytes. strlen(str[0]) = strlen(\"Frogs\") = 5. So output is 24, 5."
+},
+{
+q:"29. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int i;
+    char a[] = "\\0";
+    if(printf("%s", a))
+        printf("The string is not empty\\n");
+    else
+        printf("The string is empty\\n");
+    return 0;
+}`,
+options:[
+"The string is not empty",
+"The string is empty",
+"No output",
+"0"
+],
+answer:1,
+explanation:"a contains only the null character, so it is an empty string. printf(\"%s\", a) prints nothing and returns 0. Since the condition is false, the else part executes and prints \"The string is empty\"."
+},
+{
+q:"30. What will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    char str1[5], str2[5];
+    int i;
+    gets(str1);
+    gets(str2);
+    i = strcmp(str1, str2);
+    printf("%d\\n", i);
+    return 0;
+}`,
+options:[
+"Unpredictable integer value",
+"0",
+"-1",
+"Error"
+],
+answer:0,
+explanation:"strcmp() returns a negative, zero, or positive integer depending on comparison. It is not limited to -1, 0, or 1. Therefore the printed value can be any positive or negative integer, making it unpredictable."
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>
+   

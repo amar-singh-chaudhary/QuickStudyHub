@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+  q: "Which four options describe the correct default values for array elements of the types indicated?",
+  code: ``,
+  options: [
+    "1, 2, 3, 4",
+    "1, 3, 4, 5",
+    "2, 4, 5, 6",
+    "3, 4, 5, 6"
+  ],
+  answer: 2,
+  explanation: "(1) int -> 0 ✔, (3) Object reference -> null ✔, (4) char -> '\\u0000' ✔, (5) float -> 0.0f ✔. String default is null (not \"null\") and boolean default is false."
+},
+{
+  q: "Which one of these lists contains only Java programming language keywords?",
+  code: ``,
+  options: [
+    "class, if, void, long, Int, continue",
+    "goto, instanceof, native, finally, default, throws",
+    "try, virtual, throw, final, volatile, transient",
+    "strictfp, constant, super, implements, do",
+    "byte, break, assert, switch, include"
+  ],
+  answer: 2,
+  explanation: "All words in option B are valid Java keywords. 'goto' is reserved but not used. Other options contain non-keywords like Int, virtual, constant, and include."
+},
+{
+  q: "Which will legally declare, construct, and initialize an array?",
+  code: ``,
+  options: [
+    "int [] myList = {\"1\", \"2\", \"3\"};",
+    "int [] myList = (5, 8, 2);",
+    "int myList [][] = {4,9,7,0};",
+    "int myList [] = {4, 3, 7};"
+  ],
+  answer: 4,
+  explanation: "Option D correctly declares and initializes a one-dimensional int array. Others contain type mismatch, incorrect syntax, or incorrect dimensions."
+},
+{
+  q: "Which is a reserved word in the Java programming language?",
+  code: ``,
+  options: [
+    "method",
+    "native",
+    "subclasses",
+    "reference",
+    "array"
+  ],
+  answer: 2,
+  explanation: "'native' is a valid Java keyword used to declare native methods. The others are not Java keywords."
+},
+{
+  q: "Which is a valid keyword in java?",
+  code: ``,
+  options: [
+    "interface",
+    "string",
+    "Float",
+    "unsigned"
+  ],
+  answer: 1,
+  explanation: "'interface' is a valid Java keyword. 'string' is not a keyword (String is a class), 'Float' is a class, and 'unsigned' is not a Java keyword."
+},
+{
+  q: "Which one is a valid declaration of a boolean?",
+  code: ``,
+  options: [
+    "boolean b1 = 0;",
+    "boolean b2 = 'false';",
+    "boolean b3 = false;",
+    "boolean b4 = Boolean.false();",
+    "boolean b5 = no;"
+  ],
+  answer: 3,
+  explanation: "A boolean variable can only be assigned the literal true or false. Therefore, 'boolean b3 = false;' is correct."
+},
+{
+  q: "Which three are valid declarations of a float?",
+  code: ``,
+  options: [
+    "1, 2, 4",
+    "2, 3, 5",
+    "1, 3, 6",
+    "2, 4, 6"
+  ],
+  answer: 3,
+  explanation: "(1) and (3) are integer literals which can be assigned to float. (6) is correct because it uses 'F' suffix. (2), (4), and (5) are double literals by default."
+},
+{
+  q: "Which is a valid declarations of a String?",
+  code: ``,
+  options: [
+    "String s1 = null;",
+    "String s2 = 'null';",
+    "String s3 = (String) 'abc';",
+    "String s4 = (String) '\\ufeed';"
+  ],
+  answer: 1,
+  explanation: "String s1 = null; is valid because null can be assigned to any object reference. Others are invalid due to incorrect use of single quotes or improper casting."
+},
+{
+  q: "What is the numerical range of a char?",
+  code: ``,
+  options: [
+    "-128 to 127",
+    "-(2^15) to (2^15) - 1",
+    "0 to 32767",
+    "0 to 65535"
+  ],
+  answer: 4,
+  explanation: "A char in Java is an unsigned 16-bit type. It ranges from 0 to 65535 (2^16 - 1)."
+},
+{
+  q: "Which three are legal array declarations?",
+  code: ``,
+  options: [
+    "1, 2, 4",
+    "2, 4, 5",
+    "2, 3, 4",
+    "All are correct."
+  ],
+  answer: 1,
+  explanation: "(1), (2), and (4) are legal array declarations. Array brackets can appear on either side of the identifier. Arrays cannot be declared with a size (so 3 and 5 are invalid)."
+},
+{
+  q: "Which three piece of codes are equivalent to line 3?",
+  code: `public interface Foo 
+{ 
+    int k = 4; /* Line 3 */
+}`,
+  options: [
+    "1, 2 and 3",
+    "2, 3 and 4",
+    "3, 4 and 5",
+    "4, 5 and 6"
+  ],
+  answer: 1,
+  explanation: "Interface variables are implicitly public, static, and final. Therefore final int k = 4;, public int k = 4;, and static int k = 4; are equivalent."
+},
+{
+  q: "Which one of the following will declare an array and initialize it with five numbers?",
+  code: ``,
+  options: [
+    "Array a = new Array(5);",
+    "int [] a = {23,22,21,20,19};",
+    "int a [] = new int[5];",
+    "int [5] array;"
+  ],
+  answer: 2,
+  explanation: "Option B correctly declares and initializes an array with five values. Option C only declares and instantiates without initialization values."
+},
+{
+  q: "Which three are valid declarations of a char?",
+  code: ``,
+  options: [
+    "1, 2, 4",
+    "1, 3, 6",
+    "3, 5",
+    "5 only"
+  ],
+  answer: 2,
+  explanation: "(1) Octal literal within range is valid. (3) Hexadecimal literal within range is valid. (6) Unicode literal '\\uface' is valid. Others are invalid due to incorrect literal format."
+},
+{
+  q: "Which is the valid declarations within an interface definition?",
+  code: ``,
+  options: [
+    "public double methoda();",
+    "public final double methoda();",
+    "static void methoda(double d1);",
+    "protected void methoda(double d1);"
+  ],
+  answer: 1,
+  explanation: "Interface methods are implicitly public and abstract. Option A is valid. Methods in interfaces cannot be protected or final. Static methods were not allowed in traditional interface definitions."
+},
+{
+  q: "What will be the output of the program when executed with: java CommandArgsThree 1 2 3 ?",
+  code: `public class CommandArgsThree 
+{
+    public static void main(String [] args) 
+    {
+        String [][] argCopy = new String[2][2];
+        int x;
+        argCopy[0] = args;
+        x = argCopy[0].length;
+        for (int y = 0; y < x; y++) 
+        {
+            System.out.print(" " + argCopy[0][y]);
+        }
+    }
+}`,
+  options: [
+    "0 0",
+    "1 2",
+    "0 0 0",
+    "1 2 3"
+  ],
+  answer: 4,
+  explanation: "argCopy[0] is reassigned to args, which contains three elements (\"1\", \"2\", \"3\"). The loop prints all three values."
+},
+{
+  q: "What will be the output when executed with: java CommandArgs 1 2 3 4 ?",
+  code: `public class CommandArgs 
+{
+    public static void main(String [] args) 
+    {
+        String s1 = args[1];
+        String s2 = args[2];
+        String s3 = args[3];
+        String s4 = args[4];
+        System.out.print(" args[2] = " + s2);
+    }
+}`,
+  options: [
+    "args[2] = 2",
+    "args[2] = 3",
+    "args[2] = null",
+    "An exception is thrown at runtime."
+  ],
+  answer: 4,
+  explanation: "Accessing args[4] causes ArrayIndexOutOfBoundsException because only four arguments (index 0–3) are provided."
+},
+{
+  q: "What will be the output when executed with: java F0091 world ?",
+  code: `public class F0091 
+{    
+    public void main( String[] args ) 
+    {  
+        System.out.println( "Hello" + args[0] ); 
+    } 
+}`,
+  options: [
+    "Hello",
+    "Hello Foo91",
+    "Hello world",
+    "The code does not run."
+  ],
+  answer: 4,
+  explanation: "The main method is not declared static. JVM cannot find the proper entry point, so the program does not run."
+},
+{
+  q: "What will be the output of the program?",
+  code: `public class TestDogs 
+{
+    public static void main(String [] args) 
+    {
+        Dog [][] theDogs = new Dog[3][];
+        System.out.println(theDogs[2][0].toString());
+    }
+}
+class Dog { }`,
+  options: [
+    "null",
+    "theDogs",
+    "Compilation fails",
+    "An exception is thrown at runtime"
+  ],
+  answer: 4,
+  explanation: "The second dimension is not initialized. Accessing theDogs[2][0] causes a NullPointerException at runtime."
+},
+{
+  q: "What will be the output of the program?",
+  code: `public class Test 
+{
+    public static void main(String [] args) 
+    {
+        signed int x = 10;
+        for (int y=0; y<5; y++, x--)
+            System.out.print(x + ", ");
+    }
+}`,
+  options: [
+    "10, 9, 8, 7, 6,",
+    "9, 8, 7, 6, 5,",
+    "Compilation fails.",
+    "An exception is thrown at runtime."
+  ],
+  answer: 3,
+  explanation: "'signed' is not a valid keyword in Java. All numeric primitives are signed by default. Therefore compilation fails."
+},
+{
+  q: "What will be the output of the program when executed with: java CommandArgsTwo 1 2 3 ?",
+  code: `public class CommandArgsTwo 
+{
+    public static void main(String [] argh) 
+    {
+        int x;
+        x = argh.length;
+        for (int y = 1; y <= x; y++) 
+        {
+            System.out.print(" " + argh[y]);
+        }
+    }
+}`,
+  options: [
+    "0 1 2",
+    "1 2 3",
+    "0 0 0",
+    "An exception is thrown at runtime"
+  ],
+  answer: 4,
+  explanation: "The loop runs while y <= x. When y equals argh.length, it attempts to access argh[length], which causes ArrayIndexOutOfBoundsException."
+},
+{
+  q: "In the given program, how many lines of output will be produced?",
+  code: `public class Test 
+{
+    public static void main(String [] args) 
+    {
+        int [] [] [] x = new int [3] [] [];
+        int i, j;
+        x[0] = new int[4][];
+        x[1] = new int[2][];
+        x[2] = new int[5][];
+        for (i = 0; i < x.length; i++)
+        {
+            for (j = 0; j < x[i].length; j++) 
+            {
+                x[i][j] = new int [i + j + 1];
+                System.out.println("size = " + x[i][j].length);
+            }
+        }
+    }
+}`,
+  options: [
+    "7",
+    "9",
+    "11",
+    "13",
+    "Compilation fails"
+  ],
+  answer: 3,
+  explanation: "x[0] has 4 elements, x[1] has 2 elements, x[2] has 5 elements. Total iterations: 4 + 2 + 5 = 11. Therefore, 11 lines are printed."
+},
+{
+  q: "What will be the output when executed with: java X a b ?",
+  code: `public class X 
+{
+    public static void main(String [] args) 
+    {
+        String names [] = new String[5];
+        for (int x=0; x < args.length; x++)
+            names[x] = args[x];
+        System.out.println(names[2]);
+    }
+}`,
+  options: [
+    "names",
+    "null",
+    "Compilation fails",
+    "An exception is thrown at runtime"
+  ],
+  answer: 2,
+  explanation: "names array has 5 elements initialized to null. Only names[0] and names[1] are assigned ('a' and 'b'). names[2] remains null, so null is printed."
+}
+
+
+
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>

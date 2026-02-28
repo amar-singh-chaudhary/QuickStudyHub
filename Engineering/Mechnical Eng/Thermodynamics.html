@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+"q":"The processes occuring in open system which permit the transfer of mass to and from the system, are known as",
+"options":[
+"flow processes",
+"non-flow processes",
+"adiabatic processes",
+"none of these"
+],
+"answer":0,
+"explanation":"In an open system, mass crosses the system boundary. Such processes are called flow processes."
+},
+{
+"q":"Which of the following has the minimum atomic mass?",
+"options":[
+"Oxygen",
+"Sulphur",
+"Nitrogen",
+"Carbon"
+],
+"answer":3,
+"explanation":"Atomic masses: Carbon = 12, Nitrogen = 14, Oxygen = 16, Sulphur = 32. Hence, carbon has the minimum atomic mass."
+},
+{
+"q":"Workdone in a free expansion process is",
+"options":[
+"zero",
+"minimum",
+"maximum",
+"positive"
+],
+"answer":0,
+"explanation":"In free expansion (expansion into vacuum), no external resistance is present, so no work is done. Hence, work done is zero."
+},
+{
+"q":"The pressure exerted by an ideal gas is __________ of the kinetic energy of all the molecules contained in a unit volume of gas.",
+"options":[
+"one-half",
+"one-third",
+"two-third",
+"three-fourth"
+],
+"answer":1,
+"explanation":"According to kinetic theory of gases, pressure is equal to one-third of the kinetic energy per unit volume."
+},
+{
+"q":"The compression ratio for petrol engines is",
+"options":[
+"3 to 6",
+"5 to 8",
+"15 to 20",
+"20 to 30"
+],
+"answer":1,
+"explanation":"Petrol engines typically have compression ratios ranging from 5 to 8 (approximately 6:1 to 8:1)."
+},
+{
+"q":"The most probable velocity of the gas molecules is given by",
+"options":[
+"√(2RT/M)",
+"√(3RT/M)",
+"√(RT/M)",
+"√(5RT/M)"
+],
+"answer":0,
+"explanation":"From Maxwell’s distribution law, the most probable velocity of gas molecules is Vp = √(2RT/M), where R is gas constant, T is absolute temperature, and M is molar mass."
+},
+{
+"q":"The efficiency of Diesel cycle approaches to Otto cycle efficiency when",
+"options":[
+"cut-off is increased",
+"cut-off is decreased",
+"cut-off is zero",
+"cut-off is constant"
+],
+"answer":1,
+"explanation":"As the cut-off ratio decreases (approaches 1), the Diesel cycle efficiency approaches that of the Otto cycle."
+},
+{
+"q":"The entropy __________ in an irreversible cyclic process.",
+"options":[
+"remains constant",
+"decreases",
+"increases"
+],
+"answer":2,
+"explanation":"In an irreversible process, entropy increases according to the second law of thermodynamics."
+},
+{
+"q":"The atomic mass of oxygen is",
+"options":[
+"12",
+"14",
+"16",
+"32"
+],
+"answer":2,
+"explanation":"The atomic mass of oxygen (O) is 16."
+},
+{
+"q":"The ratio of specific heat at constant pressure (cp) and specific heat at constant volume (cv) is",
+"options":[
+"equal to one",
+"less than one",
+"greater than one",
+"none of these"
+],
+"answer":2,
+"explanation":"For all gases, cp is greater than cv; hence cp/cv (γ) is always greater than one."
+},
+
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"What is RAM?",
+options:["Random Access Memory","Read Access Memory","Run Memory","None"],
+answer:0,
+explanation:"Correct full form is Random Access Memory."
+},
+{
+q:"Hard disk is?",
+options:["Input device","Storage device","Output device","Software"],
+answer:1,
+explanation:"Hard disk is a storage device."
+}
+]
+
+// ........Section-3............
+
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

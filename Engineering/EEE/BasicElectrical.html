@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"Which of the following elements of electrical engineering cannot be analyzed using Ohm’s law?",
+options:["Capacitors","Inductors","Transistors","Resistance"],
+answer:3,
+explanation:"Ohm’s law cannot be used for unilateral devices. A transistor is a unilateral device and does not strictly obey Ohm’s law."
+},
+{
+q:"What is constant for a charged spherical shell according to basic electrical energy?",
+options:["Electrical potential outside the spherical shell","Electrical potential inside the spherical shell","Electrical field outside the spherical shell","Electrical field inside the spherical shell"],
+answer:2,
+explanation:"The electrical potential inside a charged spherical shell remains constant and equals the surface potential."
+},
+{
+q:"Where does electro-static shielding occur in a charged spherical shell?",
+options:["When electrical potential outside spherical shell is zero","When electrical potential inside the spherical shell is zero","Electrical field outside the spherical shell","Electrical field inside the spherical shell"],
+answer:4,
+explanation:"Electrostatic shielding occurs because the electric field inside a charged spherical shell is zero."
+},
+{
+q:"Which of the following is a correct representation of peak value in an AC Circuit?",
+options:["RMS value/Peak factor","RMS value*Form factor","RMS value/Form factor","RMS value*Peak factor"],
+answer:4,
+explanation:"Peak factor (crest factor) = Peak value / RMS value. Therefore, Peak value = RMS value × Peak factor."
+},
+{
+q:"Which of the following according to fundamentals of electrical energy is incorrect about alternating current?",
+options:["Frequency is zero","Magnitude changes with time","Can be transported to larger distances with less loss in power","Flows in both directions"],
+answer:1,
+explanation:"AC has a non-zero frequency and changes direction periodically. Hence frequency is not zero."
+},
+{
+q:"How many cycles will an AC signal make in 2 seconds if its frequency is 100 Hz?",
+options:["50","100","150","200"],
+answer:4,
+explanation:"Number of cycles = frequency × time = 100 × 2 = 200 cycles."
+},
+{
+q:"What will be the direction of the drift velocity of electrons change with respect to the electric field?",
+options:["Same as that of electric field","Opposite to that of electric field","Perpendicular in positive direction","Perpendicular in negative direction"],
+answer:2,
+explanation:"Electrons are negatively charged, so their drift velocity is opposite to the electric field direction."
+},
+{
+q:"What will be the current density of metal if a current of 30A is passed through a cross-sectional area of 0.5m²?",
+options:["7.5 A/m²","15 A/m²","60 A/m²","120 A/m²"],
+answer:3,
+explanation:"Current density J = I/A = 30 / 0.5 = 60 A/m²."
+},
+{
+q:"Which of the following is correct about the power consumed by R1 and R2 connected in series if R1 > R2?",
+options:["R1 will consume more power","R2 will consume more power","Both consume same power","Cannot be determined"],
+answer:1,
+explanation:"Power in series P = I²R. Since current is same, larger resistance consumes more power."
+},
+{
+q:"What is zero for a charged spherical shell?",
+options:["Electrical potential outside","Electrical potential inside","Electrical field outside","Electrical field inside"],
+answer:4,
+explanation:"The electric field inside a charged spherical shell is zero."
+},
+{
+q:"What kind of quantity is Electric potential?",
+options:["Vector","Tensor","Scalar","Dimensionless"],
+answer:3,
+explanation:"Electric potential has magnitude only, hence it is a scalar quantity."
+},
+{
+q:"What do crowded lines of force indicate?",
+options:["Strong electric field","Weak electric field","Strong electric potential","Weak electric potential"],
+answer:1,
+explanation:"Closer field lines represent stronger electric field intensity."
+},
+{
+q:"What is the direction of the electric field at a point?",
+options:["Perpendicular to field","Tangent to field line","No direction","Random direction"],
+answer:2,
+explanation:"Electric field direction is along the tangent to the field line at that point."
+},
+{
+q:"What is the magnitude of mutually induced emf E2 in a transformer?",
+options:["Directly proportional to rate of change of flux and number of secondary turns","Inversely proportional to both","Proportional to rate but inversely to turns","Inversely proportional to rate but proportional to turns"],
+answer:1,
+explanation:"E2 ∝ N2 (dΦ/dt). It depends on number of secondary turns and rate of change of flux."
+},
+{
+q:"If secondary turns are less than primary turns in transformer, what happens?",
+options:["Voltage stepped up","Voltage stepped down","Power stepped up","Power stepped down"],
+answer:2,
+explanation:"When Ns < Np, transformer acts as step-down transformer."
+},
+{
+q:"What is the number of primary turns in a 200/1000 V transformer if emf per turn is 10V?",
+options:["5","10","20","40"],
+answer:3,
+explanation:"Primary voltage = 200V. Turns = 200/10 = 20."
+},
+{
+q:"Correct representation of average value in AC Circuit?",
+options:["RMS value/Form factor","RMS value*Form factor","RMS value/Peak factor","RMS value*Peak factor"],
+answer:1,
+explanation:"Form factor = RMS / Average. Therefore Average = RMS / Form factor."
+},
+{
+q:"Who defined electric current and devised method to measure it?",
+options:["Michael Faraday","Andre-Marie Ampere","Nikola Tesla","Alessandro Volta"],
+answer:2,
+explanation:"Andre-Marie Ampere defined electric current and contributed to its measurement."
+},
+{
+q:"How many electrons constitute 2 Coulombs?",
+options:["6.24 × 10¹⁸","12.48 × 10¹⁸","1.602 × 10¹⁹","3.204 × 10¹⁹"],
+answer:2,
+explanation:"1 Coulomb = 6.24 × 10¹⁸ electrons. So 2 C = 12.48 × 10¹⁸ electrons."
+},
+{
+q:"Which is correct about direct current?",
+options:["Magnitude constant","Frequency zero","Transported long distance with less loss","Flows in one direction"],
+answer:4,
+explanation:"DC flows only in one direction."
+},
+{
+q:"Who first witnessed magnetism due to current?",
+options:["Hans Christian Orsted","Alexander Bell","Michael Faraday","Kirchhoff"],
+answer:1,
+explanation:"Hans Christian Orsted discovered magnetic effect of electric current."
+},
+{
+q:"Electrical conductivity is",
+options:["Ratio of current density to electric field","Product of J and E","Ratio of E to J","Reciprocal of product"],
+answer:1,
+explanation:"σ = J/E according to point form of Ohm’s law."
+},
+{
+q:"What is responsible for current flow?",
+options:["Protons","Electrons","Nucleus","Protons and Electrons"],
+answer:2,
+explanation:"Electrons move under applied potential difference causing current."
+},
+{
+q:"According to KCL what must be zero?",
+options:["Sum of currents in loop","Sum of power","Sum of currents at junction","Sum of voltages"],
+answer:3,
+explanation:"Algebraic sum of currents at a node is zero."
+},
+{
+q:"How many directions can electric field at a point have?",
+options:["Zero","One","Two","Many"],
+answer:2,
+explanation:"At a point, electric field has only one unique direction."
+},
+{
+q:"If secondary turns > primary turns, transformer acts as",
+options:["Step up","Step down","Power up","Power down"],
+answer:1,
+explanation:"When Ns > Np, voltage increases (step-up transformer)."
+},
+{
+q:"Voltage transformation ratio is",
+options:["Np/Ns","Es/Ep","Is/Ip","Pp/Ps"],
+answer:2,
+explanation:"Voltage ratio = Es/Ep = Ns/Np."
+},
+{
+q:"Induced emf in primary is",
+options:["Ratio of primary turns to emf per turn","Product of primary turns and emf per turn","Ratio of secondary turns","Product of secondary turns"],
+answer:2,
+explanation:"Ep = Np × emf per turn."
+},
+{
+q:"Current drawn by primary when secondary open in ideal transformer?",
+options:["Secondary current","Leakage current","Magnetizing current","Working current"],
+answer:3,
+explanation:"Only magnetizing current flows when secondary is open."
+},
+{
+q:"Positive power in element indicates",
+options:["Absorbing power","Supplying power","Either","Neither"],
+answer:1,
+explanation:"Positive power means element absorbs power."
+},
+{
+q:"Induced emf in DC motor reacts to supply voltage by",
+options:["Aiding","Doubling","Opposing","Halving"],
+answer:3,
+explanation:"By Lenz’s law, induced emf opposes supply voltage."
+},
+{
+q:"Which circuits cannot be analyzed using Ohm’s law?",
+options:["Unilateral","Bilateral","Linear","Conductors"],
+answer:1,
+explanation:"Unilateral circuits like diode circuits do not strictly obey Ohm’s law."
+},
+{
+q:"According to KVL what must be zero?",
+options:["Sum of currents","Sum of power","Sum of losses","Sum of voltages in loop"],
+answer:4,
+explanation:"Algebraic sum of voltages in closed loop is zero."
+},{
+q:"Which among the following expressions relate charge, voltage and capacitance of a capacitor?",
+options:["Q = C/V","Q = V/C","Q = CV","C = Q2V"],
+answer:3,
+explanation:"Charge is directly proportional to voltage with capacitance as constant. Therefore, Q = C × V."
+},
+{
+q:"If a 2F capacitor has 1C charge, calculate the voltage across its terminals.",
+options:["0.5V","2V","1.5V","1V"],
+answer:1,
+explanation:"Using Q = CV, V = Q/C = 1/2 = 0.5V."
+},
+{
+q:"What is the voltage across a capacitor at the time of switching, that is, when t = 0?",
+options:["Infinity","0V","Cannot be determined","1V"],
+answer:2,
+explanation:"At t = 0, a capacitor behaves like a short circuit. Voltage across a short circuit is 0V."
+},
+{
+q:"What is the voltage across the capacitor if the switch is closed and steady state is reached?",
+options:["8V","0V","10V","Infinity"],
+answer:3,
+explanation:"At steady state, a capacitor behaves as an open circuit. The full supply voltage appears across it, hence 10V."
+},
+{
+q:"If one plate of a parallel plate capacitor is charged positive, the other plate is charged?",
+options:["Positive","Negative","Positive or negative","Not charged"],
+answer:2,
+explanation:"If one plate is positively charged, the other plate becomes negatively charged to maintain electric field and charge balance."
+},
+{
+q:"When the voltage across a capacitor increases, what happens to the charge stored in it?",
+options:["Increases","Decreases","Becomes zero","Cannot be determined"],
+answer:1,
+explanation:"Since Q = CV and C is constant, increasing V increases Q proportionally."
+},
+{
+q:"When will capacitor be fully charged?",
+options:[
+"When voltage is half of supply",
+"When current is 1/√2 of original",
+"When supply voltage equals capacitor voltage",
+"Never"
+],
+answer:3,
+explanation:"A capacitor is fully charged when its voltage equals the supply voltage. At that point, current becomes zero."
+},
+{
+q:"What happens to the current flow in a fully charged capacitor?",
+options:["Current flow stops","Current flow doubles","Becomes half","Becomes one-fourth"],
+answer:1,
+explanation:"Current is rate of change of charge. When capacitor is fully charged, charge stops changing, so current becomes zero."
+},
+{
+q:"Calculate the capacitance of a capacitor that stores 40 microC of charge and has a voltage of 2V.",
+options:["20F","20 microF","10F","10 microF"],
+answer:2,
+explanation:"C = Q/V = 40 microC / 2V = 20 microF."
+},
+{
+q:"What happens to the capacitance when the voltage across the capacitor increases?",
+options:["Decreases","Increases","Becomes 0","No effect"],
+answer:4,
+explanation:"Capacitance depends on physical construction and dielectric material, not on applied voltage. Hence no effect."
+}
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"What is RAM?",
+options:["Random Access Memory","Read Access Memory","Run Memory","None"],
+answer:0,
+explanation:"Correct full form is Random Access Memory."
+},
+{
+q:"Hard disk is?",
+options:["Input device","Storage device","Output device","Software"],
+answer:1,
+explanation:"Hard disk is a storage device."
+}
+]
+
+// ........Section-3............
+
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

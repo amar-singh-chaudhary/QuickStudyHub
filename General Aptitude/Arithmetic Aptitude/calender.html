@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar - MCQ</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+}
+
+.container{
+    max-width:800px;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+}
+
+h2{
+    margin-bottom:10px;
+}
+
+.topic-list{
+    margin-bottom:20px;
+}
+
+.topic-list div{
+    margin:5px 0;
+}
+
+.question{
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:10px 0;
+    padding:6px;
+    border-radius:4px;
+}
+
+.options label{
+    cursor:pointer;
+}
+
+.explanation{
+    display:none;
+    margin-top:10px;
+    background:#f9fff3;
+    padding:10px;
+    border-left:4px solid green;
+}
+
+.nav{
+    margin-top:20px;
+    text-align:center;
+}
+
+.nav button{
+    padding:6px 12px;
+    margin:0 5px;
+}
+
+.correct{
+    background:#4d6753;
+    color:white;
+}
+
+.wrong{
+    background:#ac0815;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Exercise : Calender - General Questions</h2>
+
+<div class="topic-list">
+    <div>Calender - Formulas</div>
+    <div><b>Calender - General Questions</b></div>
+    <div>Calender - Data Sufficiency 1</div>
+</div>
+</div>
+
+<div id="quiz-container"></div>
+
+<div class="nav">
+    <button onclick="prevPage()">Prev</button>
+    <span id="pageNumbers"></span>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+<script>
+
+// QUESTIONS
+const questions = [
+{
+    question: "1. The calendar for the year 2007 will be the same for the year:",
+    options: ["2014", "2016", "2017", "2018"],
+    correct: 3,
+    explanation: "Counting odd days from 2007 onwards gives a total of 14 odd days = 0 odd days. Hence, the calendar repeats in 2018."
+},
+{
+    question: "2. Which of the following is not a leap year?",
+    options: ["700", "800", "1200", "2000"],
+    correct: 0,
+    explanation: "A century year is a leap year only if divisible by 400. 700 is not divisible by 400, so it is not a leap year."
+},
+{
+    question: "3. On 8th Dec, 2007 Saturday falls. What day of the week was it on 8th Dec, 2006?",
+    options: ["Sunday", "Thursday", "Tuesday", "Friday"],
+    correct: 3,
+    explanation: "2006 is an ordinary year (1 odd day). So 8th Dec 2007 is one day after 8th Dec 2006. Since 8th Dec 2007 is Saturday, 8th Dec 2006 was Friday."
+},
+{
+    question: "4. January 1, 2008 was Tuesday. What day of the week was January 1, 2009?",
+    options: ["Monday", "Wednesday", "Thursday", "Sunday"],
+    correct: 2,
+    explanation: "2008 is a leap year (2 odd days). So January 1, 2009 is two days after Tuesday → Thursday."
+},
+{
+    question: "5. January 1, 2007 was Monday. What day of the week was January 1, 2008?",
+    options: ["Monday", "Tuesday", "Wednesday", "Sunday"],
+    correct: 1,
+    explanation: "2007 is an ordinary year (1 odd day). So January 1, 2008 is one day after Monday → Tuesday."
+},
+{
+    question: "6. If 6th March, 2005 is Monday, what was the day of the week on 6th March, 2004?",
+    options: ["Sunday", "Saturday", "Tuesday", "Wednesday"],
+    correct: 0,
+    explanation: "The year 2004 is a leap year, so it has 2 odd days.<br> However, since we are calculating from 6th March 2004 to 6th March 2005, February 2004 (29 days) is not included. Therefore, only 1 odd day is counted.<br> Hence, the day on 6th March 2005 is 1 day ahead of 6th March 2004.<br> Given 6th March 2005 is Monday, so 6th March 2004 was Sunday."
+},
+{
+    question: "7. On what dates of April, 2001 did Wednesday fall?",
+    options: ["1st, 8th, 15th, 22nd, 29th", "2nd, 9th, 16th, 23rd, 30th", "3rd, 10th, 17th, 24th", "4th, 11th, 18th, 25th"],
+    correct: 3,
+    explanation: "To find the day on 1st April 2001:<br> Odd days in 1600 years = 0, in next 400 years = 0. <br>From 1st Jan 2001 to 1st April 2001: Jan (31) + Feb (28) + March (31) + 1 day of April = 91 days = 0 odd days. <br>Total odd days = 0, so 1st April 2001 was Sunday.<br> Therefore, Wednesdays in April 2001 were 4th, 11th, 18th and 25th."
+},
+{
+    question: "8. How many days are there in x weeks x days?",
+    options: ["7x²", "8x", "14x", "7"],
+    correct: 1,
+    explanation: "1 week = 7 days. Therefore, x weeks = 7x days.<br> Adding x days more gives total days = 7x + x = 8x days."
+},
+{
+    question: "9. The last day of a century cannot be:",
+    options: ["Monday", "Wednesday", "Tuesday", "Friday"],
+    correct: 2,
+    explanation: "100 years contain 5 odd days, so last day of 1st century = Friday. <br>200 years contain 10 odd days = 3 odd days, so last day = Wednesday.<br> 300 years contain 15 odd days = 1 odd day, so last day = Monday. <br>400 years contain 0 odd day, so last day = Sunday. This cycle repeats.<br> Therefore, the last day of a century cannot be Tuesday, Thursday or Saturday."
+},
+{
+    question: "10. On 8th Feb, 2005 it was Tuesday. What was the day of the week on 8th Feb, 2004?",
+    options: ["Tuesday", "Monday", "Sunday", "Wednesday"],
+    correct: 2,
+    explanation: "The year 2004 is a leap year and has 2 odd days. <br>Therefore, the day on 8th Feb 2005 is 2 days ahead of 8th Feb 2004.<br> Given 8th Feb 2005 was Tuesday, counting 2 days backward (Tuesday → Monday → Sunday), 8th Feb 2004 was Sunday."
+},
+{
+    question: "11. It was Sunday on Jan 1, 2006. What was the day of the week on Jan 1, 2010?",
+    options: ["Sunday", "Saturday", "Friday", "Wednesday"],
+    correct: 2,
+    explanation: "On 31st Dec 2005 it was Saturday. Odd days from 2006–2009: 2006 (1), 2007 (1), 2008 leap year (2), 2009 (1). Total = 5 odd days. Saturday + 5 days = Thursday (31st Dec 2009). Therefore, 1st Jan 2010 was Friday."
+},
+{
+    question: "12. What was the day of the week on 28th May, 2006?",
+    options: ["Thursday", "Friday", "Saturday", "Sunday"],
+    correct: 3,
+    explanation: "28 May 2006 = 2005 years + period from 1.1.2006 to 28.5.2006. Odd days in 1600 years = 0. Odd days in 400 years = 0. Remaining 5 years (2001–2005): 4 ordinary (4×1) + 1 leap (1×2) = 6 odd days. Days from Jan to 28 May = 31+28+31+30+28 = 148 days = 1 odd day. Total odd days = 6 + 1 = 7 = 0 odd day. Hence, the day was Sunday."
+},
+{
+    question: "13. What was the day of the week on 17th June, 1998?",
+    options: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+    correct: 2,
+    explanation: "17 June 1998 = 1997 years + period from 1.1.1998 to 17.6.1998. Odd days in 1600 years = 0. Odd days in next 300 years = 1. Remaining 97 years: 24 leap (24×2) + 73 ordinary (73×1) = 121 days = 2 odd days. Days from Jan to 17 June = 31+28+31+30+31+17 = 168 days = 0 odd day. Total odd days = 1 + 2 = 3. Therefore, the day was Wednesday."
+},
+{
+    question: "14. What will be the day of the week on 15th August, 2010?",
+    options: ["Sunday", "Monday", "Tuesday", "Friday"],
+    correct: 0,
+    explanation: "15 Aug 2010 = 2009 years + period from 1.1.2010 to 15.8.2010. Odd days in 1600 years = 0. Odd days in 400 years = 0. Remaining 9 years (2001–2009): 2 leap (2×2) + 7 ordinary (7×1) = 11 = 4 odd days. Days from Jan to 15 Aug = 31+28+31+30+31+30+31+15 = 227 days = 3 odd days. Total = 4 + 3 = 7 = 0 odd day. Hence, the day was Sunday."
+},
+{
+    question: "15. Today is Monday. After 61 days, it will be:",
+    options: ["Wednesday", "Saturday", "Tuesday", "Thursday"],
+    correct: 1,
+    explanation: "Days repeat every 7 days. 61 ÷ 7 leaves remainder 5. So, 5 days after Monday → Saturday."
+},
+
+  
+];
+
+const questionsPerPage = 20;
+let currentPage = 1;
+
+function loadQuestions() {
+
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = "";
+
+    const start = (currentPage - 1) * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    const pageQuestions = questions.slice(start, end);
+
+    pageQuestions.forEach((q, index) => {
+
+        const questionNumber = start + index;
+
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <div class="question">${q.question}</div>
+            <ul class="options">
+                ${q.options.map((opt, i) => `
+                    <li>
+                        <label>
+                            <input type="radio" name="q${questionNumber}" value="${i}">
+                            ${String.fromCharCode(65 + i)}. ${opt}
+                        </label>
+                    </li>
+                `).join("")}
+            </ul>
+            <button onclick="checkAnswer(${questionNumber}, ${q.correct}, \`${q.explanation}\`)">
+                Check Answer
+            </button>
+            <div class="explanation" id="exp${questionNumber}"></div>
+            <hr>
+        `;
+        container.appendChild(div);
+    });
+
+    createPageNumbers();
+}
+
+function checkAnswer(qIndex, correctIndex, explanationText) {
+
+    const explanation = document.getElementById(`exp${qIndex}`);
+
+    // TOGGLE SHOW/HIDE
+    if (explanation.style.display === "block") {
+        explanation.style.display = "none";
+        return;
+    }
+
+    const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+    const options = document.querySelectorAll(`input[name="q${qIndex}"]`);
+
+    if (!selected) {
+        alert("Please select an option.");
+        return;
+    }
+
+    let userLetter = "";
+    let correctLetter = "";
+
+    options.forEach(option => {
+        const li = option.closest("li");
+        const letter = String.fromCharCode(65 + parseInt(option.value));
+
+        // Reset colors
+        li.classList.remove("correct", "wrong");
+
+        if (parseInt(option.value) === correctIndex) {
+            li.classList.add("correct");
+            correctLetter = letter;
+        }
+
+        if (option.checked) {
+            userLetter = letter;
+
+            if (parseInt(option.value) !== correctIndex) {
+                li.classList.add("wrong");
+            }
+        }
+    });
+
+    explanation.innerHTML = `
+        <p style="font-weight:bold;">
+            ${parseInt(selected.value) === correctIndex ? "✔ Correct Answer!" : "❌ Wrong Answer!"}
+        </p>
+        <p><b>Your Option:</b> ${userLetter}</p>
+        <p><b>Correct Option:</b> ${correctLetter}</p>
+        <p><b>Explanation:</b> ${explanationText}</p>
+    `;
+
+    explanation.style.display = "block";
+}
+
+function createPageNumbers() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    const pageNumbers = document.getElementById("pageNumbers");
+    pageNumbers.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.innerText = i;
+        btn.onclick = () => {
+            currentPage = i;
+            loadQuestions();
+        };
+
+        if (i === currentPage) {
+            btn.style.background = "#333";
+            btn.style.color = "white";
+        }
+
+        pageNumbers.appendChild(btn);
+    }
+}
+
+function prevPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        loadQuestions();
+    }
+}
+
+function nextPage() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    if (currentPage < totalPages) {
+        currentPage++;
+        loadQuestions();
+    }
+}
+
+loadQuestions();
+
+</script>
+
+
+</body>
+</html>

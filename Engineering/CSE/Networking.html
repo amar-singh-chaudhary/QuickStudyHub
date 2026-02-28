@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"What is a computer network?",
+options:[
+"A device used to display information on a computer screen",
+"A collection of interconnected computers and devices that can communicate and share resources",
+"A type of software used to create documents and presentations",
+"The physical casing that protects a computer’s internal components"
+],
+answer:1,
+explanation:"A computer network is a collection of interconnected computers and devices that communicate and share resources."
+},
+
+{
+q:" What is internet?",
+options:[
+"A network of interconnected local area networks",
+"A collection of unrelated computers",
+"Interconnection of wide area networks",
+"A single network"
+],
+answer:2,
+explanation:"The Internet is formed by connecting wide area networks (WANs) globally."
+},
+
+{
+q:" Which of the following is an example of Bluetooth?",
+options:[
+"wide area network",
+"virtual private network",
+"local area network",
+"personal area network"
+],
+answer:3,
+explanation:"Bluetooth is an example of a Personal Area Network (PAN)."
+},
+
+{
+q:" Which of the following computer networks is built on the top of another network?",
+options:[
+"overlay network",
+"prime network",
+"prior network",
+"chief network"
+],
+answer:0,
+explanation:"An overlay network is built on top of another network."
+},
+
+{
+q:" What is the full form of OSI?",
+options:[
+"optical service implementation",
+"open service Internet",
+"open system interconnection",
+"operating system interface"
+],
+answer:2,
+explanation:"OSI stands for Open System Interconnection."
+},
+
+{
+q:" When a collection of various computers appears as a single coherent system to its clients, what is this called?",
+options:[
+"mail system",
+"networking system",
+"computer network",
+"distributed system"
+],
+answer:3,
+explanation:"A distributed system appears as a single coherent system to users."
+},
+
+{
+q:" How many layers are there in the ISO OSI reference model?",
+options:[
+"7",
+"5",
+"4",
+"6"
+],
+answer:0,
+explanation:"The OSI model consists of 7 layers."
+},
+
+{
+q:" What are nodes in a computer network?",
+options:[
+"the computer that routes the data",
+"the computer that terminates the data",
+"the computer that originates the data",
+"all of the mentioned"
+],
+answer:3,
+explanation:"Nodes can send, receive, or route data."
+},
+
+{
+q:" Which one of the following is not a function of network layer?",
+options:[
+"congestion control",
+"error control",
+"routing",
+"inter-networking"
+],
+answer:1,
+explanation:"Error control is mainly handled by Data Link and Transport layers."
+},
+
+{
+q:" How is a single channel shared by multiple signals in a computer network?",
+options:[
+"multiplexing",
+"phase modulation",
+"analog modulation",
+"digital modulation"
+],
+answer:0,
+explanation:"Multiplexing combines multiple signals over a single channel."
+},
+
+{
+q:" Which device forwards packets between networks by processing routing information?",
+options:[
+"firewall",
+"bridge",
+"hub",
+"router"
+],
+answer:3,
+explanation:"A router forwards packets between networks."
+},
+
+{
+q:" What is the term for an endpoint of an inter-process communication flow?",
+options:[
+"port",
+"machine",
+"socket",
+"pipe"
+],
+answer:2,
+explanation:"A socket is an endpoint in two-way communication."
+},
+
+{
+q:" How do two devices become part of a network?",
+options:[
+"PIDs of processes are same",
+"A process in one device exchanges information with another",
+"One process active and other inactive",
+"A process running on both devices"
+],
+answer:1,
+explanation:"Devices are part of a network when they exchange information."
+},
+
+{
+q:" Which layer does the data link layer take packets from?",
+options:[
+"transport layer",
+"application layer",
+"network layer",
+"physical layer"
+],
+answer:2,
+explanation:"Data link layer receives packets from the network layer."
+},
+
+{
+q:" Which of this is not a network edge device?",
+options:[
+"Switch",
+"PC",
+"Smartphones",
+"Servers"
+],
+answer:0,
+explanation:"Switch is a central networking device, not an edge device."
+},
+
+{
+q:" Which type of network shares the communication channel among all machines?",
+options:[
+"anycast network",
+"multicast network",
+"unicast network",
+"broadcast network"
+],
+answer:3,
+explanation:"Broadcast network sends data to all stations."
+},
+
+{
+q:" Which topology requires a multipoint connection?",
+options:[
+"Ring",
+"Bus",
+"Star",
+"Mesh"
+],
+answer:1,
+explanation:"Bus topology uses a single shared communication line."
+},
+
+{
+q:" Which maintains the Domain Name System?",
+options:[
+"a single server",
+"a single computer",
+"distributed database system",
+"none of the mentioned"
+],
+answer:2,
+explanation:"DNS is maintained by a distributed database system."
+},
+
+{
+q:" When discussing IDS/IPS, what is a signature?",
+options:[
+"normal baseline behavior",
+"authorize users",
+"electronic signature",
+"attack-definition file"
+],
+answer:3,
+explanation:"Signature is an attack-definition file."
+},
+
+{
+q:" Which are Gigabit Ethernets?",
+options:[
+"1000 BASE-LX",
+"1000 BASE-CX",
+"1000 BASE-SX",
+"All of the mentioned"
+],
+answer:3,
+explanation:"All listed options are Gigabit Ethernet standards."
+},
+
+{
+q:" Which network extends a private network across public networks?",
+options:[
+"virtual private network",
+"local area network",
+"storage area network",
+"enterprise private network"
+],
+answer:0,
+explanation:"VPN extends a private network over a public network."
+},
+
+{
+q:" Which layer is responsible for process-to-process delivery?",
+options:[
+"session layer",
+"data link layer",
+"transport layer",
+"network layer"
+],
+answer:2,
+explanation:"Transport layer provides process-to-process delivery."
+},
+
+{
+q:" What does each packet contain in a virtual circuit network?",
+options:[
+"only source address",
+"only destination address",
+"full source and destination address",
+"a short VC number"
+],
+answer:3,
+explanation:"Virtual circuit uses a short VC number."
+},
+
+{
+q:" Data communication system within a building is called?",
+options:[
+"MAN",
+"LAN",
+"PAN",
+"WAN"
+],
+answer:1,
+explanation:"LAN covers a small geographical area like a building."
+},
+
+{
+q:" What was the name of the first network?",
+options:[
+"ASAPNET",
+"ARPANET",
+"CNNET",
+"NSFNET"
+],
+answer:1,
+explanation:"ARPANET was the first computer network."
+},
+
+{
+q:" Network layer protocol for the internet?",
+options:[
+"HTTP",
+"FTP",
+"Ethernet",
+"Internet Protocol"
+],
+answer:3,
+explanation:"IP is the network layer protocol."
+},
+
+{
+q:" Which topology requires a central controller?",
+options:[
+"Ring",
+"Bus",
+"Star",
+"Mesh"
+],
+answer:2,
+explanation:"Star topology requires a central hub."
+},
+
+{
+q:" If link transmits 4000 frames/sec and 8 bits/slot, rate is?",
+options:[
+"500kbps",
+"32kbps",
+"32bps",
+"500bps"
+],
+answer:1,
+explanation:"4000 × 8 = 32000bps = 32kbps."
+},
+
+{
+q:" Which allows LAN users to share programs and data?",
+options:[
+"File server",
+"Network",
+"Communication server",
+"Print server"
+],
+answer:0,
+explanation:"File server allows sharing of programs and data."
+},
+
+{
+q:" Communication between keyboard and computer is?",
+options:[
+"Half-duplex",
+"Full-duplex",
+"Simplex",
+"Automatic"
+],
+answer:2,
+explanation:"Keyboard to computer is simplex communication."
+},
+
+{
+q:" Which layer provides services to user?",
+options:[
+"physical layer",
+"presentation layer",
+"session layer",
+"application layer"
+],
+answer:3,
+explanation:"Application layer provides services to the user."
+},
+
+{
+q:" Which connection is necessary to join the internet?",
+options:[
+"internet society",
+"internet service provider",
+"different computer",
+"internet architecture board"
+],
+answer:1,
+explanation:"ISP connects users to the internet."
+},
+
+{
+q:" Which allows you to login to a remote computer?",
+options:[
+"SMTP",
+"HTTP",
+"FTP",
+"Telnet"
+],
+answer:3,
+explanation:"Telnet allows remote login."
+},
+
+{
+q:" Which is used to make a resource unavailable?",
+options:[
+"botnet process",
+"worms attack",
+"virus attack",
+"denial-of-service attack"
+],
+answer:3,
+explanation:"Denial-of-service attack makes resources unavailable."
+}
+],
+
+// ........Section-2............
+
+2: [
+{
+q:" Which is not an application layer protocol?",
+options:[
+"HTTP",
+"SMTP",
+"FTP",
+"TCP"
+],
+answer:3,
+explanation:"TCP is a transport layer protocol, not an application layer protocol."
+},
+
+{
+q:" The packet of information at the application layer is called __________",
+options:[
+"Packet",
+"Message",
+"Segment",
+"Frame"
+],
+answer:1,
+explanation:"At the application, presentation, and session layers, data is referred to as a message."
+},
+
+{
+q:" Which one of the following is an architecture paradigm?",
+options:[
+"Peer to peer",
+"Client-server",
+"HTTP",
+"Both Peer-to-Peer & Client-Server"
+],
+answer:3,
+explanation:"Peer-to-Peer and Client-Server are architecture paradigms, while HTTP is a protocol."
+},
+
+{
+q:" Application developer has permission to decide the following on transport layer side",
+options:[
+"Transport layer protocol",
+"Maximum buffer size",
+"Both Transport layer protocol and Maximum buffer size",
+"None of the mentioned"
+],
+answer:2,
+explanation:"Application developers can choose the transport protocol and configure parameters like buffer size."
+},
+
+{
+q:" Application layer offers _______ service.",
+options:[
+"End to end",
+"Process to process",
+"Both End to end and Process to process",
+"None of the mentioned"
+],
+answer:0,
+explanation:"Application layer provides end-to-end communication services."
+},
+
+{
+q:" E-mail is _________",
+options:[
+"Loss-tolerant application",
+"Bandwidth-sensitive application",
+"Elastic application",
+"None of the mentioned"
+],
+answer:2,
+explanation:"E-mail is an elastic application because it adapts to available throughput."
+},
+
+{
+q:" Pick the odd one out.",
+options:[
+"File transfer",
+"File download",
+"E-mail",
+"Interactive games"
+],
+answer:3,
+explanation:"Interactive games are time-sensitive, unlike the other listed services."
+},
+
+{
+q:" Which of the following is an application layer service?",
+options:[
+"Network virtual terminal",
+"File transfer, access, and management",
+"Mail service",
+"All of the mentioned"
+],
+answer:3,
+explanation:"All listed options are services provided by the application layer."
+},
+
+{
+q:" To deliver a message to the correct application program running on a host, the _______ address must be consulted.",
+options:[
+"IP",
+"MAC",
+"Port",
+"None of the mentioned"
+],
+answer:2,
+explanation:"Port address identifies the specific application process on a host."
+},
+
+{
+q:" Which is a time-sensitive service?",
+options:[
+"File transfer",
+"File download",
+"E-mail",
+"Internet telephony"
+],
+answer:3,
+explanation:"Internet telephony requires real-time data transmission and is time-sensitive."
+},
+
+{
+q:" Transport services available to applications in one or another form _________",
+options:[
+"Reliable data transfer",
+"Timing",
+"Security",
+"All of the mentioned"
+],
+answer:3,
+explanation:"Transport layer provides reliable data transfer, timing, and security services."
+},
+
+{
+q:" Electronic mail uses which Application layer protocol?",
+options:[
+"SMTP",
+"HTTP",
+"FTP",
+"SIP"
+],
+answer:0,
+explanation:"SMTP (Simple Mail Transfer Protocol) is used for sending emails."
+},
+{
+q:" The ____________ translates internet domain and host names to IP address.",
+options:[
+"domain name system",
+"routing information protocol",
+"network time protocol",
+"internet relay chat"
+],
+answer:0,
+explanation:"Domain Name System (DNS) translates domain names into IP addresses."
+},
+
+{
+q:"Which one of the following allows a user to connect to another site and pass keystrokes from local host to remote host?",
+options:[
+"HTTP",
+"FTP",
+"Telnet",
+"TCP"
+],
+answer:2,
+explanation:"Telnet is used for remote login and allows users to access remote systems."
+},
+
+{
+q:" Application layer protocol defines ____________",
+options:[
+"types of messages exchanged",
+"message format, syntax and semantics",
+"rules for when and how processes send and respond to messages",
+"all of the mentioned"
+],
+answer:3,
+explanation:"Application layer protocols define message types, format, semantics, and communication rules."
+},
+
+{
+q:" Which one of the following protocol delivers/stores mail to receiver server?",
+options:[
+"simple mail transfer protocol",
+"post office protocol",
+"internet mail access protocol",
+"hypertext transfer protocol"
+],
+answer:0,
+explanation:"SMTP is used to send and deliver email to the receiver’s mail server."
+},
+
+{
+q:" The ASCII encoding of binary data is called",
+options:[
+"base 64 encoding",
+"base 32 encoding",
+"base 16 encoding",
+"base 8 encoding"
+],
+answer:0,
+explanation:"Base64 encoding converts binary data into ASCII format for safe transmission."
+},
+
+{
+q:" Which one of the following is an internet standard protocol for managing devices on IP network?",
+options:[
+"dynamic host configuration protocol",
+"simple network management protocol",
+"internet message access protocol",
+"media gateway protocol"
+],
+answer:1,
+explanation:"SNMP is used for network management and monitoring."
+},
+
+{
+q:" Which one of the following is not an application layer protocol?",
+options:[
+"media gateway protocol",
+"dynamic host configuration protocol",
+"resource reservation protocol",
+"session initiation protocol"
+],
+answer:2,
+explanation:"Resource Reservation Protocol (RSVP) operates at the transport/network level for QoS."
+},
+
+{
+q:" Which protocol is used for controlling multimedia communication sessions?",
+options:[
+"session initiation protocol",
+"session modelling protocol",
+"session maintenance protocol",
+"resource reservation protocol"
+],
+answer:0,
+explanation:"SIP is used to initiate, maintain, and terminate multimedia sessions."
+},
+
+{
+q:" Which one of the following is not correct?",
+options:[
+"Application layer protocols are used by both source and destination devices",
+"HTTP is a session layer protocol",
+"TCP is an application layer protocol",
+"All of the mentioned"
+],
+answer:3,
+explanation:"HTTP is an application layer protocol and TCP is a transport layer protocol, so all listed statements are incorrect."
+},
+
+{
+q:" When displaying a web page, the application layer uses the _____________",
+options:[
+"HTTP protocol",
+"FTP protocol",
+"SMTP protocol",
+"TCP protocol"
+],
+answer:0,
+explanation:"HTTP is used for transferring web pages over the World Wide Web."
+},
+{
+q:"The number of objects in a Web page which consists of 4 jpeg images and HTML text is ________",
+options:[
+"4",
+"1",
+"5",
+"7"
+],
+answer:2,
+explanation:"4 JPEG images + 1 base HTML file = 5 objects."
+},
+
+{
+q:"The default connection type used by HTTP is _________",
+options:[
+"Persistent",
+"Non-persistent",
+"Can be either persistent or non-persistent depending on connection request",
+"None of the mentioned"
+],
+answer:0,
+explanation:"By default, HTTP uses persistent connections, where the server keeps the connection open after sending the response."
+},
+
+{
+q:"The time taken by a packet to travel from client to server and then back to the client is called __________",
+options:[
+"STT",
+"RTT",
+"PTT",
+"JTT"
+],
+answer:1,
+explanation:"RTT stands for Round Trip Time."
+},
+
+{
+q:" The HTTP request message is sent in _________ part of three-way handshake.",
+options:[
+"First",
+"Second",
+"Third",
+"Fourth"
+],
+answer:2,
+explanation:"The actual HTTP request is sent after the TCP three-way handshake completes, effectively in the third step."
+},
+
+{
+q:"In the process of fetching a web page from a server the HTTP request/response takes __________ RTTs.",
+options:[
+"2",
+"1",
+"4",
+"3"
+],
+answer:1,
+explanation:"With persistent HTTP connection, only 1 RTT is required to fetch the webpage."
+},
+
+{
+q:" The first line of HTTP request message is called _____________",
+options:[
+"Request line",
+"Header line",
+"Status line",
+"Entity line"
+],
+answer:0,
+explanation:"The first line of an HTTP request message is called the Request Line."
+},
+
+{
+q:" The values GET, POST, HEAD etc are specified in ____________ of HTTP message",
+options:[
+"Request line",
+"Header line",
+"Status line",
+"Entity body"
+],
+answer:0,
+explanation:"GET, POST, HEAD are specified in the method field of the Request Line."
+},
+
+{
+q:" The __________ method when used in the method field, leaves entity body empty.",
+options:[
+"POST",
+"SEND",
+"GET",
+"PUT"
+],
+answer:2,
+explanation:"GET method requests data and leaves the entity body empty."
+},
+
+{
+q:" The HTTP response message leaves out the requested object when ____________ method is used",
+options:[
+"GET",
+"POST",
+"HEAD",
+"PUT"
+],
+answer:2,
+explanation:"HEAD method requests only header information, not the actual object."
+},
+
+{
+q:" Find the oddly matched HTTP status codes",
+options:[
+"200 OK",
+"400 Bad Request",
+"301 Moved permanently",
+"304 Not Found"
+],
+answer:3,
+explanation:"304 means Not Modified. 404 Not Found is the correct code for 'Not Found'."
+},
+
+{
+q:" Which of the following is not correct?",
+options:[
+"Web cache doesnt has its own disk space",
+"Web cache can act both like server and client",
+"Web cache might reduce the response time",
+"Web cache contains copies of recently requested objects"
+],
+answer:0,
+explanation:"Web cache does have its own storage space for temporarily storing data."
+},
+
+{
+q:" The conditional GET mechanism",
+options:[
+"Imposes conditions on the objects to be requested",
+"Limits the number of response from a server",
+"Helps to keep a cache upto date",
+"None of the mentioned"
+],
+answer:2,
+explanation:"Conditional GET helps keep cache updated by checking if the object has been modified."
+},
+
+{
+q:" Which of the following is present in both an HTTP request line and a status line?",
+options:[
+"HTTP version number",
+"URL",
+"Method",
+"None of the mentioned"
+],
+answer:0,
+explanation:"Both request line and status line contain the HTTP version number."
+},
+{
+q:" Multiple objects can be sent over a TCP connection between client and server in a persistent HTTP connection.",
+options:[
+"True",
+"False"
+],
+answer:0,
+explanation:"Persistent HTTP connections remain open after a transaction, allowing multiple objects to be sent over the same TCP connection."
+},
+
+{
+q:" HTTP is ________ protocol.",
+options:[
+"application layer",
+"transport layer",
+"network layer",
+"data link layer"
+],
+answer:0,
+explanation:"HTTP is an application layer protocol used for communication on the World Wide Web."
+},
+
+{
+q:" In the network HTTP resources are located by",
+options:[
+"uniform resource identifier",
+"unique resource locator",
+"unique resource identifier",
+"union resource locator"
+],
+answer:0,
+explanation:"URI (Uniform Resource Identifier) is used to identify and locate resources on the network."
+},
+
+{
+q:" HTTP client requests by establishing a __________ connection to a particular port on the server.",
+options:[
+"user datagram protocol",
+"transmission control protocol",
+"border gateway protocol",
+"domain host control protocol"
+],
+answer:1,
+explanation:"HTTP uses TCP (Transmission Control Protocol) for reliable communication."
+},
+
+{
+q:" In HTTP pipelining ________________",
+options:[
+"multiple HTTP requests are sent on a single TCP connection without waiting for the corresponding responses",
+"multiple HTTP requests can not be sent on a single TCP connection",
+"multiple HTTP requests are sent in a queue on a single TCP connection",
+"multiple HTTP requests are sent at random on a single TCP connection"
+],
+answer:0,
+explanation:"HTTP pipelining allows multiple requests to be sent without waiting for each response."
+},
+
+{
+q:" FTP server listens for connection on port number ____________",
+options:[
+"20",
+"21",
+"22",
+"23"
+],
+answer:1,
+explanation:"FTP uses port 21 for control connection."
+},
+
+{
+q:" In FTP protocol, client contacts server using ____ as the transport protocol.",
+options:[
+"transmission control protocol",
+"user datagram protocol",
+"datagram congestion control protocol",
+"stream control transmission protocol"
+],
+answer:0,
+explanation:"FTP uses TCP for reliable file transfer."
+},
+
+{
+q:" In Active mode FTP, the client initiates both the control and data connections.",
+options:[
+"True",
+"False"
+],
+answer:1,
+explanation:"In Active mode, client initiates control connection, but server initiates data connection."
+},
+
+{
+q:" The File Transfer Protocol is built on ______________",
+options:[
+"data centric architecture",
+"service oriented architecture",
+"client server architecture",
+"connection oriented architecture"
+],
+answer:2,
+explanation:"FTP follows a client-server architecture."
+},
+
+{
+q:" In File Transfer Protocol, data transfer cannot be done in ___________",
+options:[
+"stream mode",
+"block mode",
+"compressed mode",
+"message mode"
+],
+answer:3,
+explanation:"FTP supports stream, block, and compressed modes but not message mode."
+}
+],
+
+// ........Section-3............
+3:[
+// Network Topology MCQs
+
+{
+q:"The three topologies associated with LANs are _________",
+options:[
+"Mesh, Tree and Bus topology",
+"Tree, Circular and Ring topology",
+"Bus, Ring and Star topology",
+"Hybrid, Mesh and Star topology"
+],
+answer:2,
+explanation:"Correct answer is Bus, Ring and Star topology. These are the primary LAN topologies, with Star being the most commonly used."
+},
+
+{
+q:" A pseudo topology that combines a Star topology with either Ring or Bus topology is known as ___________",
+options:[
+"Router",
+"Hub",
+"Ethernet",
+"Switches"
+],
+answer:1,
+explanation:"Correct answer is Hub. A Hub acts as a central connection point combining Star and Bus topology characteristics."
+},
+
+{
+q:" The Tree topology is employed in network using ________",
+options:[
+"Brouters",
+"LAN",
+"Switches",
+"WAN"
+],
+answer:0,
+explanation:"Correct answer is Brouters. Tree topology uses bridged routers (brouters) to connect network segments."
+},
+
+{
+q:" ________ topology is a combination of two or more topologies.",
+options:[
+"Star",
+"Hybrid",
+"Bus",
+"Ring"
+],
+answer:1,
+explanation:"Correct answer is Hybrid. Hybrid topology combines two or more different network topologies."
+},
+
+{
+q:" The two types of LAN deployed are __________ and ___________",
+options:[
+"Mesh based, Bus based",
+"Hybrid based, Star based",
+"Bus based, Ring based",
+"Ring based, Tree based"
+],
+answer:2,
+explanation:"Correct answer is Bus based, Ring based. These two are widely deployed LAN topologies."
+},
+
+{
+q:"Bus Architecture is implemented in LANs using ________",
+options:[
+"Address Resolution Protocol (ARP)",
+"Hypertext Transfer Protocol (HTTP)",
+"File Transfer Protocol (FTP)",
+"Ethernet Protocol"
+],
+answer:3,
+explanation:"Correct answer is Ethernet Protocol. Ethernet is widely used to implement Bus architecture in LANs."
+},
+
+{
+q:" Token Ring and FDDI configurations use the _________ topology.",
+options:[
+"ring",
+"star",
+"mesh",
+"bus"
+],
+answer:0,
+explanation:"Correct answer is ring. Token Ring and FDDI use Ring topology."
+},
+
+{
+q:" Which protocol is most frequently used in Star topology?",
+options:[
+"Modem",
+"Cable",
+"DSL",
+"Ethernet"
+],
+answer:3,
+explanation:"Correct answer is Ethernet. Ethernet protocol is most commonly used in Star topology networks."
+},
+
+{
+q:" Linear network topology is more expensive than other topologies.",
+options:[
+"True",
+"False"
+],
+answer:1,
+explanation:"Correct answer is False. Linear (Bus) topology requires less cable and is less expensive."
+},
+
+{
+q:" The diagram given below represents ___________",
+options:[
+"Fully connected topology",
+"Mesh topology",
+"Star topology",
+"Hybrid topology"
+],
+answer:3,
+explanation:"Correct answer is Hybrid topology. It combines two or more network topologies."
+},
+
+],
+// ................Section-4............
+
+4:[
+    {
+// Network Security MCQs
+
+q:"1. IPSec is designed to provide security at the _________",
+options:[
+"Transport layer",
+"Network layer",
+"Application layer",
+"Session layer"
+],
+answer:1,
+explanation:"Correct answer is Network layer. IPSec provides security at the IP layer (Network layer) in the TCP/IP model."
+},
+
+{
+q:"2. In tunnel mode, IPSec protects the ______",
+options:[
+"Entire IP packet",
+"IP header",
+"IP payload",
+"IP trailer"
+],
+answer:0,
+explanation:"Correct answer is Entire IP packet. In tunnel mode, IPSec encrypts and encapsulates the whole IP packet."
+},
+
+{
+q:"3. Which component is included in IP security?",
+options:[
+"Authentication Header (AH)",
+"Encapsulating Security Payload (ESP)",
+"Internet Key Exchange (IKE)",
+"All of the mentioned"
+],
+answer:3,
+explanation:"Correct answer is All of the mentioned. AH, ESP, and IKE are all components of IPSec."
+},
+
+{
+q:"4. WPA2 is used for security in _______",
+options:[
+"Ethernet",
+"Bluetooth",
+"Wi-Fi",
+"Email"
+],
+answer:2,
+explanation:"Correct answer is Wi-Fi. WPA2 (WiFi Protected Access 2) is a wireless network security protocol."
+},
+
+{
+q:"5. An attempt to make a computer resource unavailable to its intended users is called ______",
+options:[
+"Denial-of-service attack",
+"Virus attack",
+"Worms attack",
+"Botnet process"
+],
+answer:0,
+explanation:"Correct answer is Denial-of-service attack. It prevents legitimate users from accessing network resources."
+},
+
+{
+q:"6. Extensible authentication protocol is authentication framework frequently used in ______",
+options:[
+"Wired personal area network",
+"Wireless networks",
+"Wired local area network",
+"Wired metropolitan area network"
+],
+answer:1,
+explanation:"Correct answer is Wireless networks. EAP is widely used in wireless authentication mechanisms."
+},
+
+{
+q:"7. Pretty Good Privacy (PGP) is used in ______",
+options:[
+"Browser security",
+"Email security",
+"FTP security",
+"WiFi security"
+],
+answer:1,
+explanation:"Correct answer is Email security. PGP is used to encrypt and decrypt emails."
+},
+
+{
+q:"8. PGP encrypts data by using a block cipher called ______",
+options:[
+"International Data Encryption Algorithm",
+"Private Data Encryption Algorithm",
+"Internet Data Encryption Algorithm",
+"Local Data Encryption Algorithm"
+],
+answer:0,
+explanation:"Correct answer is International Data Encryption Algorithm (IDEA). PGP originally used IDEA as its block cipher."
+},
+
+{
+q:"9. When a DNS server accepts and uses incorrect information from a host that has no authority giving that information, then it is called _________",
+options:[
+"DNS lookup",
+"DNS hijacking",
+"DNS spoofing",
+"DNS authorizing"
+],
+answer:2,
+explanation:"Correct answer is DNS spoofing. It is also known as DNS cache poisoning."
+}
+]
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

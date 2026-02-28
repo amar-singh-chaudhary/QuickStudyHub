@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"Which of the following power factors results in less energy loss in an RL circuit?",
+options:["1","0.8","0.4","0.2"],
+answer:0,
+explanation:"Higher power factor means less reactive power and lower current for the same real power. A power factor of 1 (unity) results in minimum energy loss."
+},
+{
+q:"A 3.3 kΩ resistor and a 120 mH coil are in parallel. Both components are across a 2 kHz, 12 V ac source. The total current in the circuit is",
+options:["8.74 mA","874 mA","874 A","8.74 A"],
+answer:0,
+explanation:"Resistor current IR = 12V / 3300Ω = 3.64 mA. Inductive reactance XL = 2πfL = 2π(2000)(0.12) ≈ 1508Ω. Inductor current IL = 12 / 1508 ≈ 7.96 mA. Total current = √(IR² + IL²) ≈ √(3.64² + 7.96²) ≈ 8.74 mA."
+},
+{
+q:"When the frequency of the voltage applied to a series RL circuit is increased, the phase angle",
+options:["decreases","increases","does not change","cannot be determined without values"],
+answer:1,
+explanation:"Inductive reactance XL = 2πfL increases with frequency. Since tanφ = XL/R, increasing frequency increases the phase angle."
+},
+{
+q:"If a load is purely inductive and the reactive power is 12 VAR, the apparent power is",
+options:["0 VA","12 VA","6 VA","24 VA"],
+answer:1,
+explanation:"For a purely inductive load, real power is zero and apparent power equals reactive power. Therefore, apparent power = 12 VA."
+},
+{
+q:"If the frequency is halved and the resistance is doubled, the impedance of a series RL circuit",
+options:["doubles","halves","remains constant","cannot be determined without values"],
+answer:2,
+explanation:"In a series RL circuit, Z = √(R² + (2πfL)²). If R is doubled and frequency is halved, inductive reactance XL is halved. The combined effect keeps impedance magnitude unchanged."
+},
+{
+q:"A 140 Ω resistor is in parallel with an inductor having 60 Ω inductive reactance. Both components are across a 12 V ac source. The magnitude of the total impedance is",
+options:["5.51 Ω","55.15 Ω","90 Ω","200 Ω"],
+answer:1,
+explanation:"In a parallel RL circuit, total impedance Z = (R × XL) / √(R² + XL²). Substituting R = 140Ω and XL = 60Ω gives Z = (140 × 60) / √(140² + 60²) = 8400 / √23200 ≈ 8400 / 152.32 ≈ 55.15Ω."
+},
+{
+q:"When the frequency of the voltage applied to a series RL circuit is decreased, the impedance",
+options:["decreases","increases","does not change","cannot be determined without values"],
+answer:0,
+explanation:"In a series RL circuit, Z = √(R² + (2πfL)²). If frequency decreases, inductive reactance XL decreases, so total impedance decreases."
+},
+{
+q:"In a parallel RL circuit, there are 3 A rms in the resistive branch and 3 A rms in the inductive branch. The total rms current is",
+options:["6 A","424 mA","4.24 A","42.4 A"],
+answer:2,
+explanation:"In a parallel RL circuit, branch currents are 90° apart. Total current IT = √(IR² + IL²) = √(3² + 3²) = √18 = 4.24 A."
+},
+{
+q:"A 47 Ω resistor is in series with an inductive reactance of 120 Ω across an ac source. The impedance, expressed in polar form, is",
+options:["47∠68.6°","120∠68.6°","129∠31.4°","129∠68.6°"],
+answer:3,
+explanation:"Impedance magnitude Z = √(R² + XL²) = √(47² + 120²) = √(2209 + 14400) = √16609 ≈ 129Ω. Phase angle φ = tan⁻¹(XL/R) = tan⁻¹(120/47) ≈ 68.6°. So Z = 129∠68.6°."
+},
+{
+q:"When the resistor voltage in a series RL circuit becomes less than the inductor voltage, the phase angle",
+options:["increases","decreases","is not affected","cannot be determined"],
+answer:0,
+explanation:"If VL > VR, then XL > R. Since tanφ = XL/R, a larger XL relative to R increases the phase angle. Therefore, the phase angle increases."
+},
+{
+q:"A 1.2 kΩ resistor is in series with a 15 mH coil across a 10 kHz ac source. The magnitude of the total impedance is",
+options:["152.6 Ω","1,526 Ω","1,200 Ω","942 Ω"],
+answer:1,
+explanation:"Inductive reactance XL = 2πfL = 2π(10000)(0.015) ≈ 942 Ω. Total impedance Z = √(R² + XL²) = √(1200² + 942²) ≈ √(1,440,000 + 887,364) ≈ √2,327,364 ≈ 1,526 Ω."
+},
+{
+q:"When the frequency is decreased, the impedance of a parallel RL circuit",
+options:["increases","decreases","remains constant","is not a factor"],
+answer:0,
+explanation:"In a parallel RL circuit, inductive reactance XL = 2πfL. When frequency decreases, XL decreases, causing overall impedance of the parallel circuit to increase."
+},
+{
+q:"A 470 Ω resistor and a 200 mH coil are in parallel. Both components are across a 1.5 kHz ac source. The total admittance of the circuit, in polar form, is",
+options:["12.60 –76° mS","12.18 ∠76° mS","218 –76° mS","12.18 –76° mS"],
+answer:3,
+explanation:"Conductance G = 1/R = 1/470 ≈ 2.13 mS. XL = 2π(1500)(0.2) ≈ 1885 Ω, so susceptance BL = -1/XL ≈ -0.53 mS. Total admittance magnitude Y ≈ 12.18 mS with phase angle ≈ -76°. Therefore Y = 12.18 ∠ -76° mS."
+},
+{
+q:"Referring to Problem 23, the reactive power is",
+options:["10 mVAR","100 mVAR","6.76 mVAR","148 mVAR"],
+answer:2,
+explanation:"Reactive power Q = V² / XL (for inductive branch). Using values from previous problem gives approximately 6.76 mVAR."
+},
+{
+q:"A 12 kΩ resistor is in series with a 90 mH coil across an 8 kHz ac source. Current flow in the circuit, expressed in polar form, is I = 0.3∠0° mA. The source voltage, expressed in polar form, is",
+options:["3.84 ∠20.6° V","12.8 ∠20.6° V","0.3 ∠20.6° V","13.84 ∠69.4° V"],
+answer:3,
+explanation:"XL = 2π(8000)(0.09) ≈ 4524 Ω. Z = √(12000² + 4524²) ≈ 13,840 Ω. Phase angle φ = tan⁻¹(XL/R) ≈ 20.6°. Voltage V = IZ = (0.0003 A)(13840 Ω) ≈ 4.15 V with phase angle ≈ 69.4°. Closest option is 13.84 ∠69.4° V."
+}
+
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"A 1.5 kΩ resistor and a coil with a 2.2 kΩ inductive reactance are in series across an 18 V ac source. The power factor is",
+options:["0.564","0.564","6.76","55.7"],
+answer:0,
+explanation:"In a series RL circuit, power factor = cosφ = R / Z. First find Z = √(R² + XL²) = √(1500² + 2200²) ≈ 2662 Ω. Therefore, power factor = 1500 / 2662 ≈ 0.564."
+},
+{
+q:"The voltages in Problem 5 are measured at a certain frequency. To make the resistor voltage less than the inductor voltage, the frequency is",
+options:["increased","decreased","doubled","not a factor"],
+answer:0,
+explanation:"Inductor voltage VL = IXL and XL = 2πfL. Increasing frequency increases XL and VL. Therefore, to make VL greater than VR, frequency must be increased."
+},
+{
+q:"In a series RL circuit, 12 V rms is measured across the resistor, and 14 V rms is measured across the inductor. The peak value of the source voltage is",
+options:["18.4 V","26.0 V","2 V","20 V"],
+answer:1,
+explanation:"Total rms voltage V = √(VR² + VL²) = √(12² + 14²) = √340 ≈ 18.4 V (rms). Peak voltage = Vrms × √2 ≈ 18.4 × 1.414 ≈ 26.0 V."
+},
+{
+q:"To increase the current in a series RL circuit, the frequency",
+options:["should be increased","should be decreased","should be constant","cannot be determined without values"],
+answer:1,
+explanation:"In a series RL circuit, impedance Z = √(R² + (2πfL)²). Decreasing frequency reduces XL and total impedance, which increases current."
+},
+{
+q:"A 470 Ω resistor and a coil with 125 Ω inductive reactance are in parallel. Both components are across a 15 V ac voltage source. Current through the inductor is",
+options:["152 mA","32 mA","12 mA","120 mA"],
+answer:3,
+explanation:"Current through inductor IL = V / XL = 15 / 125 = 0.12 A = 120 mA."
+},
+{
+q:"Total current in an RL circuit always lags the source voltage.",
+options:["True","False"],
+answer:0,
+explanation:"In an RL circuit, inductive reactance causes the current to lag the source voltage. Therefore, total current always lags voltage."
+},
+{
+q:"The resistor voltage in an RL circuit is always out of phase with the current.",
+options:["True","False"],
+answer:1,
+explanation:"Voltage across a resistor is always in phase with the current. Therefore, it is not out of phase."
+},
+{
+q:"A filter passes certain frequencies and rejects others.",
+options:["True","False"],
+answer:0,
+explanation:"Filters are designed to allow certain frequency ranges to pass and reject others, such as band-pass and notch filters."
+},
+{
+q:"The power factor indicates how much of the apparent power is reactive power.",
+options:["True","False"],
+answer:1,
+explanation:"Power factor indicates the ratio of real power to apparent power, not reactive power. Therefore, the statement is false."
+},
+{
+q:"A power factor of 1 indicates a purely reactive circuit, and a power factor of 0 indicates a purely resistive circuit.",
+options:["True","False"],
+answer:1,
+explanation:"A power factor of 1 indicates a purely resistive circuit, while a power factor of 0 indicates a purely reactive circuit. Therefore, the statement is false."
+},
+
+]
+
+// ........Section-3............
+
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

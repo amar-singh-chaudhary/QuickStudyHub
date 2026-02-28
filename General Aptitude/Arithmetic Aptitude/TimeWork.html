@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time and Work - MCQ</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+}
+
+.container{
+    max-width:800px;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+}
+
+h2{
+    margin-bottom:10px;
+}
+
+.topic-list{
+    margin-bottom:20px;
+}
+
+.topic-list div{
+    margin:5px 0;
+}
+
+.question{
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:10px 0;
+    padding:6px;
+    border-radius:4px;
+}
+
+.options label{
+    cursor:pointer;
+}
+
+.explanation{
+    display:none;
+    margin-top:10px;
+    background:#f9fff3;
+    padding:10px;
+    border-left:4px solid green;
+}
+
+.nav{
+    margin-top:20px;
+    text-align:center;
+}
+
+.nav button{
+    padding:6px 12px;
+    margin:0 5px;
+}
+
+.correct{
+    background:#4d6753;
+    color:white;
+}
+
+.wrong{
+    background:#ac0815;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Exercise : Calender - General Questions</h2>
+
+<div class="topic-list">
+    <div>Time and Work - Formulas</div>
+    <div><b>Time and Work - General Questions</b></div>
+    <div>Time and Work - Data Sufficiency 1</div>
+</div>
+</div>
+
+<div id="quiz-container"></div>
+
+<div class="nav">
+    <button onclick="prevPage()">Prev</button>
+    <span id="pageNumbers"></span>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+<script>
+
+// QUESTIONS
+const questions = [
+{
+    question: "1. If 6 men and 8 boys can do a piece of work in 10 days while 26 men and 48 boys can do the same work in 2 days, the time taken by 15 men and 20 boys to do the same work is:",
+    options: ["4 days", "5 days", "6 days", "7 days"],
+    correct: 0,
+    explanation: "Let 1 man's 1 day's work = x and 1 boy's 1 day's work = y.\nThen 6x + 8y = 1/10 and 26x + 48y = 1/2.\nSolving, x = 1/100 and y = 1/200.\n(15 men + 20 boys)'s 1 day's work = 15/100 + 20/200 = 15/100 + 10/100 = 25/100 = 1/4.\nTherefore, time required = 4 days."
+},
+{
+    question: "2. A can do a piece of work in 4 hours; B and C together in 3 hours; A and C together in 2 hours. How long will B alone take?",
+    options: ["8 hours", "10 hours", "12 hours", "24 hours"],
+    correct: 2,
+    explanation: "A's 1 hour work = 1/4.\n(B + C)'s 1 hour work = 1/3.\n(A + C)'s 1 hour work = 1/2.\n(A + B + C)'s 1 hour work = 1/4 + 1/3 = 7/12.\nB's 1 hour work = 7/12 - 1/2 = 1/12.\nSo, B alone takes 12 hours."
+},
+{
+    question: "3. A can do a work in the same time in which B and C together can do it. If A and B together can do it in 10 days and C alone in 50 days, then B alone can do it in:",
+    options: ["15 days", "20 days", "25 days", "30 days"],
+    correct: 2,
+    explanation: "(A + B)'s 1 day work = 1/10.\nC's 1 day work = 1/50.\n(A + B + C)'s 1 day work = 1/10 + 1/50 = 6/50 = 3/25.\nGiven A's work = (B + C)'s work.\nSo 2A = 3/25 ⇒ A = 3/50.\nB's work = 1/10 - 3/50 = 2/50 = 1/25.\nThus, B alone takes 25 days."
+},
+{
+    question: "4. A does 80% of a work in 20 days. He then calls B and together they finish the remaining work in 3 days. How long will B alone take to do the whole work?",
+    options: ["23 days", "37 days", "37 1/2 days", "40 days"],
+    correct: 2,
+    explanation: "80% work done in 20 days ⇒ Whole work by A = 20 × (5/4) = 25 days.\nRemaining 1/5 work done by A + B in 3 days ⇒ Whole work by A + B = 3 × 5 = 15 days.\nA's 1 day work = 1/25, (A+B)'s 1 day work = 1/15.\nB's 1 day work = 1/15 - 1/25 = 2/75.\nSo, B alone takes 75/2 = 37 1/2 days."
+},
+{
+    question: "5. Machine P prints one lakh books in 8 hours, Q in 10 hours, R in 12 hours. All start at 9 A.M. P stops at 11 A.M. When will the work finish?",
+    options: ["11:30 A.M.", "12 noon", "12:30 P.M.", "1:00 P.M."],
+    correct: 3,
+    explanation: "(P + Q + R)'s 1 hour work = 1/8 + 1/10 + 1/12 = 37/120.\nWork done in 2 hours (9–11 A.M.) = 37/120 × 2 = 37/60.\nRemaining work = 1 - 37/60 = 23/60.\n(Q + R)'s 1 hour work = 1/10 + 1/12 = 11/60.\nTime required = (23/60) ÷ (11/60) = 23/11 ≈ 2 hours.\nSo, work finishes around 1:00 P.M."
+},
+{
+    question: "6. A can do a work in 15 days and B in 20 days. If they work together for 4 days, what fraction of the work is left?",
+    options: ["1/4", "1/10", "7/15", "8/15"],
+    correct: 3,
+    explanation: "A's 1 day's work = 1/15.\nB's 1 day's work = 1/20.\n(A + B)'s 1 day's work = 1/15 + 1/20 = 7/60.\nWork done in 4 days = 7/60 × 4 = 7/15.\nRemaining work = 1 - 7/15 = 8/15."
+},
+{
+    question: "7. A can lay railway track in 16 days and B in 12 days. With help of C, they complete the work in 4 days. In how many days can C alone do the work?",
+    options: ["9 1/5 days", "9 2/5 days", "9 3/5 days", "10 days"],
+    correct: 2,
+    explanation: "(A + B + C)'s 1 day's work = 1/4.\nA's 1 day's work = 1/16.\nB's 1 day's work = 1/12.\nC's 1 day's work = 1/4 - (1/16 + 1/12).\n1/16 + 1/12 = 7/48.\nSo, C's 1 day's work = 1/4 - 7/48 = 5/48.\nTherefore, C alone can do the work in 48/5 = 9 3/5 days."
+},
+{
+    question: "8. A, B and C can do a piece of work in 20, 30 and 60 days respectively. In how many days can A do the work if he is assisted by B and C every third day?",
+    options: ["12 days", "15 days", "16 days", "18 days"],
+    correct: 1,
+    explanation: "A's 1 day's work = 1/20.\nA's 2 days work = 2 × 1/20 = 1/10.\n(A + B + C)'s 1 day's work = 1/20 + 1/30 + 1/60 = 1/10.\nWork done in 3 days = 1/10 + 1/10 = 1/5.\n1/5 work is done in 3 days.\nWhole work will be done in 3 × 5 = 15 days."
+},
+{
+    question: "9. A is thrice as good a workman as B and therefore finishes a job 60 days earlier than B. Working together, in how many days can they complete the work?",
+    options: ["20 days", "22 1/2 days", "25 days", "30 days"],
+    correct: 1,
+    explanation: "Since A is thrice as good as B, ratio of efficiency = 3 : 1.\nSo, ratio of time taken = 1 : 3.\nDifference of time = (3 - 1) = 2 parts.\nGiven difference = 60 days.\n1 part = 60/2 = 30 days.\nSo, A takes 30 days and B takes 90 days.\nA's 1 day's work = 1/30.\nB's 1 day's work = 1/90.\n(A + B)'s 1 day's work = 1/30 + 1/90 = 4/90 = 2/45.\nTherefore, time taken together = 45/2 = 22 1/2 days."
+},
+{
+    question: "10. A alone can do a piece of work in 6 days and B alone in 8 days. A and B undertook it for Rs. 3200. With help of C, they completed it in 3 days. How much is to be paid to C?",
+    options: ["Rs. 375", "Rs. 400", "Rs. 600", "Rs. 800"],
+    correct: 1,
+    explanation: "(A + B + C)'s 1 day's work = 1/3.\nA's 1 day's work = 1/6.\nB's 1 day's work = 1/8.\nC's 1 day's work = 1/3 - (1/6 + 1/8).\n1/6 + 1/8 = 7/24.\nSo, C's 1 day's work = 1/3 - 7/24 = 1/24.\nRatio of wages = 1/6 : 1/8 : 1/24 = 4 : 3 : 1.\nC's share = (1/8) × 3200 = Rs. 400."
+},
+{
+    question: "11. A can finish a work in 18 days and B in 15 days. B worked for 10 days and left. In how many days can A alone finish the remaining work?",
+    options: ["5 days", "5 1/2 days", "6 days", "8 days"],
+    correct: 2,
+    explanation: "B's 1 day's work = 1/15.\nB's 10 days work = 10/15 = 2/3.\nRemaining work = 1 - 2/3 = 1/3.\nA's 1 day's work = 1/18.\nTime taken by A to finish 1/3 work = 18 × 1/3 = 6 days."
+},
+{
+    question: "12. 4 men and 6 women can complete a work in 8 days, while 3 men and 7 women can complete it in 10 days. In how many days will 10 women complete it?",
+    options: ["35 days", "40 days", "45 days", "50 days"],
+    correct: 1,
+    explanation: "Let 1 man's 1 day's work = x and 1 woman's 1 day's work = y.\nThen, 4x + 6y = 1/8 and 3x + 7y = 1/10.\nSolving, x = 11/400 and y = 1/400.\nSo, 1 woman's 1 day's work = 1/400.\n10 women's 1 day's work = 10/400 = 1/40.\nTherefore, 10 women complete the work in 40 days."
+},
+{
+    question: "13. A and B together can finish a work in 30 days. They worked together for 20 days, then B left. After another 20 days, A finished the remaining work. In how many days can A alone finish the work?",
+    options: ["40 days", "50 days", "54 days", "60 days"],
+    correct: 3,
+    explanation: "(A + B)'s 1 day's work = 1/30.\nWork done in 20 days = 20/30 = 2/3.\nRemaining work = 1 - 2/3 = 1/3.\nA completes 1/3 work in 20 days.\nTherefore, A alone completes whole work in 20 × 3 = 60 days."
+},
+{
+    question: "14. P can complete a work in 12 days working 8 hours daily. Q can complete it in 8 days working 10 hours daily. If both work together 8 hours daily, in how many days will they finish the work?",
+    options: ["5 5/11 days", "5 6/11 days", "6 5/11 days", "6 6/11 days"],
+    correct: 0,
+    explanation: "P completes work in 12 × 8 = 96 hours.\nQ completes work in 8 × 10 = 80 hours.\nP's 1 hour work = 1/96.\nQ's 1 hour work = 1/80.\n(P + Q)'s 1 hour work = 1/96 + 1/80 = 11/480.\nTotal time = 480/11 hours.\nAt 8 hours per day, days = (480/11) ÷ 8 = 60/11 = 5 5/11 days."
+},
+{
+    question: "15. 10 women can complete a work in 7 days and 10 children in 14 days. How many days will 5 women and 10 children take to complete the work?",
+    options: ["3 days", "5 days", "7 days", "Cannot be determined", "None of these"],
+    correct: 2,
+    explanation: "10 women's 1 day's work = 1/7.\nSo, 1 woman's 1 day's work = 1/70.\n10 children's 1 day's work = 1/14.\nSo, 1 child's 1 day's work = 1/140.\n(5 women + 10 children)'s 1 day's work = 5/70 + 10/140 = 1/14 + 1/14 = 1/7.\nTherefore, they complete the work in 7 days."
+},
+{
+    question: "16. A and B can do a work in 8 days, B and C in 12 days. A, B and C together can finish it in 6 days. In how many days can A and C together do the work?",
+    options: ["4 days", "6 days", "8 days", "12 days"],
+    correct: 2,
+    explanation: "(A + B + C)'s 1 day's work = 1/6.\n(A + B)'s 1 day's work = 1/8.\n(B + C)'s 1 day's work = 1/12.\n(A + C)'s 1 day's work = 2 × (1/6) - (1/8 + 1/12).\n= 1/3 - (5/24) = 8/24 - 5/24 = 3/24 = 1/8.\nSo, A and C together can do the work in 8 days."
+},
+{
+    question: "17. A can finish a work in 24 days, B in 9 days and C in 12 days. B and C start the work but leave after 3 days. The remaining work is done by A in how many days?",
+    options: ["5 days", "6 days", "10 days", "10 1/2 days"],
+    correct: 2,
+    explanation: "(B + C)'s 1 day's work = 1/9 + 1/12 = 7/36.\nWork done in 3 days = 7/36 × 3 = 7/12.\nRemaining work = 1 - 7/12 = 5/12.\nA's 1 day's work = 1/24.\nTime taken = 24 × 5/12 = 10 days."
+},
+{
+    question: "18. X can do a piece of work in 40 days. He works for 8 days and then Y finishes it in 16 days. How long will they together take to complete the work?",
+    options: ["13 1/3 days", "15 days", "20 days", "26 days"],
+    correct: 0,
+    explanation: "Work done by X in 8 days = 8/40 = 1/5.\nRemaining work = 4/5.\n4/5 work done by Y in 16 days.\nWhole work by Y = (16 × 5)/4 = 20 days.\nX's 1 day's work = 1/40.\nY's 1 day's work = 1/20.\n(X + Y)'s 1 day's work = 1/40 + 1/20 = 3/40.\nTime taken together = 40/3 = 13 1/3 days."
+},
+{
+    question: "19. A and B can do a job together in 7 days. A is 13/4 times as efficient as B. In how many days can A alone do the work?",
+    options: ["9 1/3 days", "11 days", "12 1/4 days", "16 1/3 days"],
+    correct: 1,
+    explanation: "Efficiency ratio A : B = 7 : 4.\nLet A's and B's 1 day's work be 7x and 4x.\nThen, 7x + 4x = 1/7.\n11x = 1/7 ⇒ x = 1/77.\nA's 1 day's work = 7/77 = 1/11.\nTherefore, A alone can complete the work in 11 days."
+},
+{
+    question: "20. A and B together can do a piece of work in 30 days. A worked for 16 days and B finished the remaining work alone in 44 days. In how many days can B alone finish the whole work?",
+    options: ["30 days", "40 days", "60 days", "70 days"],
+    correct: 2,
+    explanation: "Let A's 1 day's work = x and B's 1 day's work = y.\nThen, x + y = 1/30.\n16x + 44y = 1.\nSolving, x = 1/60 and y = 1/60.\nSo, B's 1 day's work = 1/60.\nTherefore, B alone can finish the whole work in 60 days."
+},
+{
+    question: "21. A takes twice as much time as B and thrice as much time as C to finish a piece of work. Working together, they can finish the work in 2 days. In how many days can B alone finish the work?",
+    options: ["4 days", "6 days", "8 days", "12 days"],
+    correct: 1,
+    explanation: "Let A take x days. Then B takes x/2 days and C takes x/3 days.\nA's 1 day's work = 1/x.\nB's 1 day's work = 2/x.\nC's 1 day's work = 3/x.\n(A + B + C)'s 1 day's work = (1/x + 2/x + 3/x) = 6/x.\nGiven, they finish in 2 days ⇒ 6/x = 1/2.\nSo, x = 12.\nTherefore, B alone takes 12/2 = 6 days."
+},
+{
+    question: "22. A and B can complete a work in 15 days and 10 days respectively. They worked together for 2 days, then B left. In how many days was the whole work completed?",
+    options: ["8 days", "10 days", "12 days", "15 days"],
+    correct: 2,
+    explanation: "(A + B)'s 1 day's work = 1/15 + 1/10 = 1/6.\nWork done in 2 days = 2/6 = 1/3.\nRemaining work = 1 - 1/3 = 2/3.\nA's 1 day's work = 1/15.\nTime taken by A to finish 2/3 work = 15 × 2/3 = 10 days.\nTotal time = 10 + 2 = 12 days."
+},
+{
+    question: "23. A and B can do a work in 30 days, B and C in 24 days and C and A in 20 days. They work together for 10 days, then B and C leave. How many more days will A take to finish the work?",
+    options: ["18 days", "24 days", "30 days", "36 days"],
+    correct: 0,
+    explanation: "2(A + B + C)'s 1 day's work = 1/30 + 1/24 + 1/20.\nLCM = 120.\n= (4 + 5 + 6)/120 = 15/120 = 1/8.\nSo, (A + B + C)'s 1 day's work = 1/16.\nWork done in 10 days = 10/16 = 5/8.\nRemaining work = 3/8.\nA's 1 day's work = (1/16 - 1/24) = 1/48.\nTime taken by A = 48 × 3/8 = 18 days."
+},
+{
+    question: "24. A works twice as fast as B. If B alone completes the work in 12 days, in how many days can A and B together finish it?",
+    options: ["4 days", "6 days", "8 days", "18 days"],
+    correct: 0,
+    explanation: "B's 1 day's work = 1/12.\nA works twice as fast, so A's 1 day's work = 1/6.\n(A + B)'s 1 day's work = 1/6 + 1/12 = 3/12 = 1/4.\nTherefore, they finish the work in 4 days."
+},
+{
+    question: "25. Twenty women can do a work in 16 days and sixteen men can complete it in 15 days. What is the ratio of capacity of a man to a woman?",
+    options: ["3 : 4", "4 : 3", "5 : 3", "Data inadequate"],
+    correct: 1,
+    explanation: "20 women complete work in 16 days ⇒ 1 woman's 1 day's work = 1/(20 × 16) = 1/320.\n16 men complete work in 15 days ⇒ 1 man's 1 day's work = 1/(16 × 15) = 1/240.\nRequired ratio (man : woman) = 1/240 : 1/320.\n= 320 : 240.\n= 4 : 3."
+},
+{
+    question: "26. X and Y can do a piece of work in 20 days and 12 days respectively. X started alone and after 4 days Y joined him till completion. How long did the work last?",
+    options: ["6 days", "10 days", "15 days", "20 days"],
+    correct: 1,
+    explanation: "Work done by X in 4 days = 4/20 = 1/5.\nRemaining work = 1 - 1/5 = 4/5.\n(X + Y)'s 1 day's work = 1/20 + 1/12 = 8/60 = 2/15.\nTime to complete 4/5 work = (4/5) ÷ (2/15) = 6 days.\nTotal time = 4 + 6 = 10 days."
+},
+{
+    question: "27. A is 30% more efficient than B. How much time will they take together to complete a job which A alone could do in 23 days?",
+    options: ["11 days", "13 days", "20 3/17 days", "None of these"],
+    correct: 1,
+    explanation: "Efficiency ratio A : B = 130 : 100 = 13 : 10.\nTime ratio = 10 : 13.\nIf A takes 23 days, B takes (23 × 13)/10 = 299/10 days.\nA's 1 day's work = 1/23.\nB's 1 day's work = 10/299.\n(A + B)'s 1 day's work = 1/13.\nSo, together they complete the work in 13 days."
+},
+{
+    question: "28. Ravi types 32 pages in 6 hours and Kumar types 40 pages in 5 hours. How long will they take together to type 110 pages?",
+    options: ["7 hours 30 minutes", "8 hours", "8 hours 15 minutes", "8 hours 25 minutes"],
+    correct: 2,
+    explanation: "Ravi types 32/6 = 16/3 pages per hour.\nKumar types 40/5 = 8 pages per hour.\nTogether per hour = 16/3 + 8 = 40/3 pages.\nTime to type 110 pages = 110 ÷ (40/3) = (110 × 3)/40 = 8 1/4 hours.\n= 8 hours 15 minutes."
+},
+{
+    question: "29. A, B and C can complete a work in 24, 6 and 12 days respectively. Working together, how long will they take?",
+    options: ["1/24 day", "7/24 day", "3 3/7 days", "4 days"],
+    correct: 2,
+    explanation: "(A + B + C)'s 1 day's work = 1/24 + 1/6 + 1/12.\nLCM = 24.\n= (1 + 4 + 2)/24 = 7/24.\nTime taken = 24/7 = 3 3/7 days."
+},
+{
+    question: "30. Sakshi can do a piece of work in 20 days. Tanya is 25% more efficient than Sakshi. In how many days can Tanya complete the work?",
+    options: ["15 days", "16 days", "18 days", "25 days"],
+    correct: 1,
+    explanation: "Efficiency ratio Sakshi : Tanya = 100 : 125 = 4 : 5.\nTime ratio = 5 : 4.\nIf Sakshi takes 20 days, Tanya takes (4/5) × 20 = 16 days."
+}
+
+
+
+
+
+
+
+    
+
+  
+];
+
+const questionsPerPage = 20;
+let currentPage = 1;
+
+function loadQuestions() {
+
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = "";
+
+    const start = (currentPage - 1) * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    const pageQuestions = questions.slice(start, end);
+
+    pageQuestions.forEach((q, index) => {
+
+        const questionNumber = start + index;
+
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <div class="question">${q.question}</div>
+            <ul class="options">
+                ${q.options.map((opt, i) => `
+                    <li>
+                        <label>
+                            <input type="radio" name="q${questionNumber}" value="${i}">
+                            ${String.fromCharCode(65 + i)}. ${opt}
+                        </label>
+                    </li>
+                `).join("")}
+            </ul>
+            <button onclick="checkAnswer(${questionNumber}, ${q.correct}, \`${q.explanation}\`)">
+                Check Answer
+            </button>
+            <div class="explanation" id="exp${questionNumber}"></div>
+            <hr>
+        `;
+        container.appendChild(div);
+    });
+
+    createPageNumbers();
+}
+
+function checkAnswer(qIndex, correctIndex, explanationText) {
+
+    const explanation = document.getElementById(`exp${qIndex}`);
+
+    // TOGGLE SHOW/HIDE
+    if (explanation.style.display === "block") {
+        explanation.style.display = "none";
+        return;
+    }
+
+    const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+    const options = document.querySelectorAll(`input[name="q${qIndex}"]`);
+
+    if (!selected) {
+        alert("Please select an option.");
+        return;
+    }
+
+    let userLetter = "";
+    let correctLetter = "";
+
+    options.forEach(option => {
+        const li = option.closest("li");
+        const letter = String.fromCharCode(65 + parseInt(option.value));
+
+        // Reset colors
+        li.classList.remove("correct", "wrong");
+
+        if (parseInt(option.value) === correctIndex) {
+            li.classList.add("correct");
+            correctLetter = letter;
+        }
+
+        if (option.checked) {
+            userLetter = letter;
+
+            if (parseInt(option.value) !== correctIndex) {
+                li.classList.add("wrong");
+            }
+        }
+    });
+
+    explanation.innerHTML = `
+        <p style="font-weight:bold;">
+            ${parseInt(selected.value) === correctIndex ? "✔ Correct Answer!" : "❌ Wrong Answer!"}
+        </p>
+        <p><b>Your Option:</b> ${userLetter}</p>
+        <p><b>Correct Option:</b> ${correctLetter}</p>
+        <p><b>Explanation:</b> ${explanationText}</p>
+    `;
+
+    explanation.style.display = "block";
+}
+
+function createPageNumbers() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    const pageNumbers = document.getElementById("pageNumbers");
+    pageNumbers.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.innerText = i;
+        btn.onclick = () => {
+            currentPage = i;
+            loadQuestions();
+        };
+
+        if (i === currentPage) {
+            btn.style.background = "#333";
+            btn.style.color = "white";
+        }
+
+        pageNumbers.appendChild(btn);
+    }
+}
+
+function prevPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        loadQuestions();
+    }
+}
+
+function nextPage() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    if (currentPage < totalPages) {
+        currentPage++;
+        loadQuestions();
+    }
+}
+
+loadQuestions();
+
+</script>
+
+
+</body>
+</html>

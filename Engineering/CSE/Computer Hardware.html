@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"11. What product is used to clean smudged keys on a keyboard?",
+options:[
+"TMC solvent",
+"Silicone spray",
+"Denatured alcohol",
+"All-purpose cleaner",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Denatured alcohol, which is commonly used to clean keyboard keys safely."
+},
+{
+q:"12. ESD would cause the most damage to which component?",
+options:[
+"Power supply",
+"Expansion board",
+"Monitor",
+"Keyboard",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Expansion board, as it contains sensitive electronic components vulnerable to electrostatic discharge."
+},
+{
+q:"13. To view any currently running Terminate Stay Resident (TSR's) programs you could type:",
+options:[
+"Memory",
+"MEM",
+"SYS /M",
+"Memmaker",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is MEM, which displays memory usage including TSR programs."
+},
+{
+q:"14. Which type of system board is the MOST likely candidate for processor upgrading if you want maximum performance and future compatibility?",
+options:[
+"ML",
+"PCI",
+"ISA",
+"EISA",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is PCI, as it provides better performance and upgrade compatibility."
+},
+{
+q:"15. Suppose that the maintenance package identifies several possible field replaceable units (FRUs) that will resolve the problem. What should you do after turning the power off?",
+options:[
+"Replace the indicated parts, one at a time in the recommended sequence, until the problem is resolved; return unused FRUs to stock",
+"Replace all of the indicated FRUs at once and return the machine to the customer if the problem is resolved",
+"Follow the same procedure as always replace the system board first if it is on the list of possible FRUs If multiple FRUs are indicated, then software is the most likely source of the problem",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is to replace the indicated parts one at a time in the recommended sequence to properly isolate and resolve the issue."
+},
+{
+q:"1. From what location are the 1st computer instructions available on boot up?",
+options:[
+"ROM BIOS",
+"CPU",
+"boot.ini",
+"CONFIG.SYS",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is ROM BIOS, which contains the initial boot instructions stored in firmware."
+},
+{
+q:"2. What could cause a fixed disk error?",
+options:[
+"No-CD installed",
+"bad ram",
+"slow processor",
+"Incorrect CMOS settings",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Incorrect CMOS settings, which can prevent the system from properly detecting the fixed disk."
+},
+{
+q:"3. Missing slot covers on a computer can cause?",
+options:[
+"over heat",
+"power surges",
+"EMI.",
+"incomplete path for ESD",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is over heat, as missing slot covers disrupt proper airflow inside the computer case."
+},
+{
+q:"4. When installing PCI NICs you can check the IRQ availability by looking at:",
+options:[
+"dip switches",
+"CONFIG.SYS",
+"jumper settings",
+"motherboard BIOS",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is motherboard BIOS, where IRQ settings and availability can be checked."
+},
+{
+q:"5. With respect to a network interface card, the term 10/100 refers to:",
+options:[
+"protocol speed",
+"a fiber speed",
+"megabits per seconds",
+"minimum and maximum server speed",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is megabits per seconds, indicating 10 Mbps or 100 Mbps network speed."
+},
+{
+q:"16. Most PCs give a single beep on bootup to indicate they are ok hardware wise. You boot your PC and don't get a beep. What should you check first?",
+options:[
+"system board",
+"RAM",
+"microprocessor",
+"power supply",
+"speaker"
+],
+answer:4,
+explanation:"Correct answer is speaker, because if the speaker is not working or connected, you will not hear the beep even if the system is functioning."
+},
+{
+q:"17. Which peripheral port provides the FASTEST throughput to laser printers?",
+options:[
+"RS-232",
+"SCSI",
+"Parallel",
+"Serial",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is SCSI, which provides faster data throughput compared to serial or parallel ports."
+},
+{
+q:"18. The mouse pointer moves erratically, what is the possible cause? The mouse:",
+options:[
+"ball is dirty",
+"is not connected",
+"driver is not installed properly",
+"has an incorrect IRQ setting",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is ball is dirty, which commonly causes erratic cursor movement in mechanical mice."
+},
+{
+q:"19. Voltage is measured:",
+options:[
+"in parallel",
+"in series",
+"after breaking the circuit",
+"after checking resistance",
+"after checking current"
+],
+answer:0,
+explanation:"Correct answer is in parallel, as voltage is measured across a component without breaking the circuit."
+},
+{
+q:"20. Your customer tells you the print quality of their dot matrix printer is light then dark. Which of the following could cause the problem?",
+options:[
+"Paper slippage",
+"Improper ribbon advancement",
+"Paper thickness",
+"Head position",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Improper ribbon advancement, which can cause inconsistent print darkness."
+},
+{
+q:"6. Which Motherboard form factor uses one 20 pin connector?",
+options:[
+"ATX",
+"AT",
+"BABY AT",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is ATX, which uses a single 20-pin power connector (older ATX standard)."
+},
+{
+q:"7. A hard disk is divided into tracks which are further subdivided into:",
+options:[
+"clusters",
+"sectors",
+"vectors",
+"heads",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is sectors, as tracks are divided into sectors on a hard disk."
+},
+{
+q:"8. A wrist grounding strap contains which of the following:",
+options:[
+"Surge protector",
+"Capacitor",
+"Voltmeter",
+"Resistor",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Resistor, which protects the user from electric shock while safely discharging static electricity."
+},
+{
+q:"9. Which standard governs parallel communications?",
+options:[
+"RS232",
+"RS-232a",
+"CAT 5",
+"IEEE 1284",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is IEEE 1284, which defines the standard for parallel port communications."
+},
+{
+q:"10. In laser printer technology, what happens during the conditioning stage?",
+options:[
+"The corona wire places a uniform positive charge on the paper",
+"A uniform negative charge is placed on the photosensitive drum",
+"A uniform negative charge is placed on the toner",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is A uniform negative charge is placed on the photosensitive drum during the conditioning stage."
+},
+{
+q:"26. Which part of the laser printer should NOT be exposed to sunlight?",
+options:[
+"Transfer corona assembly",
+"PC drum",
+"Primary corona wire",
+"Toner cartridge",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is PC drum, as exposure to sunlight can damage the photosensitive drum surface."
+},
+{
+q:"27. After doing a low-level format, what would be the next step in configuring the hard drive in a system?",
+options:[
+"Format DOS partition",
+"Install operating system",
+"Configure DMA channel and back-up interrupt",
+"Partition hard disk",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Partition hard disk, which must be done before high-level formatting and OS installation."
+},
+{
+q:"28. Resistance is measured in?",
+options:[
+"Volts",
+"Amps",
+"Watts",
+"Ohms",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Ohms, the unit of electrical resistance."
+},
+{
+q:"29. What command is used to reset a MODEM when using the \"AT Command Set\"?",
+options:[
+"ATR",
+"ATZ",
+"DTR",
+"DCE",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is ATZ, which resets the modem using the AT command set."
+},
+{
+q:"30. When installing a SCSI CD-ROM drive, you must set the CD-ROM SCSI adapter to:",
+options:[
+"B0007",
+"An unused SCSI address",
+"The same address as the SCSI device before the CD-ROM",
+"SCSI ID=1",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is An unused SCSI address, since each SCSI device must have a unique ID."
+},
+{
+q:"31. Pick the correct choice for the 80386SX CPU.",
+options:[
+"16 bit word size, 16 bit data path",
+"32 bit word size, 16 bit data path",
+"8 bit word size, 32 bit data path",
+"32 bit word size, 8 bit data path",
+"32 bit word size, 32 bit data path"
+],
+answer:1,
+explanation:"Correct answer is 32 bit word size, 16 bit data path. The 80386SX has a 32-bit internal architecture with a 16-bit external data bus."
+},
+{
+q:"32. In Inkjet technology the droplets of ink are deflected by?",
+options:[
+"multi directional nozzles",
+"electronically charged plates",
+"high pressure plates",
+"electro static absorbtion",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is electronically charged plates, which control and deflect ink droplets onto the paper."
+},
+{
+q:"33. When your hard drive crashes from any of the correct selections in the question above, or from dropping it, it is known as head-to-disk interference, or HDI.",
+options:[
+"True",
+"False"
+],
+answer:0,
+explanation:"Correct answer is True. Head-to-disk interference (HDI) occurs when the read/write head touches the disk surface."
+},
+{
+q:"34. What tool is used to test serial and parallel ports?",
+options:[
+"high volt probe",
+"cable scanner",
+"loop backs (wrap plugs)",
+"sniffer",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is loop backs (wrap plugs), which are used to test serial and parallel port functionality."
+},
+{
+q:"35. ESD would cause the most damage to which component?",
+options:[
+"Power supply",
+"Expansion board",
+"Monitor",
+"Keyboard",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Expansion board, as sensitive electronic components are highly vulnerable to electrostatic discharge."
+},
+{
+q:"41. On the PC side, the printer port is a:",
+options:[
+"25 pin female serial connector",
+"15 pin female parallel connector",
+"25 pin male serial connector",
+"15 pin female serial connector",
+"25 pin female parallel connector"
+],
+answer:4,
+explanation:"Correct answer is 25 pin female parallel connector, which is the standard DB-25 parallel port on PCs."
+},
+{
+q:"42. You were installing an application in Windows 95, and the computer crashes, what do you do?",
+options:[
+"press alt + Ctrl + delete, twice",
+"press alt + Ctrl + delete, and end task",
+"press the reset button on the computer",
+"turn off computer and boot from a floppy disk",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is press alt + Ctrl + delete, and end task, which allows you to close the crashed application."
+},
+{
+q:"43. RS-232 is a standard that applies to:",
+options:[
+"serial ports",
+"parallel ports",
+"game ports",
+"networks",
+"digital frequencies"
+],
+answer:0,
+explanation:"Correct answer is serial ports, as RS-232 defines serial communication standards."
+},
+{
+q:"44. You just installed a new IDE hard drive, but your system BIOS will not recognize the new drive, what should you check first?",
+options:[
+"cable sequence",
+"jumpers on the hard drive",
+"drivers that need to be loaded",
+"hard drive manufacturer web site information",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is jumpers on the hard drive, to ensure correct master/slave configuration."
+},
+{
+q:"45. During boot-up, the memory test:",
+options:[
+"Is a superfluous step that should be ignored",
+"Checks and verifies that contiguous memory is installed",
+"Is an operational error",
+"Displays what memory is installed, but nothing else",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Checks and verifies that contiguous memory is installed, ensuring RAM integrity during POST."
+},
+{
+q:"36. What is the highest binary number that can be referred to on a three position jumper block?",
+options:[
+"4",
+"6",
+"F",
+"1",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is 6, since a three-position jumper block can represent binary 110, which equals 6 in decimal."
+},
+{
+q:"37. What voltage does a Pentium system use?",
+options:[
+"+12 volts",
+"+5 volts",
+"+8 volts",
+"+3.3 volts",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is +3.3 volts, which is commonly used by Pentium-class processors."
+},
+{
+q:"38. A numeric error code check: A 17xx indicates a problem with:",
+options:[
+"CMOS",
+"ROM BIOS",
+"DMA controller",
+"hard drive or controller",
+"power supply"
+],
+answer:3,
+explanation:"Correct answer is hard drive or controller, as 17xx error codes typically indicate hard disk-related issues."
+},
+{
+q:"39. Which provides the fastest access to large video files?",
+options:[
+"Optical drives",
+"IDE hard drives",
+"SCSI hard drives",
+"EIDE hard drives",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is SCSI hard drives, which traditionally offer faster data access speeds."
+},
+{
+q:"40. A 25-pin female connector on the back of your computer will typically be:",
+options:[
+"Serial port 1",
+"A parallel port",
+"Docking",
+"COM2 port",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is A parallel port, which commonly uses a 25-pin female DB-25 connector."
+},
+{
+q:"31. Pick the correct choice for the 80386SX CPU.",
+options:[
+"16 bit word size, 16 bit data path",
+"32 bit word size, 16 bit data path",
+"8 bit word size, 32 bit data path",
+"32 bit word size, 8 bit data path",
+"32 bit word size, 32 bit data path"
+],
+answer:1,
+explanation:"Correct answer is 32 bit word size, 16 bit data path. The 80386SX has a 32-bit internal architecture with a 16-bit external data bus."
+},
+{
+q:"32. In Inkjet technology the droplets of ink are deflected by?",
+options:[
+"multi directional nozzles",
+"electronically charged plates",
+"high pressure plates",
+"electro static absorbtion",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is electronically charged plates, which control the direction of ink droplets."
+},
+{
+q:"33. When your hard drive crashes from any of the correct selections in the question above, or from dropping it, it is known as head-to-disk interference (HDI).",
+options:[
+"True",
+"False"
+],
+answer:0,
+explanation:"Correct answer is True. Head-to-disk interference occurs when the read/write head touches the disk surface."
+},
+{
+q:"34. What tool is used to test serial and parallel ports?",
+options:[
+"high volt probe",
+"cable scanner",
+"loop backs (wrap plugs)",
+"sniffer",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is loop backs (wrap plugs), which are used to test port functionality."
+},
+{
+q:"35. ESD would cause the most damage to which component?",
+options:[
+"Power supply",
+"Expansion board",
+"Monitor",
+"Keyboard",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Expansion board, as sensitive electronic circuits are highly vulnerable to electrostatic discharge."
+},
+{
+q:"21. The 34-pin connection on an I/O card is for?",
+options:[
+"Floppy drive",
+"SCSI drive",
+"IDE drive",
+"Zip drive",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Floppy drive, as the standard floppy disk interface uses a 34-pin connector."
+},
+{
+q:"22. The terms \"red book\", \"yellow book\", and \"orange book\" refer to:",
+options:[
+"SCSI",
+"IDE",
+"floppy drive technology",
+"CD-ROM standards",
+"All of the above"
+],
+answer:3,
+explanation:"Correct answer is CD-ROM standards, as these color books define various CD formats and specifications."
+},
+{
+q:"23. On the 16-bit ISA bus, IRQ2 is elevated to which higher level Interrupt?",
+options:[
+"9",
+"11",
+"13",
+"15",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is 9, because IRQ2 is cascaded to IRQ9 in 16-bit ISA systems."
+},
+{
+q:"24. What beep codes could indicate a system board or power supply failure?",
+options:[
+"steady short beep",
+"no beep",
+"one long continuous beep tone",
+"steady long beeps",
+"All of the above"
+],
+answer:4,
+explanation:"Correct answer is All of the above, as various abnormal beep patterns or no beep at all may indicate motherboard or power supply failure."
+},
+{
+q:"25. To view any currently running Terminate Stay Resident (TSR's) programs you could type:",
+options:[
+"Memory",
+"MEM",
+"SYS /M",
+"Memmaker",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is MEM, which displays memory usage including TSR programs."
+}
+
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"11. Which of the following would be a logical first step in troubleshooting a PC?",
+options:[
+"Check the computer CMOS",
+"Define the circumstances of the problem",
+"Call the vendor",
+"Define what applications are being used",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Define the circumstances of the problem, as identifying when and how the issue occurs is the first troubleshooting step."
+},
+{
+q:"12. Which DOS driver is used to emulate expanded memory?",
+options:[
+"Himem.sys",
+"EMM386.exe",
+"Mem386.sys",
+"Ramdrive.sys",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is EMM386.exe, which emulates expanded memory (EMS) in DOS systems."
+},
+{
+q:"13. For a Macintosh to print successfully, the System Folder must contain:",
+options:[
+"File sharing software",
+"A printer enabler",
+"The Apple Garamond font set",
+"A printer driver",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is A printer driver, which allows the Macintosh to communicate with the printer."
+},
+{
+q:"14. Which component must be vacuumed or replaced during preventative maintenance on a laser printer?",
+options:[
+"Scanning mirror",
+"Toner cartridge",
+"Ozone filter",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Ozone filter, which requires cleaning or replacement during maintenance."
+},
+{
+q:"15. Which device uses a DMA channel?",
+options:[
+"Modem",
+"Network Card",
+"Sound Card",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Sound Card, as it commonly uses a DMA channel for direct memory access."
+},
+{
+q:"16. When is the risk for electrostatic discharge the greatest?",
+options:[
+"Day time",
+"High humidity",
+"Low humidity",
+"Night time",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Low humidity, because dry air increases static electricity buildup."
+},
+{
+q:"17. A modem could be attached to which port?",
+options:[
+"Parallel port",
+"ASYNC port",
+"Keyboard connector",
+"Video port",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is ASYNC port, as modems typically use asynchronous serial (COM) ports."
+},
+{
+q:"18. What device prevents power interruptions, resulting in corrupted data?",
+options:[
+"Battery back-up unit",
+"Surge protector",
+"Multiple SIMMs strips",
+"Data guard system",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Battery back-up unit, commonly known as a UPS, which prevents data loss during power failure."
+},
+{
+q:"19. SCSI must be terminated with?",
+options:[
+"Dip switch",
+"Resistor",
+"BNC",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Resistor, as SCSI chains require termination resistors at both ends."
+},
+{
+q:"20. In a computer with an EIDE adapter, where should you connect an ATA CD-ROM drive?",
+options:[
+"on the floppy bus",
+"on the primary IDE",
+"on the secondary IDE",
+"on the SCSI bus",
+"All of the above"
+],
+answer:2,
+explanation:"Correct answer is on the secondary IDE, which is typically used for CD-ROM drives."
+},
+{
+q:"1. What's the best way to protect your hard drive data?",
+options:[
+"regular backups",
+"periodically defrag it",
+"run chkdsk at least once a week",
+"run scandisk at least once a week",
+"run a regular diagnostic"
+],
+answer:0,
+explanation:"Correct answer is regular backups, as backing up data is the safest way to protect against data loss."
+},
+{
+q:"2. On a dot matrix printer, you should never lubricate which part?",
+options:[
+"carriage rails",
+"printhead pins",
+"paper advance bearings",
+"carriage bearings",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is printhead pins, as lubricating them can damage the print mechanism."
+},
+{
+q:"3. How many devices can be used on a single SCSI bus? Keep in mind that the SCSI host adapter counts as a device.",
+options:[
+"1",
+"8",
+"20",
+"10",
+"All of the above"
+],
+answer:1,
+explanation:"Correct answer is 8, as a standard narrow SCSI bus supports up to 8 devices including the host adapter."
+},
+{
+q:"4. Match the device driver HIMEM.SYS to its operation.",
+options:[
+"Supports (ANSI) terminal emulation",
+"Manages the use of extended memory",
+"Uses expanded memory on a 80386 processor",
+"Supports code page switching",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Manages the use of extended memory, as HIMEM.SYS enables access to extended memory."
+},
+{
+q:"5. _____ help prevent power surges.",
+options:[
+"Surge suppressor",
+"Spike protector",
+"UPS system",
+"High-grade multi-meter",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Surge suppressor, which protects equipment from voltage spikes."
+},
+{
+q:"6. The digital multimeter is set for DC, Ohm and 20k. You will read _____ while measuring a good 2 amp fuse.",
+options:[
+"0.00",
+"0.02",
+"0.20",
+"2.00",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is 0.00 because a good fuse has very low resistance, nearly zero ohms."
+},
+{
+q:"7. An anti static strap uses a small _____ to make sure you do not become the least path of resistance to the ground?",
+options:[
+"capacitor",
+"diode",
+"transistor",
+"resistor",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is resistor. The anti-static strap contains a resistor to safely discharge static electricity."
+},
+{
+q:"8. If the memory slots have 30 pins then the chip is a?",
+options:[
+"DIMM",
+"SIMM",
+"SDRAM",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is SIMM. A 30-pin memory module is a Single Inline Memory Module (SIMM)."
+},
+{
+q:"9. Laser Jet printer speeds are measured in pages per minute (ppm) what do we use to measure dot-matrix printers?",
+options:[
+"lines per inch",
+"lines per sheet",
+"characters per inch",
+"characters per second",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is characters per second, which is the standard measurement for dot-matrix printer speed."
+},
+{
+q:"10. Which values are held in CMOS for the hard drive?",
+options:[
+"size (heads, cylinders, sectors)",
+"IRQ",
+"Free space",
+"Virus alert",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is size (heads, cylinders, sectors). CMOS stores hard drive configuration parameters."
+},
+{
+q:"31. You get a CMOS checksum error during bootup. What is most likely the cause?",
+options:[
+"power supply is bad",
+"BIOS needs updating",
+"CMOS battery is nearing end of life",
+"hard drive types are incorrectly defined",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is CMOS battery is nearing end of life. A weak or dead CMOS battery commonly causes checksum errors during boot."
+},
+{
+q:"32. On the 16-bit ISA bus, IRQ2 is elevated to which higher level interrupt?",
+options:[
+"9",
+"11",
+"13",
+"15",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is 9. On 16-bit ISA systems, IRQ2 is cascaded to IRQ9."
+},
+{
+q:"33. When measuring AC (Alternating Current) with a multimeter, it is important to maintain the proper polarity.",
+options:[
+"True",
+"False"
+],
+answer:1,
+explanation:"Correct answer is False. AC current alternates direction, so polarity is not important when measuring AC."
+},
+{
+q:"34. After trying to unload a TSR, you get an error message saying that other TSRs were loaded after the one you tried to remove. Which of the following commands could you use to see the current load order?",
+options:[
+"MEM /P",
+"MEMMAKER",
+"MEM /C",
+"SYS:",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is MEM /C. This command displays memory usage and the load order of programs including TSRs."
+},
+{
+q:"35. What is a common language that computers use to talk with one another on a network?",
+options:[
+"client",
+"adapter",
+"protocol",
+"operating systems",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is protocol. A protocol defines the rules and language computers use to communicate over a network."
+},
+{
+q:"26. To install a second IDE drive into a computer, you must:",
+options:[
+"Set the master-slave jumper to slave on the second drive",
+"Use the IDE configuration software to set the new drive as slave",
+"Verify that you define the new drive as D: in the CMOS setup",
+"Verify that you attach the drive to the connector at the end of the ribbon cable",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Set the master-slave jumper to slave on the second drive. On an IDE channel, one drive must be configured as master and the other as slave."
+},
+{
+q:"27. Why does a successfully mapped network drive disappear every time you boot the computer?",
+options:[
+"The computer you are connected to has moved",
+"You didn't click reconnect on log on",
+"The map statement is not in the autoexec.bat file",
+"The last drive was not set correctly",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is You didn't click reconnect on log on. Without reconnecting at logon, the mapped drive will not persist after reboot."
+},
+{
+q:"28. What do you need to check serial and parallel port?",
+options:[
+"Port adapter",
+"Logic probe",
+"Loopback plug",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Loopback plug. A loopback plug is commonly used to test serial and parallel ports."
+},
+{
+q:"29. You have a PC with no video. Which of the following is LEAST likely to be causing the problem?",
+options:[
+"defective RAM (bank zero)",
+"defective microprocessor",
+"crashed hard drive",
+"loose video card",
+"low AC outlet power"
+],
+answer:2,
+explanation:"Correct answer is crashed hard drive. A failed hard drive will not usually prevent video output during boot."
+},
+{
+q:"30. To test for AC ripple on a PC power supply, you would set the volt/ohm meter for:",
+options:[
+"DC voltage scale",
+"AC voltage",
+"OHM scale",
+"Farad scale",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is AC voltage. AC ripple is alternating current noise present on a DC power supply line."
+},
+{
+q:"21. What's the best way to prevent damaging your PC with static electricity?",
+options:[
+"place your PC on a rubber mat",
+"wear leather soled shoes",
+"periodically touch a safe ground point on the PC to discharge yourself",
+"static electricity doesn't really hurt a PC",
+"wear an ESD wrist strap"
+],
+answer:4,
+explanation:"Correct answer is wear an ESD wrist strap. An ESD wrist strap safely grounds you and prevents static discharge from damaging PC components."
+},
+{
+q:"22. What is the highest binary number that can be referred to on a three position jumper block?",
+options:[
+"4",
+"6",
+"F",
+"1",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is 6. A three-position jumper block represents three bits, allowing binary values from 000 (0) to 110 (6) depending on configuration."
+},
+{
+q:"23. During boot-up, the memory test:",
+options:[
+"Is a superfluous step that should be ignored",
+"Checks and verifies that contiguous memory is installed",
+"Is an operational error",
+"Displays what memory is installed, but nothing else",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Checks and verifies that contiguous memory is installed. The POST memory test ensures RAM is functioning properly."
+},
+{
+q:"24. IRQ6 is typically reserved for:",
+options:[
+"The floppy",
+"The keyboard controller",
+"LPT2",
+"The modem",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is The floppy. IRQ6 is traditionally assigned to the floppy disk controller."
+},
+{
+q:"25. Which would you do first when troubleshooting a faulty monitor?",
+options:[
+"Check its connections to the computer and power source",
+"Use a meter to check the CRT and internal circuitry for continuity",
+"Power down the monitor, then turn it on again to see if that corrects the problem",
+"Power down the computer, then turn it on again to see if that corrects the problem",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Check its connections to the computer and power source. Always verify basic connections before deeper troubleshooting."
+},
+{
+q:"46. When connecting two internal SCSI hard disks to a computer, where do you connect the second hard drive?",
+options:[
+"Any open SCSI port on the computer",
+"A Serial port on the first host adapter",
+"An open parallel port on the computer",
+"An open SCSI port on the first hard drive",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is An open SCSI port on the first hard drive. SCSI devices are connected in a daisy-chain configuration."
+},
+{
+q:"47. When connecting a ribbon cable to a connector, how do you know which direction to plug it in?",
+options:[
+"The red line in the cable goes to the highest pin number",
+"The colored line in the cable goes to pin #1",
+"It does not matter",
+"The blue or red line in the cable goes away from the power connector",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is The colored line in the cable goes to pin #1. The red or colored stripe indicates pin 1 orientation."
+},
+{
+q:"48. What is the first step in diagnosing a completely dead computer at the client site that was working the day before?",
+options:[
+"Test the power supply",
+"replace the CMOS battery",
+"check the AC outlet",
+"reseat the hard drive controller cable",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is check the AC outlet. Always verify the power source before troubleshooting internal components."
+},
+{
+q:"49. What specification covers PC hard cards?",
+options:[
+"SCSI",
+"ISA",
+"PCMCIA",
+"MFM",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is PCMCIA. PC hard cards are covered under the PCMCIA specification."
+},
+{
+q:"41. Which of the following FRUs would be considered both an input/output device?",
+options:[
+"Video board",
+"SCSI host adapter",
+"System board CPU",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is SCSI host adapter. It manages both sending and receiving data between the computer and SCSI devices."
+},
+{
+q:"42. A COM port is a _____ port.",
+options:[
+"parallel",
+"serial",
+"static",
+"multi",
+"SCSI"
+],
+answer:1,
+explanation:"Correct answer is serial. A COM port is a serial communication port."
+},
+{
+q:"43. Which device is on IRQ 6?",
+options:[
+"Keyboard",
+"IDE",
+"Floppy drive",
+"Video card",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Floppy drive. IRQ6 is traditionally assigned to the floppy disk controller."
+},
+{
+q:"44. A system has two IDE hard drives that are each divided into primary and extended partitions, which drive letter is assigned to the primary partition of the second drive?",
+options:[
+"C",
+"D",
+"E",
+"F",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is F. Drive letters are assigned first to primary partitions (C:, D:) and then logical drives in extended partitions, making the second drive’s primary partition typically F:."
+},
+{
+q:"45. What is the most significant difference between the USB and IEEE1394 standards?",
+options:[
+"IEEE 1394 is faster",
+"USB does not support USB",
+"USB is plug and play",
+"IEEE 1394 is hot swappable",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is IEEE 1394 is faster. IEEE 1394 (FireWire) traditionally offered higher data transfer speeds compared to early USB versions."
+},
+{
+q:"36. When measuring AC (Alternating Current) with a multimeter, it is important to maintain the proper polarity.",
+options:[
+"True",
+"False"
+],
+answer:1,
+explanation:"Correct answer is False. AC current alternates direction, so polarity does not matter when measuring AC."
+},
+{
+q:"37. Which DOS driver is used to emulate expanded memory?",
+options:[
+"Himem.sys",
+"EMM386.exe",
+"Mem386.sys",
+"Ramdrive.sys",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is EMM386.exe. It is used to emulate expanded memory (EMS) using extended memory."
+},
+{
+q:"38. Which should you use for cleaning Mylar-protected LCD screens?",
+options:[
+"Ammonia window cleaner",
+"Non-abrasive cleanser",
+"Anti-static wipes",
+"Alcohol-impregnated wipes",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Anti-static wipes. They safely clean LCD screens without damaging the protective coating."
+},
+{
+q:"39. What could cause a fixed disk error?",
+options:[
+"No-CD installed",
+"Bad RAM",
+"Slow processor",
+"Incorrect CMOS settings",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Incorrect CMOS settings. Wrong hard drive parameters in CMOS can cause a fixed disk error."
+},
+{
+q:"40. ESD potential decreases with the use of:",
+options:[
+"De-ionizing fans",
+"A wrist strap",
+"Rubber gloves with matching cap",
+"A static meter",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is A wrist strap. It grounds the user and reduces electrostatic discharge potential."
+}
+],
+
+// ........Section-3............
+3: [
+    {
+q:"21. Which monitor would provide the highest level of performance?",
+options:[
+"VGA",
+"XGA",
+"CGA",
+"SVGA",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is SVGA. Super VGA provides higher resolution and better performance compared to VGA, XGA, and CGA."
+},
+{
+q:"22. Which of the following items would require you to comply with EPA disposal guidelines?",
+options:[
+"Keyboard",
+"System board",
+"Power supply",
+"Battery",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Battery. Batteries must be disposed of according to EPA guidelines due to hazardous materials."
+},
+{
+q:"23. A hard disk is divided into tracks which are further subdivided into:",
+options:[
+"clusters",
+"sectors",
+"vectors",
+"heads",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is sectors. Hard disk tracks are divided into sectors, which store data."
+},
+{
+q:"24. What is the paper feeding technology most commonly associated with dot-matrix printers?",
+options:[
+"sheet feed",
+"tractor feed",
+"friction feed",
+"manual feed",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is tractor feed. Dot-matrix printers commonly use tractor feed for continuous paper."
+},
+{
+q:"25. COM1 is typically represented by which of the following?",
+options:[
+"15 pin port",
+"9 pin male port",
+"9 pin female port",
+"25 pin male port",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is 9 pin female port. COM1 is typically a DB-9 serial female connector."
+},
+{
+q:"17. The DC voltage on most circuit boards is:",
+options:[
+"-12 volts",
+"0 volts",
+"+5 volts",
+"+12 volts",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is +5 volts. Most logic circuits on computer system boards operate at +5V DC."
+},
+{
+q:"18. A customer attached an external drive to his notebook computer but the computer is not recognizing it. What should be considered?",
+options:[
+"The cables are attached firmly",
+"The external drive has been pre-loaded with the appropriate software",
+"The external drive was attached before the computer was on",
+"The external drive is turned on",
+"All of the above"
+],
+answer:4,
+explanation:"Correct answer is All of the above. All listed factors should be checked when troubleshooting an unrecognized external drive."
+},
+{
+q:"19. \"Parity\" errors usually indicate bad memory.",
+options:[
+"True",
+"False"
+],
+answer:0,
+explanation:"Correct answer is True. Parity errors are commonly caused by faulty or failing RAM."
+},
+{
+q:"20. What device protects against line deficiencies?",
+options:[
+"Surge protector",
+"UPS",
+"Logic probe",
+"Capacitor",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is UPS. A UPS (Uninterruptible Power Supply) protects against power surges, brownouts, and outages."
+},
+{
+q:"11. A workstation has just been installed on an Ethernet LAN, but cannot communicate with the network. What should you check first?",
+options:[
+"reinstall the network protocols",
+"reinstall the network interface card driver",
+"verify the ip configuration on the workstation",
+"verify the link status on the computer's network card",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is verify the link status on the computer's network card. Physical connectivity should always be checked first."
+},
+{
+q:"12. One of the major components of a PC is the Central Processing Unit (CPU) which can be best described as:",
+options:[
+"The device that sends the monitor signals telling it what to display",
+"The area that regulates all of the system power usage",
+"The area where all of the Basic input/output routines are stored",
+"The area where all of the processing takes place",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is The area where all of the processing takes place. The CPU performs calculations and executes instructions."
+},
+{
+q:"13. What is the i/o address for com2?",
+options:[
+"2vb",
+"2f8",
+"8f8",
+"330"
+],
+answer:1,
+explanation:"Correct answer is 2f8. The standard I/O address for COM2 is 2F8h."
+},
+{
+q:"14. The ESD wrist strap is designed to protect PC Components or Service Technicians?",
+options:[
+"PC Components",
+"Service Technicians",
+"Both"
+],
+answer:0,
+explanation:"Correct answer is PC Components. The ESD wrist strap protects sensitive components from electrostatic discharge."
+},
+{
+q:"15. You can have EISA and MCA devices in the same PC.",
+options:[
+"True",
+"False"
+],
+answer:1,
+explanation:"Correct answer is False. EISA and MCA are different bus architectures and are not compatible in the same system."
+},
+{
+q:"6. You see the message \"invalid media device\" after installing a new hard drive. What do you do next?",
+options:[
+"Format",
+"Fdisk",
+"Partition",
+"Add the OS",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Fdisk. A new hard drive must be partitioned using FDISK before it can be formatted and used."
+},
+{
+q:"7. What is the modem hang up command?",
+options:[
+"ATHU",
+"ATH",
+"ATZ",
+"ATX",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is ATH. The ATH command instructs the modem to hang up the current call."
+},
+{
+q:"8. What expansion types do most PII/PIII motherboards support?",
+options:[
+"MCA, PCI",
+"ISA, EISA",
+"ISA, PCI, AGP",
+"ISA, VESA, PCI",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is ISA, PCI, AGP. Most Pentium II and Pentium III motherboards supported these expansion slots."
+},
+{
+q:"9. When installing an internal modem, all of the following IRQ's can be used except?",
+options:[
+"5",
+"10",
+"14",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is 14. IRQ14 is typically reserved for the primary IDE controller."
+},
+{
+q:"10. An IRQ allow interface cards to:",
+options:[
+"Interrupt the CPU to request service",
+"Pass data to the CPU to be processed",
+"Pass data from one card to another",
+"Pass data to the computers memory",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Interrupt the CPU to request service. An IRQ signals the processor when a device needs attention."
+},
+{
+q:"1. Which common bus specification provides the fastest data transfer rate?",
+options:[
+"VL bus",
+"ISA",
+"PCI",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is PCI. PCI provides faster data transfer rates compared to ISA and VL bus."
+},
+{
+q:"2. Modems use transmission.",
+options:[
+"synchronous",
+"asynchronous",
+"timed interval",
+"ata",
+"bank"
+],
+answer:1,
+explanation:"Correct answer is asynchronous. Traditional modems use asynchronous transmission for communication."
+},
+{
+q:"3. A 6xx indicates a problem with the:",
+options:[
+"floppy drive",
+"hard drive",
+"keyboard",
+"CD ROM",
+"All of the above"
+],
+answer:0,
+explanation:"Correct answer is floppy drive. A 6xx error code typically indicates a floppy disk drive issue."
+},
+{
+q:"4. A sound card typically uses which IRQ?",
+options:[
+"6",
+"5",
+"15",
+"1",
+"it doesn't use an IRQ"
+],
+answer:1,
+explanation:"Correct answer is 5. Sound cards commonly use IRQ5 in many PC configurations."
+},
+{
+q:"5. During preventative maintenance on a dot matrix printer, do NOT lubricate:",
+options:[
+"Platen assembly",
+"Print head pulley",
+"Print head pins",
+"Paper advance gear bushings",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Print head pins. Lubricating print head pins can damage the printer."
+},
+{
+q:"46. A 25-pin female connector on the back of your computer will typically be:",
+options:[
+"Serial port 1",
+"A parallel port",
+"Docking",
+"COM2 port",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is A parallel port. A DB-25 female connector is typically used for the parallel (printer) port."
+},
+{
+q:"47. In the Binary numbering system, a (1) represents a jumper being shorted and a (0) represents a jumper being open. On a three-bit jumper block on a SCSI drive, how would an ID of logical 3 be set?",
+options:[
+"100",
+"010",
+"011",
+"101",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is 011. The binary representation of decimal 3 is 011."
+},
+{
+q:"48. _____ help prevent power surges.",
+options:[
+"Surge suppressor",
+"Spike protector",
+"UPS system",
+"High-grade multi-meter",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Surge suppressor. It protects devices from voltage spikes."
+},
+{
+q:"49. What can you use to ensure power is not interrupted, resulting in corrupted data?",
+options:[
+"UPS",
+"Proper grounding",
+"Surge protector",
+"Nuclear powered thermal protective underwear",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is UPS. A UPS provides backup power to prevent data loss during outages."
+},
+{
+q:"50. The POST routine, which counts system board RAM first, is stored in:",
+options:[
+"RAM",
+"microprocessor",
+"ROM BIOS",
+"CMOS",
+"8259 POST controller"
+],
+answer:2,
+explanation:"Correct answer is ROM BIOS. The POST (Power-On Self-Test) routine is stored in the system BIOS ROM."
+},
+{
+q:"41. The ATAPI compliance stands for?",
+options:[
+"CDROM",
+"Bus mastering",
+"Mass storage device",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Mass storage device. ATAPI (ATA Packet Interface) is used to support devices such as CD-ROM and other mass storage devices over the ATA interface."
+},
+{
+q:"42. A dialog box with a bomb appears on a Macintosh screen. What type of problem has occurred?",
+options:[
+"A RAM problem",
+"A software problem",
+"A ROM problem",
+"An ADB problem",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is A software problem. The classic Mac 'bomb' dialog indicates a system software crash."
+},
+{
+q:"43. Capacitance is measured in units of:",
+options:[
+"volts",
+"amps",
+"farads",
+"neutrinos",
+"anti-neutrinos"
+],
+answer:2,
+explanation:"Correct answer is farads. Capacitance is measured in farads (F)."
+},
+{
+q:"44. When not in use, it is very important to keep 5 1/4 diskettes in _____.",
+options:[
+"Their protective sleeves",
+"In a plastic bag",
+"On a shelf in an upright position",
+"In the floppy drive",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Their protective sleeves. This prevents dust, scratches, and magnetic damage."
+},
+{
+q:"45. What can you use to ensure power is not interrupted, resulting in corrupted data?",
+options:[
+"UPS",
+"Proper grounding",
+"Surge protector",
+"Sag protector",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is UPS. A UPS provides backup power to prevent data corruption during outages."
+},
+{
+q:"36. 14.4 modem should transmit _____ bits per second",
+options:[
+"14,400-15,000",
+"140-150",
+"1400-1500",
+"140,000-150,000",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is 14,400-15,000. A 14.4 modem transmits approximately 14,400 bits per second."
+},
+{
+q:"37. In laser technology, what happens during the transfer stage?",
+options:[
+"Residual toner is transferred to the waste receptacle",
+"The laser transfers the image from the drum to the paper",
+"The image is transferred from the drum to the paper",
+"A negative charge is transferred to the surface of the drum",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is The image is transferred from the drum to the paper. During the transfer stage, toner is moved from the drum onto the paper."
+},
+{
+q:"38. _____ is the term used to refer to the process of two modems establishing communications with each other.",
+options:[
+"interacting",
+"handshaking",
+"connecting",
+"linking",
+"pinging"
+],
+answer:1,
+explanation:"Correct answer is handshaking. Handshaking is the process where modems establish and synchronize communication."
+},
+{
+q:"39. Resistance is measured in ohm.",
+options:[
+"True",
+"False"
+],
+answer:0,
+explanation:"Correct answer is True. Resistance is measured in ohms (Ω)."
+},
+{
+q:"40. Suppose that the power lamp is on, but the printer will not print. What can you do to correct the problem?",
+options:[
+"Make sure the printer is on line",
+"Replace the AC line fuse",
+"Turn the printer on and off",
+"Replace the ribbon",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Make sure the printer is on line. If the printer is offline, it will not receive print jobs."
+},
+{
+q:"31. Your CD-ROM audio cable connects to the:",
+options:[
+"speaker",
+"sound card (or motherboard if sound is integrated with it)",
+"power supply",
+"hard drive",
+"BIOS"
+],
+answer:1,
+explanation:"Correct answer is sound card (or motherboard if sound is integrated with it). The CD-ROM audio cable connects internally to the sound card."
+},
+{
+q:"32. In the Binary numbering system, a (1) represents a jumper being shorted and a (0) represents a jumper being open. On a three-bit jumper block on a SCSI drive, how would an ID of logical 3 be set?",
+options:[
+"100",
+"010",
+"011",
+"101",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is 011. The binary representation of decimal 3 is 011."
+},
+{
+q:"33. After installing a sound card, the system locks up when a parallel port tape backup unit is also used. What is most likely the problem?",
+options:[
+"IRQ",
+"DMA",
+"defective LPT port",
+"defective tape driver",
+"defective sound card."
+],
+answer:0,
+explanation:"Correct answer is IRQ. The sound card and parallel port device are likely conflicting on the same IRQ."
+},
+{
+q:"34. You are testing the resistance in Ohms of a fuse on a 15K amp system. If the fuse is good, the meter should read?",
+options:[
+"0.0",
+"0.2",
+"5.0",
+"2.0",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is 0.0. A good fuse should show near-zero resistance."
+},
+{
+q:"35. Type one PC cards:",
+options:[
+"are used only in desktops",
+"are no longer being produced",
+"are the thinnest of the PC cards",
+"don't exist",
+"have their own power source"
+],
+answer:2,
+explanation:"Correct answer is are the thinnest of the PC cards. Type I PCMCIA cards are the thinnest form factor."
+},
+{
+q:"26. Which step should you perform first before discharging a CRT?",
+options:[
+"Remove the CRT from its housing",
+"Disconnect the CRT from the computer",
+"Remove the video assembly",
+"Turn power off before removing power source",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Turn power off before removing power source. Always power down and disconnect before working on a CRT."
+},
+{
+q:"27. A capacitor is measured in which of the following units?",
+options:[
+"Volts",
+"Ohms",
+"Farads",
+"Resistance",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Farads. Capacitance is measured in farads (F)."
+},
+{
+q:"28. UART is a type of serial chip. Its letters stand for:",
+options:[
+"unidirectional access regarding transmission",
+"universal asynchronous receiver/ transmitter",
+"upper advanced real transfer",
+"unable all restore t-bits",
+"use all ROM types"
+],
+answer:1,
+explanation:"Correct answer is universal asynchronous receiver/transmitter. UART handles serial communication."
+},
+{
+q:"29. A system has two IDE hard drives that are each divided into primary and extended partitions, which drive letter is assigned to the primary partition of the second drive?",
+options:[
+"C",
+"D",
+"E",
+"F",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is F. After assigning letters to primary and logical drives on the first disk, the primary partition of the second disk is typically assigned F:."
+},
+{
+q:"30. What would you ask to determine if the display is working?",
+options:[
+"Is there a video cursor or action on the screen?",
+"Did the computer beep or chime?",
+"Is there high voltage static on the screen",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. These checks help determine if the display and system are functioning."
+}
+
+],
+// .......Section-4...........
+4:[
+
+// ----here Question----
+
+],
+
+// .......Section-5...........
+
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

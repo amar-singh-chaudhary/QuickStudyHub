@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+int sumdig(int);
+int main()
+{
+    int a, b;
+    a = sumdig(123);
+    b = sumdig(123);
+    printf("%d, %d\\n", a, b);
+    return 0;
+}
+int sumdig(int n)
+{
+    int s, d;
+    if(n!=0)
+    {
+        d = n%10;
+        n = n/10;
+        s = d+sumdig(n);
+    }
+    else
+        return 0;
+    return s;
+}`,
+options:[
+"4, 4",
+"3, 3",
+"6, 6",
+"12, 12"
+],
+answer:3,
+explanation:"sumdig(123) calculates 1+2+3 = 6. Both a and b store 6. So output is 6, 6."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    void fun(char*);
+    char a[100];
+    a[0] = 'A'; a[1] = 'B';
+    a[2] = 'C'; a[3] = 'D';
+    fun(&a[0]);
+    return 0;
+}
+void fun(char *a)
+{
+    a++;
+    printf("%c", *a);
+    a++;
+    printf("%c", *a);
+}`,
+options:[
+"AB",
+"BC",
+"CD",
+"No output"
+],
+answer:1,
+explanation:"Pointer moves from 'A' to 'B' then to 'C'. So output is BC."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int fun(int);
+    int i = fun(10);
+    printf("%d\\n", --i);
+    return 0;
+}
+int fun(int i)
+{
+   return (i++);
+}`,
+options:[
+"9",
+"10",
+"11",
+"8"
+],
+answer:0,
+explanation:"fun(10) returns 10 (post-increment). Then --i makes it 9."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+int check (int, int);
+
+int main()
+{
+    int c;
+    c = check(10, 20);
+    printf("c=%d\\n", c);
+    return 0;
+}
+int check(int i, int j)
+{
+    int *p, *q;
+    p=&i;
+    q=&j;
+    i>=45 ? return(*p): return(*q);
+}`,
+options:[
+"Print 10",
+"Print 20",
+"Print 1",
+"Compile error"
+],
+answer:3,
+explanation:"return cannot be used inside ternary operator. This causes compile error."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+int fun(int, int);
+typedef int (*pf) (int, int);
+int proc(pf, int, int);
+
+int main()
+{
+    printf("%d\\n", proc(fun, 6, 6));
+    return 0;
+}
+int fun(int a, int b)
+{
+   return (a==b);
+}
+int proc(pf p, int a, int b)
+{
+   return ((*p)(a, b));
+}`,
+options:[
+"6",
+"1",
+"0",
+"-1"
+],
+answer:1,
+explanation:"fun(6,6) returns (6==6) which is 1. So output is 1."
+},
+{
+q:"What will be the output of the program in 16 bit platform (Turbo C under DOS)?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int fun();
+    int i;
+    i = fun();
+    printf("%d\\n", i);
+    return 0;
+}
+int fun()
+{
+    _AX = 1990;
+}`,
+options:[
+"Garbage value",
+"0 (Zero)",
+"1990",
+"No output"
+],
+answer:2,
+explanation:"In 16-bit Turbo C, return value is taken from register AX. Since _AX=1990, the function returns 1990."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+void fun(int*, int*);
+int main()
+{
+    int i=5, j=2;
+    fun(&i, &j);
+    printf("%d, %d", i, j);
+    return 0;
+}
+void fun(int *i, int *j)
+{
+    *i = *i**i;
+    *j = *j**j;
+}`,
+options:[
+"5, 2",
+"10, 4",
+"2, 5",
+"25, 4"
+],
+answer:3,
+explanation:"*i = 5*5 = 25 and *j = 2*2 = 4. So output is 25, 4."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+int i;
+int fun();
+
+int main()
+{
+    while(i)
+    {
+        fun();
+        main();
+    }
+    printf("Hello\\n");
+    return 0;
+}
+int fun()
+{
+    printf("Hi");
+}`,
+options:[
+"Hello",
+"Hi Hello",
+"No output",
+"Infinite loop"
+],
+answer:0,
+explanation:"Global variable i is initialized to 0 by default. while(i) fails. So only Hello is printed."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+int reverse(int);
+
+int main()
+{
+    int no=5;
+    reverse(no);
+    return 0;
+}
+int reverse(int no)
+{
+    if(no == 0)
+        return 0;
+    else
+        printf("%d,", no);
+    reverse (no--);
+}`,
+options:[
+"Print 5, 4, 3, 2, 1",
+"Print 1, 2, 3, 4, 5",
+"Print 5, 4, 3, 2, 1, 0",
+"Infinite loop"
+],
+answer:3,
+explanation:"Post-decrement no-- passes original value repeatedly. reverse(5) keeps calling reverse(5). Infinite recursion occurs."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+void fun(int);
+
+int main()
+{
+    int a=3;
+    fun(a);
+    return 0;
+}
+void fun(int n)
+{
+    if(n > 0)
+    {
+        fun(--n);
+        printf("%d,", n);
+        fun(--n);
+    }
+}`,
+options:[
+"0, 2, 1, 0,",
+"1, 1, 2, 0,",
+"0, 1, 0, 2,",
+"0, 1, 2, 0,"
+],
+answer:0,
+explanation:"Recursive calls with pre-decrement produce output sequence: 0, 2, 1, 0,"
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+int check(int);
+int main()
+{
+    int i=45, c;
+    c = check(i);
+    printf("%d\\n", c);
+    return 0;
+}
+int check(int ch)
+{
+    if(ch >= 45)
+        return 100;
+    else
+        return 10;
+}`,
+options:[
+"100",
+"10",
+"1",
+"0"
+],
+answer:0,
+explanation:"Since i = 45 and condition ch >= 45 is true, function returns 100. So output is 100."
+},
+{
+q:"If int is 2 bytes wide, what will be the output of the program?",
+code:`#include <stdio.h>
+void fun(char**);
+
+int main()
+{
+    char *argv[] = {"ab", "cd", "ef", "gh"};
+    fun(argv);
+    return 0;
+}
+void fun(char **p)
+{
+    char *t;
+    t = (p+= sizeof(int))[-1];
+    printf("%s\\n", t);
+}`,
+options:[
+"ab",
+"cd",
+"ef",
+"gh"
+],
+answer:1,
+explanation:"If sizeof(int) = 2 (Turbo C), then p moves 2 positions ahead. (p+=2)[-1] gives 'cd'."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+int fun(int(*)());
+
+int main()
+{
+    fun(main);
+    printf("Hi\\n");
+    return 0;
+}
+int fun(int (*p)())
+{
+    printf("Hello ");
+    return 0;
+}`,
+options:[
+"Infinite loop",
+"Hi",
+"Hello Hi",
+"Error"
+],
+answer:2,
+explanation:"fun(main) prints 'Hello '. Then main prints 'Hi'. So output is 'Hello Hi'."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int fun(int i)
+{
+    i++;
+    return i;
+}
+
+int main()
+{
+    int fun(int);
+    int i=3;
+    fun(i=fun(fun(i)));
+    printf("%d\\n", i);
+    return 0;
+}`,
+options:[
+"5",
+"4",
+"Error",
+"Garbage value"
+],
+answer:0,
+explanation:"fun(3)=4, fun(4)=5 so i=5. Final fun(5)=6 but not stored. So i remains 5."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+int fun(int);
+int main()
+{
+    float k=3;
+    fun(k=fun(fun(k)));
+    printf("%f\\n", k);
+    return 0;
+}
+int fun(int i)
+{
+    i++;
+    return i;
+}`,
+options:[
+"5.000000",
+"3.000000",
+"Garbage value",
+"4.000000"
+],
+answer:0,
+explanation:"fun(3)=4, fun(4)=5 so k=5. Final fun(5)=6 but not stored. So k=5.000000."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int i=1;
+    if(!i)
+        printf("IndiaBIX,");
+    else
+    {
+        i=0;
+        printf("C-Program");
+        main();
+    }
+    return 0;
+}`,
+options:[
+'prints "IndiaBIX, C-Program" infinitely',
+'prints "C-Program" infinitely',
+'prints "C-Program, IndiaBIX" infinitely',
+'Error: main() should not inside else statement'
+],
+answer:1,
+explanation:"i=1 so !i becomes 0. if condition fails. Else executes, prints 'C-Program' and calls main() again. This repeats infinitely."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int addmult(int ii, int jj)
+{
+    int kk, ll;
+    kk = ii + jj;
+    ll = ii * jj;
+    return (kk, ll);
+}
+
+int main()
+{
+    int i=3, j=4, k, l;
+    k = addmult(i, j);
+    l = addmult(i, j);
+    printf("%d %d\\n", k, l);
+    return 0;
+}`,
+options:[
+"12 12",
+"No error, No output",
+"Error: Compile error",
+"None of above"
+],
+answer:0,
+explanation:"The comma operator returns the last value (ll). ll = 12. So both k and l become 12."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+int i;
+int fun1(int);
+int fun2(int);
+
+int main()
+{
+    extern int j;
+    int i=3;
+    fun1(i);
+    printf("%d,", i);
+    fun2(i);
+    printf("%d", i);
+    return 0;
+}
+int fun1(int j)
+{
+    printf("%d,", ++j);
+    return 0;
+}
+int fun2(int i)
+{
+    printf("%d,", ++i);
+    return 0;
+}
+int j=1;`,
+options:[
+"3, 4, 4, 3",
+"4, 3, 4, 3",
+"3, 3, 4, 4",
+"3, 4, 3, 4"
+],
+answer:1,
+explanation:"fun1 prints 4, main prints 3, fun2 prints 4, main prints 3. Output: 4,3,4,3."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+int func1(int);
+
+int main()
+{
+    int k=35;
+    k = func1(k=func1(k=func1(k)));
+    printf("k=%d\\n", k);
+    return 0;
+}
+int func1(int k)
+{
+    k++;
+    return k;
+}`,
+options:[
+"k=35",
+"k=36",
+"k=37",
+"k=38"
+],
+answer:3,
+explanation:"func1 is called 3 times. 35 becomes 36, then 37, then 38. So k=38."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int addmult(int ii, int jj)
+{
+    int kk, ll;
+    kk = ii + jj;
+    ll = ii * jj;
+    return (kk, ll);
+}
+
+int main()
+{
+    int i=3, j=4, k, l;
+    k = addmult(i, j);
+    l = addmult(i, j);
+    printf("%d, %d\\n", k, l);
+    return 0;
+}`,
+options:[
+"12, 12",
+"7, 7",
+"7, 12",
+"12, 7"
+],
+answer:0,
+explanation:"Comma operator returns ll (12). So both k and l become 12."
+},
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    int i=0;
+    i++;
+    if(i<=5)
+    {
+        printf("IndiaBIX");
+        exit(1);
+        main();
+    }
+    return 0;
+}`,
+options:[
+'Prints "IndiaBIX" 5 times',
+"Function main() doesn't calls itself",
+"Infinite loop",
+'Prints "IndiaBIX"'
+],
+answer:3,
+explanation:"i becomes 1. Condition i<=5 is true, so it prints 'IndiaBIX'. exit(1) terminates the program immediately, so main() is never called again."
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>

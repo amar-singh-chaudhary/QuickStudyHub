@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Test With Timer</title>
+    <link rel="stylesheet" href="CSS/mock-test2.css">
+</head>
+<body>
+
+<div class="test-container">
+    <h2>Online Mock Test</h2>
+    <div id="timer">Time Left: <span id="time">60</span> sec</div>
+
+    <form id="quizForm">
+
+        <!-- Question 1 -->
+        <div class="question-block" id="block-q1">
+            <p>1. Find HCF of 48 and 60?</p>
+            <label><input type="radio" name="q1" value="12"> 12</label>
+            <label><input type="radio" name="q1" value="6"> 6</label>
+            <label><input type="radio" name="q1" value="24"> 24</label>
+            <div class="answer-box" id="answer-q1"></div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-block" id="block-q2">
+            <p>2. 5 + 7 = ?</p>
+            <label><input type="radio" name="q2" value="10"> 10</label>
+            <label><input type="radio" name="q2" value="12"> 12</label>
+            <label><input type="radio" name="q2" value="14"> 14</label>
+            <div class="answer-box" id="answer-q2"></div>
+        </div>
+
+        <button type="button" id="submitBtn" onclick="submitTest()">Submit</button>
+    </form>
+
+    <h3 id="score"></h3>
+</div>
+
+<script src="JS/mock-test2.js"></script>
+</body>
+</html>
+

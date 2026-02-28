@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aptitude Lists</title>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<style>
+    body{
+        margin:0;
+        font-family: Arial, Helvetica, sans-serif;
+        background:#f2f2f2;
+    }
+
+    .container{
+        max-width:500px;
+        margin:auto;
+        padding:15px;
+    }
+
+    /* Search Bar */
+    .search-box{
+        display:flex;
+        align-items:center;
+        background:#eaeaea;
+        padding:10px 15px;
+        border-radius:8px;
+        margin-bottom:20px;
+    }
+
+    .search-box i{
+        color:#555;
+        margin-right:10px;
+    }
+
+    .search-box input{
+        border:none;
+        outline:none;
+        background:transparent;
+        font-size:16px;
+        width:100%;
+    }
+
+    /* Folder List */
+    .folder-list{
+        list-style:none;
+        padding:0;
+        margin:0;
+    }
+
+    .folder-list li{
+        display:flex;
+        align-items:center;
+        padding:15px 10px;
+        font-size:18px;
+        color:#333;
+        border-bottom:1px solid #ddd;
+        cursor:pointer;
+        transition:0.3s;
+    }
+
+    .folder-list li:hover{
+        background:#e6f0ff;
+    }
+
+    .folder-list li i{
+        color:#f4b400;
+        margin-right:15px;
+        font-size:26px;
+    }
+
+    .no-result{
+        text-align:center;
+        padding:20px;
+        color:red;
+        display:none;
+    }
+    /* Anchor link color reamin black */
+a {
+    color: black;          /* Set your color */
+    text-decoration: none; /* Optional: remove underline */
+}
+
+a:visited {
+    color: black;          /* Same color after clicking */
+}
+
+a:hover {
+    color: black;          /* Same color on hover */
+}
+
+a:active {
+    color: black;          /* Same color when clicked */
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Search Bar -->
+    <div class="search-box">
+        <i class="material-icons">search</i>
+        <input type="text" id="searchInput" placeholder="Search topics...">
+    </div>
+
+    <!-- Topic List -->
+    <ul class="folder-list" id="topicList">
+       
+        <li><a href="TimeDistance.html"><i class="material-icons">folder</i>Time and Distance</a></li>
+        <li><a href="calender.html"><i class="material-icons">folder</i>Calendar</a></li>
+        <li><a href="clock.html"><i class="material-icons">folder</i>Clock</a></li>
+        <li><a href="ProblemsOnAges.html"><i class="material-icons">folder</i>Problems on Ages</a></li>
+        <li><a href="SimpleInterest.html"><i class="material-icons">folder</i>Simple Interest</a></li>
+        <li><a href="ProblemOnTrain.html"><i class="material-icons">folder</i>Problems on Trains</a></li>
+
+        <li><i class="material-icons">folder</i>Height and Distance</li>
+        <li><i class="material-icons">folder</i>Time and Work</li>
+        <li><i class="material-icons">folder</i>Simple Interest</li>
+        <li><i class="material-icons">folder</i>Compound Interest</li>
+        <li><i class="material-icons">folder</i>Profit and Loss</li>
+        <li><i class="material-icons">folder</i>Partnership</li>
+        <li><i class="material-icons">folder</i>Percentage</li>
+        <li><i class="material-icons">folder</i>Problems on Ages</li>
+        <li><i class="material-icons">folder</i>Clock</li>
+        <li><i class="material-icons">folder</i>Average</li>
+        <li><i class="material-icons">folder</i>Area</li>
+        <li><i class="material-icons">folder</i>Volume and Surface Area</li>
+        <li><i class="material-icons">folder</i>Permutation and Combination</li>
+        <li><i class="material-icons">folder</i>Numbers</li>
+    </ul>
+
+    <div class="no-result" id="noResult">No topics found</div>
+
+</div>
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const topics = document.querySelectorAll("#topicList li");
+    const noResult = document.getElementById("noResult");
+
+    searchInput.addEventListener("keyup", function(){
+        let filter = searchInput.value.toLowerCase();
+        let visibleCount = 0;
+
+        topics.forEach(function(topic){
+            let text = topic.textContent.toLowerCase();
+            if(text.includes(filter)){
+                topic.style.display = "flex";
+                visibleCount++;
+            } else {
+                topic.style.display = "none";
+            }
+        });
+
+        if(visibleCount === 0){
+            noResult.style.display = "block";
+        } else {
+            noResult.style.display = "none";
+        }
+    });
+</script>
+
+</body>
+</html>

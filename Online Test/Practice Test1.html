@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>55 Question Mock Test</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+h2{
+    text-align:center;
+}
+
+.question{
+    font-size:18px;
+    margin-bottom:15px;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    margin-bottom:8px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.options input{
+    margin-right:8px;
+}
+
+.correct{
+    background:#c8f7c5;
+    border-color:green;
+}
+
+.wrong{
+    background:#f7c5c5;
+    border-color:red;
+}
+
+.buttons{
+    margin-top:15px;
+    text-align:center;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+#submitBtn{
+    background:green;
+    color:white;
+}
+
+#prevBtn,#nextBtn{
+    background:#007bff;
+    color:white;
+}
+
+#result{
+    margin-top:20px;
+    font-size:18px;
+    text-align:center;
+    font-weight:bold;
+}
+.explanation{
+    margin-top:10px;
+    background:#f9f9f9;
+    padding:10px;
+    border-radius:6px;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Mock Test - 55 Questions</h2>
+
+<div id="quiz"></div>
+
+<div class="buttons">
+    <button id="prevBtn">Previous</button>
+    <button id="nextBtn">Next</button>
+    <button id="submitBtn">Submit</button>
+</div>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+const questions = [
+{
+q:"1. Which of the following is a prime number?",
+options:["517","559","571","533"],
+answer:2,
+explanation:"571 is prime. Others are composite."
+},
+{
+q:"2. Find the sum of first 90 even natural numbers.",
+options:["8180","8190","8100","8110"],
+answer:1,
+explanation:"Formula = n² + n = 90² + 90 = 8190"
+},
+{
+q:"3. Find sum of two numbers whose product is 200 and difference minimum.",
+options:["30","27","35","33"],
+answer:0,
+explanation:"10 and 20 satisfy condition. Sum = 30"
+},
+{
+q:"4. Find ten’s digit in 65² – 55²",
+options:["2","6","5","0"],
+answer:3,
+explanation:"(65+55)(65-55)=120×10=1200 → ten's digit = 0"
+},
+{
+q:"5. Number leaves remainder 65 when divided by 91. Remainder when divided by 13?",
+options:["7","0","5","12"],
+answer:1,
+explanation:"91 = 13×7. Number divisible by 13 → remainder 0"
+},
+
+];
+
+let currentQuestion = 0;
+let userAnswers = new Array(questions.length).fill(null);
+let timerInterval;
+let timeLeft = 20 * 60; // 20 minutes
+
+// TIMER DISPLAY
+const timerDiv = document.createElement("div");
+timerDiv.style.textAlign="center";
+timerDiv.style.fontWeight="bold";
+timerDiv.style.marginBottom="10px";
+document.querySelector(".container").insertBefore(timerDiv, document.getElementById("quiz"));
+
+function startTimer(){
+    timerInterval = setInterval(()=>{
+        let minutes = Math.floor(timeLeft/60);
+        let seconds = timeLeft%60;
+        timerDiv.innerText = `Time Left: ${minutes}:${seconds<10?"0":""}${seconds}`;
+        
+        if(timeLeft <= 0){
+            clearInterval(timerInterval);
+            submitQuiz();
+        }
+        timeLeft--;
+    },1000);
+}
+
+function loadQuestion(){
+    const quiz=document.getElementById("quiz");
+    const q=questions[currentQuestion];
+    
+    quiz.innerHTML=`
+    <div class="question">${q.q}</div>
+    <div class="options">
+    ${q.options.map((opt,i)=>`
+        <label>
+        <input type="radio" name="option" value="${i}"
+        ${userAnswers[currentQuestion]==i?'checked':''}>
+        ${opt}
+        </label>
+    `).join('')}
+    </div>
+    <div class="explanation" id="explanation" style="display:none;">${q.explanation}</div>
+    `;
+}
+
+document.addEventListener("change",function(e){
+    if(e.target.name==="option"){
+        userAnswers[currentQuestion]=parseInt(e.target.value);
+    }
+});
+
+document.getElementById("nextBtn").onclick=function(){
+    if(currentQuestion<questions.length-1){
+        currentQuestion++;
+        loadQuestion();
+    }
+};
+
+document.getElementById("prevBtn").onclick=function(){
+    if(currentQuestion>0){
+        currentQuestion--;
+        loadQuestion();
+    }
+};
+
+document.getElementById("submitBtn").onclick=function(){
+    submitQuiz();
+};
+
+function submitQuiz(){
+    clearInterval(timerInterval);
+
+    let correctCount = 0;
+    let wrongCount = 0;
+    let detailedResult = "";
+
+    questions.forEach((q,i)=>{
+        let userAnsIndex = userAnswers[i];
+        let correctAnsIndex = q.answer;
+
+        let userAnsText = userAnsIndex !== null ? q.options[userAnsIndex] : "Not Attempted";
+        let correctAnsText = q.options[correctAnsIndex];
+
+        if(userAnsIndex === correctAnsIndex){
+            correctCount++;
+        } else {
+            wrongCount++;
+        }
+
+        detailedResult += `
+        <div style="margin-bottom:15px; padding:10px; border:1px solid #ddd; border-radius:6px;">
+            <strong>${q.q}</strong><br>
+            📝 Your Answer: <span style="color:${userAnsIndex===correctAnsIndex?'green':'red'}">${userAnsText}</span><br>
+            ✔ Correct Answer: <span style="color:green">${correctAnsText}</span><br>
+            📘 Explanation: ${q.explanation}
+        </div>
+        `;
+    });
+
+    let percentage = ((correctCount/questions.length)*100).toFixed(2);
+
+    document.getElementById("quiz").innerHTML="";
+    document.getElementById("result").innerHTML=`
+        <div style="margin-bottom:20px;">
+            ✅ Total Questions: ${questions.length} <br>
+            ✔ Correct Answers: ${correctCount} <br>
+            ❌ Incorrect Answers: ${wrongCount} <br>
+            📊 Percentage: ${percentage}% 
+        </div>
+        ${detailedResult}
+    `;
+
+    document.getElementById("prevBtn").disabled=true;
+    document.getElementById("nextBtn").disabled=true;
+    document.getElementById("submitBtn").disabled=true;
+}
+
+startTimer();
+loadQuestion();
+
+</script>
+
+
+</body>
+</html>

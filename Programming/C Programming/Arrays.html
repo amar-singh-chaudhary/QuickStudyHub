@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+q:" What will be the output?",
+code:`#include<stdio.h>
+int main()
+{
+    int a[5] = {5, 1, 15, 20, 25};
+    int i, j, m;
+    i = ++a[1];
+    j = a[1]++;
+    m = a[i++];
+    printf("%d, %d, %d", i, j, m);
+    return 0;
+}`,
+options:["2, 1, 15","1, 2, 5","3, 2, 15","2, 3, 20"],
+answer:2,
+explanation:"a[1] becomes 2, so i=2. Then j=2 and a[1]=3. m=a[2]=15 and i becomes 3. Output: 3, 2, 15."
+},
+{
+q:" What will be the output?",
+code:`#include<stdio.h>
+int main()
+{
+    static int a[2][2] = {1, 2, 3, 4};
+    int i, j;
+    static int *p[] = {(int*)a, (int*)a+1, (int*)a+2};
+    for(i=0; i<2; i++)
+    {
+        for(j=0; j<2; j++)
+        {
+            printf("%d, %d, %d, %d\\n", *(*(p+i)+j), *(*(j+p)+i),
+                   *(*(i+p)+j), *(*(p+j)+i));
+        }
+    }
+    return 0;
+}`,
+options:[
+"1, 1, 1, 1\n2, 3, 2, 3\n3, 2, 3, 2\n4, 4, 4, 4",
+"1, 2, 1, 2\n2, 3, 2, 3\n3, 4, 3, 4\n4, 2, 4, 2",
+"1, 1, 1, 1\n2, 2, 2, 2\n2, 2, 2, 2\n3, 3, 3, 3",
+"1, 2, 3, 4\n2, 3, 4, 1\n3, 4, 1, 2\n4, 1, 2, 3"
+],
+answer:0,
+explanation:"Pointer arithmetic walks through elements {1,2,3,4} symmetrically, producing the first option."
+},
+{
+q:" What will be the output?",
+code:`#include<stdio.h>
+void fun(int, int[]);
+int main()
+{
+    int arr[] = {1, 2, 3, 4};
+    int i;
+    fun(4, arr);
+    for(i=0; i<4; i++)
+        printf("%d,", arr[i]);
+    return 0;
+}
+void fun(int n, int arr[])
+{
+    int *p=0;
+    int i=0;
+    while(i++ < n)
+        p = &arr[i];
+    *p=0;
+}`,
+options:["2, 3, 4, 5","1, 2, 3, 4","0, 1, 2, 3","3, 2, 1, 0"],
+answer:1,
+explanation:"Function attempts to modify arr[4] (out of bounds). Given choices assume original array unchanged. Output: 1, 2, 3, 4."
+},
+{
+q:" What will be the output?",
+code:`#include<stdio.h>
+void fun(int **p);
+int main()
+{
+    int a[3][4] = {1, 2, 3, 4, 4, 3, 2, 8, 7, 8, 9, 0};
+    int *ptr;
+    ptr = &a[0][0];
+    fun(&ptr);
+    return 0;
+}
+void fun(int **p)
+{
+    printf("%d\\n", **p);
+}`,
+options:["1","2","3","4"],
+answer:0,
+explanation:"ptr points to a[0][0]. **p dereferences to value 1."
+},
+{
+q:" What will be the output?",
+code:`#include<stdio.h>
+int main()
+{
+    static int arr[] = {0, 1, 2, 3, 4};
+    int *p[] = {arr, arr+1, arr+2, arr+3, arr+4};
+    int **ptr=p;
+    ptr++;
+    printf("%d, %d, %d\\n", ptr-p, *ptr-arr, **ptr);
+    *ptr++;
+    printf("%d, %d, %d\\n", ptr-p, *ptr-arr, **ptr);
+    *++ptr;
+    printf("%d, %d, %d\\n", ptr-p, *ptr-arr, **ptr);
+    ++*ptr;
+    printf("%d, %d, %d\\n", ptr-p, *ptr-arr, **ptr);
+    return 0;
+}`,
+options:[
+"0, 0, 0\n1, 1, 1\n2, 2, 2\n3, 3, 3",
+"1, 1, 2\n2, 2, 3\n3, 3, 4\n4, 4, 1",
+"1, 1, 1\n2, 2, 2\n3, 3, 3\n3, 4, 4",
+"0, 1, 2\n1, 2, 3\n2, 3, 4\n3, 4, 5"
+],
+answer:2,
+explanation:"Careful pointer increment and dereference evaluation gives:\n1, 1, 1\n2, 2, 2\n3, 3, 3\n3, 4, 4."
+},
+{
+q:"What will be the output of the program if the array begins at 65472 and each integer occupies 2 bytes?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int a[3][4] = {1, 2, 3, 4, 4, 3, 2, 1, 7, 8, 9, 0};
+    printf("%u, %u\\n", a+1, &a+1);
+    return 0;
+}`,
+options:[
+"65474, 65476",
+"65480, 65496",
+"65480, 65488",
+"65474, 65488"
+],
+answer:1,
+explanation:"a+1 moves by 4 integers (8 bytes) → 65480. &a+1 moves by 12 integers (24 bytes) → 65496."
+},
+
+{
+q:"What will be the output of the program in Turbo C (under DOS)?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int arr[5], i=0;
+    while(i<5)
+        arr[i]=++i;
+
+    for(i=0; i<5; i++)
+        printf("%d, ", arr[i]);
+
+    return 0;
+}`,
+options:[
+"1, 2, 3, 4, 5,",
+"Garbage value, 1, 2, 3, 4,",
+"0, 1, 2, 3, 4,",
+"2, 3, 4, 5, 6,"
+],
+answer:0,
+explanation:"In Turbo C, arr[i]=++i assigns values 1 to 5 sequentially."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int arr[1]={10};
+    printf("%d\\n", 0[arr]);
+    return 0;
+}`,
+options:[
+"1",
+"10",
+"0",
+"6"
+],
+answer:1,
+explanation:"0[arr] is same as arr[0]. So output is 10."
+},
+
+{
+q:"What will be the output of the program if the array begins at address 65486?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int arr[] = {12, 14, 15, 23, 45};
+    printf("%u, %u\\n", arr, &arr);
+    return 0;
+}`,
+options:[
+"65486, 65488",
+"65486, 65486",
+"65486, 65490",
+"65486, 65487"
+],
+answer:1,
+explanation:"Both arr and &arr point to base address 65486."
+},
+
+{
+q:"What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    float arr[] = {12.4, 2.3, 4.5, 6.7};
+    printf("%d\\n", sizeof(arr)/sizeof(arr[0]));
+    return 0;
+}`,
+options:[
+"5",
+"4",
+"6",
+"7"
+],
+answer:1,
+explanation:"Array has 4 elements. sizeof(arr)=16 bytes, sizeof(arr[0])=4 bytes. 16/4=4."
+},
+{
+q:"What will be the output of the program if the array begins 1200 in memory?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int arr[]={2, 3, 4, 1, 6};
+    printf("%u, %u, %u\\n", arr, &arr[0], &arr);
+    return 0;
+}`,
+options:[
+"1200, 1202, 1204",
+"1200, 1200, 1200",
+"1200, 1204, 1208",
+"1200, 1202, 1200"
+],
+answer:1,
+explanation:"The base address is 1200. arr, &arr[0], and &arr all point to the same base address. Hence the output is 1200, 1200, 1200."
+},
+{
+q:"Which of the following is correct way to define the function fun() in the below program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int a[3][4];
+    fun(a);
+    return 0;
+}`,
+options:[
+"void fun(int p[][4])",
+"void fun(int *p[4])",
+"void fun(int *p[][4])",
+"void fun(int *p[3][4])"
+],
+answer:0,
+explanation:"void fun(int p[][4]) is correct because when passing a 2D array, the column size must be specified."
+},
+
+{
+q:"Which of the following statements mentioning the name of the array begins DOES NOT yield the base address?",
+code:`1: When array name is used with sizeof operator
+2: When array name is operand of & operator
+3: When array name is passed to scanf()
+4: When array name is passed to printf()`,
+options:[
+"1 and 2",
+"1 and 3",
+"2 only",
+"2 and 4"
+],
+answer:0,
+explanation:"Using sizeof and & operator does not yield the base address directly. scanf() and printf() do."
+},
+
+{
+q:"Which of the following statements are correct about the program below?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int size, i;
+    scanf("%d", &size);
+    int arr[size];
+    for(i=1; i<=size; i++)
+    {
+        scanf("%d", arr[i]);
+        printf("%d", arr[i]);
+    }
+    return 0;
+}`,
+options:[
+"The code is erroneous since subscript runs from 1 to size",
+"The code is erroneous since array values are scanned in loop",
+"The code is erroneous since array declaration is invalid",
+"The code is correct and runs successfully"
+],
+answer:2,
+explanation:"int arr[size]; is invalid in older C standards because array size must be constant expression. Also declaration after function call is not allowed in old C."
+},
+
+{
+q:"Which of the following statements are correct about 6 used in the program?",
+code:`int num[6];
+num[6]=21;`,
+options:[
+"In first statement 6 specifies particular element, second specifies type",
+"In first statement 6 specifies array size, second specifies particular element",
+"In first statement 6 specifies particular element, second specifies array size",
+"In both statements 6 specifies array size"
+],
+answer:1,
+explanation:"In int num[6], 6 specifies array size. In num[6]=21, 6 refers to 7th element index (out of bounds)."
+},
+
+{
+q:"Which of the following statements are correct about an array?",
+code:`1: int num[26] can store 26 elements
+2: num[1] designates first element
+3: Array must be initialized at declaration
+4: num[SIZE] allowed if SIZE is macro`,
+options:[
+"1 only",
+"1 and 4",
+"2 and 3",
+"2 and 4"
+],
+answer:1,
+explanation:"Statement 1 is true. Statement 2 is false (num[0] is first element). Statement 3 is false. Statement 4 is true."
+}
+
+
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>

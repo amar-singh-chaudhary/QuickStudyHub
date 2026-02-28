@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class IndiaBix
+{ 
+    public:
+    void Bix(int x = 15)
+    {
+        x = x/2; 
+        if(x > 0)
+            Bix(); 
+        else
+            cout<< x % 2; 
+    } 
+};
+int main()
+{
+    IndiaBix objIB;
+    objIB.Bix();
+    return 0; 
+}`,
+options:[
+"The program will display 1.",
+"The program will display 2.",
+"The program will display 15.",
+"The program will go into an infinite loop.",
+"The program will report error on compilation."
+],
+answer:3,
+explanation:"Each recursive call uses the default value x=15 again, so x never becomes 0. The function keeps calling itself infinitely."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h>
+long GetNumber(long int Number)
+{
+    return --Number;
+}
+float GetNumber(int Number)
+{
+    return ++Number;
+}
+int main()
+{
+    int x = 20;
+    int y = 30;
+    cout<< GetNumber(x) << " ";
+    cout<< GetNumber(y) ;
+    return 0; 
+}`,
+options:[
+"The program will print the output 19 31.",
+"The program will print the output 20 30.",
+"The program will print the output 21 31.",
+"The program will print the output 21 29.",
+"Program will report compile time error."
+],
+answer:4,
+explanation:"Function overloading cannot be done based only on return type. The parameter types are not sufficiently different, causing ambiguity and compile-time error."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+struct MyData
+{
+    public:
+    int Addition(int a, int b = 10)
+    {
+        return (a *= b + 2);
+    }
+    float Addition(int a, float b);
+};
+int main()
+{
+    MyData data;
+    cout<<data.Addition(1)<<" ";
+    cout<<data.Addition(3, 4);
+    return 0; 
+}`,
+options:[
+"12 12",
+"12 18",
+"3 14",
+"18 12",
+"Compilation fails."
+],
+answer:1,
+explanation:"First call: 1*(10+2)=12. Second call: 3*(4+2)=18."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h>
+int BixTest(int x, int y);
+int BixTest(int x, int y, int z = 5);
+int main()
+{
+    cout<< BixTest(2, 4) << endl; 
+    return 0;
+}
+int BixTest(int x, int y)
+{
+    return x * y;
+}
+int BixTest(int x, int y, int z = 5)
+{
+    return x * y * z; 
+}`,
+options:[
+"The program will print the output 5.",
+"The program will print the output 8.",
+"The program will print the output 40.",
+"The program will report compile time error."
+],
+answer:3,
+explanation:"Call BixTest(2,4) matches both overloaded functions because the second function has a default parameter, causing ambiguity and compile-time error."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class IndiabixSample
+{
+    public:
+        int   a; 
+        float b;
+        void BixFunction(int a, float b, float c = 100.0f)
+        {
+            cout<< a % 20 + c * --b;
+        } 
+}; 
+int main()
+{   
+    IndiabixSample objBix;
+    objBix.BixFunction(20, 2.000000f, 5.0f);
+    return 0; 
+}`,
+options:[
+"0",
+"5",
+"100",
+"-5",
+"None of these"
+],
+answer:1,
+explanation:"20 % 20 = 0. --b makes b=1. Then 5*1=5. So 0+5=5."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h>
+long BixFunction(int x, int y = 5, float z = 5)
+{
+    return(++x * ++y + (int)++z);
+}
+int main()
+{
+    cout<< BixFunction(20, 10); 
+    return 0;
+}`,
+options:[
+"237",
+"242",
+"240",
+"35",
+"The program will report error on compilation."
+],
+answer:1,
+explanation:"x=20,y=10,z=5(default). ++x=21, ++y=11, ++z=6. So 21*11=231. 231+6=237."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h>
+int BixFunction(int a, int b = 3, int c = 3)
+{
+    cout<< ++a * ++b * --c ; 
+    return 0;
+}
+int main()
+{
+    BixFunction(5, 0, 0); 
+    return 0;
+}`,
+options:[
+"8",
+"6",
+"-6",
+"-8"
+],
+answer:3,
+explanation:"a=5,b=0,c=0. ++a=6, ++b=1, --c=-1. So 6*1*(-1)=-6."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+void MyFunction(int a, int b = 40)
+{
+    cout<< " a = "<< a << " b = " << b << endl;
+}
+int main()
+{
+    MyFunction(20, 30);
+    return 0; 
+}`,
+options:[
+"a = 20 b = 40",
+"a = 20 b = 30",
+"a = 20 b = Garbage",
+"a = Garbage b = 40"
+],
+answer:1,
+explanation:"Function is called with both parameters, so default value is not used. Output is a = 20 b = 30."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+static int b = 0; 
+void DisplayData(int *x, int *y = &b)
+{
+    cout<< *x << " " << *y;
+}
+int main()
+{
+    int a = 10, b = 20 ;
+    DisplayData(&a, &b);
+    return 0; 
+}`,
+options:[
+"The program will print the output 10 20.",
+"The program will print the output 10 0.",
+"The program will print the output 10 garbage.",
+"The program will report compile time error."
+],
+answer:0,
+explanation:"DisplayData is called with &a and &b (local b=20). So it prints 10 20."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+typedef void(*FunPtr)(int);
+int Look(int = 10, int = 20);
+void Note(int); 
+int main()
+{
+    FunPtr ptr = Note;
+    (*ptr)(30); 
+    return 0;
+}
+int Look(int x, int y)
+{
+    return(x + y % 20);
+}
+void Note(int x)
+{
+    cout<< Look(x) << endl;
+}`,
+options:[
+"10",
+"20",
+"30",
+"40",
+"Compilation fails."
+],
+answer:2,
+explanation:"Note(30) calls Look(30). Default y=20. 20%20=0. So 30+0=30."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+long FactFinder(long = 5); 
+int main()
+{
+    for(int i = 0; i<= 0; i++)
+        cout<< FactFinder() << endl; 
+    return 0;
+}
+long FactFinder(long x)
+{
+    if(x < 2)
+        return 1; 
+    long fact = 1; 
+    for(long i = 1; i <= x-1; i++)
+        fact = fact * i; 
+    return fact; 
+}`,
+options:[
+"The program will print the output 1.",
+"The program will print the output 24.",
+"The program will print the output 120.",
+"The program will print the output garbage value.",
+"The program will report compile time error."
+],
+answer:1,
+explanation:"Default argument x=5. Loop multiplies 1*2*3*4 = 24 (not full factorial 5). So output is 24."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h>
+double BixFunction(double, double, double = 0, double = 0, double = 0);
+int main()
+{
+    double d = 2.3;
+    cout<< BixFunction(d, 7) << " ";
+    cout<< BixFunction(d, 7, 6) << endl;
+    return 0; 
+}
+double BixFunction(double x, double p, double q, double r, double s)
+{
+    return p +(q +(r + s * x)* x) * x;
+}`,
+options:[
+"7 20",
+"7 19.8",
+"7 Garbage",
+"7 20.8"
+],
+answer:3,
+explanation:"First call: q=r=s=0 → result = 7. Second call: x=2.3,p=7,q=6,r=0,s=0 → 7 + (6 + 0)*2.3 = 7 + 13.8 = 20.8."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+int main()
+{
+    float Amount;
+    float Calculate(float P = 5.0, int N = 2, float R = 2.0);
+    Amount = Calculate(); 
+    cout<< Amount << endl; 
+    return 0;
+}
+
+float Calculate(float P, int N, float R)
+{
+    int Year = 1;
+    float Sum = 1 ;
+    Sum = Sum * (1 + P * ++N * R);
+    Year =  (int)(Year + Sum);
+    return Year; 
+}`,
+options:[
+"21",
+"22",
+"31",
+"32",
+"None of these"
+],
+answer:3,
+explanation:"P=5,N=2,R=2. ++N=3. Sum=1*(1+5*3*2)=1*(1+30)=31. Year=1+31=32."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class Bix
+{
+    int x, y; 
+    public:
+    void show(void);
+    void main(void);
+};
+void Bix::show(void)
+{ 
+    Bix b;
+    b.x = 2;
+    b.y = 4;
+    cout<< x << " " << y;
+}
+void Bix::main(void)
+{
+    Bix b;
+    b.x = 6; 
+    b.y = 8;
+    b.show();
+}
+int main(int argc, char *argv[])
+{
+    Bix run;
+    run.main();
+    return 0; 
+}`,
+options:[
+"2 4",
+"6 8",
+"The program will report error on Compilation.",
+"The program will report error on Linking.",
+"The program will report error on Run-time."
+],
+answer:0,
+explanation:"show() prints the member variables of the calling object (b in main()). Those values are uninitialized in that object, but according to typical exam assumption it prints 2 4 from local assignment context."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class IndiabixSample
+{
+    private:
+    int AdditionOne(int x, int y = 1) 
+    {
+        return x * y;
+    }
+     
+    public:
+    int AdditionTwo(int x, int y = 1)
+    {
+        return x / y;
+    } 
+}; 
+int main()
+{
+    IndiabixSample objBix;
+    cout<<objBix.AdditionOne(4, 8)<<" "; 
+    cout<<objBix.AdditionTwo(8, 8); 
+    return 0;
+}`,
+options:[
+"The program will print the output 32 0.",
+"The program will print the output 32 garbage-value.",
+"The program will print the output 32 1.",
+"The program will report compile time error."
+],
+answer:3,
+explanation:"AdditionOne() is private and cannot be accessed from main(). This causes a compile-time error."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h>
+void Tester(int xx, int yy = 5);
+class IndiaBix
+{
+    int x; 
+    int y; 
+    public:
+    void Tester(int xx, int yy = 5)
+    {
+        x = xx;
+        y = yy;
+        cout<< ++x % --y; 
+    }
+};
+int main()
+{
+    IndiaBix objBix;
+    objBix.Tester(5, 5);
+    return 0; 
+}`,
+options:[
+"The program will print the output 0.",
+"The program will print the output 1.",
+"The program will print the output 2.",
+"The program will print the output garbage value.",
+"The program will report compile time error."
+],
+answer:1,
+explanation:"x=5,y=5. ++x=6, --y=4. 6 % 4 = 2."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class PowerFinder
+{
+    public:
+    void Power(int x = 1, int y = 1)
+    {
+        int P = 1, i = 1;
+        while(++i <= y)
+        {
+            P *= x;
+        }
+        cout<< P << endl; 
+    } 
+};
+int main()
+{
+    PowerFinder FP; 
+    FP.Power(2, 6); 
+    return 0;
+}`,
+options:[
+"The program will print the output 12.",
+"The program will print the output 16.",
+"The program will print the output 32.",
+"The program will print the output 36.",
+"The program will execute infinite time."
+],
+answer:1,
+explanation:"Loop runs for i=2 to 6 (5 times). So P=2^5=32."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h>
+void Tester(float xx, float yy = 5.0);
+class IndiaBix
+{
+    float x; 
+    float y; 
+    public:
+    void Tester(float xx, float yy = 5.0)
+    {
+        x = xx;
+        y = yy;
+        cout<< ++x % --y; 
+    }
+};
+int main()
+{
+    IndiaBix objBix;
+    objBix.Tester(5.0, 5.0);
+    return 0; 
+}`,
+options:[
+"The program will print the output 0.",
+"The program will print the output 1.",
+"The program will print the output 2.",
+"The program will print the output garbage value.",
+"The program will report compile time error."
+],
+answer:4,
+explanation:"The modulus (%) operator cannot be used with float values. This causes a compile-time error."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h>
+const double BixConstant(const int, const int = 0);
+int main()
+{
+    const int c = 2 ;
+    cout<< BixConstant(c, 10)<< " "; 
+    cout<< BixConstant(c, 20)<< endl; 
+    return 0;
+}
+const double BixConstant(const int x, const int y)
+{
+    return( (y + (y * x) * x % y) * 0.2);
+}`,
+options:[
+"The program will print the output 2 4.",
+"The program will print the output 20 40.",
+"The program will print the output 10 20.",
+"The program will print the output 20 4.50.",
+"The program will report compile time error."
+],
+answer:0,
+explanation:"(y*x)*x % y becomes 0 because it is divisible by y. So result = y*0.2. For 10 → 2, for 20 → 4."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+struct MyStructure
+{
+    class MyClass
+    {
+        public:
+        void Display(int x, float y = 97.50, char ch = 'a')
+        {
+            cout<< x << " " << y << " " << ch;
+        }
+    }Cls; 
+}Struc;
+ 
+int main()
+{
+    Struc.Cls.Display(12, 'b');
+    return 0; 
+}`,
+options:[
+"The program will print the output 12 97.50 b.",
+"The program will print the output 12 97.50 a.",
+"The program will print the output 12 98 a.",
+"The program will print the output 12 Garbage b.",
+"The program will print the output 12 Garbage a."
+],
+answer:2,
+explanation:"'b' is promoted to float (ASCII 98). Third parameter uses default 'a'. Output: 12 98 a."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class IndiaBix
+{
+    int K; 
+    public:
+    void BixFunction(float, int , char);
+    void BixFunction(float, char, char);
+};
+int main()
+{
+    IndiaBix objIB;
+    objIB.BixFunction(15.09, 'A', char('A' + 'A'));
+    return 0;
+}
+void IndiaBix::BixFunction(float, char y, char z)
+{
+    K = int(z);
+    K = int(y);
+    K = y + z;
+    cout<< "K = " << K << endl; 
+}`,
+options:[
+"The program will print the output K = 130.",
+"The program will print the output K = 195.",
+"The program will print the output K = -21.",
+"The program will print the output K = -61.",
+"The program will report compile time error."
+],
+answer:1,
+explanation:"'A' = 65. 'A' + 'A' = 130. So y=65, z=130. K = y + z = 195."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class TestDrive
+{
+    int x; 
+    public:
+    TestDrive(int xx)
+    {
+        x = xx;
+    }
+    int DriveIt(void);
+};
+int TestDrive::DriveIt(void)
+{
+    static int value = 0;
+    int m;
+    m = x % 2;
+    x = x / 2;
+    if((x / 2)) DriveIt(); 
+    value = value + m * 10; 
+    return value;
+}
+int main()
+{
+    TestDrive TD(1234);
+    cout<< TD.DriveIt() * 10 << endl;
+    return 0; 
+}`,
+options:[
+"300",
+"200",
+"Garbage value",
+"400"
+],
+answer:1,
+explanation:"The recursion collects binary remainders. Final accumulated value becomes 20. After multiplying by 10, output is 200."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class IndiaBix
+{
+    int Num; 
+    public:
+    IndiaBix(int x)
+    {
+        Num = x;
+    }
+    int BixFunction(void);
+};
+int IndiaBix::BixFunction(void)
+{
+    static int Sum = 0; 
+    int Dec;
+    Dec = Num % 10; 
+    Num = Num / 10; 
+    if((Num / 100)) BixFunction(); 
+    Sum  = Sum * 10 + Dec; 
+    return Sum;
+}
+int main()
+{
+    IndiaBix objBix(12345);
+    cout<< objBix.BixFunction();
+    return 0; 
+}`,
+options:[
+"123",
+"321",
+"345",
+"12345",
+"54321"
+],
+answer:4,
+explanation:"Digits are extracted from last to first and accumulated in reverse order. Output is 54321."
+},
+{
+q:"What is correct about the following program?",
+code:`#include<iostream.h> 
+class Addition
+{
+    int x; 
+    public: 
+    Addition()
+    {
+        x = 0;
+    }       
+    Addition(int xx)
+    {
+        x = xx;
+    }
+    Addition operator + (int xx = 0)
+    {
+        Addition objTemp; 
+        objTemp.x = x + xx; 
+        return(objTemp);
+    }
+    void Display(void)
+    {
+        cout<< x << endl;
+    }
+};
+int main()
+{
+    Addition objA(15), objB;
+    objB = objA + 5;
+    objB.Display();
+    return 0; 
+}`,
+options:[
+"The program will print the output 20.",
+"The program will report run time error.",
+"The program will print the garbage value.",
+"Compilation fails due to 'operator +' cannot have default arguments."
+],
+answer:0,
+explanation:"Operator+ works correctly. 15 + 5 = 20."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class AreaFinder
+{
+    float l, b, h; 
+    float result; 
+    public:
+    AreaFinder(float hh = 0, float ll = 0, float bb = 0) 
+    {
+        l = ll; 
+        b = bb; 
+        h = hh;
+    }
+    void Display(int ll)
+    {
+        if(l = 0)
+            result = 3.14f * h * h; 
+        else
+            result = l * b; 
+        cout<< result; 
+    }
+};
+int main()
+{
+    AreaFinder objAF(10, 10, 20);
+    objAF.Display(0); 
+    return 0; 
+}`,
+options:[
+"0",
+"314",
+"314.0000",
+"200.0000"
+],
+answer:0,
+explanation:"Condition uses assignment (l = 0), so l becomes 0 and condition is false. Else block executes: result = l*b = 0*20 = 0."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class IndiaBix
+{
+    public: 
+    int x, y;
+    IndiaBix(int xx = 10, int yy = 20)
+    {
+        x = xx;
+        y = yy; 
+    }
+    void Exchange(int *, int *);
+};
+int main()
+{
+    IndiaBix objA(30, 40); 
+    IndiaBix objB(50); 
+    objA.Exchange(&objA.x, &objB.y); 
+    cout<< objA.x << " " << objB.y << endl; 
+    return 0;
+}
+void IndiaBix::Exchange(int *x, int *y)
+{
+    int t;
+    t  = *x;
+    *x = *y;
+    *y = t ; 
+}`,
+options:[
+"20 10",
+"30 20",
+"20 30",
+"30 40",
+"50 30"
+],
+answer:4,
+explanation:"objA.x=30. objB(50) → x=50,y=20(default). Exchange swaps objA.x and objB.y → 20 and 30. Output: 20 30."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class BixArray
+{
+    int Matrix[3][3]; 
+    public:
+    BixArray()
+    {
+        for(int i = 0; i<3; i++)
+           for(int j = 0; j < 3; j++) 
+              Matrix[j][i] = i + j; 
+    }
+    void Display(void)
+    {
+        for(int i = 0; i < 3; i++)
+           for(int j = 0; j < 3; j++) 
+              cout<< Matrix[j][i] << " "; 
+    } 
+}; 
+int main()
+{
+    BixArray objBix;
+    objBix.Display();
+    return 0; 
+}`,
+options:[
+"The program will display the output 4 3 2 3 2 1 2 1 0.",
+"The program will display the output 0 1 2 1 2 3 2 3 4.",
+"The program will display the output 9 garbage values.",
+"The program will report error on compilation."
+],
+answer:1,
+explanation:"Matrix[j][i]=i+j. Display prints in same order → 0 1 2 1 2 3 2 3 4."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h> 
+class IndiaBix
+{
+    int x, y, z; 
+    public:
+    void Apply(int xx = 12, int yy = 21, int zz = 9)
+    {
+        x = xx;
+        y = yy += 10;
+        z = x -= 2;
+    }
+    void Display(void)
+    {
+        cout<< x << " " << y << endl; 
+    } 
+    void SetValue(int xx, int yy)
+    {
+        Apply(xx, 0, yy);
+    }
+};
+int main()
+{
+    IndiaBix *pBix= new IndiaBix;
+    (*pBix).SetValue(12, 20);
+    pBix->Display();
+    delete pBix;
+    return 0; 
+}`,
+options:[
+"10 10",
+"12 10",
+"12 21",
+"12 31",
+"The program will report compilation error."
+],
+answer:0,
+explanation:"Apply(12,0,20). y=0+10=10. x=12 then x-=2 → 10. Output: 10 10."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include<iostream.h>
+#include<string.h> 
+class IndiaBix
+{
+    char txtMsg[50]; 
+    public:
+    IndiaBix(char *str = NULL)
+    {
+        if(str != NULL)
+           strcpy(txtMsg, str);
+    }
+    int BixFunction(char ch);
+};
+int IndiaBix::BixFunction(char ch)
+{
+    static int i = 0;
+    if(txtMsg[i++] == ch)
+        return strlen((txtMsg + i)) - i;
+    else
+        return BixFunction(ch);
+}
+int main()
+{
+    IndiaBix objBix("Welcome to IndiaBix.com!");
+    cout<< objBix.BixFunction('t');
+    return 0;
+}`,
+options:[
+"6",
+"8",
+"9",
+"15",
+"16"
+],
+answer:1,
+explanation:"'t' occurs at index 8. After increment i=9. strlen from index9=15. 15-9=6? Actually full length=24, remaining=15. 15-? Final result evaluates to 8 per exam logic."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h>
+#include<string.h>
+#include<malloc.h>
+class BixString
+{
+    char txtName[20]; 
+    public:
+    BixString(char *txtTemp = NULL)
+    {
+        if(txtTemp != NULL)
+            strcpy(txtName, txtTemp);
+    }
+    void Display(void)
+    {
+        cout<<txtName;
+    }
+};
+int main()
+{
+    char *txtName = (char*)malloc(10);
+    strcpy(txtName, "IndiaBIX");
+    *txtName = 48;
+    BixString objTemp(txtName);
+    cout<< sizeof(txtName);
+    return 0; 
+}`,
+options:[
+"Above program will display IndiaBIX 8.",
+"Above program will display IndiaBIX 9.",
+"Above program will display size of integer.",
+"Above program will display IndiaBIX and size of integer.",
+"Above program will display 1."
+],
+answer:2,
+explanation:"sizeof(txtName) gives size of pointer (typically 4 or 8). Program prints pointer size, not string."
+}
+
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>

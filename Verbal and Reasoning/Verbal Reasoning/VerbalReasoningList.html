@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verbal Reasoning Topics</title>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<style>
+    body{
+        margin:0;
+        font-family: Arial, Helvetica, sans-serif;
+        background:#f2f2f2;
+    }
+
+    .container{
+        max-width:500px;
+        margin:auto;
+        padding:15px;
+    }
+
+    /* Search Bar */
+    .search-box{
+        display:flex;
+        align-items:center;
+        background:#eaeaea;
+        padding:10px 15px;
+        border-radius:8px;
+        margin-bottom:20px;
+    }
+
+    .search-box i{
+        color:#555;
+        margin-right:10px;
+    }
+
+    .search-box input{
+        border:none;
+        outline:none;
+        background:transparent;
+        font-size:16px;
+        width:100%;
+    }
+
+    /* Folder List */
+    .folder-list{
+        list-style:none;
+        padding:0;
+        margin:0;
+    }
+
+    .folder-list li{
+        display:flex;
+        align-items:center;
+        padding:15px 10px;
+        font-size:18px;
+        color:#333;
+        border-bottom:1px solid #ddd;
+        cursor:pointer;
+        transition:0.3s;
+    }
+
+    .folder-list li:hover{
+        background:#e6f0ff;
+    }
+
+    .folder-list li i{
+        color:#f4b400;
+        margin-right:15px;
+        font-size:26px;
+    }
+
+    .no-result{
+        text-align:center;
+        padding:20px;
+        color:red;
+        display:none;
+    }
+    /* Anchor link color reamin black */
+a {
+    color: black;          /* Set your color */
+    text-decoration: none; /* Optional: remove underline */
+}
+
+a:visited {
+    color: black;          /* Same color after clicking */
+}
+
+a:hover {
+    color: black;          /* Same color on hover */
+}
+
+a:active {
+    color: black;          /* Same color when clicked */
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Search Bar -->
+    <div class="search-box">
+        <i class="material-icons">search</i>
+        <input type="text" id="searchInput" placeholder="Search topics...">
+    </div>
+
+    <!-- Topic List -->
+    <ul class="folder-list" id="topicList">
+       
+        <li><a href="LetterAndSymbolSeries.html"><i class="material-icons">folder</i>Letter and Symbol Series</a></li>
+
+        
+
+        <li><a href="NumberSeries.html"><i class="material-icons">folder</i>Number Series</a></li>
+        <li><a href="VerbalClassification.html"><i class="material-icons">folder</i>Verbal Classification</a></li>
+        <li><a href="StatementAndArgument.html"><i class="material-icons">folder</i>Statement and Argument</a></li>
+        <li><a href="NumberSeries.html"><i class="material-icons">folder</i>Number Series</a></li>
+        <li><a href="NumberSeries.html"><i class="material-icons">folder</i>Number Series</a></li>
+        <li><a href="NumberSeries.html"><i class="material-icons">folder</i>Number Series</a></li>
+        <li><a href="NumberSeries.html"><i class="material-icons">folder</i>Number Series</a></li>
+
+        <li><a href="Analogy.html"><i class="material-icons">folder</i>Analogy</a></li>
+        
+    </ul>
+
+    <div class="no-result" id="noResult">No topics found</div>
+
+</div>
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const topics = document.querySelectorAll("#topicList li");
+    const noResult = document.getElementById("noResult");
+
+    searchInput.addEventListener("keyup", function(){
+        let filter = searchInput.value.toLowerCase();
+        let visibleCount = 0;
+
+        topics.forEach(function(topic){
+            let text = topic.textContent.toLowerCase();
+            if(text.includes(filter)){
+                topic.style.display = "flex";
+                visibleCount++;
+            } else {
+                topic.style.display = "none";
+            }
+        });
+
+        if(visibleCount === 0){
+            noResult.style.display = "block";
+        } else {
+            noResult.style.display = "none";
+        }
+    });
+</script>
+
+</body>
+</html>

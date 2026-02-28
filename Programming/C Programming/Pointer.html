@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+q:"7. A pointer is",
+code:`// Conceptual Question`,
+options:[
+"A keyword used to create variables",
+"A variable that stores address of an instruction",
+"A variable that stores address of other variable",
+"All of the above"
+],
+answer:2,
+explanation:"A pointer is a variable that stores the memory address of another variable. It is not a keyword. Although function pointers can store instruction addresses, generally a pointer stores the address of another variable."
+},
+{
+q:"8. The operator used to get value at address stored in a pointer variable is",
+code:`// Conceptual Question`,
+options:[
+"*",
+"&",
+"&&",
+"||"
+],
+answer:0,
+explanation:"The '*' operator is the dereference operator. It is used to access the value stored at the address held by a pointer variable."
+},
+{
+q:"1. What is (void*)0?",
+code:`// Conceptual Question`,
+options:[
+"Representation of NULL pointer",
+"Representation of void pointer",
+"Error",
+"None of above"
+],
+answer:0,
+explanation:"(void*)0 represents a NULL pointer. It is a null pointer constant cast to void pointer type."
+},
+{
+q:"2. Can you combine the following two statements into one?\nchar *p;\np = (char*) malloc(100);",
+code:`// Conceptual Question`,
+options:[
+"char p = *malloc(100);",
+"char *p = (char) malloc(100);",
+"char *p = (char*)malloc(100);",
+"char *p = (char *)(malloc*)(100);"
+],
+answer:2,
+explanation:"The correct combined form is: char *p = (char*)malloc(100); which declares the pointer and assigns allocated memory in one statement."
+},
+{
+q:"3. In which header file is the NULL macro defined?",
+code:`// Conceptual Question`,
+options:[
+"stdio.h",
+"stddef.h",
+"stdio.h and stddef.h",
+"math.h"
+],
+answer:2,
+explanation:"NULL is defined in multiple headers including stddef.h and stdio.h (also stdlib.h, string.h, etc.)."
+},
+{
+q:"4. How many bytes are occupied by near, far and huge pointers (DOS)?",
+code:`// Conceptual Question (16-bit DOS)`,
+options:[
+"near=2 far=4 huge=4",
+"near=4 far=8 huge=8",
+"near=2 far=4 huge=8",
+"near=4 far=4 huge=8"
+],
+answer:0,
+explanation:"In 16-bit DOS: near pointers are 2 bytes (offset only), far pointers are 4 bytes (segment + offset), and huge pointers are also 4 bytes."
+},
+{
+q:"5. If a variable is a pointer to a structure, then which operator is used to access data members of the structure through the pointer variable?",
+code:`// Conceptual Question`,
+options:[
+".",
+"&",
+"*",
+"->"
+],
+answer:3,
+explanation:"The '->' operator is used to access structure members through a pointer to structure."
+},
+{
+q:"1. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    static char *s[] = {"black", "white", "pink", "violet"};
+    char **ptr[] = {s+3, s+2, s+1, s}, ***p;
+    p = ptr;
+    ++p;
+    printf("%s", **p+1);
+    return 0;
+}`,
+options:[
+"ink",
+"ack",
+"ite",
+"let"
+],
+answer:0,
+explanation:"ptr[1] points to s+2 which is \"pink\". So **p is \"pink\". **p + 1 skips first character 'p', printing \"ink\"."
+},
+{
+q:"2. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int i=3, *j, k;
+    j = &i;
+    printf("%d\\n", i**j*i+*j);
+    return 0;
+}`,
+options:[
+"30",
+"27",
+"9",
+"3"
+],
+answer:0,
+explanation:"Expression: i * *j * i + *j. Since i=3 and *j=3 → 3*3*3 + 3 = 27 + 3 = 30."
+},
+{
+q:"3. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int x=30, *y, *z;
+    y=&x; /* Assume address of x is 500 and integer is 4 byte size */
+    z=y;
+    *y++=*z++;
+    x++;
+    printf("x=%d, y=%d, z=%d\\n", x, y, z);
+    return 0;
+}`,
+options:[
+"x=31, y=502, z=502",
+"x=31, y=500, z=500",
+"x=31, y=498, z=498",
+"x=31, y=504, z=504"
+],
+answer:3,
+explanation:"*y++=*z++ assigns value first, then both pointers increment. Since int is 4 bytes, addresses increase from 500 to 504. x becomes 31. So y=504 and z=504."
+},
+{
+q:"4. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str[20] = "Hello";
+    char *const p=str;
+    *p='M';
+    printf("%s\\n", str);
+    return 0;
+}`,
+options:[
+"Mello",
+"Hello",
+"HMello",
+"MHello"
+],
+answer:0,
+explanation:"p is a constant pointer to str. It can modify the content but cannot change the address. So 'H' becomes 'M'. Output is Mello."
+},
+{
+q:"5. What will be the output of the program if integer is 4 bytes long?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int ***r, **q, *p, i=8;
+    p = &i;
+    q = &p;
+    r = &q;
+    printf("%d, %d, %d\\n", *p, **q, ***r);
+    return 0;
+}`,
+options:[
+"8, 8, 8",
+"4000, 4002, 4004",
+"4000, 4004, 4008",
+"4000, 4008, 4016"
+],
+answer:0,
+explanation:"All pointers ultimately reference variable i which holds 8. So *p=8, **q=8, and ***r=8."
+},
+{
+q:"11. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int arr[2][2][2] = {10, 2, 3, 4, 5, 6, 7, 8};
+    int *p, *q;
+    p = &arr[1][1][1];
+    q = (int*) arr;
+    printf("%d, %d\\n", *p, *q);
+    return 0;
+}`,
+options:[
+"8, 10",
+"10, 2",
+"8, 1",
+"Garbage values"
+],
+answer:0,
+explanation:"Array is stored in row-major order. arr[1][1][1] is the last element (8). Casting arr to int* makes q point to first element (10). Hence output is 8, 10."
+},
+{
+q:"12. What will be the output of the program assuming that the array begins at location 1002 and size of int is 4 bytes?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int a[3][4] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+    printf("%u, %u, %u\\n", a[0]+1, *(a[0]+1), *(*(a+0)+1));
+    return 0;
+}`,
+options:[
+"448, 4, 4",
+"520, 2, 2",
+"1006, 2, 2",
+"Error"
+],
+answer:2,
+explanation:"a[0] points to address 1002. Adding 1 moves 4 bytes ahead → 1006. *(a[0]+1) and *(*(a+0)+1) both access second element → 2."
+},
+{
+q:"13. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int arr[3] = {2, 3, 4};
+    char *p;
+    p = (char*)arr;
+    printf("%d, ", *p);
+    p = (char*)((int*)p + 1);
+    printf("%d", *(int*)p);
+    return 0;
+}`,
+options:[
+"2, 3",
+"2, 0",
+"2, Garbage value",
+"0, 0"
+],
+answer:0,
+explanation:"First byte of integer 2 is 2 (little-endian). Then pointer moves to next integer (3). So output is 2, 3."
+},
+{
+q:"14. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char *str;
+    str = "%d\\n";
+    str++;
+    str++;
+    printf(str-2, 300);
+    return 0;
+}`,
+options:[
+"No output",
+"30",
+"3",
+"300"
+],
+answer:3,
+explanation:"str-2 restores original format string \"%d\\n\". So printf prints 300."
+},
+{
+q:"15. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    printf("%c\\n", 7["IndiaBIX"]);
+    return 0;
+}`,
+options:[
+"Error: in printf",
+"Nothing will print",
+"print \"X\" of IndiaBIX",
+"print \"7\""
+],
+answer:2,
+explanation:"In C, a[b] is same as *(a+b). So 7[\"IndiaBIX\"] is same as *(\"IndiaBIX\"+7). Index 7 is character 'X'."
+},
+{
+q:"6. What will be the output of the program?",
+code:`#include<stdio.h>
+
+void fun(void *p);
+int i;
+
+int main()
+{
+    void *vptr;
+    vptr = &i;
+    fun(vptr);
+    return 0;
+}
+void fun(void *p)
+{
+    int **q;
+    q = (int**)&p;
+    printf("%d\\n", **q);
+}`,
+options:[
+"Error: cannot convert from void** to int**",
+"Garbage value",
+"0",
+"No output"
+],
+answer:2,
+explanation:"Global variable 'i' is uninitialized, so it defaults to 0. The pointer manipulation ultimately dereferences 'i', so output is 0."
+},
+{
+q:"7. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char *str;
+    str = "%s";
+    printf(str, "K\\n");
+    return 0;
+}`,
+options:[
+"Error",
+"No output",
+"K",
+"%s"
+],
+answer:2,
+explanation:"str holds \"%s\" which is used as format string. So printf(\"%s\", \"K\\n\") prints K followed by newline."
+},
+{
+q:"8. What will be the output of the program?",
+code:`#include<stdio.h>
+int *check(static int, static int);
+
+int main()
+{
+    int *c;
+    c = check(10, 20);
+    printf("%d\\n", c);
+    return 0;
+}
+int *check(static int i, static int j)
+{
+    int *p, *q;
+    p = &i;
+    q = &j;
+    if(i >= 45)
+        return (p);
+    else
+        return (q);
+}`,
+options:[
+"10",
+"20",
+"Error: Non portable pointer conversion",
+"Error: cannot use static for function parameters"
+],
+answer:3,
+explanation:"Function parameters cannot be declared as static in C. Hence compilation error occurs."
+},
+{
+q:"9. What will be the output of the program if the size of pointer is 4 bytes?",
+code:`#include<stdio.h>
+
+int main()
+{
+    printf("%d, %d\\n", sizeof(NULL), sizeof(""));
+    return 0;
+}`,
+options:[
+"2, 1",
+"2, 2",
+"4, 1",
+"4, 2"
+],
+answer:2,
+explanation:"If pointer size is 4 bytes, sizeof(NULL) is 4. sizeof(\"\") is 1 because it contains only the null terminator '\\0'."
+},
+{
+q:"10. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    void *vp;
+    char ch=74, *cp="JACK";
+    int j=65;
+    vp=&ch;
+    printf("%c", *(char*)vp);
+    vp=&j;
+    printf("%c", *(int*)vp);
+    vp=cp;
+    printf("%s", (char*)vp+2);
+    return 0;
+}`,
+options:[
+"JCK",
+"J65K",
+"JAK",
+"JACK"
+],
+answer:0,
+explanation:"ch=74 → ASCII 'J'. j=65 → ASCII 'A'. (char*)vp+2 points to \"CK\" in \"JACK\". So output is J + A + CK = JCK."
+},
+{
+q:"21. What will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    int i, n;
+    char *x="Alice";
+    n = strlen(x);
+    *x = x[n];
+    for(i=0; i<=n; i++)
+    {
+        printf("%s ", x);
+        x++;
+    }
+    printf("\\n", x);
+    return 0;
+}`,
+options:[
+"Alice",
+"ecilA",
+"Alice lice ice ce e",
+"lice ice ce e"
+],
+answer:3,
+explanation:"x points to string literal \"Alice\". x[n] is '\\0'. Assignment *x = '\\0' attempts to modify string literal (undefined behavior). On Turbo C, first character becomes '\\0', so printing starts from next position, producing: lice ice ce e."
+},
+{
+q:"22. What will be the output of the program?",
+code:`#include<stdio.h>
+
+void change(int *b, int n);
+
+int main()
+{
+    int i, a[] = {2, 4, 6, 8, 10};
+    change(a, 5);
+    for(i=0; i<=4; i++)
+        printf("%d, ", a[i]);
+    return 0;
+}
+void change(int *b, int n)
+{
+    int i;
+    for(i=0; i<n; i++)
+        *(b+1) = *(b+i)+5;
+}`,
+options:[
+"7, 9, 11, 13, 15",
+"2, 15, 6, 8, 10",
+"2 4 6 8 10",
+"3, 1, -1, -3, -5"
+],
+answer:1,
+explanation:"Inside loop, only *(b+1) (i.e., second element) is modified repeatedly. Final iteration sets a[1] = a[4] + 5 = 10 + 5 = 15. Other elements remain unchanged."
+},
+{
+q:"23. If the size of integer is 4 bytes, what will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int arr[] = {12, 13, 14, 15, 16};
+    printf("%d, %d, %d\\n", sizeof(arr), sizeof(*arr), sizeof(arr[0]));
+    return 0;
+}`,
+options:[
+"10, 2, 4",
+"20, 4, 4",
+"16, 2, 2",
+"20, 2, 2"
+],
+answer:1,
+explanation:"Array has 5 integers. Each int is 4 bytes → sizeof(arr)=20. sizeof(*arr)=sizeof(int)=4. sizeof(arr[0])=4."
+},
+{
+q:"16. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str[] = "peace";
+    char *s = str;
+    printf("%s\\n", s++ +3);
+    return 0;
+}`,
+options:[
+"peace",
+"eace",
+"ace",
+"ce"
+],
+answer:2,
+explanation:"s points to \"peace\". s++ + 3 means original s + 3. Index 3 of \"peace\" is 'c', so printing from there gives \"ce\"."
+},
+{
+q:"17. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char *p;
+    p="hello";
+    printf("%s\\n", *&*&p);
+    return 0;
+}`,
+options:[
+"llo",
+"hello",
+"ello",
+"h"
+],
+answer:1,
+explanation:"*&*&p simplifies to p. So printf prints the string \"hello\"."
+},
+{
+q:"18. What will be the output of the program assuming that the array begins at location 1002?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int a[2][3][4] = { {1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 1, 2}, 
+                       {2, 1, 4, 7, 6, 7, 8, 9, 0, 0, 0, 0} };
+    printf("%u, %u, %u, %d\\n", a, *a, **a, ***a);
+    return 0;
+}`,
+options:[
+"1002, 2004, 4008, 2",
+"2004, 4008, 8016, 1",
+"1002, 1002, 1002, 1",
+"Error"
+],
+answer:2,
+explanation:"a, *a and **a all point to the starting address 1002. ***a is the first element value which is 1."
+},
+{
+q:"19. What will be the output of the program?",
+code:`#include<stdio.h>
+power(int**);
+
+int main()
+{
+    int a=5, *aa; /* Address of 'a' is 1000 */
+    aa = &a;
+    a = power(&aa);
+    printf("%d\\n", a);
+    return 0;
+}
+power(int **ptr)
+{
+    int b;
+    b = **ptr***ptr;
+    return (b);
+}`,
+options:[
+"5",
+"25",
+"125",
+"Garbage value"
+],
+answer:1,
+explanation:"Operator precedence: **ptr * **ptr. Since **ptr = 5, expression becomes 5*5 = 25."
+},
+{
+q:"20. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char str1[] = "India";
+    char str2[] = "BIX";
+    char *s1 = str1, *s2=str2;
+    while(*s1++ = *s2++)
+        printf("%s", str1);
+
+    printf("\\n");
+    return 0;
+}`,
+options:[
+"IndiaBIX",
+"BndiaBIdiaBIXia",
+"India",
+"(null)"
+],
+answer:1,
+explanation:"Characters of str2 replace str1 one by one while printing after each replacement. Final printed pattern becomes BndiaBIdiaBIXia."
+},
+{
+q:"1. Which of the following statements correctly declare a function that receives a pointer to pointer to a pointer to a float and returns a pointer to a pointer to a pointer to a pointer to a float?",
+options:[
+"float **fun(float***);",
+"float *fun(float**);",
+"float fun(float***);",
+"float ****fun(float***);"
+],
+answer:3,
+explanation:"Parameter must be float*** and return type must be float****. Only option 4 satisfies both conditions."
+},
+{
+q:"2. Which of the statements is correct about the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int i=10;
+    int *j=&i;
+    return 0;
+}`,
+options:[
+"j and i are pointers to an int",
+"i is a pointer to an int and stores address of j",
+"j is a pointer to an int and stores address of i",
+"j is a pointer to a pointer to an int and stores address of i"
+],
+answer:2,
+explanation:"i is a normal integer variable. j is declared as int* and stores the address of i."
+},
+{
+q:"3. Which of the statements is correct about the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    float a=3.14;
+    char *j;
+    j = (char*)&a;
+    printf("%d\\n", *j);
+    return 0;
+}`,
+options:[
+"It prints ASCII value of the binary number present in the first byte of a float variable a.",
+"It prints character equivalent of the binary number present in the first byte of a float variable a.",
+"It will print 3",
+"It will print a garbage value"
+],
+answer:0,
+explanation:"(char*)&a points to the first byte of the float. *j reads that byte and prints its integer value. It prints the numeric value of the first byte of the float representation."
+},
+{
+q:"4. In the following program add a statement in the function fun() such that address of a gets stored in j?",
+code:`#include<stdio.h>
+int main()
+{
+    int *j;
+    void fun(int**);
+    fun(&j);
+    return 0;
+}
+void fun(int **k)
+{
+    int a=10;
+    /* Add a statement here */
+}`,
+options:[
+"**k=a;",
+"k=&a;",
+"*k=&a;",
+"&k=*a;"
+],
+answer:2,
+explanation:"k is int**. To store address of a into j, we assign *k = &a."
+},
+{
+q:"5. Which of the following statements correct about k used in the below statement?",
+code:`char ****k;`,
+options:[
+"k is a pointer to a pointer to a pointer to a char",
+"k is a pointer to a pointer to a pointer to a pointer to a char",
+"k is a pointer to a char pointer",
+"k is a pointer to a pointer to a char"
+],
+answer:1,
+explanation:"Each * adds one level of indirection. char ****k means pointer to pointer to pointer to pointer to char."
+},
+{
+q:"6. Which of the statements is correct about the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int arr[3][3] = {1, 2, 3, 4};
+    printf("%d\\n", *(*(*(arr))));
+    return 0;
+}`,
+options:[
+"Output: Garbage value",
+"Output: 1",
+"Output: 3",
+"Error: Invalid indirection"
+],
+answer:3,
+explanation:"arr is a 2D array. arr decays to pointer to first row (int (*)[3]). *arr gives first row (int[3]). **arr gives first element (int). Applying another * results in invalid indirection because it attempts to dereference an int."
+},
+{
+q:"7. Which statement will you add to the following program to ensure that the program outputs \"IndiaBIX\" on execution?",
+code:`#include<stdio.h>
+
+int main()
+{
+    char s[] = "IndiaBIX";
+    char t[25];
+    char *ps, *pt;
+    ps = s;
+    pt = t;
+    while(*ps)
+        *pt++ = *ps++;
+
+    /* Add a statement here */
+    printf("%s\\n", t);
+    return 0;
+}`,
+options:[
+"*pt='';",
+"pt='\\0';",
+"pt='\\n';",
+"*pt='\\0';"
+],
+answer:3,
+explanation:"After copying characters, the string must be null-terminated. *pt = '\\0'; correctly adds the string terminator."
+},
+{
+q:"8. In the following program add a statement in the function fact() such that the factorial gets stored in j.",
+code:`#include<stdio.h>
+void fact(int*);
+
+int main()
+{
+    int i=5;
+    fact(&i);
+    printf("%d\\n", i);
+    return 0;
+}
+void fact(int *j)
+{
+    static int s=1;
+    if(*j!=0)
+    {
+        s = s * *j;
+        *j = *j-1;
+        fact(j);
+        /* Add a statement here */
+    }
+}`,
+options:[
+"j=s;",
+"*j=s;",
+"*j=&s;",
+"&j=s;"
+],
+answer:1,
+explanation:"j is a pointer to int. To store the factorial result in the original variable, assign the computed value to *j."
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>
+   

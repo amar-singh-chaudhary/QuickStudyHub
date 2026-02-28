@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"When one of three series resistors is removed from a circuit and the circuit is reconnected, the current",
+options:[
+"increases",
+"increases by one-third",
+"decreases by one-third",
+"decreases by the amount of current through the removed resistor"
+],
+answer:1,
+explanation:"In a series circuit, removing one resistor reduces total resistance. Since I = V/R, decreasing resistance increases current."
+},
+{
+q:"The total power in a certain circuit is 12 W. Each of the four equal-value series resistors making up the circuit dissipates",
+options:["12 W","48 W","3 W","8 W"],
+answer:3,
+explanation:"In series, equal resistors carry same current. Total power = 12 W shared equally among 4 resistors. So each dissipates 12/4 = 3 W."
+},
+{
+q:"The following resistors (one each) are connected in a series circuit: 470 Ω, 680 Ω, 1 kΩ, and 1.2 kΩ. The voltage source is 20 V. Current through the 680 Ω resistor is approximately",
+options:["60 mA","30 mA","6 mA","300 mA"],
+answer:3,
+explanation:"Total resistance = 470 + 680 + 1000 + 1200 = 3350 Ω. Current I = 20 / 3350 ≈ 0.006 A = 6 mA. Same current flows through all series resistors."
+},
+{
+q:"A series circuit consists of a 4.7 kΩ, a 12 kΩ, and a 2.2 kΩ resistor. The resistor that has the most voltage drop is",
+options:[
+"the 12 kΩ",
+"the 2.2 kΩ",
+"the 4.7 kΩ",
+"impossible to determine from the given information"
+],
+answer:1,
+explanation:"In series, same current flows through all resistors. Voltage drop V = IR, so larger resistance (12 kΩ) has largest voltage drop."
+},
+{
+q:"All the voltage drops and the source voltage added together in a series circuit is equal to",
+options:[
+"the total of the voltage drops",
+"the source voltage",
+"zero",
+"the total of the source voltage and the voltage drops"
+],
+answer:3,
+explanation:"By Kirchhoff’s Voltage Law (KVL), the algebraic sum of all voltages in a closed loop is zero."
+},
+{
+q:"When a fourth resistor is connected in series with three resistors, the total resistance",
+options:[
+"increases by one-fourth",
+"increases",
+"decreases",
+"remains the same"
+],
+answer:2,
+explanation:"In a series circuit, total resistance is the sum of all resistors. Adding another resistor increases the total resistance."
+},
+{
+q:"A string of five series resistors is connected across a 6 V battery. Zero voltage is measured across all resistors except R3. The voltage across R3 is",
+options:["0 V","1.2 V","6 V","0.6 V"],
+answer:3,
+explanation:"If all other resistors have zero voltage drop, they must be shorted. Therefore, the entire source voltage (6 V) appears across R3."
+},
+{
+q:"A series circuit consists of three resistors with values of 120 Ω, 270 Ω, and 330 Ω. The total resistance is",
+options:[
+"less than 120 Ω",
+"the average of the values",
+"720 Ω",
+"120 Ω"
+],
+answer:3,
+explanation:"Total resistance in series = 120 + 270 + 330 = 720 Ω."
+},
+{
+q:"A certain series circuit consists of a 1/8 W resistor, a 1/4 W resistor, and a 1/2 W resistor. The total resistance is 1200 Ω. If each resistor is operating at its maximum power dissipation, total current flow is",
+options:["27 mA","2.7 mA","19 mA","190 mA"],
+answer:1,
+explanation:"Total maximum power = 1/8 + 1/4 + 1/2 = 7/8 W. Using P = I²R, I = √(P/R) = √((7/8)/1200) ≈ 0.027 A = 27 mA."
+},
+{
+q:"Which of the following series combinations dissipates the most power when connected across a 120 V source?",
+options:[
+"one 220 Ω resistor",
+"two 220 Ω resistors",
+"three 220 Ω resistors",
+"four 220 Ω resistors"
+],
+answer:1,
+explanation:"Power P = V²/R. Smaller total resistance gives greater power. A single 220 Ω resistor has the least resistance, so it dissipates the most power."
+},
+{
+q:"A series circuit consists of three resistors. Two resistors are 1.2 kΩ each. The total resistance is 12 kΩ. The value of the third resistor",
+options:[
+"is 9,600 Ω",
+"is 960 Ω",
+"is 1.2 kΩ",
+"cannot be determined"
+],
+answer:1,
+explanation:"Total resistance = 12 kΩ. Two resistors = 1.2 kΩ + 1.2 kΩ = 2.4 kΩ. Third resistor = 12 − 2.4 = 9.6 kΩ = 9600 Ω."
+},
+{
+q:"Four equal-value resistors are in series with a 12 V battery and 13.63 mA are measured. The value of each resistor is",
+options:["22 Ω","220 Ω","880 Ω","88 Ω"],
+answer:2,
+explanation:"Total resistance R = V/I = 12 / 0.01363 ≈ 880 Ω. Since four equal resistors are in series, each = 880/4 = 220 Ω."
+},
+{
+q:"Two 1.5 V cells are connected series opposing across two 100 Ω resistors in series. Total current flow is",
+options:["15 mA","5 mA","2 mA","0 A"],
+answer:4,
+explanation:"Series opposing batteries cancel each other (1.5V − 1.5V = 0V). With zero net voltage, current is 0 A."
+},
+{
+q:"The total resistance of a circuit is 680 Ω. The percentage of the total voltage appearing across a 47 Ω resistor that makes up part of the total series resistance is",
+options:["68%","47%","69%","6.91%"],
+answer:4,
+explanation:"Voltage division rule: Percentage = (47 / 680) × 100 ≈ 6.91%."
+},
+{
+q:"Two 6 V batteries are connected series aiding across two 1.2 kΩ resistors in series. Current through each resistor is",
+options:["5 mA","10 mA","0 A","2.5 mA"],
+answer:2,
+explanation:"Series aiding gives total voltage = 6 + 6 = 12 V. Total resistance = 1.2 kΩ + 1.2 kΩ = 2.4 kΩ. Current I = 12 / 2400 = 0.005 A = 5 mA."
+},
+{
+q:"The total resistance of eight 5.6 kΩ resistors in series is",
+options:["8 kΩ","5,600 Ω","4,480 Ω","44,800 Ω"],
+answer:4,
+explanation:"Total resistance in series = 8 × 5.6 kΩ = 44.8 kΩ = 44,800 Ω."
+},
+{
+q:"A series circuit has a 24 V source and a total resistance of 120 Ω. The current through each resistor is",
+options:["24 mA","200 mA","120 mA","20 mA"],
+answer:2,
+explanation:"Using Ohm’s Law, I = V/R = 24 / 120 = 0.2 A = 200 mA. Same current flows through each series resistor."
+},
+{
+q:"To measure the current out of the second resistor in a circuit consisting of four resistors, an ammeter can be placed",
+options:[
+"between the second and third resistors",
+"at the negative terminal of the source",
+"between the third and fourth resistors",
+"at any point in the circuit"
+],
+answer:4,
+explanation:"In a series circuit, current is the same at all points. Therefore, an ammeter can be placed anywhere in the circuit."
+},
+{
+q:"A 12 V battery is connected across a series combination of 68 Ω, 47 Ω, 220 Ω, and 33 Ω. The amount of current is",
+options:["326 mA","16.3 mA","32.6 mA","163 mA"],
+answer:3,
+explanation:"Total resistance = 68 + 47 + 220 + 33 = 368 Ω. Current I = 12 / 368 ≈ 0.0326 A = 32.6 mA."
+},
+{
+q:"If a 24 V and a 6 V battery are series opposing, the total voltage is",
+options:["30 V","24 V","18 V","0 V"],
+answer:3,
+explanation:"In series opposing connection, voltages subtract. 24 V − 6 V = 18 V."
+},
+{
+q:"Two resistors are in series: a 5.6 kΩ resistor and a 4.7 kΩ resistor. The voltage drop across the 5.6 kΩ resistor is 10 V. The voltage across the 4.7 kΩ resistor is",
+options:["8.39 V","10 V","2.32 V","0 V"],
+answer:1,
+explanation:"In series circuit, voltage divides proportional to resistance. V2 = (4.7k / 5.6k) × 10 V = 0.839 × 10 = 8.39 V."
+},
+{
+q:"Three 680 Ω resistors are connected in series with a 470 V source. Current in the circuit is",
+options:["69 mA","230 mA","23 mA","690 mA"],
+answer:2,
+explanation:"Total resistance = 680 × 3 = 2040 Ω. Current I = V/R = 470 / 2040 ≈ 0.23 A = 230 mA."
+},
+{
+q:"There are five resistors in a given series circuit and each resistor has 6 V dropped across it. The source voltage",
+options:["is 6 V","depends on the current flow","depends on the resistor values","is 30 V"],
+answer:4,
+explanation:"Total source voltage in series = sum of individual drops = 5 × 6 V = 30 V."
+},
+{
+q:"If a 6 V and a 9 V source are connected series aiding, the total voltage is",
+options:["6 V","9 V","3 V","15 V"],
+answer:4,
+explanation:"In series aiding, voltages add: 6 V + 9 V = 15 V."
+},
+{
+q:"Five resistors are connected in a series and there is a current of 3 A into the first resistor. The amount of current into the second resistor is",
+options:["3 A","1 A","4 A","0.3 A"],
+answer:1,
+explanation:"In a series circuit, current is same through all components. Therefore, current in second resistor = 3 A."
+}
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"The term series opposing means that sources are in series with opposite polarities.",
+options:["True","False"],
+answer:1,
+explanation:"Series opposing means the voltage sources are connected in series but with opposite polarities, so their voltages subtract."
+},
+{
+q:"If you know the current anywhere in a series circuit, you know the current everywhere in a series circuit.",
+options:["True","False"],
+answer:1,
+explanation:"In a series circuit, current is the same through all components. Therefore, knowing current at one point means knowing it everywhere."
+},
+{
+q:"In a series circuit, the individual powers are additive.",
+options:["True","False"],
+answer:1,
+explanation:"Total power in a series circuit equals the sum of individual power dissipations of each component."
+},
+{
+q:"The total resistance of a series circuit is equal to the difference between the largest and smallest value resistors.",
+options:["True","False"],
+answer:2,
+explanation:"In a series circuit, total resistance is the sum of all resistor values, not the difference."
+},
+{
+q:"The voltage at one point in a circuit is always measured relative to another point.",
+options:["True","False"],
+answer:1,
+explanation:"Voltage is a potential difference, meaning it is always measured between two points."
+},
+{
+q:"A series circuit acts as a voltage divider.",
+options:["True","False"],
+answer:1,
+explanation:"In a series circuit, the total voltage is divided among the resistors proportional to their resistance values. Hence, it acts as a voltage divider."
+},
+{
+q:"The sum of all the voltage drops around a single closed loop in a circuit is zero.",
+options:["True","False"],
+answer:1,
+explanation:"According to Kirchhoff’s Voltage Law (KVL), the algebraic sum of all voltages around a closed loop is zero."
+},
+{
+q:"A short in a series circuit prevents current.",
+options:["True","False"],
+answer:2,
+explanation:"A short circuit provides very low resistance, which allows excessive current to flow rather than preventing it."
+},
+{
+q:"A series circuit acts as a current divider.",
+options:["True","False"],
+answer:2,
+explanation:"Current remains the same throughout a series circuit. Current division occurs in parallel circuits, not series circuits."
+},
+{
+q:"Series aiding is a term sometimes used to describe voltage sources of the same polarity in series.",
+options:["True","False"],
+answer:1,
+explanation:"In series aiding connection, voltage sources are connected with the same polarity so their voltages add."
+}
+
+]
+
+// ........Section-3............
+
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

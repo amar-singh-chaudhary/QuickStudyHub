@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clock - MCQ</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+}
+
+.container{
+    max-width:800px;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+}
+
+h2{
+    margin-bottom:10px;
+}
+
+.topic-list{
+    margin-bottom:20px;
+}
+
+.topic-list div{
+    margin:5px 0;
+}
+
+.question{
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:10px 0;
+    padding:6px;
+    border-radius:4px;
+}
+
+.options label{
+    cursor:pointer;
+}
+
+.explanation{
+    display:none;
+    margin-top:10px;
+    background:#f9fff3;
+    padding:10px;
+    border-left:4px solid green;
+}
+
+.nav{
+    margin-top:20px;
+    text-align:center;
+}
+
+.nav button{
+    padding:6px 12px;
+    margin:0 5px;
+}
+
+.correct{
+    background:#4d6753;
+    color:white;
+}
+
+.wrong{
+    background:#ac0815;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Exercise : Clock - General Questions</h2>
+
+<div class="topic-list">
+    <div>Clock - Formulas</div>
+    <div><b>Clock - General Questions</b></div>
+    <div>Clock - Data Sufficiency 1</div>
+</div>
+</div>
+
+<div id="quiz-container"></div>
+
+<div class="nav">
+    <button onclick="prevPage()">Prev</button>
+    <span id="pageNumbers"></span>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+<script>
+
+// QUESTIONS
+const questions = [
+{
+    question: "1. At what time, in minutes, between 3 o'clock and 4 o'clock, will the hands of a clock coincide?",
+    options: ["5 1/11 minutes", "12 4/11 minutes", "13 4/11 minutes", "16 4/11 minutes"],
+    correct: 3,
+    explanation: "At 3 o'clock, the minute hand is 15 minute spaces ahead of the hour hand.\nTo coincide, minute hand must gain 15 minute spaces.\n55 minute spaces are gained in 60 minutes.\nTime required = (60 × 15) / 55 = 16 4/11 minutes.\nSo, the hands coincide at 16 4/11 minutes past 3."
+},
+{
+    question: "2. How many times do the hands of a clock coincide in a day?",
+    options: ["20", "21", "22", "24"],
+    correct: 2,
+    explanation: "The hands of a clock coincide 11 times in 12 hours.\nBetween 11 and 1, they coincide only once (at 12 o'clock).\nTherefore, in 24 hours, they coincide 11 × 2 = 22 times."
+},
+{
+    question: "3. How many times in a day are the hands of a clock straight (either coincide or opposite)?",
+    options: ["22", "24", "44", "48"],
+    correct: 2,
+    explanation: "In 12 hours, the hands coincide or are opposite 22 times.\nTherefore, in 24 hours, they are straight 22 × 2 = 44 times."
+},
+{
+    question: "4. A watch which gains uniformly is 2 minutes slow at noon on Monday and 4 minutes 48 seconds fast at 2 p.m. the following Monday. When was it correct?",
+    options: ["2 p.m. on Tuesday", "2 p.m. on Wednesday", "3 p.m. on Thursday", "1 p.m. on Friday"],
+    correct: 1,
+    explanation: "Time from Monday 12 p.m. to next Monday 2 p.m. = 7 days 2 hours = 170 hours.\nTotal gain = 2 minutes + 4 minutes 48 seconds = 6 minutes 48 seconds = 34/5 minutes.\n34/5 minutes are gained in 170 hours.\n2 minutes are gained in (170 × 5 × 2) / 34 = 50 hours.\n50 hours = 2 days 2 hours after Monday noon.\nSo, the watch was correct at 2 p.m. on Wednesday."
+},
+{
+    question: "5. How many times are the hands of a clock at right angle in a day?",
+    options: ["22", "24", "44", "48"],
+    correct: 2,
+    explanation: "In 12 hours, the hands are at right angles 22 times.\nTherefore, in 24 hours, they are at right angles 22 × 2 = 44 times."
+},
+{
+    question: "6. What is the angle between the minute hand and the hour hand at 8:30?",
+    options: ["80°", "75°", "60°", "105°"],
+    correct: 1,
+    explanation: "Angle moved by hour hand = (30 × 8) + (30 × 1/2) = 240 + 15 = 255°.\nAngle moved by minute hand = 6 × 30 = 180°.\nRequired angle = 255° - 180° = 75°."
+},
+{
+    question: "7. How many times in a day are the hands of a clock in a straight line but opposite in direction?",
+    options: ["20", "22", "24", "48"],
+    correct: 1,
+    explanation: "In 12 hours, the hands are opposite (180° apart) 11 times.\nTherefore, in 24 hours, they are opposite 11 × 2 = 22 times."
+},
+{
+    question: "8. At what time between 4 and 5 o'clock will the hands of a watch be in opposite directions?",
+    options: ["45 min past 4", "40 min past 4", "50 4/11 min past 4", "54 6/11 min past 4"],
+    correct: 3,
+    explanation: "At 4 o'clock, hands are 20 minute spaces apart.\nTo be opposite, they must be 30 minute spaces apart.\nMinute hand must gain 50 minute spaces.\n55 minute spaces are gained in 60 minutes.\nTime required = (60 × 50) / 55 = 54 6/11 minutes.\nSo, hands are opposite at 54 6/11 minutes past 4."
+},
+{
+    question: "9. At what time between 9 and 10 o'clock will the hands of a watch coincide?",
+    options: ["45 min past 9", "50 min past 9", "49 1/11 min past 9", "48 2/11 min past 9"],
+    correct: 2,
+    explanation: "To coincide between 9 and 10, minute hand must gain 45 minute spaces.\n55 minute spaces are gained in 60 minutes.\nTime required = (60 × 45) / 55 = 49 1/11 minutes.\nSo, hands coincide at 49 1/11 minutes past 9."
+},
+{
+    question: "10. At what time between 7 and 8 o'clock will the hands of a clock be in the same straight line but, not together?",
+    options: ["5 min past 7", "5 2/11 min past 7", "5 3/11 min past 7", "5 5/11 min past 7"],
+    correct: 3,
+    explanation: "When hands are in the same straight line but not together, they are 30 minute spaces apart.\nAt 7 o'clock, they are 25 minute spaces apart.\nMinute hand must gain 5 minute spaces.\n55 minute spaces are gained in 60 minutes.\nTime required = (60 × 5) / 55 = 5 5/11 minutes.\nSo, required time is 5 5/11 minutes past 7."
+},
+{
+    question: "11. At what time between 5:30 and 6 will the hands of a clock be at right angles?",
+    options: ["43 5/11 min past 5", "43 7/11 min past 5", "40 min past 5", "45 min past 5"],
+    correct: 1,
+    explanation: "At 5 o'clock, hands are 25 minute spaces apart.\nFor right angle (90°), they must be 15 minute spaces apart.\nBetween 5:30 and 6, minute hand must gain (25 + 15) = 40 minute spaces.\n55 minute spaces are gained in 60 minutes.\nTime required = (60 × 40) / 55 = 43 7/11 minutes.\nSo, required time is 43 7/11 minutes past 5."
+},
+{
+    question: "12. The angle between the minute hand and the hour hand when the time is 4:20 is:",
+    options: ["0°", "10°", "5°", "20°"],
+    correct: 1,
+    explanation: "Hour hand angle = (4 + 20/60) × 30 = 130°.\nMinute hand angle = 20 × 6 = 120°.\nRequired angle = 130° − 120° = 10°."
+},
+{
+    question: "13. At what angle are the hands inclined at 15 minutes past 5?",
+    options: ["58 1/2°", "64°", "67 1/2°", "72 1/2°"],
+    correct: 2,
+    explanation: "Hour hand angle = (5 + 15/60) × 30 = 157 1/2°.\nMinute hand angle = 15 × 6 = 90°.\nRequired angle = 157 1/2° − 90° = 67 1/2°."
+},
+{
+    question: "14. At 3:40, the hour hand and the minute hand form an angle of:",
+    options: ["120°", "125°", "130°", "135°"],
+    correct: 2,
+    explanation: "Hour hand angle = (3 + 40/60) × 30 = 110°.\nMinute hand angle = 40 × 6 = 240°.\nRequired angle = 240° − 110° = 130°."
+},
+{
+    question: "15. An accurate clock shows 8 o'clock in the morning. Through how many degrees will the hour hand rotate when the clock shows 2 o'clock in the afternoon?",
+    options: ["144°", "150°", "168°", "180°"],
+    correct: 3,
+    explanation: "From 8 a.m. to 2 p.m. = 6 hours.\nHour hand rotates 360° in 12 hours.\nIn 6 hours, rotation = (360 × 6) / 12 = 180°.\nSo, the hour hand rotates 180°."
+},
+{
+    question: "16. The reflex angle between the hands of a clock at 10:25 is:",
+    options: ["180°", "192 1/2°", "195°", "197 1/2°"],
+    correct: 3,
+    explanation: "Hour hand angle = (10 + 25/60) × 30 = 312 1/2°.\nMinute hand angle = 25 × 6 = 150°.\nDifference = 312 1/2° − 150° = 162 1/2°.\nReflex angle = 360° − 162 1/2° = 197 1/2°."
+},
+{
+    question: "17. A clock is started at noon. By 10 minutes past 5, the hour hand has turned through:",
+    options: ["145°", "150°", "155°", "160°"],
+    correct: 2,
+    explanation: "From 12 noon to 5:10 = 5 hours 10 minutes = 31/6 hours.\nHour hand rotates 360° in 12 hours.\nAngle turned = (360 × 31/6) / 12 = 155°.\nSo, the hour hand turns 155°."
+},
+{
+    question: "18. A watch which gains 5 seconds in 3 minutes was set right at 7 a.m. In the afternoon of the same day, when the watch indicated quarter past 4 o'clock, the true time is:",
+    options: ["59 7/12 min past 3", "4 p.m.", "58 7/11 min past 3", "2 3/11 min past 4"],
+    correct: 1,
+    explanation: "Time from 7 a.m. to 4:15 p.m. = 9 hours 15 minutes = 37/4 hours.\n3 minutes 5 seconds of this watch = 3 minutes of correct time.\nSo, 37/4 hours of this watch = 9 hours of correct time.\nTherefore, the correct time is 9 hours after 7 a.m., i.e., 4 p.m."
+},
+{
+    question: "19. How much does a watch lose per day, if its hands coincide every 64 minutes?",
+    options: ["32 8/11 min", "36 5/11 min", "90 min", "96 min"],
+    correct: 0,
+    explanation: "Normally, hands coincide every 65 5/11 minutes.\nBut here they coincide every 64 minutes.\nLoss in 64 minutes = 65 5/11 − 64 = 16/11 minutes.\nLoss in 24 hours = (16/11 × 24 × 60) / 64 = 32 8/11 minutes.\nSo, the watch loses 32 8/11 minutes per day."
+}
+
+
+
+
+
+  
+];
+
+const questionsPerPage = 10;
+let currentPage = 1;
+
+function loadQuestions() {
+
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = "";
+
+    const start = (currentPage - 1) * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    const pageQuestions = questions.slice(start, end);
+
+    pageQuestions.forEach((q, index) => {
+
+        const questionNumber = start + index;
+
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <div class="question">${q.question}</div>
+            <ul class="options">
+                ${q.options.map((opt, i) => `
+                    <li>
+                        <label>
+                            <input type="radio" name="q${questionNumber}" value="${i}">
+                            ${String.fromCharCode(65 + i)}. ${opt}
+                        </label>
+                    </li>
+                `).join("")}
+            </ul>
+            <button onclick="checkAnswer(${questionNumber}, ${q.correct}, \`${q.explanation}\`)">
+                Check Answer
+            </button>
+            <div class="explanation" id="exp${questionNumber}"></div>
+            <hr>
+        `;
+        container.appendChild(div);
+    });
+
+    createPageNumbers();
+}
+
+function checkAnswer(qIndex, correctIndex, explanationText) {
+
+    const explanation = document.getElementById(`exp${qIndex}`);
+
+    // TOGGLE SHOW/HIDE
+    if (explanation.style.display === "block") {
+        explanation.style.display = "none";
+        return;
+    }
+
+    const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+    const options = document.querySelectorAll(`input[name="q${qIndex}"]`);
+
+    if (!selected) {
+        alert("Please select an option.");
+        return;
+    }
+
+    let userLetter = "";
+    let correctLetter = "";
+
+    options.forEach(option => {
+        const li = option.closest("li");
+        const letter = String.fromCharCode(65 + parseInt(option.value));
+
+        // Reset colors
+        li.classList.remove("correct", "wrong");
+
+        if (parseInt(option.value) === correctIndex) {
+            li.classList.add("correct");
+            correctLetter = letter;
+        }
+
+        if (option.checked) {
+            userLetter = letter;
+
+            if (parseInt(option.value) !== correctIndex) {
+                li.classList.add("wrong");
+            }
+        }
+    });
+
+    explanation.innerHTML = `
+        <p style="font-weight:bold;">
+            ${parseInt(selected.value) === correctIndex ? "✔ Correct Answer!" : "❌ Wrong Answer!"}
+        </p>
+        <p><b>Your Option:</b> ${userLetter}</p>
+        <p><b>Correct Option:</b> ${correctLetter}</p>
+        <p><b>Explanation:</b> ${explanationText}</p>
+    `;
+
+    explanation.style.display = "block";
+}
+
+function createPageNumbers() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    const pageNumbers = document.getElementById("pageNumbers");
+    pageNumbers.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.innerText = i;
+        btn.onclick = () => {
+            currentPage = i;
+            loadQuestions();
+        };
+
+        if (i === currentPage) {
+            btn.style.background = "#333";
+            btn.style.color = "white";
+        }
+
+        pageNumbers.appendChild(btn);
+    }
+}
+
+function prevPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        loadQuestions();
+    }
+}
+
+function nextPage() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    if (currentPage < totalPages) {
+        currentPage++;
+        loadQuestions();
+    }
+}
+
+loadQuestions();
+
+</script>
+
+
+</body>
+</html>

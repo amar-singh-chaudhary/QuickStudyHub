@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1:[
+{
+q:"Which of the following is an example of laminar flow?",
+options:["Under ground flow","Flow past tiny bodies","Flow of oil in measuring instruments","all of these"],
+answer:3,
+explanation:"Laminar flow occurs at low velocities and high viscosity. Underground flow through soil, flow past very small bodies, and flow of oil in measuring instruments are all typical examples of laminar flow."
+},
+{
+q:"The pressure less than atmospheric pressure is known as",
+options:["suction pressure","vacuum pressure","negative gauge pressure","all of these"],
+answer:3,
+explanation:"Pressure below atmospheric pressure is called suction pressure, vacuum pressure, or negative gauge pressure. All terms refer to the same condition."
+},
+{
+q:"The total energy line lies over the hydraulic gradient line by an amount equal to the",
+options:["pressure head","velocity head","pressure head + velocity head","pressure head - velocity head"],
+answer:1,
+explanation:"Total Energy Line (TEL) = Pressure head + Velocity head + Datum head. Hydraulic Gradient Line (HGL) = Pressure head + Datum head. Therefore, TEL lies above HGL by the velocity head."
+},
+{
+q:"A structure whose width is __________ the width of the channel, is called a flumed structure.",
+options:["less than","more than"],
+answer:0,
+explanation:"A flumed structure is one whose width is less than the width of the approaching channel, causing contraction of flow."
+},
+{
+q:"The maximum efficiency of transmission through a pipe is",
+options:["50%","56.7%","66.67%","76.66%"],
+answer:2,
+explanation:"The maximum efficiency of power transmission through a pipe occurs when the head lost due to friction is one-third of the total head, giving a maximum efficiency of 66.67%."
+},
+{
+q:"The coefficient of viscosity may be determined by",
+options:["capillary tube method","orifice type viscometer","rotating cylinder method","all of these"],
+answer:3,
+explanation:"Viscosity can be measured using capillary tube methods (Poiseuille’s law), orifice-type viscometers, and rotating cylinder (Couette) methods. Hence, all of these are valid methods."
+},
+{
+q:"The stability of a dam is checked for",
+options:["tension at the base","overturning of the wall or dam","sliding of the wall or dam","all of these"],
+answer:3,
+explanation:"Dam stability analysis includes checking for tensile stresses at the base, overturning moments, and sliding failure. Therefore, all of these conditions are examined."
+},
+{
+q:"An ideal fluid is frictionless and incompressible.",
+options:["Correct","Incorrect"],
+answer:0,
+explanation:"An ideal fluid is assumed to have no viscosity (frictionless) and to be incompressible. These are the standard theoretical assumptions."
+},
+{
+q:"A manometer is used to measure",
+options:["low pressure","moderate pressure","high pressure","atmospheric pressure"],
+answer:0,
+explanation:"A manometer is generally used to measure low pressures or pressure differences in fluids."
+},
+{
+q:"The centre of gravity of the volume of the liquid displaced is called",
+options:["centre of pressure","centre of buoyancy","metacentre","none of these"],
+answer:1,
+explanation:"The centre of gravity of the displaced liquid volume is called the centre of buoyancy."
+},
+{
+q:"The coefficient of discharge for an external mouthpiece is",
+options:["0.375","0.5","0.707","0.855"],
+answer:3,
+explanation:"For an external cylindrical mouthpiece running full, the coefficient of discharge is approximately 0.855."
+},
+{
+q:"A tank of uniform cross-sectional area (A) containing liquid up to height (H₁) has an orifice of cross-sectional area (a) at its bottom. The time required to empty the tank completely will be",
+options:["(2A/ a√(2g)) √H₁","(A/ a√(2g)) √H₁","(2A/ a√(2g)) H₁","(A/2a√(2g)) √H₁"],
+answer:0,
+explanation:"Time to empty a tank through an orifice at the bottom is t = (2A / (a√(2g))) √H₁ (neglecting losses and assuming Cd = 1)."
+},
+{
+q:"A siphon is used to connect two reservoirs at different levels intervened by a high ridge.",
+options:["True","False"],
+answer:0,
+explanation:"A siphon allows liquid to flow from a higher reservoir to a lower reservoir over an intermediate high point (ridge) due to atmospheric pressure and gravity."
+},
+{
+q:"A flow in which the volume of a fluid and its density does not change during the flow is called __________ flow.",
+options:["incompressible","compressible"],
+answer:0,
+explanation:"If density and volume remain constant during flow, it is called incompressible flow."
+},
+{
+q:"The loss of head due to an obstruction in a pipe is twice the loss of head at its entrance.",
+options:["Agree","Disagree"],
+answer:0,
+explanation:"For sudden obstruction (sudden contraction followed by expansion), the head loss is approximately twice the head loss at the entrance under similar conditions."
+},
+{
+q:"One litre of water occupies a volume of",
+options:["100 cm3","250 cm3","500 cm3","1000 cm3"],
+answer:3,
+explanation:"1 litre = 1000 cubic centimeters (cm³)."
+},
+{
+q:"The value of bulk modulus of a fluid is required to determine",
+options:["Reynold's number","Froude's number","Mach number","Euler's number"],
+answer:2,
+explanation:"Mach number involves the speed of sound in a fluid, which depends on the bulk modulus and density. Therefore, bulk modulus is required to determine Mach number."
+},
+{
+q:"In a depressed nappe",
+options:["the pressure below the nappe is atmospheric","the pressure below the nappe is negative","the pressure above the nappe is atmospheric","the pressure above the nappe is negative"],
+answer:1,
+explanation:"In a depressed nappe, the pressure below the nappe is less than atmospheric (negative gauge pressure), causing the nappe to be depressed."
+},
+{
+q:"In one dimensional flow, the flow",
+options:["is steady and uniform","takes place in straight line","takes place in curve","takes place in one direction"],
+answer:3,
+explanation:"In one-dimensional flow, fluid properties vary only along one direction, meaning the flow effectively takes place in one direction."
+},
+{
+q:"The kinematic viscosity is the",
+options:["ratio of absolute viscosity to the density of the liquid","ratio of density of the liquid to the absolute viscosity","product of absolute viscosity and density of the liquid","product of absolute viscosity and mass of the liquid"],
+answer:0,
+explanation:"Kinematic viscosity (ν) is defined as ν = μ/ρ, i.e., the ratio of absolute (dynamic) viscosity to the density of the liquid."
+},
+{
+q:"The diameter of the nozzle (d) for maximum transmission of power is given by (where D = Diameter of pipe, f = Darcy's coefficient of friction for pipe, and l = Length of pipe)",
+options:["d = D/2","d = √(D² / (1 + 4fl/D))","d = D / √(1 + 4fl/D)","d = D √(1 + 4fl/D)"],
+answer:2,
+explanation:"For maximum power transmission through a nozzle at the end of a pipe, the head lost due to friction equals one-third of the total head. The resulting relation gives d = D / √(1 + 4fl/D)."
+},
+{
+q:"The discharge over a right angled notch is (where H = Height of liquid above the apex of notch)",
+options:["Cd √(2g) H","Cd √(2g) H^(3/2)","Cd √(2g) H^2","Cd √(2g) H^(5/2)"],
+answer:3,
+explanation:"For a right-angled (90°) triangular notch, discharge Q ∝ H^(5/2). The general form is Q = (8/15) Cd √(2g) H^(5/2)."
+},
+{
+q:"A weir is said to be broad crested weir, if the width of the crest of the weir is __________ half the height of water above the weir crest.",
+options:["equal to","less than","more than"],
+answer:2,
+explanation:"A weir is considered broad crested when the width of the crest is more than half the height of water above the crest."
+},
+{
+q:"A vertical wall is subjected to a pressure due to one kind of liquid, on one of its sides. The total pressure on the wall per unit length is (where w = Specific weight of liquid, and H = Height of liquid)",
+options:["wH","wH/2","wH^2/2","wH^2/3"],
+answer:2,
+explanation:"Total hydrostatic force on a vertical wall per unit width is F = wH²/2."
+},
+{
+q:"An error of 1% in measuring head over the apex of the notch (H) will produce an error of __________ in discharge over a triangular notch.",
+options:["1%","1.5%","2%","2.5%"],
+answer:3,
+explanation:"For a triangular notch, Q ∝ H^(5/2). Therefore, percentage error in Q = (5/2) × percentage error in H = 2.5%."
+},
+
+{
+q:"The weight per unit volume of a liquid at a standard temperature and pressure is called",
+options:["specific weight","mass density","specific gravity","none of these"],
+answer:0,
+explanation:"Specific weight is defined as the weight per unit volume of a substance."
+},
+{
+q:"The centre of buoyancy is the centre of area of the immersed body.",
+options:["Correct","Incorrect"],
+answer:1,
+explanation:"The centre of buoyancy is the centre of gravity of the displaced liquid (volume), not the centre of area of the immersed body."
+},
+{
+q:"The metacentric heights of two floating bodies A and B are 1 m and 1.5 m respectively. Select the correct statement.",
+options:["The bodies A and B have equal stability","The body A is more stable than body B","The body B is more stable than body A","The bodies A and B are unstable"],
+answer:2,
+explanation:"Greater metacentric height indicates greater stability. Since body B has 1.5 m compared to 1 m for body A, body B is more stable."
+},
+{
+q:"In open channels, the specific energy is the",
+options:["total energy per unit discharge","total energy measured with respect to the datum passing through the bottom of the channel","total energy measured above the horizontal datum","kinetic energy plotted above the free surface of water"],
+answer:1,
+explanation:"Specific energy in open channel flow is the total energy per unit weight of water measured with respect to the channel bottom as datum."
+},
+{
+q:"The Bernoulli's equation is based on the assumption that",
+options:["there is no loss of energy of the liquid flowing","the velocity of flow is uniform across any cross-section of the pipe","no force except gravity acts on the fluid","all of the above"],
+answer:3,
+explanation:"Bernoulli’s equation assumes steady, incompressible, frictionless flow with no energy losses, uniform velocity distribution, and only gravity acting as a body force."
+},
+{
+q:"The weight per unit volume of a liquid at a standard temperature and pressure is called",
+options:["specific weight","mass density","specific gravity","none of these"],
+answer:0,
+explanation:"Specific weight is defined as the weight per unit volume of a substance."
+},
+{
+q:"The centre of buoyancy is the centre of area of the immersed body.",
+options:["Correct","Incorrect"],
+answer:1,
+explanation:"The centre of buoyancy is the centre of gravity of the displaced liquid (volume), not the centre of area of the immersed body."
+},
+{
+q:"The metacentric heights of two floating bodies A and B are 1 m and 1.5 m respectively. Select the correct statement.",
+options:["The bodies A and B have equal stability","The body A is more stable than body B","The body B is more stable than body A","The bodies A and B are unstable"],
+answer:2,
+explanation:"Greater metacentric height indicates greater stability. Since body B has 1.5 m compared to 1 m for body A, body B is more stable."
+},
+{
+q:"In open channels, the specific energy is the",
+options:["total energy per unit discharge","total energy measured with respect to the datum passing through the bottom of the channel","total energy measured above the horizontal datum","kinetic energy plotted above the free surface of water"],
+answer:1,
+explanation:"Specific energy in open channel flow is the total energy per unit weight of water measured with respect to the channel bottom as datum."
+},
+{
+q:"The Bernoulli's equation is based on the assumption that",
+options:["there is no loss of energy of the liquid flowing","the velocity of flow is uniform across any cross-section of the pipe","no force except gravity acts on the fluid","all of the above"],
+answer:3,
+explanation:"Bernoulli’s equation assumes steady, incompressible, frictionless flow with no energy losses, uniform velocity distribution, and only gravity acting as a body force."
+}
+
+],
+
+// ........Section-2............
+
+2 : [
+{
+q:"The discharge over a rectangular weir, considering the velocity of approach, is (where H₁ = Total height of water above the weir = H + Hₐ; H = Height of water over the crest; Hₐ = Head due to velocity of approach)",
+options:[
+"Cd × L√(2g) [H₁ - Hₐ]",
+"Cd × L√(2g) [H₁^(3/2) - Hₐ^(3/2)]",
+"Cd × L√(2g) [H₁^2 - Hₐ^2]",
+"Cd × L√(2g) [H₁^(5/2) - Hₐ^(5/2)]"
+],
+answer:1,
+explanation:"For a rectangular weir considering velocity of approach, Q ∝ [H₁^(3/2) − Hₐ^(3/2)]. Hence the correct expression contains the (3/2) power term."
+},
+{
+q:"A flow in which __________ force is dominating over the viscosity is called turbulent flow.",
+options:["elastic","surface tension","viscous","inertia"],
+answer:3,
+explanation:"Turbulent flow occurs when inertial forces dominate over viscous forces (high Reynolds number)."
+},
+{
+q:"If an incompressible liquid is continuously flowing through a pipe, the quantity of liquid passing per second is different at different sections.",
+options:["True","False"],
+answer:1,
+explanation:"For incompressible steady flow, discharge (Q) remains constant at all sections of the pipe (continuity equation)."
+},
+{
+q:"The atmospheric pressure at sea level is",
+options:["103 kN/m²","10.3 m of water","760 mm of mercury","all of these"],
+answer:3,
+explanation:"Standard atmospheric pressure at sea level equals approximately 103 kN/m², 10.3 m of water column, or 760 mm of mercury."
+},
+{
+q:"When the pressure intensity at a point is less than the local atmospheric pressure, then the difference of these two pressures is called vacuum pressure.",
+options:["Agree","Disagree"],
+answer:0,
+explanation:"Vacuum pressure is defined as the difference between atmospheric pressure and the local pressure when the local pressure is lower than atmospheric."
+},
+{
+q:"Reynold's number is the ratio of inertia force to",
+options:["pressure force","elastic force","gravity force","viscous force"],
+answer:3,
+explanation:"Reynolds number is defined as the ratio of inertial forces to viscous forces in a flowing fluid."
+},
+{
+q:"The unit of dynamic viscosity in S.I. units is",
+options:["N-m/s²","N-s/m²","poise","stoke"],
+answer:1,
+explanation:"The SI unit of dynamic viscosity (μ) is N·s/m² (also expressed as Pa·s)."
+},
+{
+q:"Bulk modulus of a fluid __________ as the pressure increases.",
+options:["remains same","decreases","increases"],
+answer:2,
+explanation:"Bulk modulus generally increases with increase in pressure because the fluid becomes harder to compress at higher pressures."
+},
+{
+q:"The hydraulic gradient line may be above or below the centre line of the pipe.",
+options:["True","False"],
+answer:0,
+explanation:"The hydraulic gradient line (HGL) represents pressure head plus datum head and can lie above or below the pipe centre line depending on pressure conditions."
+},
+{
+q:"A water tank contains 1.3 m deep water. The pressure exerted by the water per metre length of the tank is",
+options:["2.89 kN","8.29 kN","9.28 kN","28.9 kN"],
+answer:1,
+explanation:"Total hydrostatic force per metre width on a vertical wall is F = wH²/2. Taking w ≈ 9.81 kN/m³ and H = 1.3 m, F = (9.81 × 1.3²)/2 ≈ 8.29 kN."
+},
+{
+q:"The specific gravity has no units.",
+options:["Agree","Disagree"],
+answer:0,
+explanation:"Specific gravity is the ratio of the density (or specific weight) of a substance to that of water, so it is dimensionless and has no units."
+},
+{
+q:"The depth of water in a channel corresponding to the minimum specific energy is known as critical depth.",
+options:["Agree","Disagree"],
+answer:0,
+explanation:"Critical depth is defined as the depth at which the specific energy is minimum for a given discharge."
+},
+{
+q:"The ratio of the inertia force to the gravity force is called Froude number.",
+options:["Agree","Disagree"],
+answer:0,
+explanation:"Froude number is defined as the ratio of inertial forces to gravitational forces."
+},
+{
+q:"Which of the following statement is wrong?",
+options:[
+"A flow whose streamline is represented by a curve, is called two dimensional flow.",
+"The total energy of a liquid particle is the sum of potential energy, kinetic energy and pressure energy.",
+"The length of divergent portion in a venturimeter is equal to the convergent portion.",
+"A pitot tube is used to measure the velocity of flow at the required point in a pipe."
+],
+answer:2,
+explanation:"In a venturimeter, the divergent portion is longer than the convergent portion to avoid flow separation. Hence the statement that both lengths are equal is wrong."
+},
+{
+"q":"If a body floating in a liquid does not return back to its original position, and heels farther away when given a small angular displacement, the body is said to be in neutral equilibrium.",
+"options":["Yes","No"],
+"answer":1,
+"explanation":"If a floating body moves farther away from its original position after a small angular displacement, it is in unstable equilibrium, not neutral equilibrium."
+},
+{
+"q":"The length of the divergent cone in a venturimeter is __________ that of the convergent cone.",
+"options":["equal to","double","three to four times","five to six times"],
+"answer":2,
+"explanation":"The divergent cone is made three to four times longer than the convergent cone to avoid flow separation and energy loss."
+},
+{
+"q":"A flow through a long pipe at constant rate is called",
+"options":["steady uniform flow","steady non-uniform flow","unsteady uniform flow","unsteady non-uniform flow"],
+"answer":0,
+"explanation":"If the discharge remains constant with time (steady) and flow parameters do not change along the length (uniform), it is steady uniform flow."
+},
+{
+"q":"The volume per unit mass of a liquid is called specific volume.",
+"options":["Yes","No"],
+"answer":0,
+"explanation":"Specific volume is defined as volume per unit mass of a substance."
+},
+{
+"q":"In an external or internal mouthpiece, the absolute pressure head at vena contracta is zero when atmospheric pressure head is 10.3 m of water.",
+"options":["Correct","Incorrect"],
+"answer":0,
+"explanation":"When atmospheric pressure head is 10.3 m of water, the absolute pressure head at vena contracta becomes zero if the gauge pressure equals negative atmospheric pressure (theoretical condition of maximum suction)."
+},
+{
+"q":"The shear stress-strain graph for a newtonian fluid is a",
+"options":["straight line","parabolic curve","hyperbolic curve","elliptical"],
+"answer":0,
+"explanation":"For a Newtonian fluid, shear stress is directly proportional to rate of shear strain, resulting in a straight-line relationship passing through the origin."
+},
+{
+"q":"If a pitot tube is placed with its nose upstream, downstream or sideways, the reading will be the same in every case.",
+"options":["True","False"],
+"answer":1,
+"explanation":"A Pitot tube measures stagnation pressure and must face upstream. If placed downstream or sideways, the reading will not be correct."
+},
+{
+"q":"A flow in which each liquid particle does not have a definite path and the paths of individual particles also cross each other, is called turbulent flow.",
+"options":["Agree","Disagree"],
+"answer":0,
+"explanation":"In turbulent flow, fluid particles move in irregular paths and may cross each other due to eddies and mixing."
+},
+{
+"q":"A flow in which the viscosity of fluid is dominating over the inertia force is called",
+"options":["steady flow","unsteady flow","laminar flow","turbulent flow"],
+"answer":2,
+"explanation":"Laminar flow occurs when viscous forces dominate over inertial forces (low Reynolds number)."
+},
+{
+"q":"An air vessel is provided at the summit in a syphon to",
+"options":["avoid interruption in the flow","increase discharge","increase velocity","maintain pressure difference"],
+"answer":0,
+"explanation":"An air vessel at the summit of a siphon prevents air accumulation and avoids interruption of flow."
+},
+{
+"q":"The velocity at which the laminar flow stops, is known as",
+"options":["velocity of approach","lower critical velocity","higher critical velocity","none of these"],
+"answer":1,
+"explanation":"The velocity at which laminar flow just ceases and turbulent flow begins is called the lower critical velocity."
+},
+{
+"q":"When a cylindrical vessel, containing some liquid, is rotated about its vertical axis, the liquid surface is depressed down at the axis of its rotation and rises up near the walls of the vessel on all sides. This type of flow is known as",
+"options":["steady flow","turbulent flow","vortex flow","uniform flow"],
+"answer":2,
+"explanation":"This phenomenon is called vortex flow, where liquid rotates about an axis forming a parabolic free surface."
+},
+{
+"q":"The Newton's law of resistance is based on the assumption that the",
+"options":["planes of the body are completely smooth","space around the body is completely filled with the fluid","fluid particles do not exert any influence on one another","all of the above"],
+"answer":3,
+"explanation":"Newton’s law of resistance assumes smooth body surface, continuous fluid around the body, and no interaction between fluid particles beyond ideal assumptions."
+},
+{
+"q":"The Euler's equation for the motion of liquids is based upon the assumption that",
+"options":["the fluid is non - viscous, homogeneous and incompressible","the velocity of flow is uniform over the section","the flow is continuous, steady and along the stream line","all of the above"],
+"answer":3,
+"explanation":"Euler’s equation assumes ideal fluid (non-viscous, incompressible), steady flow, and motion along a streamline."
+},
+{
+"q":"A weir is usually made of masonry or concrete.",
+"options":["Yes","No"],
+"answer":0,
+"explanation":"Weirs are generally permanent hydraulic structures constructed using masonry or concrete."
+},
+{
+"q":"An open tank containing liquid is made to move from rest with a uniform acceleration. The angle θ which the free surface of liquid makes with the horizontal is such that (where a = Horizontal acceleration of the tank, and g = Acceleration due to gravity)",
+"options":["tan θ = a/g","tan θ = 2 a/g","tan θ = a/2g","tan θ = a2/2g"],
+"answer":0,
+"explanation":"When a tank accelerates horizontally, the free surface tilts such that tan θ = a/g due to equilibrium between inertia force and gravity."
+},
+{
+"q":"The discharge over a triangular notch is",
+"options":["inversely proportional to H3/2","directly proportional to H3/2","inversely proportional to H5/2","directly proportional to H5/2"],
+"answer":3,
+"explanation":"The discharge over a triangular (V) notch varies as H^(5/2), hence it is directly proportional to H5/2."
+},
+{
+"q":"The discharge through an external mouthpiece is given by (where a = Cross-sectional area of the mouthpiece, and H = Height of liquid above the mouthpiece)",
+"options":["0.855 a√(2gH)","1.855 aH√(2g)","1.585 a√(2gH)","5.85 aH√(2g)"],
+"answer":2,
+"explanation":"The discharge through an external cylindrical mouthpiece running full is approximately 1.585 a√(2gH)."
+},
+{
+"q":"The loss of pressure head in case of laminar flow is proportional to",
+"options":["velocity","(velocity)2","(velocity)3","(velocity)4"],
+"answer":0,
+"explanation":"In laminar flow, head loss is directly proportional to velocity as per Hagen–Poiseuille law."
+},
+{
+"q":"The flow of water through the hole in the bottom of a wash basin is an example of",
+"options":["steady flow","uniform flow","free vortex","forced vortex"],
+"answer":2,
+"explanation":"Water flowing through a hole at the bottom forms a swirling motion without external torque, which is a free vortex."
+},
+{
+"q":"A compound pipe of diameter d1, d2 and d3 having lengths l1, l2 and l3 is to be replaced by an equivalent pipe of uniform diameter d and of the same length (l) as that of the compound pipe. The size of the equivalent pipe is given by",
+"options":["l/d^5 = l1/d1^5 + l2/d2^5 + l3/d3^5","l/d^4 = l1/d1^4 + l2/d2^4 + l3/d3^4","l/d^3 = l1/d1^3 + l2/d2^3 + l3/d3^3","l/d^2 = l1/d1^2 + l2/d2^2 + l3/d3^2"],
+"answer":0,
+"explanation":"For pipes in series using Darcy–Weisbach equation, head loss is proportional to l/d^5. Hence, for equivalent pipe: l/d^5 = l1/d1^5 + l2/d2^5 + l3/d3^5."
+},
+{
+"q":"The velocity corresponding to Reynold number of 2800, is called",
+"options":["sub-sonic velocity","super-sonic velocity","lower critical velocity","higher critical velocity"],
+"answer":3,
+"explanation":"Reynolds number of about 2800 corresponds to the higher critical velocity, beyond which flow becomes turbulent."
+},
+{
+"q":"When the pipes are in series, the total head loss is equal to the sum of the head loss in each pipe.",
+"options":["Yes","No"],
+"answer":0,
+"explanation":"For pipes connected in series, discharge is same and total head loss equals the sum of individual head losses."
+},
+{
+"q":"Whenever a plate is held immersed at some angle with the direction of flow of the liquid, it is subjected to some pressure. The component of this pressure, at right angles to the direction of flow of the liquid is known as lift.",
+"options":["True","False"],
+"answer":0,
+"explanation":"The force component perpendicular to the direction of flow is called lift."
+},
+{
+"q":"The efficiency of power transmission through pipe is (where H = Total supply head, and hf = Head lost due to friction in the pipe)",
+"options":["(H - hf)/H","hf/H","H/(H - hf)","(H + hf)/H"],
+"answer":0,
+"explanation":"Efficiency of power transmission = (Useful head / Total head) = (H - hf)/H."
+}
+
+],
+
+
+// ........Section-3............
+3:[
+{
+"q":"Which of the following statement is correct ?",
+"options":[
+"In a compressible flow, the volume of the flowing liquid changes during the flow.",
+"A flow in which the volume of the flowing liquid does not change, is called incompressible flow.",
+"When the particles rotate about their own axes while flowing, the flow is said to be rotational flow.",
+"all of the above"
+],
+"answer":3,
+"explanation":"All the given statements are correct definitions of compressible flow, incompressible flow, and rotational flow."
+},
+{
+"q":"The rise, in water level, which occurs during the transformation of the unstable shooting flow to the stable streaming flow is called hydraulic jump.",
+"options":["Yes","No"],
+"answer":0,
+"explanation":"A hydraulic jump is the sudden rise in water level that occurs when supercritical (shooting) flow changes to subcritical (streaming) flow."
+},
+{
+"q":"One stoke is equal to",
+"options":["10-2 m2/s","10-3 m2/s","10-4 m2/s","10-6 m2/s"],
+"answer":2,
+"explanation":"1 stoke = 1 cm²/s = 10^-4 m²/s."
+},
+{
+"q":"The water hammer in pipes occurs due to sudden change in the velocity of flowing liquid",
+"options":["Agree","Disagree"],
+"answer":0,
+"explanation":"Water hammer is caused by a sudden change in velocity of flowing liquid, producing a pressure surge in the pipe."
+},
+{
+"q":"A venturiflume is a flumed structure constructed across a channel by restricting its width.",
+"options":["True","False"],
+"answer":0,
+"explanation":"A venturiflume measures discharge by narrowing the channel width, which increases velocity and changes water depth."
+},
+{
+"q":"The flow in a pipe is laminar, when Reynold number is less than 2000.",
+"options":["True","False"],
+"answer":0,
+"explanation":"Flow in a pipe is considered laminar when the Reynolds number is less than 2000. Between 2000 and 4000 it is transitional, and above 4000 it is turbulent."
+},
+{
+"q":"The power transmitted through the pipe is maximum when the head lost due to friction is equal to",
+"options":[
+"one-fourth of the total supply head",
+"one-third of the total supply head",
+"one-half of the total supply head",
+"two-third of the total supply head"
+],
+"answer":1,
+"explanation":"Maximum power transmission through a pipe occurs when the head lost due to friction (hf) is equal to one-third of the total supply head (H)."
+},
+{
+"q":"The velocity corresponding to Reynold number of 2000 is called",
+"options":[
+"sub-sonic velocity",
+"super-sonic velocity",
+"lower critical velocity",
+"higher critical velocity"
+],
+"answer":2,
+"explanation":"The velocity at which Reynolds number is 2000 is called the lower critical velocity. Below this value, the flow remains laminar."
+},
+{
+"q":"The specific weight of water in S.I. units is taken as",
+"options":[
+"9.81 kN/m3",
+"9.81 x 103 kN/m3",
+"9.81 x 10-6 N/mm3",
+"any one of these"
+],
+"answer":0,
+"explanation":"The specific weight of water in S.I. units is 9.81 kN/m3 (approximately 9810 N/m3)."
+},
+{
+"q":"The loss of head at exit of a pipe is",
+"options":[
+"V2/2g",
+"V2/4g",
+"V2/g",
+"Zero"
+],
+"answer":0,
+"explanation":"The head loss at the exit of a pipe is equal to the velocity head, i.e., V^2/2g."
+},
+{
+"q":"Select the correct statement",
+"options":[
+"Weber's number is the ratio of inertia force to elastic force.",
+"Weber's number is the ratio of gravity force to surface tension force.",
+"Weber's number is the ratio of viscous force to pressure force.",
+"Weber's number is the ratio of inertia force to surface tension force."
+],
+"answer":3,
+"explanation":"Weber's number is defined as the ratio of inertia force to surface tension force. It is used in problems involving fluid flow with free surfaces."
+},
+{
+"q":"The specific weight of sea water is __________ that of pure water.",
+"options":[
+"same as",
+"less than",
+"more than"
+],
+"answer":2,
+"explanation":"Sea water contains dissolved salts, which increase its density. Hence, its specific weight is more than that of pure water."
+},
+{
+"q":"If a body floating in a liquid occupies a new position and remains at rest in this new position, when given a small angular displacement, The body is said to be in __________ equilibrium.",
+"options":[
+"neutral",
+"stable",
+"unstable"
+],
+"answer":1,
+"explanation":"If a floating body returns to a new position and remains at rest after a small angular displacement, it is said to be in stable equilibrium."
+},
+{
+"q":"The force exerted by a moving fluid on an immersed body is directly proportional to the rate of change of momentum due to the presence of the body. This statement is called",
+"options":[
+"Newton's law of motion",
+"Newton's law of cooling",
+"Newton's law of viscosity",
+"Newton's law of resistance"
+],
+"answer":3,
+"explanation":"Newton's law of resistance states that the force exerted by a moving fluid on a body is proportional to the rate of change of momentum."
+},
+{
+"q":"The most economical section of a trapezoidal channel is one which has hydraulic mean depth equal to",
+"options":[
+"1/2 depth",
+"1/2 breadth",
+"1/2 sloping side",
+"1/4 (depth + breadth)"
+],
+"answer":0,
+"explanation":"For the most economical trapezoidal channel section, the hydraulic mean depth (area/wetted perimeter) is equal to half the depth of flow."
+},
+{
+"q":"A flow is called sub-sonic, if the Mach number is",
+"options":[
+"less than unity",
+"unity",
+"between 1 and 6",
+"more than 6"
+],
+"answer":0,
+"explanation":"A flow is called sub-sonic when the Mach number is less than 1 (unity)."
+},
+{
+"q":"The discharge of a depressed nappe is 6 to 7 percent __________ that of a free nappe.",
+"options":[
+"less than",
+"more than"
+],
+"answer":0,
+"explanation":"The discharge of a depressed nappe is about 6 to 7 percent less than that of a free nappe due to reduced effective head."
+},
+{
+"q":"Re-entrant or Borda's mouthpiece is an __________ mouthpiece.",
+"options":[
+"internal",
+"external"
+],
+"answer":1,
+"explanation":"A re-entrant or Borda's mouthpiece projects outward from the vessel, so it is an external mouthpiece."
+},
+{
+"q":"The flow in a pipe is neither laminar nor turbulent when Reynold number is",
+"options":[
+"less than 2000",
+"between 2000 and 2800",
+"more than 2800",
+"none of these"
+],
+"answer":1,
+"explanation":"When Reynolds number lies between 2000 and about 2800, the flow is in the transition zone, which is neither fully laminar nor fully turbulent."
+},
+{
+"q":"The intensity of pressure on an immersed surface __________ with the increase in depth.",
+"options":[
+"does not change",
+"increases",
+"decreases"
+],
+"answer":1,
+"explanation":"In a static fluid, pressure increases with depth due to the increasing weight of the fluid above."
+},
+{
+"q":"According to Pascal's law, the intensity of pressure at any point in a fluid at rest is the same in all directions.",
+"options":[
+"Agree",
+"Disagree"
+],
+"answer":0,
+"explanation":"According to Pascal's law, pressure at a point in a fluid at rest acts equally in all directions."
+},
+{
+"q":"The ratio of the inertia force to the surface tension force is called Weber's number.",
+"options":[
+"Correct",
+"Incorrect"
+],
+"answer":0,
+"explanation":"Weber's number is defined as the ratio of inertia force to surface tension force."
+},
+{
+"q":"For a perfect incompressible liquid, flowing in a continuous stream, the total energy of a particle remains the same, while the particle moves from one point to another. This statement is called",
+"options":[
+"continuity equation",
+"Bernoulli's equation",
+"Pascal's law",
+"Archimede's principle"
+],
+"answer":1,
+"explanation":"Bernoulli's equation states that for a perfect incompressible fluid in steady flow, the total energy remains constant along a streamline."
+},
+{
+"q":"The buoyancy depends upon the",
+"options":[
+"weight of the liquid displaced",
+"pressure with which the liquid is displaced",
+"viscosity of the liquid",
+"compressibility of the liquid"
+],
+"answer":0,
+"explanation":"According to Archimedes' principle, buoyant force is equal to the weight of the liquid displaced."
+},
+{
+"q":"In an internal mouthpiece, the absolute pressure head at vena contracta is __________ the atmospheric pressure head by an amount equal to height of the liquid above the vena contracta.",
+"options":[
+"less than",
+"more than"
+],
+"answer":0,
+"explanation":"In an internal mouthpiece, the pressure head at vena contracta is less than atmospheric pressure head by an amount equal to the height of liquid above the vena contracta."
+},
+{
+"q":"When the coefficient of discharge (Cd) is 0.623, then the general equation for discharge over a rectangular weir is",
+"options":[
+"1.84(L - 0.1nH)H3/2",
+"1.84(L - nH)H2",
+"1.84(L - 0.1nH)H5/2",
+"1.84(L - nH)H3"
+],
+"answer":0,
+"explanation":"For a rectangular weir with Cd = 0.623, the discharge formula is Q = 1.84 (L - 0.1nH) H^(3/2)."
+},
+{
+"q":"The total energy line lies over the centre line of the pipe by an amount equal to",
+"options":[
+"pressure head",
+"velocity head",
+"pressure head + velocity head",
+"pressure head - velocity head"
+],
+"answer":2,
+"explanation":"The total energy line (TEL) is above the centre line of the pipe by the sum of pressure head and velocity head."
+},
+{
+"q":"A piezometer tube is used only for measuring",
+"options":[
+"low pressure",
+"high pressure",
+"moderate pressure",
+"vacuum pressure"
+],
+"answer":0,
+"explanation":"A piezometer is suitable only for measuring low pressures in liquids and cannot measure vacuum or high pressures."
+},
+{
+"q":"The flow in a pipe is turbulent when Reynold number is",
+"options":[
+"less than 2000",
+"between 2000 and 2800",
+"more than 2800",
+"none of these"
+],
+"answer":2,
+"explanation":"Flow in a pipe is considered turbulent when Reynolds number is greater than about 2800."
+},
+{
+"q":"When a tank containing liquid moves with an acceleration in the horizontal direction, then the free surface of the liquid",
+"options":[
+"remains horizontal",
+"becomes curved",
+"falls on the front end",
+"falls on the back end"
+],
+"answer":3,
+"explanation":"When a tank accelerates horizontally, the free surface tilts such that it rises at the back end and falls at the front end."
+},
+{
+"q":"The discharge through a small rectangular orifice is given by (where Cd = Coefficient of discharge for the orifice, a = Cross-sectional area of the orifice, h = Height of the liquid above the centre of the orifice)",
+"options":[
+"Q = Cd x a x √(2gh)",
+"Q = Cd x a x 2gh",
+"Q = Cd x a x gh",
+"Q = Cd x a x √(gh)"
+],
+"answer":0,
+"explanation":"The discharge through a small rectangular orifice is Q = Cd × a × √(2gh), derived from Torricelli’s theorem."
+},
+{
+"q":"The siphon will work satisfactorily, if the minimum pressure in the pipe is __________ vapour pressure of liquid.",
+"options":[
+"equal to",
+"less than",
+"more than"
+],
+"answer":2,
+"explanation":"For a siphon to work properly, the minimum pressure in the pipe must be more than the vapour pressure of the liquid to prevent cavitation."
+},
+{
+"q":"The difference between the notch and weir is that the notch is of bigger size and the weir is of a smaller size.",
+"options":[
+"Agree",
+"Disagree"
+],
+"answer":1,
+"explanation":"A notch is a small opening in a tank or vessel, while a weir is a larger overflow structure built across a channel. Hence, the statement is incorrect."
+},
+{
+"q":"An open tank containing liquid is moving with an acceleration on an inclined plane. The inclination of the free surface of the liquid will be __________ to the acceleration of the tank.",
+"options":[
+"equal to",
+"directly proportional",
+"inversely proportional"
+],
+"answer":1,
+"explanation":"The inclination of the free surface is directly proportional to the acceleration of the tank."
+},
+{
+"q":"Euler's number is the ratio of __________ force to pressure force.",
+"options":[
+"inertia",
+"gravity",
+"viscous"
+],
+"answer":0,
+"explanation":"Euler's number is defined as the ratio of inertia force to pressure force."
+}
+],
+// ........Section-4...........
+4:[
+  {
+"q":"The variation in the volume of a liquid with the variation of pressure is called its",
+"options":[
+"surface tension",
+"compressibility",
+"capillarity",
+"viscosity"
+],
+"answer":1,
+"explanation":"Compressibility is the property of a liquid that describes the change in its volume due to change in pressure."
+},
+{
+"q":"The pressure measured with the help of a pressure gauge is called",
+"options":[
+"atmospheric pressure",
+"gauge pressure",
+"absolute pressure",
+"mean pressure"
+],
+"answer":1,
+"explanation":"A pressure gauge measures gauge pressure, which is the pressure above atmospheric pressure."
+},
+{
+"q":"A venturiflume is used to measure",
+"options":[
+"pressure of liquid",
+"discharge of liquid",
+"pressure difference between two points in a channel",
+"pressure difference between two points in a pipe"
+],
+"answer":1,
+"explanation":"A venturiflume is a device used in open channels to measure the discharge of liquid."
+},
+{
+"q":"The line of action of the force of buoyancy acts through the centre of gravity of the volume of the liquid displaced.",
+"options":[
+"True",
+"False"
+],
+"answer":0,
+"explanation":"The buoyant force acts vertically upward through the centre of buoyancy, which is the centre of gravity of the displaced liquid."
+},
+{
+"q":"The metacentric height is the distance between the",
+"options":[
+"centre of gravity of the floating body and the centre of buoyancy",
+"centre of gravity of the floating body and the metacentre",
+"metacentre and centre of buoyancy",
+"original centre of buoyancy and new centre of buoyancy"
+],
+"answer":1,
+"explanation":"Metacentric height is the distance between the centre of gravity (G) of the floating body and the metacentre (M)."
+},
+ {
+"q":"When a plate is immersed in a liquid parallel to the flow, it will be subjected to a pressure __________ that if the same plate is immersed perpendicular to the flow.",
+"options":[
+"less than",
+"more than"
+],
+"answer":0,
+"explanation":"When the plate is parallel to the flow, the projected area normal to the flow is smaller, so it experiences less pressure force than when it is perpendicular to the flow."
+},
+{
+"q":"The hydraulic mean depth for a circular pipe of diameter (d) is",
+"options":[
+"d/6",
+"d/4",
+"d/2",
+"d"
+],
+"answer":3,
+"explanation":"Hydraulic mean depth = Area / Wetted perimeter. For a full circular pipe, Area = πd²/4 and Wetted perimeter = πd, so hydraulic mean depth = d/4."
+},
+{
+"q":"The tangential velocity of the water element having a free vortex is",
+"options":[
+"directly proportional to its distance from the centre",
+"inversely proportional to its distance from the centre",
+"directly proportional to its (distance)2 from the centre",
+"inversely proportional to its (distance)2 from the centre"
+],
+"answer":1,
+"explanation":"In a free vortex, tangential velocity varies inversely with radius (v ∝ 1/r)."
+},
+{
+"q":"The unit of kinematic viscosity in S. I. units is",
+"options":[
+"N-m/s",
+"N-s/m2",
+"m2/s",
+"N-m"
+],
+"answer":2,
+"explanation":"The S.I. unit of kinematic viscosity is m²/s."
+},
+{
+"q":"A fluid whose viscosity does not change with the rate of deformation or shear strain is known as",
+"options":[
+"real fluid",
+"ideal fluid",
+"newtonian fluid",
+"non-newtonian fluid"
+],
+"answer":2,
+"explanation":"A Newtonian fluid has constant viscosity independent of the rate of shear strain."
+},
+{
+"q":"Reynold's number is the ratio of the inertia force to the",
+"options":[
+"surface tension force",
+"viscous force",
+"gravity force",
+"elastic force"
+],
+"answer":1,
+"explanation":"Reynolds number is defined as the ratio of inertia force to viscous force."
+},
+{
+"q":"A uniform body 3 m long, 2 m wide and 1 m deep floats in water. If the depth of immersion is 0.6 m, then the weight of the body is",
+"options":[
+"3.53 kN",
+"33.3 kN",
+"35.3 kN",
+"none of these"
+],
+"answer":2,
+"explanation":"Weight of body = Weight of displaced water = Volume displaced × specific weight of water = (3 × 2 × 0.6) × 9.81 = 3.6 × 9.81 ≈ 35.3 kN."
+},
+{
+"q":"A weir is said to be narrow-crested weir, if the width of the crest of the weir is __________ half the height of water above the weir crest.",
+"options":[
+"equal to",
+"less than",
+"more than"
+],
+"answer":2,
+"explanation":"A weir is called narrow-crested when the crest width is more than half the height of water above the crest."
+},
+{
+"q":"The total pressure on an immersed surface inclined at an angle θ with the liquid surface is",
+"options":[
+"wA",
+"wx",
+"wAx",
+"wAx/sin θ"
+],
+"answer":2,
+"explanation":"Total pressure on an inclined immersed surface = w × A × x, where w is specific weight, A is area, and x is depth of centroid from liquid surface."
+},
+{
+"q":"Turbulent flow takes place at high velocities.",
+"options":[
+"Agree",
+"Disagree"
+],
+"answer":0,
+"explanation":"Turbulent flow generally occurs at high velocities corresponding to high Reynolds numbers."
+},
+{
+"q":"Reynold's number is the ratio of the inertia force to the",
+"options":[
+"surface tension force",
+"viscous force",
+"gravity force",
+"elastic force"
+],
+"answer":1,
+"explanation":"Reynolds number is defined as the ratio of inertia force to viscous force."
+},
+{
+"q":"A uniform body 3 m long, 2 m wide and 1 m deep floats in water. If the depth of immersion is 0.6 m, then the weight of the body is",
+"options":[
+"3.53 kN",
+"33.3 kN",
+"35.3 kN",
+"none of these"
+],
+"answer":2,
+"explanation":"Weight of the floating body equals weight of displaced water. Volume displaced = 3 × 2 × 0.6 = 3.6 m³. Weight = 3.6 × 9.81 = 35.3 kN (approx)."
+},
+{
+"q":"A weir is said to be narrow-crested weir, if the width of the crest of the weir is __________ half the height of water above the weir crest.",
+"options":[
+"equal to",
+"less than",
+"more than"
+],
+"answer":1,
+"explanation":"A weir is called narrow-crested when the width of the crest is less than half the height of water above the crest."
+},
+{
+"q":"The total pressure on an immersed surface inclined at an angle θ with the liquid surface is",
+"options":[
+"wA",
+"wx",
+"wAx",
+"wAx/sin θ"
+],
+"answer":2,
+"explanation":"Total pressure on an inclined immersed surface = w × A × x, where w is specific weight, A is area, and x is depth of centroid below the free surface."
+},
+{
+"q":"Turbulent flow takes place at high velocities.",
+"options":[
+"Agree",
+"Disagree"
+],
+"answer":0,
+"explanation":"Turbulent flow generally occurs at high velocities corresponding to high Reynolds numbers."
+},
+{
+"q":"The pressure of a liquid measured with the help of a piezometer tube is",
+"options":[
+"vacuum pressure",
+"gauge pressure",
+"absolute pressure",
+"atmospheric pressure"
+],
+"answer":1,
+"explanation":"A piezometer measures gauge pressure, i.e., pressure above atmospheric pressure."
+},
+{
+"q":"The hydraulic gradient line lies over the centre line of the pipe by an amount equal to the",
+"options":[
+"pressure head",
+"velocity head",
+"pressure head + velocity head",
+"pressure head - velocity head"
+],
+"answer":0,
+"explanation":"The hydraulic gradient line (HGL) is above the centre line of the pipe by an amount equal to the pressure head."
+},
+{
+"q":"The flow in a pipe or channel is said to be non-uniform when",
+"options":[
+"the liquid particles at all sections have the same velocities",
+"the liquid particles at different sections have different velocities",
+"the quantity of liquid flowing per second is constant",
+"each liquid particle has a definite path"
+],
+"answer":1,
+"explanation":"Flow is non-uniform when the velocity changes from section to section along the flow."
+},
+{
+"q":"The ratio of the inertia force to the viscous force is called",
+"options":[
+"Reynold's number",
+"Froude's number",
+"Weber's number",
+"Euler's number"
+],
+"answer":0,
+"explanation":"Reynolds number is defined as the ratio of inertia force to viscous force."
+},
+{
+"q":"A flow whose streamline is represented by a straight line, is called __________ dimensional flow.",
+"options":[
+"one",
+"two",
+"three",
+"four"
+],
+"answer":0,
+"explanation":"If the streamline is a straight line, the flow is considered one-dimensional flow."
+},
+{
+"q":"The pressure of a liquid measured with the help of a piezometer tube is",
+"options":[
+"vacuum pressure",
+"gauge pressure",
+"absolute pressure",
+"atmospheric pressure"
+],
+"answer":1,
+"explanation":"A piezometer measures gauge pressure, i.e., pressure above atmospheric pressure."
+},
+{
+"q":"The hydraulic gradient line lies over the centre line of the pipe by an amount equal to the",
+"options":[
+"pressure head",
+"velocity head",
+"pressure head + velocity head",
+"pressure head - velocity head"
+],
+"answer":0,
+"explanation":"The hydraulic gradient line (HGL) is above the centre line of the pipe by an amount equal to the pressure head."
+},
+{
+"q":"The flow in a pipe or channel is said to be non-uniform when",
+"options":[
+"the liquid particles at all sections have the same velocities",
+"the liquid particles at different sections have different velocities",
+"the quantity of liquid flowing per second is constant",
+"each liquid particle has a definite path"
+],
+"answer":1,
+"explanation":"Flow is non-uniform when the velocity changes from section to section along the flow."
+},
+{
+"q":"The ratio of the inertia force to the viscous force is called",
+"options":[
+"Reynold's number",
+"Froude's number",
+"Weber's number",
+"Euler's number"
+],
+"answer":0,
+"explanation":"Reynolds number is defined as the ratio of inertia force to viscous force."
+},
+{
+"q":"A flow whose streamline is represented by a straight line, is called __________ dimensional flow.",
+"options":[
+"one",
+"two",
+"three",
+"four"
+],
+"answer":0,
+"explanation":"If the streamline is a straight line, the flow is considered one-dimensional flow."
+},
+{
+"q":"The viscosity of a liquid __________ its rate of flow through a hole in a vessel.",
+"options":[
+"effects",
+"does not effect"
+],
+"answer":1,
+"explanation":"For small orifices, the discharge is given by Torricelli’s theorem and is independent of viscosity; hence viscosity does not affect the rate of flow significantly."
+},
+{
+"q":"The formula for discharge over a sharp-crested weir and Ogee weir is same as that of a rectangular weir",
+"options":[
+"Agree",
+"Disagree"
+],
+"answer":0,
+"explanation":"The discharge formula for a sharp-crested and Ogee weir is similar to that of a rectangular weir, differing mainly in coefficient values."
+},
+{
+"q":"The Cippoletti weir is a __________ weir.",
+"options":[
+"rectangular",
+"triangular",
+"trapezoidal",
+"circular"
+],
+"answer":2,
+"explanation":"A Cippoletti weir is a trapezoidal weir with side slopes designed to compensate for end contractions."
+},
+{
+"q":"When a body is placed over a liquid, it will float if",
+"options":[
+"gravitational force is equal to the upthrust of the liquid",
+"gravitational force is less than the upthrust of the liquid",
+"gravitational force is more than the upthrust of the liquid",
+"none of the above"
+],
+"answer":0,
+"explanation":"A body floats when its weight (gravitational force) is equal to the buoyant force (upthrust) of the liquid."
+},
+{
+"q":"Gauge pressure at a point is equal to the absolute pressure __________ the atmospheric pressure.",
+"options":[
+"plus",
+"minus"
+],
+"answer":1,
+"explanation":"Gauge pressure = Absolute pressure − Atmospheric pressure."
+},
+{
+"q":"The absolute pressure is equal to",
+"options":[
+"gauge pressure + atmospheric pressure",
+"gauge pressure - atmospheric pressure",
+"atmospheric pressure - gauge pressure",
+"gauge pressure - vacuum pressure"
+],
+"answer":0,
+"explanation":"Absolute pressure = Gauge pressure + Atmospheric pressure."
+},
+{
+"q":"When the pressure intensity at a point is more than the local atmospheric pressure, then the difference of these two pressures is called",
+"options":[
+"gauge pressure",
+"absolute pressure",
+"positive gauge pressure",
+"vacuum pressure"
+],
+"answer":2,
+"explanation":"When pressure exceeds atmospheric pressure, the excess is called positive gauge pressure."
+},
+{
+"q":"The hammer blow in pipes occurs when",
+"options":[
+"there is excessive leakage in the pipe",
+"the pipe bursts under high pressure of fluid",
+"the flow of fluid through the pipe is suddenly brought to rest by closing of the valve",
+"the flow of fluid through the pipe is gradually brought to rest by closing of the valve"
+],
+"answer":2,
+"explanation":"Water hammer (hammer blow) occurs when flowing fluid is suddenly stopped by rapid valve closure, causing a pressure surge."
+},
+{
+"q":"When a body is placed over a liquid, it will sink down if",
+"options":[
+"gravitational force is equal to the upthrust of the liquid",
+"gravitational force is less than the upthrust of the liquid",
+"gravitational force is more than the upthrust of the liquid",
+"none of the above"
+],
+"answer":2,
+"explanation":"A body sinks when its weight (gravitational force) is greater than the buoyant force (upthrust)."
+},
+{
+"q":"When a cylindrical vessel of radius (r) containing liquid is revolved about its vertical axis ω rad/s, then depth of parabola which the liquid assumes is",
+"options":[
+"(ω²r²)/(2g)",
+"(ω²r²)/g",
+"(ωr²)/(2g)",
+"(ω²r)/(2g)"
+],
+"answer":0,
+"explanation":"For a rotating liquid, the depth of parabola formed is given by h = (ω²r²)/(2g)."
+}
+
+
+
+]
+};
+
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

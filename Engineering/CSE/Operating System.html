@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:" Which of the following statements is false?",
+options:[
+"the technique of storage compaction involves moving all occupied areas of storage to one end or other of main storage",
+"compaction does not involve relocation of programs",
+"compaction is also known as garbage collection",
+"the system must stop everything while it performs the compaction",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is compaction does not involve relocation of programs. Compaction requires relocation of programs to eliminate fragmentation."
+},
+
+{
+q:" Interprocess communication",
+options:[
+"is required for all processes",
+"is usually done via disk drives",
+"is never necessary",
+"allows processes to synchronize activity"
+],
+answer:3,
+explanation:"Correct answer is allows processes to synchronize activity. Interprocess communication (IPC) enables processes to exchange data and coordinate their actions."
+},
+
+{
+q:" Which of the following functions is(are) performed by the loader",
+options:[
+"allocate space in memory for the programs and resolve symbolic references between object decks",
+"adjust all address dependent locations, such as address constants, to correspond to the allocated space",
+"physically place the machine instructions and data into memory",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. The loader allocates memory, resolves references, adjusts addresses, and loads programs into memory."
+},
+
+{
+q:" User-Friendly Systems are:",
+options:[
+"required for object-oriented programming",
+"easy to develop",
+"common among traditional mainframe operating systems",
+"becoming more common",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is becoming more common. Modern systems increasingly focus on user-friendly interfaces."
+},
+
+{
+q:" Which of the following addressing modes facilitates access to an operand whose location is defined relative to the beginning of the data structure in which it appears?",
+options:[
+"ascending",
+"sorting",
+"index",
+"indirect",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is index. Indexed addressing allows access relative to the beginning of a data structure."
+},
+{
+q:" Which of the following systems software does the job of merging the records from two files into one?",
+options:[
+"Security software",
+"Utility program",
+"Networking software",
+"Documentation system",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Utility program. Utility programs perform file management tasks such as sorting, merging, and copying files."
+},
+
+{
+q:" Fork is",
+options:[
+"the dispatching of a task",
+"the creation of a new job",
+"the creation of a new process",
+"increasing the priority of a task",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is the creation of a new process. In operating systems, fork creates a new process."
+},
+
+{
+q:" Thrashing",
+options:[
+"is a natural consequence of virtual memory systems",
+"can always be avoided by swapping",
+"always occurs on large computers",
+"can be caused by poor paging algorithms",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is can be caused by poor paging algorithms. Thrashing occurs when excessive paging reduces system performance."
+},
+
+{
+q:" Supervisor state is",
+options:[
+"never used",
+"entered by programs when they enter the processor",
+"required to perform any I/O",
+"only allowed to the operating system",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is only allowed to the operating system. Supervisor (privileged) mode is restricted to the OS for critical operations."
+},
+
+{
+q:" Which of the following instruction steps would be written within the diamond-shaped box of a flowchart?",
+options:[
+"S = B - C",
+"IS A<10",
+"PRINT A",
+"DATA X,4Z",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is IS A<10. The diamond shape in a flowchart represents a decision or conditional test."
+},
+{
+q:" Addressing structure",
+options:[
+"defines the fundamental method of determining effective operand addresses",
+"are variations in the use of fundamental addressing structures, or some associated actions which are related to addressing",
+"performs indicated operations on two fast registers of the machine and leave the result in one of the registers",
+"all of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is defines the fundamental method of determining effective operand addresses. Addressing structures specify how the effective address of an operand is calculated."
+},
+
+{
+q:" The Memory Buffer Register (MBR)",
+options:[
+"is a hardware memory device which denotes the location of the current instruction being executed",
+"is a group of electrical circuits (hardware), that performs the intent of instructions fetched from memory",
+"contains the address of the memory location that is to be read from or stored into",
+"contains a copy of the designated memory location specified by the MAR after a read or the new contents of the memory prior to a write",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is contains a copy of the designated memory location specified by the MAR after a read or the new contents of the memory prior to a write. The MBR temporarily holds data being transferred to or from memory."
+},
+
+{
+q:" The strategy of allowing processes that are logically runnable to be temporarily suspended is called",
+options:[
+"preemptive scheduling",
+"non preemptive scheduling",
+"shortest job first",
+"first come first served",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is preemptive scheduling. In preemptive scheduling, the operating system can suspend a running process to allow another process to execute."
+},
+
+{
+q:" The Storage-to-Storage instructions",
+options:[
+"have both their operands in the main store",
+"which perform an operation on a register operand and an operand located in the main store, generally leaving the result in the register, except in the case of store operation",
+"which perform indicated operations on two fast registers of the machine and have the result in one of the registers",
+"all of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is have both their operands in the main store. Storage-to-storage instructions operate directly on memory operands."
+},
+
+{
+q:" The LRU algorithm",
+options:[
+"pages out pages that have been used recently",
+"pages out pages that have not been used recently",
+"pages out pages that have been least used recently",
+"pages out the first page in a given area",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is pages out pages that have been least used recently. LRU (Least Recently Used) replaces the page that has not been used for the longest time."
+},
+{
+q:" The part of machine level instruction, which tells the central processor what has to be done, is",
+options:[
+"Operation code",
+"Address",
+"Locator",
+"Flip-Flop",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Operation code. The opcode specifies the operation that the CPU must perform."
+},
+
+{
+q:" Which of the following refers to the associative memory?",
+options:[
+"the address of the data is generated by the CPU",
+"the address of the data is supplied by the users",
+"there is no need for an address i.e. the data is used as an address",
+"the data are accessed sequentially",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is there is no need for an address i.e. the data is used as an address. Associative memory is accessed based on content rather than a specific address."
+},
+
+{
+q:" To avoid the race condition, the number of processes that may be simultaneously inside their critical section is",
+options:[
+"8",
+"1",
+"16",
+"0",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is 1. Only one process should be in the critical section at a time to prevent race conditions."
+},
+
+{
+q:" A system program that combines the separately compiled modules of a program into a form suitable for execution",
+options:[
+"assembler",
+"linking loader",
+"cross compiler",
+"load and go",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is linking loader. A linking loader links object modules and prepares the program for execution."
+},
+
+{
+q:" Process is",
+options:[
+"program in High level language kept on disk",
+"contents of main memory",
+"a program in execution",
+"a job in secondary memory",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is a program in execution. A process is an active instance of a program being executed."
+},
+{
+q:" Page stealing",
+options:[
+"is a sign of an efficient system",
+"is taking page frames from other working sets",
+"should be the tuning goal",
+"is taking larger disk spaces for pages paged out",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is is taking page frames from other working sets. Page stealing occurs when the system reallocates page frames from one process to another."
+},
+
+{
+q:" In MS-DOS 5.0, which is the number that acts as a code to uniquely identify the software product?",
+options:[
+"MS",
+"DOS",
+"MS DOS",
+"5.0",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is 5.0. The version number uniquely identifies the specific release of the MS-DOS software."
+},
+
+{
+q:" Bug means",
+options:[
+"A logical error in a program",
+"A difficult syntax error in a program",
+"Documenting programs using an efficient documentation tool",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is A logical error in a program. A bug refers to an error or flaw in a program that causes incorrect behavior."
+},
+
+{
+q:" Memory management is :",
+options:[
+"not used in modern operating system",
+"replaced with virtual memory on current systems",
+"not used on multiprogramming systems",
+"critical for even the simplest operating systems",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is critical for even the simplest operating systems. Memory management is essential for efficient and safe execution of programs."
+},
+{
+q:" The memory allocation scheme subject to \"external\" fragmentation is",
+options:[
+"segmentation",
+"swapping",
+"pure demand paging",
+"multiple contiguous fixed partitions",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is segmentation. Segmentation uses variable-sized partitions which can lead to external fragmentation."
+},
+
+{
+q:" While working with MS-DOS, which command will you use to transfer a specific file from one disk to another?",
+options:[
+"DISKCOPY",
+"COPY",
+"RENAME",
+"FORMAT",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is COPY. The COPY command transfers specific files from one disk to another."
+},
+
+{
+q:" What is the name of the operating system for the laptop computer called MacLite?",
+options:[
+"Windows",
+"DOS",
+"MS-DOS",
+"OZ",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is OZ. OZ was the operating system used for the MacLite laptop."
+},
+
+{
+q:" In which addressing mode the contents of a register specified in the instruction are first decremented, and then these contents are used as the effective address of the operands?",
+options:[
+"index addressing",
+"indirect addressing",
+"auto increment",
+"auto decrement",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is auto decrement. In auto decrement mode, the register is decremented before its value is used as the effective address."
+},
+
+{
+q:" What is the name given to the values that are automatically provided by software to reduce keystrokes and improve a computer user's productivity?",
+options:[
+"Defined values",
+"Fixed values",
+"Default values",
+"Special values",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Default values. Default values are automatically supplied by software to simplify user interaction."
+},
+{
+q:" In virtual memory systems, Dynamic address translation",
+options:[
+"is the hardware necessary to implement paging",
+"stores pages at a specific location on disk",
+"is useless when swapping is used",
+"is part of the operating system paging algorithm",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is is the hardware necessary to implement paging. Dynamic address translation is performed by hardware (MMU) to map virtual addresses to physical addresses."
+},
+
+{
+q:" Fragmentation of the file system",
+options:[
+"occurs only if the file system is used improperly",
+"can always be prevented",
+"can be temporarily removed by compaction",
+"is a characteristic of all file systems",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is is a characteristic of all file systems. Over time, fragmentation naturally occurs as files are created, deleted, and modified."
+},
+
+{
+q:" A non-relocatable program is one which",
+options:[
+"cannot be made to execute in any area of storage other than the one designated for it at the time of its coding or translation.",
+"consists of a program and relevant information for its relocation.",
+"can itself performs the relocation of its address-sensitive portions.",
+"all of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is cannot be made to execute in any area of storage other than the one designated for it at the time of its coding or translation. A non-relocatable program must run at a fixed memory location."
+},
+
+{
+q:" Which of the following are(is) Language Processor(s)",
+options:[
+"assembles",
+"compilers",
+"interpreters",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Assemblers, compilers, and interpreters are all language processors."
+},
+
+{
+q:" In which addressing mode the effective address of the operand is the contents of a register specified in the instruction and after accessing the operand, the contents of this register is incremented to point to the next item in the list?",
+options:[
+"index addressing",
+"indirect addressing",
+"auto increment",
+"auto decrement",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is auto increment. In auto increment mode, the register is used as the effective address and then incremented after accessing the operand."
+},
+{
+q:" Thrashing can be avoided if",
+options:[
+"the pages, belonging to the working set of the programs, are in main memory",
+"the speed of CPU is increased",
+"the speed of I/O processor is increased",
+"all of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is the pages, belonging to the working set of the programs, are in main memory. Thrashing occurs when processes do not have enough frames; keeping the working set in memory prevents excessive page faults."
+},
+
+{
+q:" In analyzing the compilation of PL/I program, the term \"Lexical analysis\" is associated with",
+options:[
+"recognition of basic syntactic constructs through reductions.",
+"recognition of basic elements and creation of uniform symbols",
+"creation of more optional matrix.",
+"use of macro processor to produce more optimal assembly code",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is recognition of basic elements and creation of uniform symbols. Lexical analysis identifies tokens (keywords, identifiers, operators) in the source program."
+},
+
+{
+q:" Resolution of externally defined symbols is performed by",
+options:[
+"Linker",
+"Loader",
+"Compiler",
+"Assembler",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Linker. The linker resolves external symbol references between different object modules."
+},
+
+{
+q:" System generation:",
+options:[
+"is always quite simple",
+"is always very difficult",
+"varies in difficulty between systems",
+"requires extensive tools to be understandable",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is varies in difficulty between systems. The complexity of system generation depends on system design and configuration."
+},
+
+{
+q:" The Memory Address Register",
+options:[
+"is a hardware memory device which denotes the location of the current instruction being executed.",
+"is a group of electrical circuits (hardware), that performs the intent of instructions fetched from memory.",
+"contains the address of the memory location that is to be read from or stored into.",
+"contains a copy of the designated memory location specified by the MAR after a \"read\" or the new contents of the memory prior to a \"write\".",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is contains the address of the memory location that is to be read from or stored into. The MAR holds the address for memory read or write operations."
+}
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:" The working set theory of programming behaviour of processes running within an operating system involves",
+options:[
+"the collection of pages that a process accesses",
+"disk scheduling mechanisms",
+"coalescing holes in memory",
+"assigning the CPU to processes",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is the collection of pages that a process accesses. The working set model refers to the set of pages a process is actively using during execution."
+},
+
+{
+q:" Operating system is",
+options:[
+"A collection of hardware components",
+"A collection of input-output devices",
+"A collection of software routines",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is A collection of software routines. An operating system is system software that manages hardware and software resources."
+},
+
+{
+q:" A file organization component of a VSAM file is:",
+options:[
+"relative record data set",
+"keyed sequential data set",
+"entry sequential data set",
+"all of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is all of the above. VSAM supports RRDS, KSDS, and ESDS file organizations."
+},
+
+{
+q:" What is the name given to the software which can be legally compiled and often used for free?",
+options:[
+"Shareware program",
+"Public domain program",
+"Firmware program",
+"Mindware",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Public domain program. Public domain software can be freely used and distributed without restrictions."
+},
+
+{
+q:" The SJF algorithm executes first the job",
+options:[
+"that last entered the queue",
+"that first entered the queue",
+"that has been in the queue the longest",
+"with the least processor needs",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is with the least processor needs. Shortest Job First (SJF) schedules the process with the smallest CPU burst time first."
+},
+{
+q:" A translator which reads an entire programme written in a high level language and converts it into machine language code is:",
+options:[
+"assembler",
+"translator",
+"compiler",
+"system software",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is compiler. A compiler translates the entire high-level program into machine code at once."
+},
+
+{
+q:" The advantage(s) inherent to using high level languages is (are)",
+options:[
+"Fewer people, less management and shorter transition in learning time",
+"Improved debugging capability, and superior documentation",
+"A greater degree of machine independence",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. High-level languages improve productivity, debugging, documentation, and portability."
+},
+
+{
+q:" Addressing modes",
+options:[
+"defines the fundamental method of determining effective operand addresses",
+"are variations in the use of fundamental addressing structures, or some associated actions which are related to addressing.",
+"performs indicated operations on two fast registers of the machine and leave the result in one of the registers.",
+"all of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is are variations in the use of fundamental addressing structures, or some associated actions which are related to addressing. Addressing modes specify how operand addresses are determined."
+},
+
+{
+q:" In which way(s) a macro processor for assembly language can be implemented:",
+options:[
+"independent two-pass processor",
+"independent one-pass processor",
+"processor incorporated into pass 1 of a standard two-pass assembler",
+"all of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is all of the above. A macro processor can be implemented independently or integrated with an assembler."
+},
+
+{
+q:" Which of the following is a type of systems software used on microcomputers?",
+options:[
+"MS-DOS",
+"PC-DOS",
+"Unix",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. MS-DOS, PC-DOS, and Unix are system software used on microcomputers."
+},
+{
+q:" What is the name given to the process of initializing a microcomputer with its operating system?",
+options:[
+"Cold booting",
+"Booting",
+"Warm booting",
+"Boot recording",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Booting. Booting is the process of loading the operating system into memory when the computer starts."
+},
+
+{
+q:" The function(s) of the Storage Assignment is (are)",
+options:[
+"to assign storage to all variables referenced in the source program.",
+"to assign storage to all temporary locations that are necessary for intermediate results.",
+"to assign storage to literals, and to ensure that the storage is allocate and appropriate locations are initialized.",
+"all of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is all of the above. Storage assignment includes allocating memory for variables, temporary data, and literals."
+},
+
+{
+q:" A Processor",
+options:[
+"is a device that performs a sequence of operations specified by instructions in memory.",
+"is the device where information is stored",
+"is a sequence of instructions",
+"is typically characterized by interactive processing and time of the CPU's time to allow quick response to each user.",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is is a device that performs a sequence of operations specified by instructions in memory. A processor executes program instructions."
+},
+
+{
+q:" With MS-DOS which command will divide the surface of the blank floppy disk into sectors and assign a unique address to each one?",
+options:[
+"FORMAT command",
+"FAT command",
+"VER command",
+"CHKDSK command",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is FORMAT command. FORMAT prepares the disk by dividing it into tracks and sectors and setting up the file system."
+},
+
+{
+q:" Multiprogramming",
+options:[
+"is a method of memory allocation by which the program is subdivided into equal portions, or pages and core is subdivided into equal portions or blocks.",
+"consists of those addresses that may be generated by a processor during execution of a computation.",
+"is a method of allocating processor time.",
+"allows multiple programs to reside in separate areas of core at the time.",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is allows multiple programs to reside in separate areas of core at the time. Multiprogramming keeps several programs in memory to improve CPU utilization."
+},
+{
+q:" When did IBM release the first version of disk operating system DOS version 1.0?",
+options:[
+"1981",
+"1982",
+"1983",
+"1984",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is 1981. IBM released PC-DOS 1.0 in 1981 along with the IBM PC."
+},
+
+{
+q:" Which of the following is false about disk when compared to main memory?",
+options:[
+"non-volatile",
+"longer storage capacity",
+"lower price per bit",
+"faster",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is faster. Disk storage is slower than main memory, though it is non-volatile and cheaper per bit."
+},
+
+{
+q:" Producer consumer problem can be solved using",
+options:[
+"semaphores",
+"event counters",
+"monitors",
+"all of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is all of the above. The producer-consumer problem can be solved using semaphores, monitors, or other synchronization mechanisms."
+},
+
+{
+q:" Most of the microcomputer's operating systems like Apple DOS, MS DOS and PC DOS etc. are called disk operating systems because",
+options:[
+"they are memory resident",
+"they are initially stored on disk",
+"they are available on magnetic tapes",
+"they are partly in primary memory and partly on disk",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is they are initially stored on disk. Disk operating systems are loaded from disk storage into memory during booting."
+},
+
+{
+q:" The CPU, after receiving an interrupt from an I/O device",
+options:[
+"halts for a predetermined time",
+"hands over control of address bus and data bus to the interrupting device",
+"branches off to the interrupt service routine immediately",
+"branches off to the interrupt service routine after completion of the current instruction",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is branches off to the interrupt service routine after completion of the current instruction. The CPU completes the current instruction before servicing the interrupt."
+},
+{
+q:" Block caches or buffer caches are used",
+options:[
+"to improve disk performance",
+"to handle interrupts",
+"to increase the capacity of the main memory",
+"to speed up main memory read operation",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is to improve disk performance. Buffer caches store frequently accessed disk blocks in memory to reduce disk I/O operations."
+},
+
+{
+q:" Which of the following statements is false?",
+options:[
+"a small page size causes large page tables",
+"internal fragmentation is increased with small pages",
+"a large page size causes instructions and data that will not be referenced brought into primary storage",
+"I/O transfers are more efficient with large pages",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is internal fragmentation is increased with small pages. Internal fragmentation increases with larger page sizes, not smaller ones."
+},
+
+{
+q:" The action of parsing the source program into the proper syntactic classes is known as",
+options:[
+"syntax analysis",
+"lexical analysis",
+"interpretation analysis",
+"general syntax analysis",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is syntax analysis. Syntax analysis (parsing) checks the grammatical structure of the program."
+},
+
+{
+q:" Which, of the following is not true about the description of a decision table?",
+options:[
+"A decision table is easy to modify",
+"A decision table is directly understood by the computer",
+"A decision table is easy to understand",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is A decision table is directly understood by the computer. Decision tables are tools for humans and must be translated into program code."
+},
+
+{
+q:" Trojan-Horse programs",
+options:[
+"are legitimate programs that allow unauthorized access",
+"do not usually work",
+"are hidden programs that do not show up on the system",
+"usually are immediately discovered",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is are legitimate programs that allow unauthorized access. A Trojan horse appears legitimate but performs malicious actions."
+},
+{
+q:" The initial value of the semaphore that allows only one of the many processes to enter their critical sections, is",
+options:[
+"8",
+"1",
+"16",
+"0",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is 1. A semaphore initialized to 1 (binary semaphore) ensures mutual exclusion, allowing only one process in the critical section."
+},
+
+{
+q:" The Register - to - Register (RR) instructions",
+options:[
+"have both their operands in the main store.",
+"which perform an operation on a register operand and an operand which is located in the main store, generally leaving the result in the register, except in the case of store operation when it is also written into the specified storage location.",
+"which perform indicated operations on two fast registers of the machine and leave the result in one of the registers.",
+"all of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is which perform indicated operations on two fast registers of the machine and leave the result in one of the registers. RR instructions operate between CPU registers."
+},
+
+{
+q:" A page fault",
+options:[
+"is an error is a specific page",
+"occurs when a program accesses a page of memory",
+"is an access to a page not currently in memory",
+"is a reference to a page belonging to another program",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is is an access to a page not currently in memory. A page fault happens when the required page is not present in main memory."
+},
+
+{
+q:" An algorithm is best described as",
+options:[
+"A computer language",
+"A step by step procedure for solving a problem",
+"A branch of mathematics",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is A step by step procedure for solving a problem. An algorithm is a finite sequence of well-defined instructions."
+},
+
+{
+q:" The process of transferring data intended for a peripheral device into a disk (or intermediate store) so that it can be transferred to peripheral at a more convenient time or in bulk, is known as",
+options:[
+"multiprogramming",
+"spooling",
+"caching",
+"virtual programming",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is spooling. Spooling stores data temporarily on disk before sending it to an output device like a printer."
+},
+{
+q:" The function(s) of the Syntax phase is(are)",
+options:[
+"to recognize the major constructs of the language and to call the appropriate action routines that will generate the intermediate form or matrix for these constructs.",
+"to build a literal table and an identifier table",
+"to build a uniform symbol table",
+"to parse the source program into the basic elements or tokens of the language.",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is to recognize the major constructs of the language and to call the appropriate action routines that will generate the intermediate form or matrix for these constructs. This is the role of syntax analysis (parsing)."
+},
+
+{
+q:" Swapping",
+options:[
+"works best with many small partitions",
+"allows many programs to use memory simultaneously",
+"allows each program in turn to use the memory",
+"does not work with overlaying",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is allows each program in turn to use the memory. Swapping moves processes in and out of memory so each can use it when needed."
+},
+
+{
+q:" A disk scheduling algorithm in an operating system causes the disk arm to move back and forth across the disk surface in order to service all requests in its path. This is a",
+options:[
+"First come first served",
+"Shortest Seek Time First (SSTE)",
+"Scan",
+"FIFO",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Scan. The SCAN (elevator) algorithm moves the disk arm back and forth servicing requests along the way."
+},
+
+{
+q:" A translator is best described as",
+options:[
+"an application software",
+"a system software",
+"a hardware component",
+"all of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is a system software. A translator (compiler/assembler/interpreter) is system software that converts source code into machine code."
+},
+
+{
+q:" Data encryption",
+options:[
+"is mostly used by public networks",
+"is mostly used by financial networks",
+"cannot be used by private installations",
+"is not necessary, since data cannot be intercepted",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is is mostly used by financial networks. Encryption is widely used in financial systems to secure sensitive transactions."
+},
+{
+q:" The dispatcher",
+options:[
+"actually schedules the tasks into the processor",
+"puts tasks in I/O wait",
+"is always small and simple",
+"never changes task priorities",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is is always small and simple. The dispatcher is a small module that gives control of the CPU to the process selected by the scheduler."
+},
+
+{
+q:" System programs such as Compilers are designed so that they are",
+options:[
+"reenterable",
+"non reusable",
+"serially usable",
+"recursive",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is reenterable. System programs like compilers are designed to be reentrant so they can be safely used by multiple processes."
+},
+
+{
+q:" IBM released its first PC in 1981. Can you name the operating system which was most popular at that time?",
+options:[
+"MS-DOS",
+"PC-DOS",
+"OS/360",
+"CP/M",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is CP/M. Before MS-DOS became dominant, CP/M was the most popular microcomputer operating system."
+},
+
+{
+q:" If the number of bits in a virtual address of a program is 16 and the page size is 0.5 K bytes, the number of pages in the virtual address space is",
+options:[
+"16",
+"32",
+"64",
+"128",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is 128. A 16-bit address space is 64 KB. Page size 0.5 KB (512 bytes). Number of pages = 64 KB / 0.5 KB = 128 pages."
+},
+
+{
+q:" Which table is a permanent database that has an entry for each terminal symbol.",
+options:[
+"Terminal table",
+"Literal table",
+"Identifier table",
+"Reductions",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Terminal table. The terminal table contains entries for each terminal symbol in the language."
+},
+{
+q:" The details of all external symbols and relocation formation (relocation list or map) is provided to linker by",
+options:[
+"Macro processor",
+"Translator",
+"Loader",
+"Editor",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Translator. The translator (assembler/compiler) generates object code containing external symbol details and relocation information for the linker."
+},
+
+{
+q:" The macro processor must perform",
+options:[
+"recognize macro definitions and macro calls",
+"save the macro definitions",
+"expand macros calls and substitute arguments",
+"all of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is all of the above. A macro processor identifies macros, stores their definitions, and expands macro calls with proper argument substitution."
+},
+
+{
+q:" A development strategy whereby the executive control modules of a system are coded and tested first, is known as",
+options:[
+"Bottom-up development",
+"Top-down development",
+"Left-Right development",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Top-down development. In top-down development, high-level control modules are developed and tested before lower-level modules."
+},
+
+{
+q:" Which of the following is helpful in evaluating applications software what will best suit your needs?",
+options:[
+"recommendations by other users",
+"computer magazines",
+"objective software reviews",
+"all of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is all of the above. User recommendations, magazines, and objective reviews all help in evaluating application software."
+},
+
+{
+q:" What problem is solved by Dijkstra's banker's algorithm?",
+options:[
+"mutual exclusion",
+"deadlock recovery",
+"deadlock avoidance",
+"cache coherence",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is deadlock avoidance. The Banker's algorithm ensures the system remains in a safe state and prevents deadlock by careful resource allocation."
+}
+
+],
+
+
+// ........Section-3............
+
+3:[
+ {
+q:" The technique, for sharing the time of a computer among several jobs. Which switches jobs so rapidly such that each job appears to have the computer to itself:",
+options:[
+"time sharing",
+"time out",
+"time domain",
+"FIFO",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is time sharing. Time sharing rapidly switches the CPU among multiple jobs so each appears to run independently."
+}, 
+{
+q:" In MS-DOS, relocatable object files and load modules have extensions",
+options:[
+".OBJ and .COM or .EXE, respectively",
+".COM and .OBJ, respectively",
+".EXE and .OBJ, respectively",
+".DAS and .EXE, respectively",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is .OBJ and .COM or .EXE, respectively. .OBJ files are relocatable object files, while .COM and .EXE are executable load modules."
+},
+
+{
+q:" The state transition initiated by the user process itself in an operating system is",
+options:[
+"block",
+"dispatch",
+"wake up",
+"timer run out",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is block. A running process may block itself when it requests I/O or waits for an event."
+},
+
+{
+q:" Which of the following program is not a utility?",
+options:[
+"Debugger",
+"Editor",
+"Spooler",
+"All of the above",
+"None of the above"
+],
+answer:4,
+explanation:"Correct answer is None of the above. Debugger, Editor, and Spooler are all utility programs."
+},
+
+{
+q:" The function(s) of file system is (are):",
+options:[
+"to provide complete file naming freedom to the users and to permit controlled sharing of files",
+"to provide for long and short term storage of files with appropriate economic tradeoffs.",
+"to provide security against loss of information due to system failure",
+"all of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is all of the above. A file system manages naming, storage, sharing, and protection of files."
+},
+
+{
+q:" A public key encryption system",
+options:[
+"allows anyone to decode the transmission",
+"allows only the correct sender to decode the data",
+"allows only the correct receiver to decode the data",
+"does not encode the data before transmitting it",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is allows only the correct receiver to decode the data. In public key encryption, the receiver uses a private key to decrypt the message."
+},
+{
+q:" In which of the storage placement strategies a program is placed in the largest available hole in the main memory?",
+options:[
+"best fit",
+"first fit",
+"worst fit",
+"buddy",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is worst fit. Worst fit allocates the largest available memory hole to the incoming program."
+},
+
+{
+q:" Which of the following is a block device",
+options:[
+"mouse",
+"printer",
+"terminals",
+"disk",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is disk. A disk is a block device because it transfers data in fixed-size blocks."
+},
+
+{
+q:" The problem of thrashing is affected significantly by:",
+options:[
+"program structure",
+"program size",
+"primary-storage size",
+"all of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is all of the above. Thrashing depends on program behavior, size, and available main memory."
+},
+
+{
+q:" Which of the following software types is used to simplify using systems software?",
+options:[
+"spreadsheet",
+"operating environment",
+"timesharing",
+"multitasking",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is operating environment. An operating environment provides a user-friendly interface to simplify interaction with system software."
+},
+
+{
+q:" Advantage(s) of using assembly language rather than machine language is (are):",
+options:[
+"It is mnemonic and easy to read.",
+"Addresses any symbolic, not absolute",
+"Introduction of data to program is easier",
+"all of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is all of the above. Assembly language uses mnemonics, symbolic addresses, and simplifies data handling compared to machine language."
+},
+{
+q:" Which of the following is not true about the memory management?",
+options:[
+"virtual memory is used only in multi-user systems",
+"segmentation suffers from external fragmentation",
+"paging suffers from internal fragmentation",
+"segmented memory can be paged",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is virtual memory is used only in multi-user systems. Virtual memory is used in both single-user and multi-user systems."
+},
+
+{
+q:" Job Control Language (JCL) statements are used to",
+options:[
+"Read the input from the slow-speed card reader to the high-speed magnetic disk",
+"Specify, to the operating system, the beginning and end of a job in a batch",
+"Allocate the CPU to a job",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Specify, to the operating system, the beginning and end of a job in a batch. JCL defines job boundaries and job-related parameters in batch systems."
+},
+
+{
+q:" Paging",
+options:[
+"is a method of memory allocation by which the program is subdivided into equal portions, or pages and core is subdivided into equal portions or blocks.",
+"consists of those addresses that may be generated by a processor during execution of a computation.",
+"is a method of allocating processor time.",
+"allows multiple programs to reside in separate areas of core at the time.",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is is a method of memory allocation by which the program is subdivided into equal portions, or pages and core is subdivided into equal portions or blocks. Paging divides memory into fixed-size pages and frames."
+},
+
+{
+q:" Which of the following is not true about documentation?",
+options:[
+"Documentation, of a system, should be as clear and direct as possible",
+"Documentation increases the maintenance time and cost",
+"Documentation gives better understanding of the problem",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Documentation increases the maintenance time and cost. Proper documentation actually reduces maintenance time and cost."
+},
+
+{
+q:" The system/370 assembler language",
+options:[
+"allows the programmer to write base registers and displacements explicitly in the source program.",
+"is used to remember which of the general-purpose registers are currently available as base registers, and what base addresses they contain.",
+"allows multiple programs to reside in separate areas of core at the same time.",
+"is a term that refers to the control programs of an operating system.",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is allows the programmer to write base registers and displacements explicitly in the source program. This is a feature of System/370 assembly language."
+},
+{
+q:" The errors that can be pointed out by the compiler are",
+options:[
+"Syntax errors",
+"Semantic errors",
+"Logical errors",
+"Internal errors",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Syntax errors. A compiler primarily detects syntax errors during compilation; logical errors are usually found during testing."
+},
+
+{
+q:" When a computer is first turned on or restarted, a special type of absolute loader is executed, called a",
+options:[
+"\"Compile and Go\" loader",
+"Boot loader",
+"Bootstrap loader",
+"Relating loader",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Bootstrap loader. The bootstrap loader loads the operating system into memory when the computer starts."
+},
+
+{
+q:" Which, of the following checks, cannot be carried out on the input data to a system?",
+options:[
+"consistency check",
+"Syntax check",
+"Range check",
+"All of the above",
+"None of the above"
+],
+answer:4,
+explanation:"Correct answer is None of the above. Consistency, syntax, and range checks can all be performed on input data."
+},
+
+{
+q:" A program that converts a high-level language program to a set of instructions that can run on a computer is called a",
+options:[
+"Compiler",
+"Debugger",
+"Editor",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Compiler. A compiler translates high-level language programs into machine code."
+},
+
+{
+q:" Which of the following is characteristic of an operating system?",
+options:[
+"resource management",
+"error recovery",
+"memory management",
+"All the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All the above. An operating system manages resources, handles errors, and controls memory."
+},
+{
+q:" Four necessary conditions for deadlock to exist are: mutual exclusion, no-preemption, circular wait and",
+options:[
+"hold and wait",
+"deadlock avoidance",
+"race around condition",
+"buffer overflow",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is hold and wait. The four necessary conditions for deadlock are mutual exclusion, hold and wait, no-preemption, and circular wait."
+},
+
+{
+q:" If you do not know which version of MS-DOS you are working with, which command will you use after having booted your operating system?",
+options:[
+"FORMAT command",
+"DIR command",
+"VER command",
+"DISK command",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is VER command. The VER command displays the current version of MS-DOS."
+},
+
+{
+q:" A partitioned data set is most used for",
+options:[
+"a program or source library",
+"storing program data",
+"storing backup information",
+"storing ISAM files",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is a program or source library. A partitioned data set (PDS) is commonly used to store programs or source code libraries."
+},
+
+{
+q:" Page-map table is",
+options:[
+"A data file",
+"A directory",
+"Used for address translation",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Used for address translation. A page-map table (page table) is used in memory management to translate logical addresses into physical addresses."
+},
+
+{
+q:" The main function of the dispatcher (the portion of the process scheduler) is",
+options:[
+"swapping a process to the disk",
+"assigning ready process to the CPU",
+"suspending some of the processes when the CPU load is high",
+"bring processes from the disk to the main memory",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is assigning ready process to the CPU. The dispatcher gives control of the CPU to the process selected by the scheduler."
+},
+{
+q:" If you want to execute more than one program at a time, the systems software you are using must be capable of:",
+options:[
+"word processing",
+"virtual memory",
+"compiling",
+"multitasking",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is multitasking. Multitasking allows the operating system to run more than one program at the same time."
+},
+
+{
+q:" In analyzing the compilation of PL/I program, the description \"resolving symbolic address (labels) and generating machine language\" is associated with",
+options:[
+"Assembly and output",
+"Code generation",
+"Storage assignment",
+"Syntax analysis",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Code generation. Code generation resolves symbolic addresses and produces machine-level instructions."
+},
+
+{
+q:" Round-robin scheduling",
+options:[
+"allows interactive tasks quicker access to the processor",
+"is quite complex to implement",
+"gives each task the same chance at the processor",
+"allows processor-bound tasks more time in the processor",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is gives each task the same chance at the processor. Round-robin scheduling allocates CPU time equally using time slices."
+},
+
+{
+q:" What is the name of the system which deals with the running of the actual computer and not with the programming problems?",
+options:[
+"Operating system",
+"Systems program",
+"Object program",
+"Source program",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Operating system. The operating system manages hardware and controls the execution of programs."
+},
+
+{
+q:" What is the initial value of the semaphore to allow only one of the many processes to enter their critical section?",
+options:[
+"8",
+"1",
+"16",
+"0",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is 1. A binary semaphore initialized to 1 allows only one process to enter the critical section at a time."
+}
+],
+// .........Section-4................
+4:[
+// '''''''Questions for Section 4 will be added soon'''''''''
+
+]
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

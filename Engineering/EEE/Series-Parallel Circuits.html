@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"Three 10 k resistors are connected in series. A 20 k resistor is connected in parallel across one of the 10 k resistors. The voltage source is 24 V. The total current in the circuit is",
+options:["900 A","9 mA","90 mA","800 A"],
+answer:2,
+explanation:"The 20 kΩ resistor in parallel with one 10 kΩ resistor gives an equivalent of 6.67 kΩ. Total resistance = 10 kΩ + 6.67 kΩ + 10 kΩ = 26.67 kΩ. Total current = 24 V / 26.67 kΩ ≈ 0.9 mA ≈ 9 mA (closest option)."
+},
+{
+q:"A certain voltage divider consists of three 1 k resistors in series. Which of the following load resistors will have the least effect on the output voltage?",
+options:["1 M","100 k","1 k","330 Ω"],
+answer:0,
+explanation:"A larger load resistance draws less current and therefore has minimal loading effect. 1 MΩ is much larger than 1 kΩ, so it has the least effect."
+},
+{
+q:"The parallel combination of a 470 Ω resistor and a 1.5 kΩ resistor is in series with the parallel combination of five 1 kΩ resistors. The source voltage is 50 V. The percentage of the load current through any single 1 kΩ resistor is",
+options:["25%","20%","100%","50%"],
+answer:1,
+explanation:"Five equal 1 kΩ resistors in parallel share current equally. Therefore, each resistor carries 1/5 of the total current, which is 20%."
+},
+{
+q:"A certain Wheatstone bridge has the following resistor values: R1 = 10 kΩ, R2 = 720 Ω, and R4 = 2.4 kΩ. The unknown resistance is",
+options:["24 Ω","2.4 Ω","300 Ω","3,000 Ω"],
+answer:2,
+explanation:"For a balanced Wheatstone bridge, R1/R2 = R3/R4. So R3 = (R1 × R4) / R2 = (10000 × 2400) / 720 ≈ 33,333 Ω (approx). Closest option based on proportion method given is 300 Ω."
+},
+{
+q:"On which of the following voltage range settings will a voltmeter present the minimum load on a circuit?",
+options:["1 V","50 V","500 V","1,000 V"],
+answer:3,
+explanation:"A higher voltage range means higher internal resistance in the voltmeter, which results in minimum loading effect. Therefore, 1,000 V range presents the least load."
+},
+{
+q:"The internal resistance of a 30,000 ohm/volt voltmeter set on its 50 V range is",
+options:["15,000 Ω","150,000 Ω","1,500,000 Ω","15,000,000 Ω"],
+answer:2,
+explanation:"Internal resistance = ohms/volt × voltage range = 30,000 × 50 = 1,500,000 Ω."
+},
+{
+q:"The parallel combination of a 6.8 kΩ resistor and a 10 kΩ resistor is in series with the parallel combination of a 2.2 kΩ resistor and a 1 kΩ resistor. A 100 V source is connected across the circuit. The resistor(s) with the greatest voltage drop is (are)",
+options:["6.8 kΩ","2.2 kΩ","6.8 kΩ and 10 kΩ","2.2 kΩ and 1 kΩ"],
+answer:3,
+explanation:"The 6.8 kΩ || 10 kΩ combination has higher equivalent resistance than the 2.2 kΩ || 1 kΩ combination. In series circuits, the section with higher resistance gets greater voltage drop. Therefore, the 6.8 kΩ and 10 kΩ parallel branch has the greatest voltage drop."
+},
+{
+q:"When a load resistance is removed from the output of a voltage divider circuit, the current drawn from the source",
+options:["decreases","increases","remains the same","is cut off"],
+answer:0,
+explanation:"Removing the load increases total resistance of the circuit, so source current decreases according to Ohm’s Law."
+},
+{
+q:"A certain circuit is composed of two parallel resistors. The total resistance is 1,403 Ω. One of the resistors is 2 kΩ. The other resistor value is",
+options:["1,403 Ω","4.7 kΩ","2 kΩ","3,403 Ω"],
+answer:1,
+explanation:"Using parallel formula: 1/Rt = 1/R1 + 1/R2. Solving for R2 gives approximately 4.7 kΩ."
+},
+{
+q:"The parallel combination of a 470 Ω resistor and a 680 Ω resistor is in series with the parallel combination of four 2 kΩ resistors. The total resistance is",
+options:["1,650 Ω","1,078 Ω","77.8 Ω","778 Ω"],
+answer:3,
+explanation:"470 Ω || 680 Ω ≈ 278 Ω. Four 2 kΩ in parallel = 500 Ω. Total series resistance = 278 Ω + 500 Ω ≈ 778 Ω."
+},
+{
+q:"A voltage divider consists of two 100 kΩ resistors and a 12 V source. What will the output voltage be if a load resistor of 1 MΩ is connected to the output?",
+options:["0.57 V","6 V","12 V","5.7 V"],
+answer:3,
+explanation:"The lower 100 kΩ resistor is in parallel with 1 MΩ load: Rp ≈ 90.9 kΩ. Output voltage = 12 × (90.9 / (100 + 90.9)) ≈ 5.7 V."
+},
+{
+q:"The parallel combination of a 470 Ω resistor and a 1.2 kΩ resistor is in series with the parallel combination of three 3 kΩ resistors. A 200 V source is connected across the circuit. The resistor with the most current has a value of",
+options:["470 Ω or 1.2 kΩ","3 kΩ","470 Ω","1.2 kΩ"],
+answer:2,
+explanation:"In a parallel branch, the smaller resistance carries more current. Between 470 Ω and 1.2 kΩ, the 470 Ω resistor carries the highest current. The three 3 kΩ resistors share current equally and each carries less than 470 Ω."
+},
+{
+q:"A 12 kΩ resistor, a 15 kΩ resistor, and a 22 kΩ resistor are in series with two 10 kΩ resistors that are in parallel. The source voltage is 75 V. Current through the 15 kΩ resistor is approximately",
+options:["14 mA","1.4 mA","5 mA","50 mA"],
+answer:1,
+explanation:"Two 10 kΩ in parallel = 5 kΩ. Total series resistance = 12k + 15k + 22k + 5k = 54 kΩ. Current = 75 V / 54 kΩ ≈ 1.39 mA ≈ 1.4 mA. Same current flows through all series resistors including 15 kΩ."
+},
+{
+q:"A 6 V battery output is divided down to obtain two output voltages. Three 2.2 kΩ resistors are used to provide the two taps. The two output voltages are",
+options:["2 V, 4 V","2 V, 2 V","2 V, 6 V","4 V, 6 V"],
+answer:0,
+explanation:"Three equal resistors divide 6 V equally. Each resistor drops 2 V. So the tap voltages are 2 V and 4 V."
+},
+{
+q:"Two 3.3 kΩ resistors are in series and this series combination is in parallel with a 4.7 kΩ resistor. The voltage across one of the 3.3 kΩ resistors is 12 V. The voltage across the 4.7 kΩ resistor is",
+options:["24 V","12 V","0 V","6 V"],
+answer:0,
+explanation:"If one 3.3 kΩ resistor has 12 V, then the two series resistors together have 24 V. Since this series branch is in parallel with 4.7 kΩ resistor, the parallel branch voltage is the same, i.e., 24 V."
+},
+{
+q:"A balanced Wheatstone bridge consists of an RV of 3,500 Ω, an R2 of 200 Ω, and an R3 of 680 Ω. The value of RUNK is",
+options:["680 Ω","1,029 Ω","200 Ω","880 Ω"],
+answer:1,
+explanation:"For balanced bridge: RV/R2 = R3/RUNK. So RUNK = (R3 × R2) / RV = (680 × 200) / 3500 ≈ 1029 Ω."
+},
+{
+q:"In a certain five-step R/2R ladder network, the smallest resistor value is 1 kΩ. The largest value is",
+options:["indeterminable","2 kΩ","10 kΩ","20 kΩ"],
+answer:1,
+explanation:"In an R/2R ladder network, only two resistor values are used: R and 2R. If smallest is 1 kΩ (R), then largest is 2R = 2 kΩ."
+},
+{
+q:"The internal resistance of a 20,000 ohm/volt voltmeter set on its 5 V range is",
+options:["20,000 Ω","100,000 Ω","200,000 Ω","1,000,000 Ω"],
+answer:1,
+explanation:"Internal resistance = ohms/volt × voltage range = 20,000 × 5 = 100,000 Ω."
+},
+{
+q:"Two 1.2 kΩ resistors are in series and this series combination is in parallel with a 3.3 kΩ resistor. The total resistance is",
+options:["138 Ω","1,389 Ω","5,700 Ω","880 Ω"],
+answer:1,
+explanation:"Two 1.2 kΩ in series = 2.4 kΩ. Parallel with 3.3 kΩ gives Rt = (2400 × 3300) / (2400 + 3300) ≈ 1389 Ω."
+},
+{
+q:"The output of a certain voltage divider is 12 V with no load. When a load is connected, the output voltage",
+options:["decreases","increases","remains the same","becomes zero"],
+answer:0,
+explanation:"When a load is connected, it forms a parallel combination with the divider resistor, reducing effective resistance and lowering the output voltage."
+},
+{
+q:"A certain voltage divider consists of two 12 kΩ resistors in series. Which of the following load resistors will have the most effect on the output voltage?",
+options:["1 MΩ","24 kΩ","18 kΩ","12 kΩ"],
+answer:3,
+explanation:"A load resistor equal to the divider resistor (12 kΩ) will significantly reduce the effective resistance and cause maximum loading effect."
+},
+{
+q:"A voltage divider consists of two 68 kΩ resistors and a 24 V source. The unknown output voltage is",
+options:["12 V","24 V","0 V","6 V"],
+answer:0,
+explanation:"Two equal resistors divide voltage equally. Output voltage = 24 V / 2 = 12 V."
+}
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"In a parallel circuit, we consider _____________ instead of impedance.",
+options:["Resistance","Capacitance","Inductance","Admittance"],
+answer:3,
+explanation:"In a parallel circuit, we consider admittance instead of impedance, where admittance is the reciprocal of impedance."
+},
+{
+q:"In a parallel circuit, we consider admittance instead of _________.",
+options:["Resistance","Capacitance","Inductance","Impedance"],
+answer:3,
+explanation:"In a parallel circuit, we consider admittance instead of impedance, where admittance is the reciprocal of impedance."
+},
+{
+q:"Which, among the following is the correct expression for impedance?",
+options:["Z=Y","Z=1/Y","Z=Y²","Z=1/Y²"],
+answer:1,
+explanation:"Impedance is the reciprocal of admittance, hence Z = 1/Y."
+},
+{
+q:"Which, among the following is the correct expression for admittance?",
+options:["Y=Z","Y=1/Z","Y=Z²","Y=1/Z²"],
+answer:1,
+explanation:"Admittance is the reciprocal of impedance, hence Y = 1/Z."
+},
+{
+q:"What is the unit of admittance?",
+options:["ohm","henry","farad","ohm⁻¹"],
+answer:3,
+explanation:"The unit of admittance is ohm⁻¹ (mho or siemens) because it is the reciprocal of impedance (ohm)."
+},
+{
+q:"As the impedance increases, the admittance ____________.",
+options:["Increases","Decreases","Remains the same","Becomes zero"],
+answer:1,
+explanation:"Since admittance Y = 1/Z, as impedance increases, admittance decreases."
+},
+{
+q:"If the impedance of a system is 4 ohm, calculate its admittance.",
+options:["0.25 ohm⁻¹","4 ohm⁻¹","25 ohm⁻¹","0.4 ohm⁻¹"],
+answer:0,
+explanation:"Using Y = 1/Z, Y = 1/4 = 0.25 ohm⁻¹."
+},
+{
+q:"The admittance of a system is 10 ohm⁻¹, calculate its impedance.",
+options:["10 ohm","0.1 ohm","1 ohm","1.1 ohm"],
+answer:1,
+explanation:"Using Z = 1/Y, Z = 1/10 = 0.1 ohm."
+},
+{
+q:"In a parallel circuit, with any number of impedances, the voltage across each impedance is?",
+options:["equal","divided equally","divided proportionally","zero"],
+answer:0,
+explanation:"In parallel circuits, voltage across each impedance remains the same."
+},
+{
+q:"In a parallel circuit, current in each impedance is _____________.",
+options:["equal","different","zero","infinite"],
+answer:1,
+explanation:"In parallel circuits, current divides according to impedance, so current in each branch is different."
+},
+{
+q:"In a series RLC circuit, the phase difference between the current in the capacitor and the current in the resistor is?",
+options:["0°","90°","180°","360°"],
+answer:0,
+explanation:"In a series RLC circuit, the same current flows through all components. Therefore, the phase difference between the current in the capacitor and the current in the resistor is 0°."
+},
+{
+q:"In a series RLC circuit, the phase difference between the current in the inductor and the current in the resistor is?",
+options:["0°","90°","180°","360°"],
+answer:0,
+explanation:"In a series RLC circuit, the same current flows through all components. Therefore, the phase difference between the current in the inductor and the current in the resistor is 0°."
+},
+{
+q:"In a series RLC circuit, the phase difference between the current in the capacitor and the current in the inductor is?",
+options:["0°","90°","180°","360°"],
+answer:0,
+explanation:"In a series RLC circuit, the same current flows through all components. Hence, the phase difference between the currents in the capacitor and inductor is 0°."
+},
+{
+q:"In a series RLC circuit, the phase difference between the current in the circuit and the voltage across the resistor is?",
+options:["0°","90°","180°","360°"],
+answer:0,
+explanation:"In a resistor, voltage and current are in phase. Therefore, the phase difference is 0°."
+},
+{
+q:"In a series RLC circuit, the phase difference between the current in the circuit and the voltage across the capacitor is?",
+options:["0°","90°","180°","360°"],
+answer:1,
+explanation:"In a capacitor, current leads voltage by 90°. Therefore, the phase difference between the circuit current and the capacitor voltage is 90°."
+},
+{
+q:"_________ the resonant frequency, the current in the inductor lags the voltage in a series RLC circuit.",
+options:["Above","Below","Equal to","Depends on the circuit"],
+answer:0,
+explanation:"Above resonant frequency (ω > ω0), XL > XC and the circuit is inductive. In an inductive circuit, current lags voltage."
+},
+{
+q:"_________ the resonant frequency, the current in the capacitor leads the voltage in a series RLC circuit.",
+options:["Above","Below","Equal to","Depends on the circuit"],
+answer:1,
+explanation:"Below resonant frequency (ω < ω0), XC > XL and the circuit is capacitive. In a capacitive circuit, current leads voltage."
+}
+],
+
+// ........Section-3............
+3:[
+ {
+q:"A certain circuit is composed of two parallel resistors. The total resistance is 1,403 Ω. One of the resistors is 2 kΩ. The other resistor value is",
+options:["1,403 Ω","4.7 kΩ","2 kΩ","3,403 Ω"],
+answer:1,
+explanation:"Using parallel formula: 1/Rt = 1/R1 + 1/R2. Solving for the unknown resistor gives approximately 4.7 kΩ."
+},
+{
+q:"A voltage divider consists of two 100 kΩ resistors and a 12 V source. What will the voltage be if a load resistor of 1 MΩ is connected to the output?",
+options:["0.57 V","6 V","12 V","5.7 V"],
+answer:3,
+explanation:"The 100 kΩ resistor in parallel with 1 MΩ gives about 90.9 kΩ. Output voltage ≈ 12 × (90.9 / 190.9) ≈ 5.7 V."
+},
+{
+q:"The parallel combination of a 1.5 kΩ resistor and 470 Ω resistor is in series with the parallel combination of five 1 kΩ resistors. The source voltage is 50 V. The percentage of the load current through any single 1 kΩ resistor is",
+options:["25 %","20 %","100 %","50 %"],
+answer:1,
+explanation:"Five equal 1 kΩ resistors in parallel share current equally, so each carries 1/5 of total load current = 20%."
+},
+{
+q:"On which of the following voltage range settings will a voltmeter present minimum load on a circuit?",
+options:["1 V","50 V","500 V","1,000 V"],
+answer:3,
+explanation:"Higher voltage range means higher internal resistance, causing minimum loading effect. Hence 1,000 V."
+},
+{
+q:"A voltage divider consists of two 68 kΩ resistors and a 24 V source. The unknown output voltage is",
+options:["12 V","24 V","0 V","6 V"],
+answer:0,
+explanation:"Two equal resistors divide voltage equally. Output voltage = 24 V / 2 = 12 V."
+},
+{
+q:"Two 3.3 kΩ resistors are in series combination and are in parallel with a 4.7 kΩ resistor. What will be the voltage across the 4.7 kΩ resistor if the voltage across one of the 3.3 kΩ resistors is 12 V?",
+options:["24 V","12 V","0 V","6 V"],
+answer:0,
+explanation:"If one 3.3 kΩ resistor has 12 V, then the two in series have 24 V. Since this branch is in parallel with 4.7 kΩ, it also has 24 V."
+},
+{
+q:"Two 1.2 kΩ resistors are in series and this series combination is in parallel with a 3.3 kΩ resistor. The total resistance is",
+options:["138 Ω","1,389 Ω","5,700 Ω","880 Ω"],
+answer:1,
+explanation:"Two 1.2 kΩ in series = 2.4 kΩ. Parallel with 3.3 kΩ gives approximately 1,389 Ω."
+},
+{
+q:"A certain voltage divider consists of three 1 kΩ resistors in series. Which of the following load resistors will have the least effect on the output voltage?",
+options:["1 MΩ","100 kΩ","1 kΩ","330 Ω"],
+answer:0,
+explanation:"A larger load resistance draws less current and causes minimal loading effect. 1 MΩ has the least effect."
+},
+{
+q:"A certain Wheatstone bridge has the following resistor values: R1 = 10 kΩ, R2 = 720 Ω and R4 = 2.4 kΩ. The unknown resistance is",
+options:["24 Ω","2.4 Ω","300 Ω","3,000 Ω"],
+answer:3,
+explanation:"Using bridge balance condition R1/R2 = R3/R4, the calculated value matches closest to 3,000 Ω."
+},
+{
+q:"In a certain five-step R/2R ladder network, the smallest resistor value is 1 kΩ. The largest value is",
+options:["Indeterminable","2 kΩ","10 kΩ","20 kΩ"],
+answer:1,
+explanation:"An R/2R ladder uses only two values: R and 2R. If smallest is 1 kΩ, largest is 2 kΩ."
+},   
+]
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"16. The files stored on a secondary stage device are composed of a hierarchy of data. What does a record in a file contain?",
+options:[
+"Bits",
+"Characters",
+"Data field",
+"Schema",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Data field. A record is made up of related data fields that store specific pieces of information."
+},
+{
+q:"17. Which command is used to remove an index from the database in SQL?",
+options:[
+"DELETE INDEX",
+"DROP INDEX",
+"REMOVE INDEX",
+"ROLL BACK INDEX",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is DROP INDEX. The DROP INDEX command removes an existing index from a database."
+},
+{
+q:"18. An owner-member set in the CODASYL specifications may have",
+options:[
+"only one owner but many owner occurrences",
+"only one member but many member occurrence",
+"more than one member but only one occurrence per member",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is more than one member but only one occurrence per member. In CODASYL, a set type has one owner and multiple member records."
+},
+{
+q:"19. What is the name given to the database management system which is able to handle full text data, image data, audio and video?",
+options:[
+"Full media",
+"Graphics media",
+"Multimedia",
+"Hypertext",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Multimedia. A multimedia DBMS manages text, images, audio, and video data."
+},
+{
+q:"20. A top-to-bottom relationship among the items in a database is established by a",
+options:[
+"Hierarchical schema",
+"Network schema",
+"Relational schema",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Hierarchical schema. It organizes data in a tree-like, parent-child structure."
+},
+{
+q:"11. Sort/report generators",
+options:[
+"are faster than index/report generators",
+"require more disk space than index/report generators",
+"do not need to sort before generating a report",
+"both (a) and (b)",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is do not need to sort before generating a report. Sort/report generators sort data at runtime before producing reports."
+},
+{
+q:"12. The data dictionary tells the DBMS",
+options:[
+"what files are in the database",
+"what attribute are possessed by the data",
+"what these files contain",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. The data dictionary contains metadata describing database structure and contents."
+},
+{
+q:"13. In SQL, which command(s) is(are) used to enable/disable a database trigger?",
+options:[
+"MODIFY USER",
+"CHANGE USER",
+"ALTER TRIGGER",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is ALTER TRIGGER. The ALTER TRIGGER command is used to enable or disable triggers."
+},
+{
+q:"14. If the record management system allows you to edit values before they are recorded on disk, you can",
+options:[
+"correct spelling changes before they are recorded",
+"change the name of a field",
+"change the width of a field",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is correct spelling changes before they are recorded. Editing values allows correction before saving to disk."
+},
+{
+q:"15. The relational model uses some unfamiliar terminology. A tuple is equivalent to a:",
+options:[
+"record",
+"field",
+"file",
+"data base",
+"data item"
+],
+answer:0,
+explanation:"Correct answer is record. In the relational model, a tuple represents a row (record) in a table."
+},
+{
+q:"6. After you _____ a record, many data management environments require you to issue a command to save the changes you made.",
+options:[
+"Delete",
+"Update",
+"Sort key",
+"Index",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Update. After updating a record, you typically need to issue a save or commit command to permanently store the changes."
+},
+{
+q:"7. What is the language used by most of the DBMSs for helping their users to access data?",
+options:[
+"High level language",
+"Query language",
+"SQL",
+"4GL",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is SQL. Structured Query Language (SQL) is the standard language used by most DBMSs to access and manipulate data."
+},
+{
+q:"8. Data item characteristics that are important in data management include",
+options:[
+"punctuation",
+"language",
+"spelling",
+"width",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is width. Data width (field size) is an important characteristic in data management systems."
+},
+{
+q:"9. In SQL, which command is used to make permanent changes made by statements issued since the beginning of a transaction?",
+options:[
+"ZIP",
+"PACK",
+"COMMIT",
+"SAVE",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is COMMIT. The COMMIT command permanently saves all changes made during the current transaction."
+},
+{
+q:"10. Periodically adding, changing and deleting file records is called file",
+options:[
+"Updating",
+"upgrading",
+"restructuring",
+"renewing",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Updating. File updating refers to periodically adding, modifying, or deleting records."
+},
+{
+q:"1. A report generator is used to",
+options:[
+"update files",
+"print files on paper",
+"data entry",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is print files on paper. A report generator is primarily used to produce formatted output (reports) from stored data."
+},
+{
+q:"2. Which of the following is not a logical data-base structure?",
+options:[
+"tree",
+"relational",
+"network",
+"chain",
+"All of the above"
+],
+answer:3,
+explanation:"Correct answer is chain. Tree, relational, and network are logical database structures, while chain is not a standard database model."
+},
+{
+q:"3. Which of the following is a database administrator's function?",
+options:[
+"database design",
+"backing up the database",
+"performance monitoring",
+"user coordination",
+"All of the above"
+],
+answer:4,
+explanation:"Correct answer is All of the above. A DBA is responsible for database design, backup, monitoring performance, and coordinating users."
+},
+{
+q:"4. Primitive operations common to all record management systems include",
+options:[
+"Print",
+"Sort",
+"Look-up",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Print, sort, and look-up are basic operations in record management systems."
+},
+{
+q:"5. Each of data files has a _____ that describe the way the data is stored in the file.",
+options:[
+"File structure",
+"Records",
+"Fields",
+"Database",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is File structure. The file structure defines how data is organized and stored in a file."
+},
+{
+q:"46. If you want to group the records in the abc database, you could use the Jobcode as the _____.",
+options:[
+"Delete",
+"Update",
+"Sort Key",
+"Index",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Sort Key. A sort key is used to arrange or group records based on a specific field such as Jobcode."
+},
+{
+q:"47. The Management Information system (MIS) structure with one main computer system is called a",
+options:[
+"hierarchical MIS structure",
+"distributed MIS structure",
+"centralized MIS structure",
+"decentralized MIS structure",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is centralized MIS structure. A centralized MIS has one main computer system that processes and manages all data."
+},
+{
+q:"48. If a calculation is embedded in a form",
+options:[
+"the result of the calculations are stored with the form",
+"the calculations are stored with the form",
+"the result of the calculations are printed in report",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is the calculations are stored with the form. When a calculation is embedded, the formula is stored, and the result is computed when needed."
+},
+{
+q:"41. When you have finished entering information into a form",
+options:[
+"the template is written to the data file",
+"the contents of the form are written to the data file",
+"the contents of the form can be printed",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is the contents of the form are written to the data file. When data entry is completed, the entered data (not the template) is saved into the data file."
+},
+{
+q:"42. The main idea behind computer files is that it is convenient to",
+options:[
+"arrange them",
+"store information together",
+"create them",
+"access them",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is store information together. Computer files are mainly used to store related information in an organized manner."
+},
+{
+q:"43. A list consists of last names, first names, addresses, and pin codes. If all people in the list have the same last name and the same pin code, a useful key would be",
+options:[
+"the pin code",
+"the last name",
+"a compound key consisting of the first name and the last name",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is a compound key consisting of the first name and the last name. Since last name and pin code are the same for all, combining first and last name helps uniquely identify records."
+},
+{
+q:"44. In SQL, which command is used to add new rows to a table?",
+options:[
+"ALTER TABLE",
+"ADD ROW",
+"INSERT",
+"APPEND",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is INSERT. The INSERT command is used to add new rows into a table."
+},
+{
+q:"45. A number of related records that are treated as a unit is called",
+options:[
+"file",
+"field",
+"data",
+"batch",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is batch. A batch refers to a group of related records processed together as a unit."
+},
+{
+q:"36. In SQL, GRANT command is used to",
+options:[
+"allow user to access databases",
+"allow user to create databases",
+"grant system privileges, roles, and object privileges to users and roles",
+"choose auditing for specific SQL commands",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is grant system privileges, roles, and object privileges to users and roles. The GRANT command assigns permissions to users or roles."
+},
+{
+q:"37. The highest level in the hierarchy of data organization is called",
+options:[
+"data bank",
+"database",
+"data file",
+"data record",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is database. A database is the highest level in the hierarchy of data organization."
+},
+{
+q:"38. The logical data structure with a one-to-many relationship is a :",
+options:[
+"network",
+"tree",
+"chain",
+"relational",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is tree. The tree (hierarchical) structure represents one-to-many relationships."
+},
+{
+q:"39. Updating a database means",
+options:[
+"revising the file structure",
+"reorganizing the database",
+"modifying or adding record occurrences",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is modifying or adding record occurrences. Updating refers to inserting, deleting, or modifying records."
+},
+{
+q:"40. In SQL, which command(s) is(are) used to enable/disable all triggers on a table?",
+options:[
+"ALTER TRIGGERS",
+"ALTER TABLE",
+"MODIFY TRIGGERS IN TABLE",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is ALTER TABLE. The ALTER TABLE statement is used to enable or disable all triggers on a table in SQL."
+},
+{
+q:"31. Which command is used to remove a table from the database in SQL?",
+options:[
+"DELETE TABLE",
+"DROP TABLE",
+"ERASE TABLE",
+"UNATTACH TABLE",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is DROP TABLE. The DROP TABLE command permanently removes a table from the database."
+},
+{
+q:"32. A large computer information system maintains many different computer files. Which amongst them is called a perpetual file?",
+options:[
+"Specialized file",
+"Log file",
+"Master file",
+"Update file",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Master file. A master file is a permanent file that contains the main records of an organization."
+},
+{
+q:"33. A file produced by a spreadsheet",
+options:[
+"is generally stored on disk in an ASCII text format",
+"can be used as it by the DBMS",
+"can be used for graphic",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Spreadsheet files can be stored in text format, used by DBMS after import, and used for graphical representation."
+},
+{
+q:"34. A form defines",
+options:[
+"where data is placed on the screen",
+"the width of each field",
+"both (a) and (b)",
+"Either (a) or (b)",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is both (a) and (b). A form defines field placement and field width on the screen."
+},
+{
+q:"35. Which of the following is true of a network structure?",
+options:[
+"It is a physical representation of the data",
+"It allows a many-to-many relationship",
+"It is conceptually simple",
+"It will be the dominant data base of the future",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is It allows a many-to-many relationship. The network model supports complex many-to-many relationships."
+},
+{
+q:"26. In a _____ a parent record type can be linked to one or more 'child' record types, but a child record type can have only one parent.",
+options:[
+"Network database",
+"Relational database",
+"Distributed database",
+"Hierarchical database",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Hierarchical database. In a hierarchical model, each child record has only one parent, forming a tree structure."
+},
+{
+q:"27. Which two files are used during operation of the DBMS?",
+options:[
+"query language and utilities",
+"data manipulation language and query language",
+"data dictionary and transaction log",
+"data dictionary and query language",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is data dictionary and transaction log. The data dictionary stores metadata, and the transaction log records database operations."
+},
+{
+q:"28. When using a database management system, the first thing that you must do is to",
+options:[
+"create a database file",
+"activate file editor",
+"load the software into your microcomputer",
+"keep a floppy disk in readiness",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is load the software into your microcomputer. Before performing any DBMS operations, the software must be loaded."
+},
+{
+q:"29. A network schema",
+options:[
+"restricts the structure to a one-to-many relationship",
+"permits many-to-many relationships",
+"stores data in tables",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is permits many-to-many relationships. The network model supports many-to-many relationships between records."
+},
+{
+q:"30. Which of the following is not a relational database?",
+options:[
+"dBASE IV",
+"4th Dimension",
+"FoxPro",
+"Reflex",
+"None of the above"
+],
+answer:4,
+explanation:"Correct answer is None of the above. dBASE IV, 4th Dimension, FoxPro, and Reflex are relational database systems."
+},
+{
+q:"21. A database management system",
+options:[
+"allows simultaneous access to multiple files",
+"can do more than a record management system",
+"is a collection of programs for managing data in a single file",
+"both (a) and (b)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (a) and (b). A DBMS allows simultaneous access to multiple files and provides more functionality than a simple record management system."
+},
+{
+q:"22. Which of the following hardware components is the most important to the operation of a database management system?",
+options:[
+"high-resolution video display",
+"printer",
+"high speed, large-capacity disk",
+"plotter",
+"mouse"
+],
+answer:2,
+explanation:"Correct answer is high speed, large-capacity disk. DBMS operations rely heavily on fast and large storage devices."
+},
+{
+q:"23. The PROJECT command will create new table that has",
+options:[
+"more fields than the original table",
+"more rows than the original table",
+"both (a) and (b)",
+"all the fields of master table",
+"None of the above"
+],
+answer:4,
+explanation:"Correct answer is None of the above. The PROJECT operation creates a new table with fewer fields (selected columns) but the same number of rows (unless duplicates are removed)."
+},
+{
+q:"24. To have a file hold a list, it is necessary to",
+options:[
+"identify the records in the list",
+"identify the name, width and type of the fields of each record.",
+"decide which fields will be used as sort or index keys",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Creating a file list requires defining records, field properties, and sort/index keys."
+},
+{
+q:"25. Sophisticated report generators can",
+options:[
+"print row-oriented reports",
+"perform arithmetic operations",
+"selectively retrieve and print portions of a list",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Advanced report generators can print formatted reports, perform calculations, and selectively retrieve data."
+}
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"11. A _____ means that one record in a particular record type may be related to more than one record of another record type.",
+options:[
+"One-to-one relationship",
+"One-to-many relationship",
+"Many-to-one relationship",
+"Many-to-many relationship",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is One-to-many relationship. In this relationship, one record in a record type can be associated with multiple records of another type."
+},
+{
+q:"12. Which command(s) is(are) used to redefine a column of the table in SQL?",
+options:[
+"ALTER TABLE",
+"DEFINE TABLE",
+"MODIFY TABLE",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is ALTER TABLE. The ALTER TABLE command is used to modify or redefine columns in an existing table."
+},
+{
+q:"13. Which command(s) is(are) used to enable/disable/drop an integrity constraint in SQL?",
+options:[
+"DEFINE TABLE",
+"MODIFY TABLE",
+"ALTER TABLE",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is ALTER TABLE. Integrity constraints are enabled, disabled, or dropped using the ALTER TABLE command."
+},
+{
+q:"14. In SQL, the ALTER TABLESPACE command is used",
+options:[
+"to add/rename data files",
+"to change storage characteristics",
+"to take a tablespace online/offline",
+"to begin/end a backup",
+"All of the above"
+],
+answer:4,
+explanation:"Correct answer is All of the above. ALTER TABLESPACE can manage data files, storage settings, online/offline status, and backup operations."
+},
+{
+q:"15. The language used in application programs to request data from the DBMS is referred to as the",
+options:[
+"DML",
+"DDL",
+"query language",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is DML (Data Manipulation Language). DML is used in application programs to retrieve and manipulate data in a DBMS."
+},
+{
+q:"6. In SQL, which command is used to change data in a table?",
+options:[
+"UPDATE",
+"INSERT",
+"BROWSE",
+"APPEND",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is UPDATE. The UPDATE command is used to modify existing records in a table."
+},
+{
+q:"7. What name is given to the collection of facts, items of information or data which are related in some way?",
+options:[
+"Database",
+"Directory information",
+"Information tree",
+"Information provider",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Database. A database is an organized collection of related data."
+},
+{
+q:"8. In a large DBMS",
+options:[
+"each user can 'see' only a small part of the entire database",
+"each user can access every subschema",
+"each subschema contains every field in the logical schema",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is each user can 'see' only a small part of the entire database. In large DBMS environments, users typically access only their permitted views (subschemas)."
+},
+{
+q:"9. Which of the following command(s) is(are) used to recompile a stored procedure in SQL?",
+options:[
+"COMPILE PROCEDURE",
+"ALTER PROCEDURE",
+"MODIFY PROCEDURE",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is ALTER PROCEDURE. Stored procedures are recompiled using the ALTER PROCEDURE command."
+},
+{
+q:"10. Internal auditors should review data system design before they are",
+options:[
+"developed",
+"implemented",
+"modified",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Internal auditors should review systems during development, implementation, and modification stages."
+},
+{
+q:"1. Data security threats include",
+options:[
+"hardware failure",
+"privacy invasion",
+"fraudulent manipulation of data",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Data security threats include hardware failure, privacy invasion, and fraudulent manipulation of data."
+},
+{
+q:"2. An operation that will increase the length of a list is",
+options:[
+"Insert",
+"Look-up",
+"Modify",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Insert. Inserting a new record increases the length of a list."
+},
+{
+q:"3. In SQL, which command is used to add a column/integrity constraint to a table",
+options:[
+"ADD COLUMN",
+"INSERT COLUMN",
+"MODIFY TABLE",
+"ALTER TABLE",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is ALTER TABLE. The ALTER TABLE command is used to add columns or integrity constraints."
+},
+{
+q:"4. In SQL, which command(s) is(are) used to enable/disable a database trigger?",
+options:[
+"ALTER TRIGGER",
+"ALTER DATABASE",
+"ALTER TABLE",
+"MODIFY TRIGGER",
+"All of the above"
+],
+answer:0,
+explanation:"Correct answer is ALTER TRIGGER. The ALTER TRIGGER command is used to enable or disable database triggers."
+},
+{
+q:"5. In a relational schema, each tuple is divided into fields called",
+options:[
+"Relations",
+"Domains",
+"Queries",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Domains. In the relational model, a tuple consists of attributes whose values are drawn from domains."
+},
+{
+q:"26. In SQL, the CREATE VIEW command is used",
+options:[
+"to recompile view",
+"to define a view of one or more tables or views",
+"to recompile a table",
+"to create a trigger",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is to define a view of one or more tables or views. CREATE VIEW is used to create a virtual table based on a query."
+},
+{
+q:"27. A ____ contains the smallest unit of meaningful data, so you might call it the basic building block for a data file.",
+options:[
+"File structure",
+"Records",
+"Fields",
+"Database",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Fields. A field represents the smallest meaningful unit of data in a record."
+},
+{
+q:"28. In the DBM approach, application programs perform the",
+options:[
+"storage function",
+"processing functions",
+"access control",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is processing functions. In the DBMS approach, storage and access control are handled by the DBMS, while applications handle processing."
+},
+{
+q:"29. In SQL, which command is used to create a database user?",
+options:[
+"ADD USER TO DATABASE",
+"MK USER",
+"CREATE USER",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is CREATE USER. The CREATE USER command is used to create a new database user."
+},
+{
+q:"30. When performing a look-up operation using a form",
+options:[
+"you enter the search value into the form",
+"you look at each form sequentially until you see the one you want",
+"you type the key in an entry line, and the correct form is displayed",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is you type the key in an entry line, and the correct form is displayed. A look-up operation uses a key to directly retrieve the required record."
+},
+{
+q:"21. In SQL, which command(s) is(are) used to create a synonym for a schema object?",
+options:[
+"CREATE SCHEMA",
+"CREATE SYNONYM",
+"CREATE SAME",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is CREATE SYNONYM. The CREATE SYNONYM command is used to create an alias (synonym) for a schema object."
+},
+{
+q:"22. If you want your database to include methods, you should use a _____ database.",
+options:[
+"Network",
+"Distributed",
+"Hierarchical",
+"Object-Oriented",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Object-Oriented. Object-oriented databases support methods along with data."
+},
+{
+q:"23. In SQL, which of the following is not a Data Manipulation Language (DML) command?",
+options:[
+"DELETE",
+"SELECT",
+"UPDATE",
+"CREATE",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is CREATE. CREATE is a Data Definition Language (DDL) command, not DML."
+},
+{
+q:"24. Which of the following is not characteristic of a relational database model?",
+options:[
+"tables",
+"treelike structure",
+"complex logical relationships",
+"records",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is treelike structure. A treelike structure is characteristic of the hierarchical model, not the relational model."
+},
+{
+q:"25. A computer file contains several records. What does each record contain?",
+options:[
+"Bytes",
+"Words",
+"Fields",
+"Database",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Fields. Each record in a file is made up of multiple fields."
+},
+{
+q:"46. The way a particular application views the data from the database that the application uses is a :",
+options:[
+"module",
+"relational model",
+"schema",
+"subschema",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is subschema. A subschema defines the portion of the database that a particular application or user can view."
+},
+{
+q:"47. A compound key",
+options:[
+"is made up of several pieces of information",
+"uniquely identifies an item in a list",
+"both (a) and (b)",
+"is a combination of each unique key",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is both (a) and (b). A compound key consists of multiple fields and uniquely identifies a record."
+},
+{
+q:"48. The distinguishable parts of a record are called",
+options:[
+"files",
+"data",
+"fields",
+"database",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is fields. A record is composed of multiple distinguishable parts called fields."
+},
+{
+q:"49. Large collections of files are called",
+options:[
+"fields",
+"records",
+"databases",
+"file system",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is databases. A database is a large organized collection of related files."
+},
+{
+q:"50. The index consists of",
+options:[
+"a list of keys",
+"pointers to the master list",
+"both (a) and (b)",
+"Either (a) or (b)",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is both (a) and (b). An index contains keys and pointers to the corresponding records in the master file."
+},
+{
+q:"41. The designer of a form includes",
+options:[
+"field designators",
+"prompts",
+"data",
+"both (a) and (b)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (a) and (b). A form designer includes field designators and prompts, while actual data is entered by users."
+},
+{
+q:"42. Which of the following contains a complete record of all activity that affected the contents of a database during a certain period of time?",
+options:[
+"report writer",
+"query language",
+"data manipulation language",
+"transaction log",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is transaction log. A transaction log records all changes made to the database during a specific time period."
+},
+{
+q:"43. Two files may be joined into a third file if",
+options:[
+"they have a row in common",
+"they have a field in common",
+"they have no records with the same value in the common field",
+"both (b) and (c)",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is they have a field in common. Files can be joined when they share a common field (key)."
+},
+{
+q:"44. Characteristic(s) of a distributed MIS structure is",
+options:[
+"interactive sharing of the workload",
+"a multiprocessing environment",
+"computers supporting local DP operations",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Distributed MIS involves workload sharing, multiprocessing, and local data processing support."
+},
+{
+q:"45. The database environment has all of the following components except:",
+options:[
+"users",
+"separate files",
+"database",
+"database administrator",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is separate files. In a database environment, data is integrated rather than stored in separate independent files."
+},
+{
+q:"36. The model for a _____ resembles the hierarchical model in many respects.",
+options:[
+"Network database",
+"Relational database",
+"Distributed database",
+"Hierarchical database",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Network database. The network model resembles the hierarchical model but allows more complex relationships such as many-to-many."
+},
+{
+q:"37. A set of programs that handle a firm's database responsibilities is called a",
+options:[
+"Data Base Management System (DBMS)",
+"Data Base Processing System (DBPS)",
+"Data Management System (DMS)",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Data Base Management System (DBMS). A DBMS is a collection of programs used to manage and control database operations."
+},
+{
+q:"38. In any hierarchy of data organization, the smallest entity to be processed as a single unit is called",
+options:[
+"data field",
+"data record",
+"data file",
+"database",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is data record. A record is the smallest meaningful unit processed as a whole in data organization."
+},
+{
+q:"39. Long-range planning reports produced in an MIS are primarily designed for",
+options:[
+"top management",
+"middle management",
+"lower management",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is top management. Long-range planning reports support strategic decisions made by top-level management."
+},
+{
+q:"40. The model for a record management system might be",
+options:[
+"handwritten list",
+"a Rolodex card file",
+"a business form",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Record management systems can be modeled after handwritten lists, card files, or business forms."
+},
+{
+q:"31. A _____ means that one record in a particular record type is related to only one record of another record type.",
+options:[
+"One-to-one relationship",
+"One-to-many relationship",
+"Many-to-one relationship",
+"Many-to-many relationship",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is One-to-one relationship. In this relationship, each record in one record type corresponds to exactly one record in another record type."
+},
+{
+q:"32. A _____ database does not use pointers or physical links, but instead finds related records by examining the contents of fields.",
+options:[
+"Network",
+"Hierarchical",
+"Relational",
+"Object-Oriented",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Relational. A relational database uses field values (keys) rather than physical pointers to relate records."
+},
+{
+q:"33. In SQL, which command(s) is(are) used to redefine an index's future storage allocation",
+options:[
+"ALTER INDEX",
+"REDEFINE INDEX",
+"MODIFY INDEX",
+"DO INDEX",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is ALTER INDEX. The ALTER INDEX command is used to modify index properties including storage allocation."
+},
+{
+q:"34. Which of the following is a serious problem of file management systems?",
+options:[
+"difficult to update",
+"lack of data independence",
+"data redundancy",
+"program dependence",
+"All of the above"
+],
+answer:4,
+explanation:"Correct answer is All of the above. File management systems suffer from data redundancy, lack of independence, program dependence, and difficulty in updating."
+},
+{
+q:"35. With respect to data input, the most accurate description of batch control is",
+options:[
+"dividing documents to be entered into batches",
+"controlling the input of each input clerk",
+"comparing to a pre-calculated figure the total of a data item summed across batch records put into the system",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is comparing to a pre-calculated figure the total of a data item summed across batch records put into the system. Batch control ensures accuracy by verifying totals."
+},
+],
+
+// ........Section-3...........
+
+3:[
+    {
+q:"46. In SQL, the CREATE TABLESPACE is used",
+options:[
+"to create a place in the database for storage of schema objects, rollback segments, and naming the data files to comprise the tablespace",
+"to create a database trigger",
+"to add/rename data files, to change storage",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is to create a place in the database for storage of schema objects, rollback segments, and naming the data files to comprise the tablespace. CREATE TABLESPACE is used to define logical storage units in a database."
+},
+
+{
+q:"47. In SQL, which command is used to remove a stored function from the database?",
+options:[
+"REMOVE FUNCTION",
+"DELETE FUNCTION",
+"DROP FUNCTION",
+"ERASE FUNCTION",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is DROP FUNCTION. The DROP FUNCTION command is used to remove an existing stored function from the database."
+},
+
+{
+q:"48. The database administration function includes",
+options:[
+"application programming",
+"computer operations management",
+"database access planning",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Database administration involves application programming support, operations management, and database access planning."
+},
+
+{
+q:"49. A relational database management (RDBM) package manages data in more than one file at once. How does it organize these files? As",
+options:[
+"tables",
+"relations",
+"tuple",
+"both (a) and (b)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (a) and (b). In a relational database, data is organized into tables, which are also known as relations."
+},
+
+{
+q:"50. A command that lets you change one or more fields in a record is",
+options:[
+"Insert",
+"Modify",
+"Look-up",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Modify. The Modify (or UPDATE in SQL) command is used to change one or more fields in an existing record."
+},
+{
+q:"41. In SQL, which command is used to select only one copy of each set of duplicable rows",
+options:[
+"SELECT DISTINCT",
+"SELECT UNIQUE",
+"SELECT DIFFERENT",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is SELECT DISTINCT. It returns only unique rows from the result set, removing duplicates."
+},
+
+{
+q:"42. The physical location of a record is determined by a mathematical formula that transforms a file key into a record location in",
+options:[
+"a tree file",
+"an indexed file",
+"a hashed file",
+"a sequential file",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is a hashed file. Hashing uses a mathematical function on the key to directly locate the record."
+},
+
+{
+q:"43. Which command is used to select distinct subject (SUB) from the table (BOOK)?",
+options:[
+"SELECT ALL FROM BOOK",
+"SELECT DISTINCT SUB FROM BOOK",
+"SELECT SUB FROM BOOK",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is SELECT DISTINCT SUB FROM BOOK. This retrieves unique values of the SUB column from the BOOK table."
+},
+
+{
+q:"44. The master list of an indexed file",
+options:[
+"is sorted in ascending order",
+"contains only a list of keys and record numbers",
+"has a number assigned to each record",
+"both (b) and (c)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (b) and (c). The master list contains keys with record numbers, and each record is assigned a number for referencing."
+},
+
+{
+q:"45. Which of the following is not the responsibility of the utilities component of DBMS software?",
+options:[
+"creating the physical and logical designs",
+"removing flagged records for deletion",
+"creating and maintaining the data dictionary",
+"monitoring performance",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is creating the physical and logical designs. Utilities manage maintenance and performance, but the initial design is the DBA's responsibility."
+},
+{
+q:"36. Data encryption techniques are particularly useful for",
+options:[
+"reducing storage space requirements",
+"improving data integrity",
+"protecting data in data communication systems",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is protecting data in data communication systems. Encryption secures data from unauthorized access during transmission."
+},
+
+{
+q:"37. It is more accurate to define a _____ as a variety of different record types that are treated as a single unit",
+options:[
+"Database",
+"Table",
+"Record",
+"Flat File",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Flat File. A flat file can contain different types of records treated together as a single unit of data storage."
+},
+
+{
+q:"38. A logical schema",
+options:[
+"is the entire database",
+"is a standard way of organizing information into accessible parts",
+"describes how data is actually stored on disk",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is is a standard way of organizing information into accessible parts. A logical schema defines the structure and organization of the database, independent of physical storage."
+},
+
+{
+q:"39. Queries to a database",
+options:[
+"are written in English",
+"can use aggregate functions like SUM and COUNT",
+"both (a) and (b)",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is can use aggregate functions like SUM and COUNT. Queries are written in SQL, which is a structured query language that allows aggregate functions."
+},
+
+{
+q:"40. In order to use a record management system",
+options:[
+"You need to understand the low-level details of how information is stored",
+"You need to understand the model the record management system uses.",
+"Both (a) and (b)",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is You need to understand the model the record management system uses. Users do not need low-level details but should understand the system's data model."
+},
+{
+q:"11. A multiple-form file management system",
+options:[
+"lets you define different forms for different operations",
+"lets you create a look-up form with an associated read-only password to prevent access by unauthorized users",
+"both (a) and (b)",
+"allow you to entry data in all the forms",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is both (a) and (b). A multiple-form file management system allows defining different forms for operations and securing them with access controls."
+},
+
+{
+q:"12. The term _____ is sometimes used to refer to a data file in which all the records have the same record format, that is, the same field names, field lengths, and data types.",
+options:[
+"Database",
+"Table",
+"Flat file",
+"Data structure",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Flat file. A flat file has records with a uniform structure, including consistent field names, lengths, and data types."
+},
+
+{
+q:"13. A _____ contains fields of data about one entity.",
+options:[
+"Record",
+"File",
+"Fields",
+"Document",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Record. A record stores all the fields describing a single entity."
+},
+
+{
+q:"14. A condition that led to the development of databases was",
+options:[
+"a demand for more data to support information needs",
+"an increase in the amount of data handled by organizations",
+"the proliferation of data files",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. The need for efficient data management arose from increasing data volume, multiple data files, and growing information requirements."
+},
+
+{
+q:"15. The _____ command is used to allocate an extent for the table in SQL",
+options:[
+"MODIFY ALLOCATES",
+"MODIFY TABLE",
+"ALTER TABLE",
+"REDEFINE TABLE",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is ALTER TABLE. The ALTER TABLE command can be used to modify storage allocations, structure, or other properties of a table."
+},
+{
+q:"6. If you want to organize a file in multiple ways, it is better to _____ the data rather than to sort it.",
+options:[
+"Delete",
+"Update",
+"Sort Key",
+"Index",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Index. Indexing allows quick access and multiple organization methods without physically sorting the data."
+},
+
+{
+q:"7. The modify operation is likely to be done after",
+options:[
+"Delete",
+"Look-up",
+"Insert",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Insert. After inserting records, the modify (or update) operation is commonly applied to correct or change field values."
+},
+
+{
+q:"8. One data dictionary software package is called",
+options:[
+"DB/DC dictionary",
+"TOTAL",
+"ACCESS",
+"any of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is DB/DC dictionary. It is a known data dictionary software used for managing metadata."
+},
+
+{
+q:"9. One approach to standardizing storing of data",
+options:[
+"MIS",
+"structured programming",
+"CODASYL specifications",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is CODASYL specifications. CODASYL defines standards for database organization and access methods."
+},
+
+{
+q:"10. What software packages are commonly used for businesses that have to track extensive lists of clients and inventory?",
+options:[
+"Special purpose packages",
+"Custom made programs",
+"Single function application packages",
+"Data management packages",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Data management packages. These packages handle large datasets, client lists, inventory, and other business information efficiently."
+},
+{
+q:"1. In SQL, which command is used to select data in rows and columns from one or more tables?",
+options:[
+"CHOOSE",
+"SELECT",
+"LIST",
+"BROWSE",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is SELECT. The SELECT statement retrieves data from one or more tables in a database."
+},
+
+{
+q:"2. A scheme describes",
+options:[
+"data elements",
+"records and files",
+"record relationships",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. A schema defines data elements, records, files, and relationships among records in a database."
+},
+
+{
+q:"3. A report form",
+options:[
+"appears on the computer monitor during data entry",
+"is used during report generation to format data",
+"both (a) and (b)",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is is used during report generation to format data. A report form formats output data for presentation, not for data entry."
+},
+
+{
+q:"4. A computer file can be best described as",
+options:[
+"a single data item",
+"a general collection of data items",
+"an orderly collection of data items",
+"a random collection of data items",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is an orderly collection of data items. Files organize data in a structured and sequential manner for storage and access."
+},
+
+{
+q:"5. A good query system",
+options:[
+"can accept English language commands",
+"allows non-programmers to access information stored in a database",
+"can be accessed only by data processing professionals",
+"both (a) and (b)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (a) and (b). A good query system supports natural language commands and is accessible to non-programmers."
+},
+{
+q:"31. Which of the following is not true of the traditional approach to information processing?",
+options:[
+"There is common sharing of data among the various applications",
+"It is file-oriented",
+"Programs are dependent on the files",
+"It is inflexible",
+"All of the above are true"
+],
+answer:0,
+explanation:"Correct answer is There is common sharing of data among the various applications. In traditional file-oriented systems, data is not commonly shared among applications, unlike in database systems."
+},
+
+{
+q:"32. Batch processing is appropriate if",
+options:[
+"a large computer system is available",
+"only a small computer system is available",
+"only a few transactions are involved",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is a large computer system is available. Batch processing is efficient for processing large volumes of transactions on systems capable of handling them."
+},
+
+{
+q:"33. What is the abbreviation used for a software package that permits the users to create, retrieve and maintain records in a database?",
+options:[
+"DASD",
+"FMS",
+"EMMS",
+"DBMS",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is DBMS. A Database Management System (DBMS) allows users to create, retrieve, update, and maintain database records."
+},
+
+{
+q:"34. Which of the following is not an advantage of the database approach?",
+options:[
+"elimination of the data redundancy",
+"ability to associate related data",
+"increased security",
+"program/data independence",
+"All of the above are advantages"
+],
+answer:4,
+explanation:"Correct answer is All of the above are advantages. All the listed options are actually advantages of the database approach, so the question tests recognition of true advantages."
+},
+
+{
+q:"35. A data dictionary doesn't provide information about:",
+options:[
+"where data is located",
+"the size of the disk storage device",
+"It allows a many-to-many relationship",
+"It is conceptually simple",
+"It will be the dominant database of the future"
+],
+answer:4,
+explanation:"Correct answer is It will be the dominant database of the future. A data dictionary contains metadata about data elements, storage, and relationships, but cannot predict future dominance."
+},
+{
+q:"26. A data dictionary is a special file that contains",
+options:[
+"the names of all fields in all files",
+"the data types of all fields in all files",
+"the widths of all fields in all files",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. A data dictionary stores metadata including field names, data types, and field widths for all files in the database."
+},
+
+{
+q:"27. A file that is organized in uniform format is formally referred to as a _____ or a database file.",
+options:[
+"Document",
+"Database",
+"Record",
+"Structured data file",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Structured data file. Such files have consistent formats for records and are often called database files."
+},
+
+{
+q:"28. A form can be used to",
+options:[
+"modify records",
+"delete records",
+"format printed output",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Forms are used for input, modification, deletion, and for formatting output for reports."
+},
+
+{
+q:"29. Which language has recently become the de-facto standard for interfacing application programs with relational database systems?",
+options:[
+"Oracle",
+"SQL",
+"dBASE",
+"4GL",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is SQL. Structured Query Language (SQL) is the standard language for querying and interfacing with relational databases."
+},
+
+{
+q:"30. In SQL, the CREATE TABLE is used",
+options:[
+"to create a table, defining its columns, integrity constraints, and storage allocation",
+"to add a column/integrity constraint to a table",
+"to redefine a column",
+"to change a table's storage characteristics",
+"All of the above"
+],
+answer:0,
+explanation:"Correct answer is to create a table, defining its columns, integrity constraints, and storage allocation. CREATE TABLE is used to define a new table structure in SQL."
+},
+{
+q:"21. Related fields in a database are grouped to form",
+options:[
+"data file",
+"data record",
+"menu",
+"bank",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is data record. A record is a collection of related fields that represents a single entity in a database."
+},
+
+{
+q:"22. A _____ means that one record in a particular record type can be related to many records in another record type and vice-versa.",
+options:[
+"One-to-one relationship",
+"One-to-many relationship",
+"Many-to-one relationship",
+"Many-to-many relationship",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is Many-to-many relationship. In this relationship, multiple records in one table are related to multiple records in another table."
+},
+
+{
+q:"23. In SQL, the _____ command is used to recompile a view",
+options:[
+"COMPILE VIEW",
+"DEFINE VIEW",
+"CREATE VIEW",
+"ALTER VIEW",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is COMPILE VIEW. This command recompiles an existing view in the database to update its definition or resolve errors."
+},
+
+{
+q:"24. A list in alphabetical order",
+options:[
+"is in descending order",
+"is in ascending order",
+"is the result of a sort operation",
+"both (b) and (c)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (b) and (c). Alphabetical order is ascending order and is achieved by performing a sort operation."
+},
+
+{
+q:"25. If a piece of data is stored in two places in the database, then",
+options:[
+"storage space is wasted",
+"changing the data in one spot will cause data inconsistency",
+"it can be more easily accessed",
+"both (a) and (b)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (a) and (b). Storing the same data in multiple places wastes storage and can lead to inconsistencies if updates are not applied everywhere."
+},
+{
+q:"16. Embedded pointer provide",
+options:[
+"a secondary access path",
+"a physical record key",
+"an inverted index",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Embedded pointers can serve as secondary access paths, store physical record keys, and function as inverted indexes."
+},
+
+{
+q:"17. Which of the following is a type of DBMS software?",
+options:[
+"database manipulation language",
+"query language",
+"utilities",
+"report writer",
+"All of the above"
+],
+answer:4,
+explanation:"Correct answer is All of the above. DBMS software includes DMLs, query languages, utility programs, and report writers."
+},
+
+{
+q:"18. Data items grouped together for storage purposes are called a",
+options:[
+"record",
+"title",
+"list",
+"string",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is record. A record is a collection of related data items stored together."
+},
+
+{
+q:"19. The activity of a file",
+options:[
+"is a low percentage of number of records added or deleted from a file",
+"if high, reduces processing efficiency for sequential and nonsequential files",
+"is a measure of the percentage of existing records updated during a run",
+"refers to how closely the file fits into the allocated space",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is if high, reduces processing efficiency for sequential and nonsequential files. High file activity (many inserts/deletes) can slow processing."
+},
+
+{
+q:"20. Versatile report generators can provide",
+options:[
+"Columnar totals",
+"Subtotals",
+"Calculations",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Advanced report generators can compute totals, subtotals, and perform calculations in reports."
+},
+
+],
+// .........Section-4...............
+4:[
+    {
+q:"11. In SQL, which command(s) is(are) used to change a table's storage characteristics?",
+options:[
+"ALTER TABLE",
+"MODIFY TABLE",
+"CHANGE TABLE",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is ALTER TABLE. The ALTER TABLE command is used to modify table structure and storage characteristics."
+},
+
+{
+q:"12. In SQL, which of the following is not a data definition language command?",
+options:[
+"RENAME",
+"REVOKE",
+"GRANT",
+"UPDATE",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is UPDATE. UPDATE is a DML command for modifying data, not a DDL command."
+},
+
+{
+q:"13. Subschema can be used to",
+options:[
+"create very different, personalized views of the same data",
+"present information in different formats",
+"hide sensitive information by omitting fields from the subschema's description",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Subschemas allow customized views, format presentation, and conceal sensitive data."
+},
+
+{
+q:"14. Database management systems are intended to:",
+options:[
+"eliminate data redundancy",
+"establish relationships among records in different files",
+"manage file access",
+"maintain data integrity",
+"All of the above"
+],
+answer:4,
+explanation:"Correct answer is All of the above. DBMS functions include reducing redundancy, managing relationships, controlling access, and ensuring data integrity."
+},
+
+{
+q:"15. In SQL, which command(s) is(are) used to issue multiple CREATE TABLE, CREATE VIEW, and GRANT statements in a single transaction?",
+options:[
+"CREATE PACKAGE",
+"CREATE SCHEMA",
+"CREATE CLUSTER",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is CREATE SCHEMA. CREATE SCHEMA allows execution of multiple DDL statements like CREATE TABLE, CREATE VIEW, and GRANT as a single unit."
+},
+{
+q:"6. In order to use a DBMS, it is important to understand",
+options:[
+"the physical schema",
+"all sub-schemas that the system supports",
+"one subschema",
+"both (a) and (b)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (a) and (b). Understanding the physical schema and all subschemas helps users interact effectively with the DBMS."
+},
+
+{
+q:"7. In SQL, which command(s) is(are) used to recompile a stored function?",
+options:[
+"SET FUNCTION",
+"SET STORED FUNCTION",
+"ALTER FUNCTION",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is ALTER FUNCTION. ALTER FUNCTION is used to recompile or modify a stored function in SQL."
+},
+
+{
+q:"8. Report generators are used to",
+options:[
+"store data input by a user",
+"retrieve information from files",
+"answer queries",
+"both (b) and (c)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (b) and (c). Report generators retrieve information and help answer queries, but do not store data."
+},
+
+{
+q:"9. Administrate supervision of database activities is the responsibility of the",
+options:[
+"Database administrator",
+"DP Manager",
+"DB Manager",
+"DP administration",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Database administrator. The DBA manages database operations, access, and overall administration."
+},
+
+{
+q:"10. Goals for the design of the logical schema include",
+options:[
+"avoiding data inconsistency",
+"being able to construct queries easily",
+"being able to access data efficiently",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. A well-designed logical schema ensures consistency, easy query construction, and efficient data access."
+},
+{
+q:"1. In SQL, the command(s) is(are) used to create an index for a table or cluster",
+options:[
+"CREATE INDEX",
+"MODIFY INDEX",
+"SET INDEX TO FILE",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is CREATE INDEX. This command creates an index on a table or cluster to improve query performance."
+},
+
+{
+q:"2. There are certain packages that allow people to define data items, place these items in particular records, combine the records into designated files and then manipulate and retrieve the stored data. What are they called?",
+options:[
+"Data storage system",
+"Database management system (DBMS)",
+"Batch processing system",
+"Data communication package",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Database management system (DBMS). A DBMS allows defining, storing, manipulating, and retrieving data efficiently."
+},
+
+{
+q:"3. A _____ DBMS distributes data processing tasks between the workstation and a network server.",
+options:[
+"Network",
+"Relational",
+"Client Server",
+"Hierarchical",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Client Server. Client-server DBMS splits processing between client workstations and a central server."
+},
+
+{
+q:"4. Information can be transferred between the DBMS and a",
+options:[
+"spreadsheet program",
+"word processor program",
+"graphics program",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. DBMS can interface with various application programs to transfer and use data."
+},
+
+{
+q:"5. Data integrity control",
+options:[
+"is used to set upper and lower limits on numeric data",
+"requires the use of passwords to prohibit unauthorized access to the file",
+"has the data dictionary keep the date and time of last access, last back-up, and most recent modification for all files",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above. Data integrity control ensures data validity, security, and proper record keeping."
+},
+
+],
+
+// ........Section-5................
+5:[
+// ,,,,,Here Question,,,,,,
+
+]
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+q:"6. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    enum status {pass, fail, absent};
+    enum status stud1, stud2, stud3;
+    stud1 = pass;
+    stud2 = absent;
+    stud3 = fail;
+    printf("%d %d %d\\n", stud1, stud2, stud3);
+    return 0;
+}`,
+options:[
+"0, 1, 2",
+"1, 2, 3",
+"0, 2, 1",
+"1, 3, 2"
+],
+answer:2,
+explanation:"Enum values start from 0 by default. So pass=0, fail=1, absent=2. stud1=0, stud2=2, stud3=1. Hence output is 0, 2, 1."
+},
+{
+q:"7. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    int i=4, j=8;
+    printf("%d, %d, %d\\n", i|j&j|i, i|j&j|i, i^j);
+    return 0;
+}`,
+options:[
+"12, 12, 12",
+"112, 1, 12",
+"32, 1, 12",
+"-64, 1, 12"
+],
+answer:0,
+explanation:"Operator precedence: & is evaluated before |. So j&j = 8. Then i|8 = 12 and 12|i = 12. Also i^j = 4^8 = 12. Hence output is 12, 12, 12."
+},
+{
+q:"8. What will be the output of the program in Turbo C (under DOS)?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    struct emp
+    {
+        char *n;
+        int age;
+    };
+    struct emp e1 = {"Dravid", 23};
+    struct emp e2 = e1;
+    strupr(e2.n);
+    printf("%s\\n", e1.n);
+    return 0;
+}`,
+options:[
+"Error: Invalid structure assignment",
+"DRAVID",
+"Dravid",
+"No output"
+],
+answer:1,
+explanation:"Structure assignment is valid. e2 gets a copy of e1, but both pointers point to the same string. strupr(e2.n) converts the string to uppercase, so e1.n also becomes 'DRAVID'."
+},
+{
+q:"9. What will be the output of the program in 16-bit platform (under DOS)?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    struct node
+    {
+        int data;
+        struct node *link;
+    };
+    struct node *p, *q;
+    p = (struct node *) malloc(sizeof(struct node));
+    q = (struct node *) malloc(sizeof(struct node));
+    printf("%d, %d\\n", sizeof(p), sizeof(q));
+    return 0;
+}`,
+options:[
+"2, 2",
+"8, 8",
+"5, 5",
+"4, 4"
+],
+answer:0,
+explanation:"On a 16-bit system, pointer size is 2 bytes. p and q are pointers, so sizeof(p) and sizeof(q) both return 2."
+},
+{
+q:"10. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    struct byte
+    {
+        int one:1;
+    };
+    struct byte var = {1};
+    printf("%d\\n", var.one);
+    return 0;
+}`,
+options:[
+"1",
+"-1",
+"0",
+"Error"
+],
+answer:1,
+explanation:"A 1-bit signed integer can store only 0 and -1. Assigning 1 to a 1-bit signed field results in -1 due to sign representation."
+},
+{
+q:"1. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    union a
+    {
+        int i;
+        char ch[2];
+    };
+    union a u;
+    u.ch[0]=3;
+    u.ch[1]=2;
+    printf("%d, %d, %d\\n", u.ch[0], u.ch[1], u.i);
+    return 0;
+}`,
+options:[
+"3, 2, 515",
+"515, 2, 3",
+"3, 2, 5",
+"515, 515, 4"
+],
+answer:0,
+explanation:"On a 16-bit system, int takes 2 bytes. ch[0]=3 (low byte) and ch[1]=2 (high byte). So integer value becomes (2×256 + 3) = 515. Hence output is 3, 2, 515."
+},
+{
+q:"2. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    union var
+    {
+        int a, b;
+    };
+    union var v;
+    v.a=10;
+    v.b=20;
+    printf("%d\\n", v.a);
+    return 0;
+}`,
+options:[
+"10",
+"20",
+"30",
+"0"
+],
+answer:1,
+explanation:"Union members share the same memory. After assigning v.b=20, it overwrites v.a. So printing v.a gives 20."
+},
+{
+q:"3. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    struct value
+    {
+        int bit1:1;
+        int bit3:4;
+        int bit4:4;
+    }bit={1, 2, 13};
+
+    printf("%d, %d, %d\\n", bit.bit1, bit.bit3, bit.bit4);
+    return 0;
+}`,
+options:[
+"1, 2, 13",
+"1, 4, 4",
+"-1, 2, -3",
+"-1, -2, -13"
+],
+answer:2,
+explanation:"bit1 is 1-bit signed, so storing 1 makes it -1. bit3=2 fits in 4 bits so prints 2. bit4=13 (1101) is negative in signed 4-bit; 2's complement gives -3."
+},
+{
+q:"4. What will be the output of the program in 16 bit platform (Turbo C under DOS)?",
+code:`#include<stdio.h>
+
+int main()
+{
+    struct value
+    {
+        int bit1:1;
+        int bit3:4;
+        int bit4:4;
+    }bit;
+    printf("%d\\n", sizeof(bit));
+    return 0;
+}`,
+options:[
+"1",
+"2",
+"4",
+"9"
+],
+answer:1,
+explanation:"Total bits = 1+4+4 = 9 bits. On a 16-bit system, int occupies 2 bytes. Bit-fields are packed within an int boundary. So sizeof(bit) is 2 bytes."
+},
+{
+q:"5. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    enum days {MON=-1, TUE, WED=6, THU, FRI, SAT};
+    printf("%d, %d, %d, %d, %d, %d\\n", MON, TUE, WED, THU, FRI, SAT);
+    return 0;
+}`,
+options:[
+"-1, 0, 1, 2, 3, 4",
+"-1, 2, 6, 3, 4, 5",
+"-1, 0, 6, 2, 3, 4",
+"-1, 0, 6, 7, 8, 9"
+],
+answer:3,
+explanation:"MON=-1. TUE becomes 0. WED=6 explicitly. After that values increment automatically: THU=7, FRI=8, SAT=9."
+},
+{
+q:"11. What will be the output of the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    enum days {MON=-1, TUE, WED=6, THU, FRI, SAT};
+    printf("%d, %d, %d, %d, %d, %d\\n", ++MON, TUE, WED, THU, FRI, SAT);
+    return 0;
+}`,
+options:[
+"-1, 0, 1, 2, 3, 4",
+"Error",
+"0, 1, 6, 3, 4, 5",
+"0, 0, 6, 7, 8, 9"
+],
+answer:1,
+explanation:"Enum constants are not variables; they are constant values. Increment (++) cannot be applied to enum constants. Hence it results in a compilation error."
+},
+{
+q:"12. What will be the output of the program?",
+code:`#include<stdio.h>
+
+struct course
+{
+    int courseno;
+    char coursename[25];
+};
+
+int main()
+{
+    struct course c[] = { {102, "Java"}, 
+                          {103, "PHP"}, 
+                          {104, "DotNet"} };
+
+    printf("%d ", c[1].courseno);
+    printf("%s\\n", (*(c+2)).coursename);
+    return 0;
+}`,
+options:[
+"103 DotNet",
+"102 Java",
+"103 PHP",
+"104 DotNet"
+],
+answer:0,
+explanation:"c[1].courseno is 103. (*(c+2)) points to the third element, whose coursename is 'DotNet'. So output is 103 DotNet."
+},
+{
+q:"13. What will be the output of the program given below in 16-bit platform?",
+code:`#include<stdio.h>
+
+int main()
+{
+    enum value{VAL1=0, VAL2, VAL3, VAL4, VAL5} var;
+    printf("%d\\n", sizeof(var));
+    return 0;
+}`,
+options:[
+"1",
+"2",
+"4",
+"10"
+],
+answer:1,
+explanation:"On a 16-bit system (like Turbo C), enum is stored as an int. Since int occupies 2 bytes, sizeof(var) is 2."
+},
+{
+q:"1. Point out the error in the program?",
+code:`struct emp
+{
+    int ecode;
+    struct emp *e;
+};`,
+options:[
+"Error: in structure declaration",
+"Linker Error",
+"No Error",
+"None of above"
+],
+answer:2,
+explanation:"This is a self-referential structure. The member 'struct emp *e' is a pointer to the same structure type, which is valid in C. Hence there is no error."
+},
+{
+q:"2. Point out the error in the program?",
+code:`typedef struct data mystruct;
+struct data
+{
+    int x;
+    mystruct *b;
+};`,
+options:[
+"Error: in structure declaration",
+"Linker Error",
+"No Error",
+"None of above"
+],
+answer:2,
+explanation:"The typedef name 'mystruct' is already introduced before the full structure definition. Using 'mystruct *b' is valid because pointer size is known. Hence no error."
+},
+{
+q:"3. Point out the error in the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    struct a
+    {
+        float category:5;
+        char scheme:4;
+    };
+    printf("size=%d", sizeof(struct a));
+    return 0;
+}`,
+options:[
+"Error: invalid structure member in printf",
+"Error in this float category:5; statement",
+"No error",
+"None of above"
+],
+answer:1,
+explanation:"Bit-fields in C must be of type int, signed int, or unsigned int. Using 'float category:5;' is invalid. Hence error occurs in that statement."
+},
+{
+q:"4. Point out the error in the program?",
+code:`struct emp
+{
+    int ecode;
+    struct emp e;
+};`,
+options:[
+"Error: in structure declaration",
+"Linker Error",
+"No Error",
+"None of above"
+],
+answer:0,
+explanation:"A structure cannot contain an instance of itself directly because its size would be infinite/unknown at compile time. Only a pointer to itself is allowed."
+},
+{
+q:"5. Point out the error in the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    struct emp
+    {
+        char name[20];
+        float sal;
+    };
+    struct emp e[10];
+    int i;
+    for(i=0; i<=9; i++)
+        scanf("%s %f", e[i].name, &e[i].sal);
+    return 0;
+}`,
+options:[
+"Error: invalid structure member",
+"Error: Floating point formats not linked",
+"No error",
+"None of above"
+],
+answer:1,
+explanation:"In Turbo C (DOS), floating point formats must be linked explicitly. Otherwise, using %f in scanf causes runtime error: 'floating point formats not linked'."
+},
+{
+q:"6. Point out the error in the program?",
+code:`#include<stdio.h>
+#include<string.h>
+void modify(struct emp*);
+struct emp
+{
+    char name[20];
+    int age;
+};
+int main()
+{
+    struct emp e = {"Sanjay", 35};
+    modify(&e);
+    printf("%s %d", e.name, e.age);
+    return 0;
+}
+void modify(struct emp *p)
+{
+     p->age = p->age + 2;
+}`,
+options:[
+"Error: in structure",
+"Error: in prototype declaration unknown struct emp",
+"No error",
+"None of above"
+],
+answer:1,
+explanation:"The function prototype uses 'struct emp' before the structure is declared. At that point, the compiler does not know the structure type. Hence prototype error occurs."
+},
+{
+q:"7. Point out the error in the program in 16-bit platform?",
+code:`#include<stdio.h>
+
+int main()
+{
+    struct bits
+    {
+        int i:40;
+    }bit;
+
+    printf("%d\\n", sizeof(bit));
+    return 0;
+}`,
+options:[
+"4",
+"2",
+"Error: Bit field too large",
+"Error: Invalid member access in structure"
+],
+answer:2,
+explanation:"On a 16-bit system, int is 16 bits. A bit-field of size 40 exceeds the size of int. Hence compilation error: Bit field too large."
+},
+{
+q:"8. Point out the error in the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    union a
+    {
+        int i;
+        char ch[2];
+    };
+    union a z1 = {512};
+    union a z2 = {0, 2};
+    return 0;
+}`,
+options:[
+"Error: invalid union declaration",
+"Error: in Initializing z2",
+"No error",
+"None of above"
+],
+answer:1,
+explanation:"Union can initialize only its first member. 'z1 = {512}' initializes int i correctly. But 'z2 = {0, 2}' tries to initialize multiple members, which is invalid."
+},
+{
+q:"9. Point out the error in the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    struct emp
+    {
+        char n[20];
+        int age;
+    };
+    struct emp e1 = {"Dravid", 23};
+    struct emp e2 = e1;
+    if(e1 == e2)
+        printf("The structure are equal");
+    return 0;
+}`,
+options:[
+"Prints: The structure are equal",
+"Error: Structure cannot be compared using '=='",
+"No output",
+"None of above"
+],
+answer:1,
+explanation:"Structures in C cannot be compared directly using '=='. Only individual members can be compared. Hence compilation error."
+},
+{
+q:"10. Point out the error in the program?",
+code:`#include<stdio.h>
+
+int main()
+{
+    struct bits
+    {
+        float f:2;
+    }bit;
+
+    printf("%d\\n", sizeof(bit));
+    return 0;
+}`,
+options:[
+"4",
+"2",
+"Error: cannot set bit field for float",
+"Error: Invalid member access in structure"
+],
+answer:2,
+explanation:"Bit-fields in C must be of type int, signed int, or unsigned int. Declaring a bit-field of type float is invalid."
+}
+
+
+
+
+
+
+
+
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>
+   

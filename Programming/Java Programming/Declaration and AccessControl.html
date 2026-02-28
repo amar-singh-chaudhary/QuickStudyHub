@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+
+{
+  q: "What is the widest valid returnType for methodA in line 3?",
+  code: `public class ReturnIt 
+{ 
+    returnType methodA(byte x, double y) /* Line 3 */
+    { 
+        return (long)x / y * 2; 
+    } 
+}`,
+  options: [
+    "int",
+    "byte",
+    "long",
+    "double"
+  ],
+  answer: 4,
+  explanation: "The expression (long)x / y * 2 involves double (because y is double). Java performs widening conversion to double. Therefore the widest valid return type is double."
+},
+{
+  q: "Which is valid in a class that extends class A?",
+  code: `class A 
+{  
+    protected int method1(int a, int b) 
+    {
+        return 0; 
+    } 
+}`,
+  options: [
+    "public int method1(int a, int b) { return 0; }",
+    "private int method1(int a, int b) { return 0; }",
+    "public short method1(int a, int b) { return 0; }",
+    "static protected int method1(int a, int b) { return 0; }"
+  ],
+  answer: 1,
+  explanation: "A subclass can increase access level while overriding. public int method1(...) correctly overrides the protected method. Other options either reduce access, change return type, or use static."
+},
+{
+  q: "Which one creates an instance of an array?",
+  code: ``,
+  options: [
+    "int[] ia = new int[15];",
+    "float fa = new float[20];",
+    "char[] ca = \"Some String\";",
+    "int ia[][] = { 4,5,6 }, {1,2,3};"
+  ],
+  answer: 1,
+  explanation: "Option A correctly declares and creates an array instance. Other options cause compile-time errors due to incorrect declarations or assignments."
+},
+{
+  q: "Which two of the following are legal declarations for nonnested classes and interfaces?",
+  code: `final abstract class Test {}
+public static interface Test {}
+final public class Test {}
+protected abstract class Test {}
+protected interface Test {}
+abstract public class Test {}`,
+  options: [
+    "1 and 4",
+    "2 and 5",
+    "3 and 6",
+    "4 and 6"
+  ],
+  answer: 3,
+  explanation: "(3) final public class Test {} and (6) abstract public class Test {} are legal. A class cannot be both final and abstract. Non-nested classes/interfaces cannot be static or protected."
+},
+{
+  q: "Which of the following class level (nonlocal) variable declarations will not compile?",
+  code: ``,
+  options: [
+    "protected int a;",
+    "transient int b = 3;",
+    "private synchronized int e;",
+    "volatile int d;"
+  ],
+  answer: 3,
+  explanation: "The synchronized modifier cannot be applied to variables; it is only valid for methods or blocks. Therefore option C will not compile."
+}
+,
+{
+  q: "What is the most restrictive access modifier that will allow members of one class to have access to members of another class in the same package?",
+  code: ``,
+  options: [
+    "public",
+    "abstract",
+    "protected",
+    "synchronized",
+    "default access"
+  ],
+  answer: 5,
+  explanation: "Default access (package-private) allows access only within the same package. It is more restrictive than public and protected. Abstract and synchronized are not access modifiers."
+},
+{
+  q: "Which of the following is/are legal method declarations?",
+  code: `protected abstract void m1();
+static final void m1(){}
+synchronized public final void m1() {}
+private native void m1();`,
+  options: [
+    "1 and 3",
+    "2 and 4",
+    "1 only",
+    "All of them are legal declarations."
+  ],
+  answer: 4,
+  explanation: "All given method declarations are legal. Abstract methods can be protected, static final methods are valid, synchronized public final is valid, and private native methods are also valid."
+},
+{
+  q: "Which cause a compiler error?",
+  code: ``,
+  options: [
+    "int[] scores = {3, 5, 7};",
+    "int[][] scores = {2,7,6}, {9,3,45};",
+    "String cats[] = {\"Fluffy\", \"Spot\", \"Zeus\"};",
+    "boolean results[] = new boolean[] {true, false, true};",
+    "Integer results[] = {new Integer(3), new Integer(5), new Integer(8)};"
+  ],
+  answer: 2,
+  explanation: "Option B causes a compiler error because a two-dimensional array initializer must be enclosed within an extra pair of braces: int[][] scores = {{2,7,6}, {9,3,45}};"
+},
+{
+  q: "Which three are valid method signatures in an interface?",
+  code: `private int getArea();
+public float getVol(float x);
+public void main(String [] args);
+public static void main(String [] args);
+boolean setFlag(Boolean [] test);`,
+  options: [
+    "1 and 2",
+    "2, 3 and 5",
+    "3, 4, and 5",
+    "2 and 4"
+  ],
+  answer: 2,
+  explanation: "Valid interface method signatures are (2), (3), and (5). Interface methods are implicitly public and abstract. They cannot be private or static (in traditional interface rules)."
+},
+{
+  q: "You want a class to have access to members of another class in the same package. Which is the most restrictive access that accomplishes this objective?",
+  code: ``,
+  options: [
+    "public",
+    "private",
+    "protected",
+    "default access"
+  ],
+  answer: 4,
+  explanation: "Default access (package-private) allows access only to classes within the same package and is more restrictive than protected."
+},
+
+{
+  q: "You want subclasses in any package to have access to members of a superclass. Which is the most restrictive access that accomplishes this objective?",
+  code: ``,
+  options: [
+    "public",
+    "private",
+    "protected",
+    "transient"
+  ],
+  answer: 3,
+  explanation: "Protected allows access to subclasses even if they are in different packages. It is more restrictive than public and still satisfies the condition. Private does not allow subclass access, and transient is not an access modifier."
+},
+{
+  q: "Which of the following code fragments inserted will allow the program to compile?",
+  code: `public class Outer 
+{ 
+    public void someOuterMethod() 
+    {
+        //Line 5 
+    } 
+    public class Inner { } 
+    
+    public static void main(String[] argv) 
+    {
+        Outer ot = new Outer(); 
+        //Line 10
+    } 
+}`,
+  options: [
+    "new Inner(); //At line 5",
+    "new Inner(); //At line 10",
+    "new ot.Inner(); //At line 10",
+    "new Outer.Inner(); //At line 10"
+  ],
+  answer: 1,
+  explanation: "Inside a non-static method (line 5), Inner can be instantiated directly. In static context (main), a non-static inner class requires an outer instance reference."
+},
+{
+  q: "Which two code fragments will compile?",
+  code: `interface Base 
+{
+    boolean m1 ();
+    byte m2(short s);
+}`,
+  options: [
+    "1 and 2",
+    "2 and 3",
+    "3 and 4",
+    "1 and 5"
+  ],
+  answer: 3,
+  explanation: "(3) An abstract class can implement an interface without implementing all methods. (4) Correctly implements m1() as public and returns boolean. Other options misuse implements/extends or reduce access level."
+},
+{
+  q: "Which three form part of correct array declarations?",
+  code: `public int a[];
+static int[] a;
+public [] int a;
+private int a[3];
+private int[3] a[];
+public final int[] a;`,
+  options: [
+    "1, 3, 4",
+    "2, 4, 5",
+    "1, 2, 6",
+    "2, 5, 6"
+  ],
+  answer: 3,
+  explanation: "Correct array declarations are: public int a[]; static int[] a; and public final int[] a;. Others are syntactically incorrect."
+},
+{
+  q: "What is the prototype of the default constructor?",
+  code: `public class Test { }`,
+  options: [
+    "Test()",
+    "Test(void)",
+    "public Test()",
+    "public Test(void)"
+  ],
+  answer: 3,
+  explanation: "The default constructor has the same access modifier as the class. Since the class is public, the default constructor is public Test(). Constructors do not have a return type."
+},
+
+{
+  q: "What is the most restrictive access modifier that will allow members of one class to have access to members of another class in the same package?",
+  code: ``,
+  options: [
+    "public",
+    "abstract",
+    "protected",
+    "synchronized",
+    "default access"
+  ],
+  answer: 5,
+  explanation: "Default access (package-private) allows access only within the same package and is more restrictive than public and protected. Abstract and synchronized are not access modifiers."
+},
+{
+  q: "Which of the following is/are legal method declarations?",
+  code: `protected abstract void m1();
+static final void m1(){}
+synchronized public final void m1() {}
+private native void m1();`,
+  options: [
+    "1 and 3",
+    "2 and 4",
+    "1 only",
+    "All of them are legal declarations."
+  ],
+  answer: 4,
+  explanation: "All the given method declarations are legal. Abstract methods can be protected, static final methods are valid, synchronized public final is valid, and private native methods are also valid."
+},
+{
+  q: "Which cause a compiler error?",
+  code: ``,
+  options: [
+    "int[] scores = {3, 5, 7};",
+    "int[][] scores = {2,7,6}, {9,3,45};",
+    "String cats[] = {\"Fluffy\", \"Spot\", \"Zeus\"};",
+    "boolean results[] = new boolean[] {true, false, true};",
+    "Integer results[] = {new Integer(3), new Integer(5), new Integer(8)};"
+  ],
+  answer: 2,
+  explanation: "Option B causes a compiler error because the two-dimensional array initializer must be enclosed within an extra pair of braces: int[][] scores = {{2,7,6}, {9,3,45}};"
+},
+{
+  q: "Which three are valid method signatures in an interface?",
+  code: `private int getArea();
+public float getVol(float x);
+public void main(String [] args);
+public static void main(String [] args);
+boolean setFlag(Boolean [] test);`,
+  options: [
+    "1 and 2",
+    "2, 3 and 5",
+    "3, 4, and 5",
+    "2 and 4"
+  ],
+  answer: 2,
+  explanation: "Valid interface method signatures are (2), (3), and (5). Interface methods are implicitly public and abstract. They cannot be private or static (traditional rules)."
+},
+{
+  q: "You want a class to have access to members of another class in the same package. Which is the most restrictive access that accomplishes this objective?",
+  code: ``,
+  options: [
+    "public",
+    "private",
+    "protected",
+    "default access"
+  ],
+  answer: 4,
+  explanation: "Default access (package-private) allows access only within the same package and is more restrictive than protected."
+}
+
+
+
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>

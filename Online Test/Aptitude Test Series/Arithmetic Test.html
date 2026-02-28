@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aptitude Tests</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:30px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.test-card{
+    background:#fff;
+    padding:20px;
+    margin-bottom:15px;
+    border-radius:10px;
+    box-shadow:0 3px 8px rgba(0,0,0,0.1);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.test-info{
+    line-height:1.6;
+}
+
+.test-title{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.test-details{
+    color:#555;
+}
+
+.start-btn{
+    padding:8px 16px;
+    background:#007bff;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.start-btn:hover{
+    background:#0056b3;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>Aptitude Test Series</h1>
+
+<div id="testList"></div>
+
+</div>
+
+<script>
+
+const tests = [
+{ title:"Aptitude Test (Random Questions)", link:"random.html" },
+{ title:"Aptitude Test 1", link:"Practice Test1.html" },
+{ title:"Aptitude Test 2", link:"test2.html" },
+{ title:"Aptitude Test 3", link:"test3.html" },
+{ title:"Aptitude Test 4", link:"test4.html" },
+{ title:"Aptitude Test 5", link:"test5.html" },
+{ title:"Aptitude Test 6", link:"test6.html" },
+{ title:"Aptitude Test 7", link:"test7.html" },
+{ title:"Aptitude Test 8", link:"test8.html" },
+{ title:"Aptitude Test 9", link:"test9.html" },
+{ title:"Aptitude Test 10", link:"test10.html" }
+];
+
+const testList = document.getElementById("testList");
+
+tests.forEach(test=>{
+    testList.innerHTML += `
+    <div class="test-card">
+        <div class="test-info">
+            <div class="test-title">${test.title}</div>
+            <div class="test-details">
+                Questions: 20 <br>
+                Duration: 30 Minutes
+            </div>
+        </div>
+        <a href="${test.link}" class="start-btn">Start Test</a>
+    </div>
+    `;
+});
+
+</script>
+
+
+</body>
+</html>

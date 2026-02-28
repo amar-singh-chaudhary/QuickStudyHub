@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+q:"6. What will be the output of the program?",
+code:`#include<stdio.h>
+int X=40;
+int main()
+{
+    int X=20;
+    printf("%d\\n", X);
+    return 0;
+}`,
+options:[
+"20",
+"40",
+"Error",
+"No Output"
+],
+answer:0,
+explanation:"The local variable X inside main() hides the global variable X. Local variables get priority, so the output is 20."
+},
+{
+q:"7. What is the output of the program?",
+code:`#include<stdio.h>
+int main()
+{
+    int x = 10, y = 20, z = 5, i;
+    i = x < y < z;
+    printf("%d\\n", i);
+    return 0;
+}`,
+options:[
+"0",
+"1",
+"Error",
+"None of these"
+],
+answer:1,
+explanation:"Relational operators are evaluated left to right. First x<y (10<20) is true, which becomes 1. Then 1<z (1<5) is true. So i becomes 1."
+},
+{
+q:"8. What is the output of the program?",
+code:`#include<stdio.h>
+int main()
+{
+    extern int fun(float);
+    int a;
+    a = fun(3.14);
+    printf("%d\\n", a);
+    return 0;
+}
+int fun(int aa)
+{
+    return (int)++aa;
+}`,
+options:[
+"3",
+"3.14",
+"0",
+"4",
+"Compile Error"
+],
+answer:4,
+explanation:"There is a type mismatch. The function is declared as fun(float) but defined as fun(int). This causes a compilation error."
+},
+{
+q:"9. What is the output of the program?",
+code:`#include<stdio.h>
+int main()
+{
+    int a[5] = {2, 3};
+    printf("%d, %d, %d\\n", a[2], a[3], a[4]);
+    return 0;
+}`,
+options:[
+"Garbage Values",
+"2, 3, 3",
+"3, 2, 2",
+"0, 0, 0"
+],
+answer:3,
+explanation:"When an array is partially initialized, the remaining elements are automatically initialized to 0. So a[2], a[3], and a[4] are 0."
+},
+{
+q:"10. What is the output of the program?",
+code:`#include<stdio.h>
+int main()
+{
+    union a
+    {
+        int i;
+        char ch[2];
+    };
+    union a u;
+    u.ch[0] = 3;
+    u.ch[1] = 2;
+    printf("%d, %d, %d\\n", u.ch[0], u.ch[1], u.i);
+    return 0;
+}`,
+options:[
+"3, 2, 515",
+"515, 2, 3",
+"3, 2, 5",
+"None of these"
+],
+answer:0,
+explanation:"In a union, all members share the same memory. Assigning ch[0]=3 and ch[1]=2 stores these bytes in memory. On a little-endian system, this forms integer value 515 (2*256 + 3). So output is 3, 2, 515."
+},
+{
+q:"1. What is the output of the program given below?",
+code:`#include<stdio.h>
+int main()
+{
+    enum status { pass, fail, atkt};
+    enum status stud1, stud2, stud3;
+    stud1 = pass;
+    stud2 = atkt;
+    stud3 = fail;
+    printf("%d, %d, %d\\n", stud1, stud2, stud3);
+    return 0;
+}`,
+options:[
+"0, 1, 2",
+"1, 2, 3",
+"0, 2, 1",
+"1, 3, 2"
+],
+answer:2,
+explanation:"By default enum values start from 0. So pass=0, fail=1, atkt=2. stud1=0, stud2=2, stud3=1. Hence output is 0, 2, 1."
+},
+{
+q:"2. What will be the output of the program in 16-bit platform (Turbo C under DOS)?",
+code:`#include<stdio.h>
+int main()
+{
+    extern int i;
+    i = 20;
+    printf("%d\\n", sizeof(i));
+    return 0;
+}`,
+options:[
+"2",
+"4",
+"vary from compiler",
+"Linker Error : Undefined symbol 'i'"
+],
+answer:3,
+explanation:"extern int i declares i but does not define it. Since no global definition of i exists, the linker cannot find memory for it, resulting in a linker error."
+},
+{
+q:"3. What is the output of the program?",
+code:`#include<stdio.h>
+int main()
+{
+    extern int a;
+    printf("%d\\n", a);
+    return 0;
+}
+int a=20;`,
+options:[
+"20",
+"0",
+"Garbage Value",
+"Error"
+],
+answer:0,
+explanation:"The variable a is defined globally as 20. extern int a; tells the compiler that a is defined elsewhere. So it prints 20."
+},
+{
+q:"4. What is the output of the program in Turbo C (16-bit DOS)?",
+code:`#include<stdio.h>
+int main()
+{
+    char *s1;
+    char far *s2;
+    char huge *s3;
+    printf("%d, %d, %d\\n", sizeof(s1), sizeof(s2), sizeof(s3));
+    return 0;
+}`,
+options:[
+"2, 4, 6",
+"4, 4, 2",
+"2, 4, 4",
+"2, 2, 2"
+],
+answer:2,
+explanation:"In 16-bit Turbo C, a near pointer (char*) is 2 bytes. far and huge pointers contain segment and offset (16-bit each), so they are 4 bytes. Hence output is 2, 4, 4."
+},
+{
+q:"5. What is the output of the program?",
+code:`#include<stdio.h>
+int main()
+{
+    struct emp
+    {
+        char name[20];
+        int age;
+        float sal;
+    };
+    struct emp e = {"Tiger"};
+    printf("%d, %f\\n", e.age, e.sal);
+    return 0;
+}`,
+options:[
+"0, 0.000000",
+"Garbage values",
+"Error",
+"None of above"
+],
+answer:0,
+explanation:"When a structure is partially initialized, the remaining members are automatically initialized to 0. So age=0 and sal=0.0."
+},
+{
+q:"11. In the following program how long will the for loop get executed?",
+code:`#include<stdio.h>
+int main()
+{
+    int i=5;
+    for(; scanf("%s", &i); printf("%d\\n", i));
+    return 0;
+}`,
+options:[
+"The for loop would not get executed at all",
+"The for loop would get executed only once",
+"The for loop would get executed 5 times",
+"The for loop would get executed infinite times"
+],
+answer:3,
+explanation:"scanf() returns the number of successful inputs. As long as the user provides valid input, scanf() returns 1 (true). Therefore the loop continues indefinitely, resulting in an infinite loop."
+},
+{
+q:"12. What will be the output of the program?",
+code:`#include<stdio.h>
+int main()
+{
+    int X=40;
+    {
+        int X=20;
+        printf("%d ", X);
+    }
+    printf("%d\\n", X);
+    return 0;
+}`,
+options:[
+"40 40",
+"20 40",
+"20",
+"Error"
+],
+answer:1,
+explanation:"The inner block declares a new local variable X=20, which hides the outer X. So first 20 is printed. After the block ends, the outer X=40 is printed. Hence output is 20 40."
+},
+{
+q:"1. Point out the error in the following program (compiled with Turbo C).",
+code:`#include<stdio.h>
+int main()
+{
+    display();
+    return 0;
+}
+void display()
+{
+    printf("IndiaBIX.com");
+}`,
+options:[
+"No error",
+"display() doesn't get invoked",
+"display() is called before it is defined",
+"None of these"
+],
+answer:2,
+explanation:"The function display() is called before it is defined and no function prototype is declared. In older C compilers like Turbo C, this causes an error."
+},
+{
+q:"2. Point out the error in the following program.",
+code:`#include<stdio.h>
+int main()
+{
+    void v = 0;
+    printf("%d", v);
+    return 0;
+}`,
+options:[
+"Error: Declaration syntax error 'v' (or) Size of v is unknown or zero.",
+"Program terminates abnormally.",
+"No error.",
+"None of these."
+],
+answer:0,
+explanation:"void cannot be used as a variable type. A variable must have a valid data type with known size. So 'void v = 0;' causes a declaration error."
+},
+{
+q:"3. Point out the error in the following program.",
+code:`#include<stdio.h>
+struct emp
+{
+    char name[20];
+    int age;
+};
+int main()
+{
+    emp int xx;
+    int a;
+    printf("%d\\n", &a);
+    return 0;
+}`,
+options:[
+"Error: in printf",
+"Error: in emp int xx;",
+"No error.",
+"None of these."
+],
+answer:1,
+explanation:"The structure must be declared as 'struct emp xx;' not 'emp int xx;'. Hence there is a syntax error in 'emp int xx;'."
+},
+{
+q:"4. Which of the following is correct about err used in the declaration below?",
+code:`typedef enum error { warning, test, exception } err;`,
+options:[
+"It is a typedef for enum error.",
+"It is a variable of type enum error.",
+"The statement is erroneous.",
+"It is a structure."
+],
+answer:0,
+explanation:"The statement creates a typedef name 'err' for the enum 'error'. So err can be used as a type name instead of writing enum error."
+},
+{
+q:"5. Point out the error in the following program.",
+code:`#include<stdio.h>
+int main()
+{
+    int (*p)() = fun;
+    (*p)();
+    return 0;
+}
+int fun()
+{
+    printf("IndiaBix.com\\n");
+    return 0;
+}`,
+options:[
+"Error: in int(*p)() = fun;",
+"Error: fun() prototype not defined",
+"No error",
+"None of these"
+],
+answer:1,
+explanation:"The compiler does not know about fun() before it is used. A function prototype 'int fun();' must be declared before main(). Otherwise it causes an error."
+},
+
+
+
+
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>
+   

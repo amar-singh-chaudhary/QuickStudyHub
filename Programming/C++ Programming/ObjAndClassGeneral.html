@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clock - MCQ</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+}
+
+.container{
+    max-width:800px;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+}
+
+h2{
+    margin-bottom:10px;
+}
+
+.topic-list{
+    margin-bottom:20px;
+}
+
+.topic-list div{
+    margin:5px 0;
+}
+
+.question{
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:10px 0;
+    padding:6px;
+    border-radius:4px;
+}
+
+.options label{
+    cursor:pointer;
+}
+
+.explanation{
+    display:none;
+    margin-top:10px;
+    background:#f9fff3;
+    padding:10px;
+    border-left:4px solid green;
+}
+
+.nav{
+    margin-top:20px;
+    text-align:center;
+}
+
+.nav button{
+    padding:6px 12px;
+    margin:0 5px;
+}
+
+.correct{
+    background:#4d6753;
+    color:white;
+}
+
+.wrong{
+    background:#ac0815;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Exercise : Clock - General Questions</h2>
+
+<div class="topic-list">
+    <div>Clock - Formulas</div>
+    <div><b>Clock - General Questions</b></div>
+    <div>Clock - Data Sufficiency 1</div>
+</div>
+</div>
+
+<div id="quiz-container"></div>
+
+<div class="nav">
+    <button onclick="prevPage()">Prev</button>
+    <span id="pageNumbers"></span>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+<script>
+
+// QUESTIONS
+const questions = [
+{
+    question: "6. Which of the following statements is correct when a class is inherited publicly?",
+    options: [
+        "Public members of the base class become protected members of derived class.",
+        "Public members of the base class become private members of derived class.",
+        "Private members of the base class become protected members of derived class.",
+        "Public members of the base class become public members of derived class."
+    ],
+    correct: 3,
+    explanation: "In public inheritance, public members of the base class remain public in the derived class."
+},
+{
+    question: "7. Which of the following statements is correct about the constructors and destructors?",
+    options: [
+        "Destructors can take arguments but constructors cannot.",
+        "Constructors can take arguments but destructors cannot.",
+        "Destructors can be overloaded but constructors cannot be overloaded.",
+        "Constructors and destructors can both return a value."
+    ],
+    correct: 1,
+    explanation: "Constructors can take arguments (e.g., parameterized constructors), but destructors cannot take arguments."
+},
+{
+    question: "8. Which of the following access specifies is used in a class definition by default?",
+    options: ["Protected", "Public", "Private", "Friend"],
+    correct: 2,
+    explanation: "In C++, class members are private by default."
+},
+{
+    question: "9. Which of the following statement is correct with respect to the use of friend keyword inside a class?",
+    options: [
+        "A private data member can be declared as a friend.",
+        "A class may be declared as a friend.",
+        "An object may be declared as a friend.",
+        "We can use friend keyword as a class name."
+    ],
+    correct: 1,
+    explanation: "In C++, a class can be declared as a friend of another class."
+},
+{
+    question: "10. Which of the following keywords is used to control access to a class member?",
+    options: ["Default", "Break", "Protected", "Asm"],
+    correct: 2,
+    explanation: "The keyword 'protected' is an access specifier used to control access to class members."
+},
+{
+    question: "11. Which of the following can access private data members or member functions of a class?",
+    options: [
+        "Any function in the program.",
+        "All global functions in the program.",
+        "Any member function of that class.",
+        "Only public member functions of that class."
+    ],
+    correct: 2,
+    explanation: "All member functions of a class (public, private, or protected) can access its private data members and member functions."
+},
+{
+    question: "12. Which of the following type of data member can be shared by all instances of its class?",
+    options: ["Public", "Inherited", "Static", "Friend"],
+    correct: 2,
+    explanation: "A static data member is shared among all instances (objects) of a class."
+},
+{
+    question: "13. Which of the following also known as an instance of a class?",
+    options: ["Friend Functions", "Object", "Member Functions", "Member Variables"],
+    correct: 1,
+    explanation: "An object is an instance of a class."
+},
+{
+    question: "14. Constructor is executed when _____.",
+    options: [
+        "an object is created",
+        "an object is used",
+        "a class is declared",
+        "an object goes out of scope."
+    ],
+    correct: 0,
+    explanation: "A constructor is executed automatically when an object of a class is created."
+},
+{
+    question: "15. Which of the following statements about virtual base classes is correct?",
+    options: [
+        "It is used to provide multiple inheritance.",
+        "It is used to avoid multiple copies of base class in derived class.",
+        "It is used to allow multiple copies of base class in a derived class.",
+        "It allows private members of the base class to be inherited in the derived class."
+    ],
+    correct: 1,
+    explanation: "Virtual base classes are used in multiple inheritance to avoid multiple copies of a base class in a derived class (diamond problem)."
+},
+{
+    question: "1. What happens when we try to compile the class definition in following code snippet? class Birds {}; class Peacock : protected Birds {};",
+    options: [
+        "It will not compile because class body of Birds is not defined.",
+        "It will not compile because class body of Peacock is not defined.",
+        "It will not compile because a class cannot be protectedly inherited from other class.",
+        "It will compile succesfully."
+    ],
+    correct: 3,
+    explanation: "Both classes are properly defined, and protected inheritance is valid in C++. The code will compile successfully."
+},
+{
+    question: "2. Which of the following statements is incorrect?",
+    options: [
+        "Friend keyword can be used in the class to allow access to another class.",
+        "Friend keyword can be used for a function in the public section of a class.",
+        "Friend keyword can be used for a function in the private section of a class.",
+        "Friend keyword can be used on main()."
+    ],
+    correct: 3,
+    explanation: "The friend keyword is used inside a class to grant access to specific functions or classes. It is not used on main() itself."
+},
+{
+    question: "3. Which of the following statement is correct regarding destructor of base class?",
+    options: [
+        "Destructor of base class should always be static.",
+        "Destructor of base class should always be virtual.",
+        "Destructor of base class should not be virtual.",
+        "Destructor of base class should always be private."
+    ],
+    correct: 1,
+    explanation: "If a base class is intended to be inherited polymorphically, its destructor should be virtual to ensure proper cleanup of derived class objects."
+},
+{
+    question: "4. Which of the following two entities (reading from Left to Right) can be connected by the dot operator?",
+    options: [
+        "A class member and a class object.",
+        "A class object and a class.",
+        "A class and a member of that class.",
+        "A class object and a member of that class."
+    ],
+    correct: 3,
+    explanation: "The dot operator is used to access a member of a class through an object of that class."
+},
+{
+    question: "5. How can we make a class abstract?",
+    options: [
+        "By making all member functions constant.",
+        "By making at least one member function as pure virtual function.",
+        "By declaring it abstract using the static keyword.",
+        "By declaring it abstract using the virtual keyword."
+    ],
+    correct: 1,
+    explanation: "A class becomes abstract when it contains at least one pure virtual function."
+},
+{
+    question: "21. Which of the following can be overloaded?",
+    options: ["Object", "Functions", "Operators", "Both B and C"],
+    correct: 3,
+    explanation: "In C++, both functions and operators can be overloaded."
+},
+{
+    question: "22. Which of the following means \"The use of an object of one class in definition of another class\"?",
+    options: ["Encapsulation", "Inheritance", "Composition", "Abstraction"],
+    correct: 2,
+    explanation: "Composition refers to using an object of one class as a member of another class."
+},
+{
+    question: "23. Which of the following is the only technical difference between structures and classes in C++?",
+    options: [
+        "Member function and data are by default protected in structures but private in classes.",
+        "Member function and data are by default private in structures but public in classes.",
+        "Member function and data are by default public in structures but private in classes.",
+        "Member function and data are by default public in structures but protected in classes."
+    ],
+    correct: 2,
+    explanation: "In C++, members of a struct are public by default, whereas members of a class are private by default."
+},
+{
+    question: "24. Which of the following statements is correct about the program given below? class Bix { public: static void MyFunction(); }; int main() { void(*ptr)() = &Bix::MyFunction; return 0; }",
+    options: [
+        "The program reports an error as pointer to member function cannot be defined outside the definition of class.",
+        "The program reports an error as pointer to static member function cannot be defined.",
+        "The program reports an error as pointer to member function cannot be defined without object.",
+        "The program reports linker error."
+    ],
+    correct: 3,
+    explanation: "The declaration of a pointer to a static member function is valid. However, since MyFunction is declared but not defined, it will result in a linker error."
+},
+{
+    question: "25. Which of the following statements are correct for a static member function? It can access only other static members of its class. It can be called using the class name, instead of objects.",
+    options: [
+        "Only 1 is correct.",
+        "Only 2 is correct.",
+        "Both 1 and 2 are correct.",
+        "Both 1 and 2 are incorrect."
+    ],
+    correct: 2,
+    explanation: "A static member function can access only static members of its class and can be called using the class name without creating an object."
+},
+{
+    question: "16. How many objects can be created from an abstract class?",
+    options: ["Zero", "One", "Two", "As many as we want"],
+    correct: 0,
+    explanation: "An abstract class cannot be instantiated, so zero objects can be created from it."
+},
+
+{
+    question: "18. Which of the following statements is correct when a class is inherited privately?",
+    options: [
+        "Public members of the base class become protected members of derived class.",
+        "Public members of the base class become private members of derived class.",
+        "Private members of the base class become private members of derived class.",
+        "Public members of the base class become public members of derived class."
+    ],
+    correct: 1,
+    explanation: "In private inheritance, public and protected members of the base class become private members of the derived class."
+},
+{
+    question: "19. Which of the following statements is correct?",
+    options: [
+        "Data items in a class must be private.",
+        "Both data and functions can be either private or public.",
+        "Member functions of a class must be private.",
+        "Constructor of a class cannot be private."
+    ],
+    correct: 1,
+    explanation: "In C++, both data members and member functions can be declared as private, protected, or public."
+},
+{
+    question: "20. What does a class hierarchy depict?",
+    options: [
+        "It shows the relationships between the classes in the form of an organization chart.",
+        "It describes \"has a\" relationships.",
+        "It describes \"kind of\" relationships.",
+        "It shows the same relationship as a family tree."
+    ],
+    correct: 2,
+    explanation: "A class hierarchy represents 'kind-of' (is-a) relationships, which are achieved through inheritance."
+}
+
+
+
+
+
+  
+];
+
+const questionsPerPage = 10;
+let currentPage = 1;
+
+function loadQuestions() {
+
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = "";
+
+    const start = (currentPage - 1) * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    const pageQuestions = questions.slice(start, end);
+
+    pageQuestions.forEach((q, index) => {
+
+        const questionNumber = start + index;
+
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <div class="question">${q.question}</div>
+            <ul class="options">
+                ${q.options.map((opt, i) => `
+                    <li>
+                        <label>
+                            <input type="radio" name="q${questionNumber}" value="${i}">
+                            ${String.fromCharCode(65 + i)}. ${opt}
+                        </label>
+                    </li>
+                `).join("")}
+            </ul>
+            <button onclick="checkAnswer(${questionNumber}, ${q.correct}, \`${q.explanation}\`)">
+                Check Answer
+            </button>
+            <div class="explanation" id="exp${questionNumber}"></div>
+            <hr>
+        `;
+        container.appendChild(div);
+    });
+
+    createPageNumbers();
+}
+
+function checkAnswer(qIndex, correctIndex, explanationText) {
+
+    const explanation = document.getElementById(`exp${qIndex}`);
+
+    // TOGGLE SHOW/HIDE
+    if (explanation.style.display === "block") {
+        explanation.style.display = "none";
+        return;
+    }
+
+    const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+    const options = document.querySelectorAll(`input[name="q${qIndex}"]`);
+
+    if (!selected) {
+        alert("Please select an option.");
+        return;
+    }
+
+    let userLetter = "";
+    let correctLetter = "";
+
+    options.forEach(option => {
+        const li = option.closest("li");
+        const letter = String.fromCharCode(65 + parseInt(option.value));
+
+        // Reset colors
+        li.classList.remove("correct", "wrong");
+
+        if (parseInt(option.value) === correctIndex) {
+            li.classList.add("correct");
+            correctLetter = letter;
+        }
+
+        if (option.checked) {
+            userLetter = letter;
+
+            if (parseInt(option.value) !== correctIndex) {
+                li.classList.add("wrong");
+            }
+        }
+    });
+
+    explanation.innerHTML = `
+        <p style="font-weight:bold;">
+            ${parseInt(selected.value) === correctIndex ? "✔ Correct Answer!" : "❌ Wrong Answer!"}
+        </p>
+        <p><b>Your Option:</b> ${userLetter}</p>
+        <p><b>Correct Option:</b> ${correctLetter}</p>
+        <p><b>Explanation:</b> ${explanationText}</p>
+    `;
+
+    explanation.style.display = "block";
+}
+
+function createPageNumbers() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    const pageNumbers = document.getElementById("pageNumbers");
+    pageNumbers.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.innerText = i;
+        btn.onclick = () => {
+            currentPage = i;
+            loadQuestions();
+        };
+
+        if (i === currentPage) {
+            btn.style.background = "#333";
+            btn.style.color = "white";
+        }
+
+        pageNumbers.appendChild(btn);
+    }
+}
+
+function prevPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        loadQuestions();
+    }
+}
+
+function nextPage() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    if (currentPage < totalPages) {
+        currentPage++;
+        loadQuestions();
+    }
+}
+
+loadQuestions();
+
+</script>
+
+
+</body>
+</html>

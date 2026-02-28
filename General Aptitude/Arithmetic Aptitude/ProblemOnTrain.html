@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Problems on Trains - MCQ</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+}
+
+.container{
+    max-width:800px;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+}
+
+h2{
+    margin-bottom:10px;
+}
+
+.topic-list{
+    margin-bottom:20px;
+}
+
+.topic-list div{
+    margin:5px 0;
+}
+
+.question{
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:10px 0;
+    padding:6px;
+    border-radius:4px;
+}
+
+.options label{
+    cursor:pointer;
+}
+
+.explanation{
+    display:none;
+    margin-top:10px;
+    background:#f9fff3;
+    padding:10px;
+    border-left:4px solid green;
+}
+
+.nav{
+    margin-top:20px;
+    text-align:center;
+}
+
+.nav button{
+    padding:6px 12px;
+    margin:0 5px;
+}
+
+.correct{
+    background:#4d6753;
+    color:white;
+}
+
+.wrong{
+    background:#ac0815;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Exercise : Problems on Trains - General Questions</h2>
+
+<div class="topic-list">
+    <div>Problems on Trains - Formulas</div>
+    <div><b>Problems on Trains - General Questions</b></div>
+    <div>Problems on Trains - Data Sufficiency 1</div>
+</div>
+</div>
+
+<div id="quiz-container"></div>
+
+<div class="nav">
+    <button onclick="prevPage()">Prev</button>
+    <span id="pageNumbers"></span>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+<script>
+
+// QUESTIONS
+const questions = [
+{
+    question: "1. A train 240 m long passes a pole in 24 seconds. How long will it take to pass a platform 650 m long?",
+    options: ["65 sec", "89 sec", "100 sec", "150 sec"],
+    correct: 1,
+    explanation: "Speed = 240 / 24 = 10 m/sec.\nTotal distance to pass platform = 240 + 650 = 890 m.\nTime = 890 / 10 = 89 sec."
+},
+{
+    question: "2. Two trains of equal length are running in the same direction at 46 km/hr and 36 km/hr. The faster train passes the slower train in 36 seconds. The length of each train is:",
+    options: ["50 m", "72 m", "80 m", "82 m"],
+    correct: 0,
+    explanation: "Let length of each train be x metres.\nRelative speed = (46 − 36) = 10 km/hr = (10 × 5/18) = 25/9 m/sec.\nDistance covered while crossing = 2x.\nSo, 2x / 36 = 25/9.\n2x = 100 ⇒ x = 50 m."
+},
+{
+    question: "3. A train 360 m long is running at 45 km/hr. In what time will it pass a bridge 140 m long?",
+    options: ["40 sec", "42 sec", "45 sec", "48 sec"],
+    correct: 0,
+    explanation: "Speed = 45 × 5/18 = 25/2 m/sec.\nTotal distance = 360 + 140 = 500 m.\nTime = 500 ÷ (25/2) = 500 × 2 / 25 = 40 sec."
+},
+{
+    question: "4. Two trains are moving in opposite directions at 60 km/hr and 90 km/hr. Their lengths are 1.10 km and 0.9 km respectively. The time taken to cross each other is:",
+    options: ["36 sec", "45 sec", "48 sec", "49 sec"],
+    correct: 2,
+    explanation: "Relative speed = (60 + 90) = 150 km/hr = 150 × 5/18 = 125/3 m/sec.\nTotal distance = 1.10 + 0.9 = 2 km = 2000 m.\nTime = 2000 ÷ (125/3) = 2000 × 3 / 125 = 48 sec."
+},
+{
+    question: "5. A jogger running at 9 km/hr is 240 m ahead of the engine of a 120 m long train running at 45 km/hr in the same direction. In how much time will the train pass the jogger?",
+    options: ["3.6 sec", "18 sec", "36 sec", "72 sec"],
+    correct: 2,
+    explanation: "Relative speed = (45 − 9) = 36 km/hr = 36 × 5/18 = 10 m/sec.\nTotal distance to be covered = 240 + 120 = 360 m.\nTime = 360 / 10 = 36 sec."
+},
+{
+    question: "6. A 270 m long train running at 120 km/hr crosses another train running in opposite direction at 80 km/hr in 9 seconds. What is the length of the other train?",
+    options: ["230 m", "240 m", "260 m", "320 m", "None of these"],
+    correct: 0,
+    explanation: "Relative speed = (120 + 80) = 200 km/hr = 200 × 5/18 = 500/9 m/sec.\nLet length of other train = x m.\nTotal distance = x + 270.\n(x + 270)/9 = 500/9.\nSo, x + 270 = 500 ⇒ x = 230 m."
+},
+{
+    question: "7. A goods train runs at 72 km/hr and crosses a 250 m long platform in 26 seconds. What is the length of the train?",
+    options: ["230 m", "240 m", "260 m", "270 m"],
+    correct: 3,
+    explanation: "Speed = 72 × 5/18 = 20 m/sec.\nDistance covered in 26 sec = 20 × 26 = 520 m.\nLet length of train = x.\nThen, x + 250 = 520 ⇒ x = 270 m."
+},
+{
+    question: "8. Two trains, each 100 m long, moving in opposite directions, cross each other in 8 seconds. If one is moving twice as fast as the other, what is the speed of the faster train?",
+    options: ["30 km/hr", "45 km/hr", "60 km/hr", "75 km/hr"],
+    correct: 2,
+    explanation: "Let speed of slower train = x m/sec.\nSpeed of faster train = 2x m/sec.\nRelative speed = 3x m/sec.\nTotal distance = 100 + 100 = 200 m.\n200/8 = 3x ⇒ 25 = 3x ⇒ x = 25/3 m/sec.\nSpeed of faster train = 50/3 m/sec = (50/3 × 18/5) = 60 km/hr."
+},
+{
+    question: "9. Two trains 140 m and 160 m long run at 60 km/hr and 40 km/hr respectively in opposite directions. Time taken to cross each other is:",
+    options: ["9 sec", "9.6 sec", "10 sec", "10.8 sec"],
+    correct: 3,
+    explanation: "Relative speed = (60 + 40) = 100 km/hr = 100 × 5/18 = 250/9 m/sec.\nTotal distance = 140 + 160 = 300 m.\nTime = 300 ÷ (250/9) = 300 × 9 / 250 = 10.8 sec."
+},
+{
+    question: "10. A train 110 m long runs at 60 km/hr. In what time will it pass a man running at 6 km/hr in the opposite direction?",
+    options: ["5 sec", "6 sec", "7 sec", "10 sec"],
+    correct: 1,
+    explanation: "Relative speed = (60 + 6) = 66 km/hr = 66 × 5/18 = 55/3 m/sec.\nDistance = 110 m.\nTime = 110 ÷ (55/3) = 110 × 3 / 55 = 6 sec."
+},
+{
+    question: "11. A train running at 60 km/hr crosses a pole in 9 seconds. What is the length of the train?",
+    options: ["120 metres", "180 metres", "324 metres", "150 metres"],
+    correct: 3,
+    explanation: "Speed = 60 × 5/18 = 50/3 m/sec.\nLength of train = Speed × Time = (50/3 × 9) = 150 m."
+},
+{
+    question: "12. A train 125 m long passes a man running at 5 km/hr in the same direction in 10 seconds. What is the speed of the train?",
+    options: ["45 km/hr", "50 km/hr", "54 km/hr", "55 km/hr"],
+    correct: 1,
+    explanation: "Relative speed = 125/10 = 25/2 m/sec.\nConvert to km/hr: (25/2 × 18/5) = 45 km/hr.\nLet speed of train = x km/hr.\nThen, x − 5 = 45 ⇒ x = 50 km/hr."
+},
+{
+    question: "13. A train 130 m long travelling at 45 km/hr crosses a bridge in 30 seconds. What is the length of the bridge?",
+    options: ["200 m", "225 m", "245 m", "250 m"],
+    correct: 2,
+    explanation: "Speed = 45 × 5/18 = 25/2 m/sec.\nTotal distance covered in 30 sec = (25/2 × 30) = 375 m.\nLet length of bridge = x.\nThen, 130 + x = 375 ⇒ x = 245 m."
+},
+{
+    question: "14. Two trains running in opposite directions cross a man in 27 sec and 17 sec respectively and cross each other in 23 sec. What is the ratio of their speeds?",
+    options: ["1 : 3", "3 : 2", "3 : 4", "None of these"],
+    correct: 1,
+    explanation: "Let speeds be x and y m/sec.\nLength of first train = 27x.\nLength of second train = 17y.\nWhile crossing each other: (27x + 17y)/23 = x + y.\nSo, 27x + 17y = 23x + 23y ⇒ 4x = 6y ⇒ x/y = 3/2."
+},
+{
+    question: "15. A train passes a platform in 36 seconds and a man in 20 seconds. Speed of train is 54 km/hr. What is the length of the platform?",
+    options: ["120 m", "240 m", "300 m", "None of these"],
+    correct: 1,
+    explanation: "Speed = 54 × 5/18 = 15 m/sec.\nLength of train = 15 × 20 = 300 m.\nLet length of platform = x.\nThen, x + 300 = 15 × 36 = 540 ⇒ x = 240 m."
+},
+{
+    question: "16. Two trains are running at 40 km/hr and 20 km/hr in the same direction. The fast train completely passes a man sitting in the slower train in 5 seconds. What is the length of the fast train?",
+    options: ["23 m", "23 2/9 m", "27 7/9 m", "29 m"],
+    correct: 2,
+    explanation: "Relative speed = (40 − 20) = 20 km/hr = 20 × 5/18 = 50/9 m/sec.\nLength of fast train = (50/9 × 5) = 250/9 = 27 7/9 m."
+},
+{
+    question: "17. A train overtakes two persons walking at 2 km/hr and 4 km/hr and passes them completely in 9 sec and 10 sec respectively. What is the length of the train?",
+    options: ["45 m", "50 m", "54 m", "72 m"],
+    correct: 1,
+    explanation: "2 km/hr = 5/9 m/sec and 4 km/hr = 10/9 m/sec.\nLet speed of train = y m/sec and length = x m.\nThen, x/(y − 5/9) = 9 and x/(y − 10/9) = 10.\nSolving the equations, we get x = 50 m."
+},
+{
+    question: "18. A train overtakes two persons walking at 4.5 km/hr and 5.4 km/hr in 8.4 sec and 8.5 sec respectively. What is the speed of the train?",
+    options: ["66 km/hr", "72 km/hr", "78 km/hr", "81 km/hr"],
+    correct: 3,
+    explanation: "4.5 km/hr = 1.25 m/sec and 5.4 km/hr = 1.5 m/sec.\nLet speed of train = x m/sec.\nThen, (x − 1.25) × 8.4 = (x − 1.5) × 8.5.\nSolving, x = 22.5 m/sec.\nConvert to km/hr: 22.5 × 18/5 = 81 km/hr."
+},
+{
+    question: "19. A train travelling at 48 km/hr crosses another train of half its length moving in opposite direction at 42 km/hr in 12 sec. It also passes a platform in 45 sec. What is the length of the platform?",
+    options: ["400 m", "450 m", "560 m", "600 m"],
+    correct: 0,
+    explanation: "Relative speed = (48 + 42) = 90 km/hr = 25 m/sec.\nLet length of first train = x.\nThen total distance = x + x/2 = 3x/2.\n(3x/2)/25 = 12 ⇒ 3x = 600 ⇒ x = 200 m.\nSpeed of first train = 48 × 5/18 = 40/3 m/sec.\n(200 + y)/(40/3) = 45 ⇒ 600 + 3y = 1800 ⇒ y = 400 m."
+},
+{
+    question: "20. Two stations A and B are 110 km apart. A train leaves A at 7 a.m. at 20 km/hr and another leaves B at 8 a.m. at 25 km/hr. At what time will they meet?",
+    options: ["9 a.m.", "10 a.m.", "10:30 a.m.", "11 a.m."],
+    correct: 1,
+    explanation: "Let they meet x hours after 7 a.m.\nDistance covered by first train = 20x.\nDistance covered by second train = 25(x − 1).\nSo, 20x + 25(x − 1) = 110.\n45x = 135 ⇒ x = 3.\nThey meet at 10 a.m."
+},
+{
+    question: "21. How many seconds will a 500 metre long train take to cross a man walking at 3 km/hr in the same direction if the speed of the train is 63 km/hr?",
+    options: ["25", "30", "40", "45"],
+    correct: 1,
+    explanation: "Relative speed = (63 − 3) = 60 km/hr = 60 × 5/18 = 50/3 m/sec.\nTime = 500 ÷ (50/3) = 500 × 3 / 50 = 30 sec."
+},
+{
+    question: "22. Two goods trains each 500 m long run in opposite directions at 45 km/hr and 30 km/hr. Time taken by the slower train to pass the driver of the faster train is:",
+    options: ["12 sec", "24 sec", "48 sec", "60 sec"],
+    correct: 1,
+    explanation: "Relative speed = (45 + 30) = 75 km/hr = 75 × 5/18 = 125/6 m/sec.\nDistance to be covered = 500 m.\nTime = 500 ÷ (125/6) = 500 × 6 / 125 = 24 sec."
+},
+{
+    question: "23. Two trains of equal length 120 m each run in opposite directions with same speed and cross in 12 seconds. What is the speed of each train?",
+    options: ["10 km/hr", "18 km/hr", "36 km/hr", "72 km/hr"],
+    correct: 2,
+    explanation: "Let speed of each train = x m/sec.\nRelative speed = 2x.\n(120 + 120)/12 = 2x ⇒ 240/12 = 20 = 2x ⇒ x = 10 m/sec.\nConvert to km/hr: 10 × 18/5 = 36 km/hr."
+},
+{
+    question: "24. Two trains of equal length 120 m take 10 sec and 15 sec respectively to cross a post. In what time will they cross each other in opposite direction?",
+    options: ["10", "12", "15", "20"],
+    correct: 1,
+    explanation: "Speed of first train = 120/10 = 12 m/sec.\nSpeed of second train = 120/15 = 8 m/sec.\nRelative speed = 12 + 8 = 20 m/sec.\nTime = (120 + 120)/20 = 240/20 = 12 sec."
+},
+{
+    question: "25. A 108 m train moving at 50 km/hr crosses a 112 m train coming from opposite direction in 6 sec. What is the speed of the second train?",
+    options: ["48 km/hr", "54 km/hr", "66 km/hr", "82 km/hr"],
+    correct: 3,
+    explanation: "Let speed of second train = x km/hr.\nRelative speed = (50 + x) km/hr = (50 + x) × 5/18 m/sec.\nTotal distance = 108 + 112 = 220 m.\n220 = 6 × (50 + x) × 5/18.\nSolving, 50 + x = 132 ⇒ x = 82 km/hr."
+},
+{
+    question: "26. A train travelling at 75 mph enters a tunnel 3½ miles long. The train is ¼ mile long. How long does it take to completely pass through the tunnel?",
+    options: ["2.5 min", "3 min", "3.2 min", "3.5 min"],
+    correct: 1,
+    explanation: "Total distance = 3½ + ¼ = 7/2 + 1/4 = 15/4 miles.\nTime = (15/4) ÷ 75 hrs = 15 / 300 hrs = 1/20 hr.\nConvert to minutes: (1/20) × 60 = 3 minutes."
+},
+{
+    question: "27. A train 800 metres long running at 78 km/hr crosses a tunnel in 1 minute. What is the length of the tunnel?",
+    options: ["130", "360", "500", "540"],
+    correct: 2,
+    explanation: "Speed = 78 × 5/18 = 65/3 m/sec.\nTime = 60 sec.\nTotal distance = (65/3) × 60 = 1300 m.\nLength of tunnel = 1300 − 800 = 500 m."
+},
+{
+    question: "28. A 300 m train crosses a platform in 39 sec and a pole in 18 sec. What is the length of the platform?",
+    options: ["320 m", "350 m", "650 m", "Data inadequate"],
+    correct: 1,
+    explanation: "Speed = 300/18 = 50/3 m/sec.\nLet platform length = x.\n(x + 300)/39 = 50/3.\n3(x + 300) = 1950 ⇒ x = 350 m."
+},
+{
+    question: "29. A train passes a pole in 15 sec and a 100 m platform in 25 sec. What is its length?",
+    options: ["50 m", "150 m", "200 m", "Data inadequate"],
+    correct: 1,
+    explanation: "Let length = x and speed = y.\nFrom pole: x/y = 15 ⇒ y = x/15.\nFrom platform: (x + 100)/y = 25.\nSubstitute: (x + 100)/(x/15) = 25 ⇒ 15(x + 100) = 25x ⇒ x = 150 m."
+},
+{
+    question: "30. A train passes a telegraph post in 8 sec and a 264 m bridge in 20 sec. What is its speed?",
+    options: ["69.5 km/hr", "70 km/hr", "79 km/hr", "79.2 km/hr"],
+    correct: 3,
+    explanation: "Let length = x and speed = y.\nFrom post: x/y = 8 ⇒ x = 8y.\nFrom bridge: (x + 264)/y = 20.\nSubstitute: (8y + 264)/y = 20 ⇒ 8y + 264 = 20y ⇒ y = 22 m/sec.\nConvert to km/hr: 22 × 18/5 = 79.2 km/hr."
+}
+
+
+
+
+
+  
+];
+
+const questionsPerPage = 20;
+let currentPage = 1;
+
+function loadQuestions() {
+
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = "";
+
+    const start = (currentPage - 1) * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    const pageQuestions = questions.slice(start, end);
+
+    pageQuestions.forEach((q, index) => {
+
+        const questionNumber = start + index;
+
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <div class="question">${q.question}</div>
+            <ul class="options">
+                ${q.options.map((opt, i) => `
+                    <li>
+                        <label>
+                            <input type="radio" name="q${questionNumber}" value="${i}">
+                            ${String.fromCharCode(65 + i)}. ${opt}
+                        </label>
+                    </li>
+                `).join("")}
+            </ul>
+            <button onclick="checkAnswer(${questionNumber}, ${q.correct}, \`${q.explanation}\`)">
+                Check Answer
+            </button>
+            <div class="explanation" id="exp${questionNumber}"></div>
+            <hr>
+        `;
+        container.appendChild(div);
+    });
+
+    createPageNumbers();
+}
+
+function checkAnswer(qIndex, correctIndex, explanationText) {
+
+    const explanation = document.getElementById(`exp${qIndex}`);
+
+    // TOGGLE SHOW/HIDE
+    if (explanation.style.display === "block") {
+        explanation.style.display = "none";
+        return;
+    }
+
+    const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+    const options = document.querySelectorAll(`input[name="q${qIndex}"]`);
+
+    if (!selected) {
+        alert("Please select an option.");
+        return;
+    }
+
+    let userLetter = "";
+    let correctLetter = "";
+
+    options.forEach(option => {
+        const li = option.closest("li");
+        const letter = String.fromCharCode(65 + parseInt(option.value));
+
+        // Reset colors
+        li.classList.remove("correct", "wrong");
+
+        if (parseInt(option.value) === correctIndex) {
+            li.classList.add("correct");
+            correctLetter = letter;
+        }
+
+        if (option.checked) {
+            userLetter = letter;
+
+            if (parseInt(option.value) !== correctIndex) {
+                li.classList.add("wrong");
+            }
+        }
+    });
+
+    explanation.innerHTML = `
+        <p style="font-weight:bold;">
+            ${parseInt(selected.value) === correctIndex ? "✔ Correct Answer!" : "❌ Wrong Answer!"}
+        </p>
+        <p><b>Your Option:</b> ${userLetter}</p>
+        <p><b>Correct Option:</b> ${correctLetter}</p>
+        <p><b>Explanation:</b> ${explanationText}</p>
+    `;
+
+    explanation.style.display = "block";
+}
+
+function createPageNumbers() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    const pageNumbers = document.getElementById("pageNumbers");
+    pageNumbers.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.innerText = i;
+        btn.onclick = () => {
+            currentPage = i;
+            loadQuestions();
+        };
+
+        if (i === currentPage) {
+            btn.style.background = "#333";
+            btn.style.color = "white";
+        }
+
+        pageNumbers.appendChild(btn);
+    }
+}
+
+function prevPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        loadQuestions();
+    }
+}
+
+function nextPage() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    if (currentPage < totalPages) {
+        currentPage++;
+        loadQuestions();
+    }
+}
+
+loadQuestions();
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+
+1: [
+{
+q:"Which of the following languages is more suited to a structured program?",
+options:["PL/1","FORTRAN","BASIC","PASCAL","None of the above"],
+answer:3,
+explanation:"PASCAL is specifically designed to support structured programming concepts."
+},
+{
+q:"A computer assisted method for the recording and analyzing of existing or hypothetical systems is",
+options:["Data transmission","Data flow","Data capture","Data processing","None of the above"],
+answer:1,
+explanation:"Data flow refers to recording and analyzing systems using DFDs."
+},
+{
+q:"The brain of any computer system is",
+options:["ALU","Memory","CPU","Control unit","None of the above"],
+answer:2,
+explanation:"CPU performs calculations and controls all operations."
+},
+{
+q:"What difference does the 5th generation computer have from other generation computers?",
+options:["Technological advancement","Scientific code","Object Oriented Programming","All of the above","None of the above"],
+answer:0,
+explanation:"Fifth generation computers are based on AI and advanced technologies."
+},
+{
+q:"Which of the following computer language is used for artificial intelligence?",
+options:["FORTRAN","PROLOG","C","COBOL","None of the above"],
+answer:1,
+explanation:"PROLOG is used in Artificial Intelligence."
+},
+{
+q:"The tracks on a disk which can be accessed without repositioning the R/W heads is",
+options:["Surface","Cylinder","Cluster","All of the above","None of the above"],
+answer:1,
+explanation:"Cylinder consists of tracks aligned vertically across platters."
+},
+{
+q:"Which of the following is the 1's complement of 10?",
+options:["01","110","11","10","None of the above"],
+answer:0,
+explanation:"1's complement is formed by inverting bits."
+},
+{
+q:"A section of code to which control is transferred when a processor is interrupted is known as",
+options:["M","SVC","IP","MDR","None of the above"],
+answer:1,
+explanation:"Control transfers to SVC during interrupt."
+},
+{
+q:"Which part interprets program instructions and initiate control operations.",
+options:["Input","Storage unit","Logic unit","Control unit","None of the above"],
+answer:3,
+explanation:"Control Unit interprets instructions."
+},
+{
+q:"The binary system uses powers of",
+options:["2","10","8","16","None of the above"],
+answer:0,
+explanation:"Binary number system is base 2."
+},
+{
+q:"A computer program that converts assembly language to machine language is",
+options:["Compiler","Interpreter","Assembler","Comparator","None of the above"],
+answer:2,
+explanation:"Assembler translates assembly language."
+},
+{
+q:"The time required for fetching and execution of one simple machine instruction is",
+options:["Delay time","CPU cycle","Real time","Seek time","None of the above"],
+answer:1,
+explanation:"CPU cycle is time for one instruction."
+},
+{
+q:"The time for which a piece of equipment operates is called",
+options:["Seek time","Effective time","Access time","Real time","None of the above"],
+answer:1,
+explanation:"Effective time is actual operating time."
+},
+{
+q:"Binary numbers need more places for counting because",
+options:["They are always big numbers","Any no. of 0's can be added","Binary base is small","0's and 1's spaced apart","None of the above"],
+answer:2,
+explanation:"Binary base 2 requires more digits."
+},
+{
+q:"Which access method is used for obtaining a record from a cassette tape?",
+options:["Direct","Sequential","Random","All of the above","None of the above"],
+answer:1,
+explanation:"Cassette tape uses sequential access."
+},
+{
+q:"Any type of storage used for holding information between processing steps is",
+options:["CPU","Primary storage","Intermediate storage","Internal storage","None of the above"],
+answer:2,
+explanation:"Intermediate storage holds temporary data."
+},
+{
+q:"Intel corp. high speed MOS technology is called",
+options:["HDLC","LAP","HMOS","SDLC","None of the above"],
+answer:2,
+explanation:"HMOS is Intel high-speed MOS technology."
+},
+{
+q:"A program component that allows structuring in unusual way is",
+options:["Correlation","Coroutine","Diagonalization","Queue","None of the above"],
+answer:1,
+explanation:"Coroutine allows cooperative multitasking."
+},
+{
+q:"The radix of a number system",
+options:["Is variable","Nothing to do with digit position","Equals distinct digits","Always even","None of the above"],
+answer:2,
+explanation:"Radix equals number of distinct digits."
+},
+{
+q:"The section of CPU that selects and executes instructions",
+options:["Memory","Register unit","Control unit","ALU","None of the above"],
+answer:2,
+explanation:"Control unit manages execution."
+},
+{
+q:"Which type of system puts the user into direct conversation with the computer?",
+options:["Real time","Interactive computer","Batch","Time sharing","None of the above"],
+answer:1,
+explanation:"Interactive system allows direct user interaction."
+},
+{
+q:"Evacuating content of some part of machine is called",
+options:["Dump","Enhancement","Down","Compiler","None of the above"],
+answer:0,
+explanation:"Dump copies memory content."
+},
+{
+q:"A single packet on a data link is known as",
+options:["Path","Frame","Block","Group","None of the above"],
+answer:1,
+explanation:"Frame is unit of data link layer."
+},
+{
+q:"The process of communicating with a file from terminal is",
+options:["Interactive","Interrogation","Heuristic","All","None"],
+answer:1,
+explanation:"Interrogation means querying a file."
+},
+{
+q:"Common boundary between two systems is",
+options:["Interdiction","Interface","Surface","None of the above"],
+answer:1,
+explanation:"Interface is shared boundary."
+},
+{
+q:"Bit examination and changing small group is called",
+options:["Bit","Byte","Bit manipulation","Bit slice","None"],
+answer:2,
+explanation:"Bit manipulation modifies bits."
+},
+{
+q:"Which computer is designed to be compact?",
+options:["Mini","Super","Micro","Mainframe","None"],
+answer:2,
+explanation:"Microcomputer is compact."
+},
+{
+q:"Method used to connect remote computer?",
+options:["Device","Dialup","Diagnostic","Logic circuit","None"],
+answer:1,
+explanation:"Dialup connects remote systems."
+},
+{
+q:"Murray code uses how many bits?",
+options:["4","5","9","25","None"],
+answer:1,
+explanation:"Murray code is 5-bit code."
+},
+{
+q:"Symbols used in assembly language are",
+options:["Codes","Mnemonics","Assembler","All","None"],
+answer:1,
+explanation:"Mnemonics represent instructions."
+},
+{
+q:"2's complement is obtained by adding",
+options:["0","1","10","12","None"],
+answer:1,
+explanation:"Add 1 to 1's complement."
+},
+{
+q:"Average time for sector to reach R/W head",
+options:["Down time","Seek time","Rotational delay","Access time","None"],
+answer:2,
+explanation:"Rotational delay is latency."
+},
+{
+q:"Number used to control form of another number",
+options:["Map","Mask","Mamtossa","Marker","None"],
+answer:1,
+explanation:"Mask controls bit form."
+},
+{
+q:"Single-user microcomputer is",
+options:["Special-purpose","KIPS","M","PC","None"],
+answer:3,
+explanation:"PC is personal computer."
+},
+{
+q:"ASCII stands for",
+options:["American standard code for information interchange","All purpose scientific code","American security code","American Scientific code","None"],
+answer:0,
+explanation:"ASCII is character encoding standard."
+},
+{
+q:"Device dispensing keyboard use",
+options:["Joystick","Light pen","Mouse","Touch","None"],
+answer:3,
+explanation:"Touch screen eliminates keyboard."
+},
+{
+q:"System programming language for Intel family",
+options:["PL/C","PL/CT","PL/M","PLA","None"],
+answer:2,
+explanation:"PL/M developed by Intel."
+},
+{
+q:"Datum indicating important state is",
+options:["Sequence","Sentinel","SIO","Sibling","None"],
+answer:1,
+explanation:"Sentinel marks important state."
+},
+{
+q:"Non-standard version of computing language",
+options:["PROLOG","APL","Army","PL/1","None"],
+answer:2,
+explanation:"Army is not a standard language."
+},
+{
+q:"Still useful for adding numbers",
+options:["EDSAC","ENIAC","Abacus","UNIVAC","None"],
+answer:2,
+explanation:"Abacus is ancient calculating tool."
+},
+{
+q:"Intel MCS-80 based on",
+options:["8080 microprocessor","8085 microprocessor","8086 microprocessor","8082 microprocessor","None"],
+answer:0,
+explanation:"MCS-80 based on 8080."
+},
+{
+q:"Machine-oriented high-level language for GEC 4080",
+options:["LOGO","SNOBOL","Babbage","ALGOL","None"],
+answer:2,
+explanation:"Babbage developed for GEC 4080."
+},
+{
+q:"Program used for development or repair of programs",
+options:["System software","Software tool","Applications","Utility","None"],
+answer:1,
+explanation:"Software tool enhances programs."
+},
+{
+q:"Storage beyond main memory is called",
+options:["Floppy disk","Hard disk","Backing store","Punched card","None"],
+answer:2,
+explanation:"Backing store is secondary storage."
+},
+{
+q:"Output device translating information into pictorial form",
+options:["Mouse","Plotter","Touch panel","Card punch","None"],
+answer:1,
+explanation:"Plotter prints graphics."
+}
+],
+
+
+// ........Section-2............
+
+2: [
+{
+q:"Codes consisting of light and dark marks which may be optically read is known as",
+options:["Mnemonics","Bar code","Decoder","All of the above","None of the above"],
+answer:1,
+explanation:"A bar code consists of patterns of light and dark marks that can be optically read by a barcode scanner."
+},
+{
+q:"A type of channel used to connect a central processor and peripherals which uses multiplexing is known as",
+options:["Modem","Network","Multiplexer","All of the above","None of the above"],
+answer:2,
+explanation:"A multiplexer combines multiple signals into one communication channel."
+},
+{
+q:"The first generation of computers available was based on the bit micro processors.",
+options:["4","8","16","64","None of the above"],
+answer:1,
+explanation:"The first widely used microprocessors were 8-bit processors."
+},
+{
+q:"The complete picture of data stored in database is known as",
+options:["Record","Schema","System flowchart","DBMS","None of the above"],
+answer:1,
+explanation:"Schema represents the complete logical structure of a database."
+},
+{
+q:"Which of the following is intended to be used in all applications runs on mainframe computers.",
+options:["LOGO","APL","PL/1","OCCAM","None of the above"],
+answer:2,
+explanation:"PL/1 was designed for scientific, business and system applications."
+},
+{
+q:"A technique used by codes to convert an analog signal into a digital bit stream is known as",
+options:["Pulse code modulation","Pulse stretcher","Query processing","Queue management","None of the above"],
+answer:0,
+explanation:"Pulse Code Modulation converts analog signals into digital form."
+},
+{
+q:"An optical input device that interprets pencil marks on paper media is",
+options:["O.M.R","Punch card reader","Optical scanners","Magnetic tape","None of the above"],
+answer:0,
+explanation:"OMR reads pencil or pen marks from paper."
+},
+{
+q:"Most important advantage of an IC is its",
+options:["Easy replacement","Extremely high reliability","Reduced cost","Low power consumption","None of the above"],
+answer:1,
+explanation:"ICs provide extremely high reliability."
+},
+{
+q:"Data division is the third division of a _____ program.",
+options:["COBOL","BASIC","PASCAL","FORTH","None of the above"],
+answer:0,
+explanation:"COBOL programs contain Identification, Environment, Data and Procedure divisions."
+},
+{
+q:"Which language was devised by Dr. Seymour Aubrey Papert?",
+options:["APL","COBOL","LOGO","FORTRAN","None of the above"],
+answer:2,
+explanation:"LOGO was developed by Dr. Seymour Papert."
+},
+{
+q:"A program that converts computer data into some code system other than the normal one is known as",
+options:["Encoder","Simulation","Emulator","Coding","None of the above"],
+answer:0,
+explanation:"An encoder converts data from one code system to another."
+},
+{
+q:"A device designed to read information encoded into a small plastic card is",
+options:["Magnetic tape","Badge reader","Tape puncher","Card puncher","None of the above"],
+answer:1,
+explanation:"Badge reader reads information stored on plastic cards."
+},
+{
+q:"A hybrid computer uses a _____ to convert digital signals into analog signals.",
+options:["Modulator","Demodulator","Modem","Decoder","None of the above"],
+answer:0,
+explanation:"Modulator converts digital signals to analog signals."
+},
+{
+q:"A group of magnetic tapes, videos or terminals usually under the control of one master is",
+options:["Cylinder","Cluster","Surface","Track","None of the above"],
+answer:1,
+explanation:"Cluster is a group of devices under one master system."
+},
+{
+q:"Any device that performs signal conversion is",
+options:["Modulator","Modem","Keyboard","Plotter","None of the above"],
+answer:1,
+explanation:"Modem converts digital to analog and vice versa."
+},
+{
+q:"Which of the following can store information in the form of microscopic pits on metal disks.",
+options:["Laser disks","Tape cassettes","RAM cartridge","Punched cards","None of the above"],
+answer:0,
+explanation:"Laser disks store information as microscopic pits."
+},
+{
+q:"A device for converting handwritten impressions into coded characters & positional coordinates is",
+options:["Touch panel","Mouse","Wand","Writing tablet","None of the above"],
+answer:3,
+explanation:"Writing tablet converts handwritten input into digital form."
+},
+{
+q:"A storage system for small amounts of data is",
+options:["Magnetic card","Magnetic tape","Punched card","Optical mark reader","None of the above"],
+answer:0,
+explanation:"Magnetic card stores small amounts of data."
+},
+{
+q:"Which is another name for functional language?",
+options:["Machine","Application language","Low-level language","High-level language","None of the above"],
+answer:3,
+explanation:"Functional languages are high-level languages."
+},
+{
+q:"Compilers and interpreters are themselves",
+options:["High-level language","Codes","Programs","Mnemonics","None of the above"],
+answer:2,
+explanation:"Compilers and interpreters are programs."
+},
+{
+q:"A compiler means",
+options:["A person who compiles","Programmer","Keypunch operator","Program translating source to object","None"],
+answer:3,
+explanation:"Compiler translates source program into object program."
+},
+{
+q:"A pen shaped device which senses light and points at screen is",
+options:["Mouse","Light pen","Joystick","Plotter","None"],
+answer:1,
+explanation:"Light pen detects light from screen."
+},
+{
+q:"A notation used to express clearly an algorithm is known as",
+options:["Algorithmic language","Assembly language","Machine language","High level language","None"],
+answer:0,
+explanation:"Algorithmic language expresses algorithm clearly."
+},
+{
+q:"Compression of digital data for efficient storage is",
+options:["Buffer","CPU","Packing","Field","None"],
+answer:2,
+explanation:"Packing compresses data for storage."
+},
+{
+q:"An operating system intended for microprocessor based single user systems is",
+options:["PC-DOS","MS-DOS","UNIX","CP/M","None"],
+answer:1,
+explanation:"MS-DOS is single-user OS."
+},
+{
+q:"Which programming language is based on Algol 60.",
+options:["PILOT","SNOBOL","ADA","SIMULA","None"],
+answer:3,
+explanation:"SIMULA is based on ALGOL 60."
+},
+{
+q:"Computer memory consists of",
+options:["RAM","ROM","PROM","All of the above","None"],
+answer:3,
+explanation:"Memory includes RAM, ROM and PROM."
+},
+{
+q:"A path for communication between CPU and devices is called",
+options:["Audit trail","Network","Bus","Channel","None"],
+answer:2,
+explanation:"Bus transfers data between CPU and components."
+},
+{
+q:"A stand-alone system producing one page at a time",
+options:["Page printer","Line printer","Laser printer","Dot matrix printer","None"],
+answer:0,
+explanation:"Page printer prints one page at a time."
+},
+{
+q:"Memory that does not change without external cause",
+options:["Dynamic","Static","RAM","EEPROM","None"],
+answer:1,
+explanation:"Static memory retains contents without refreshing."
+},
+{
+q:"Report card and merit list forms the",
+options:["Output data","Data processing","Central Processing","Input data","None"],
+answer:0,
+explanation:"They are output data."
+},
+{
+q:"Number stored but not in exponential form is",
+options:["Floating point","Fixed point","Octal","Decimal","None"],
+answer:1,
+explanation:"Fixed point numbers are not exponential."
+},
+{
+q:"Memory that holds micro programs is",
+options:["Core memory","ROM","RAM","Control memory","None"],
+answer:3,
+explanation:"Control memory stores microprograms."
+},
+{
+q:"Device invented by Dr. Bobeck in 1966 for mass storage",
+options:["Punched paper tape","Magnetic bubble storage","Magnetic tape","Magnetic disk","None"],
+answer:1,
+explanation:"Magnetic bubble storage was invented in 1966."
+},
+{
+q:"Organization and interconnection of computer components is",
+options:["Architecture","Networks","Graphics","Designing","None"],
+answer:0,
+explanation:"Computer architecture defines structure."
+},
+{
+q:"Which network is a packet switching network?",
+options:["Ring network","LAN","Star network","EuroNET","None"],
+answer:3,
+explanation:"EuroNET was a packet switching network."
+},
+{
+q:"Symbolic languages were developed in",
+options:["1962","1950","1974","1980","None"],
+answer:1,
+explanation:"Symbolic languages were developed around 1950."
+},
+{
+q:"Coding of data so it can't be understood if intercepted",
+options:["Barcode","Decoder","Encryption","Mnemonics","None"],
+answer:2,
+explanation:"Encryption protects data."
+},
+{
+q:"RAM is short memory because it is",
+options:["Volatile","Small capacity","Expensive","Programmable","None"],
+answer:0,
+explanation:"RAM loses data when power off."
+},
+{
+q:"Modern electronic computer is meant for",
+options:["Quick calculations","Input/output","Electronic data processing","Repetitive tasks","None"],
+answer:2,
+explanation:"Main purpose is electronic data processing."
+},
+{
+q:"Device that changes information into digital form",
+options:["Modem","Digitizer","Mouse","Light pen","None"],
+answer:1,
+explanation:"Digitizer converts data into digital form."
+},
+{
+q:"An index register automatically incremented or decremented is",
+options:["Auto index","Asynchronous","Assembler","Compiler","None"],
+answer:0,
+explanation:"Auto index register increments automatically."
+},
+{
+q:"Language close to computer internal language is",
+options:["High-level","Assembly","Low-level","All","None"],
+answer:2,
+explanation:"Low-level language is closest to machine language."
+},
+{
+q:"Unit representing number of bits of discrete information",
+options:["Baud","Byte","Bit","All","None"],
+answer:2,
+explanation:"Bit is smallest unit of information."
+},
+{
+q:"Device that can both feed and accept data",
+options:["ALU","CPU","Input-Output device","All","None"],
+answer:2,
+explanation:"Input-Output devices perform both operations."
+},
+{
+q:"Personnel dealing with computer management are called",
+options:["Software","Humanware","Firmware","Hardware","None"],
+answer:1,
+explanation:"Humanware refers to people involved."
+},
+{
+q:"Modern digital computer has",
+options:["High speed","Large memory","Unlimited array","All of the above","None"],
+answer:3,
+explanation:"Modern computers have all these features."
+}
+],
+
+// ........Section-3............
+3: [
+{
+q:"A billionth of a second is defined as a:",
+options:["millisecond","microsecond","nanosecond","picoseconds","None of the above"],
+answer:2,
+explanation:"A nanosecond is one billionth (10^-9) of a second."
+},
+{
+q:"Which of the following is not currently a topic in computer science?",
+options:["Speech recognition","Artificial intelligence","Thermodynamics","Multiprocessing","None of the above"],
+answer:2,
+explanation:"Thermodynamics is a branch of physics."
+},
+{
+q:"Where must program and data be located before ALU and control unit operate on it?",
+options:["Internal memory","Secondary memory","Microprocessor","Magnetic tapes","None of the above"],
+answer:0,
+explanation:"Programs and data must be loaded into main memory."
+},
+{
+q:"When was Apple Macintosh II introduced?",
+options:["1964","1970","1983","1986","None"],
+answer:3,
+explanation:"Macintosh II was introduced in 1986."
+},
+{
+q:"Control Unit of a digital computer is often called the",
+options:["Clock","Nerve center","ICs","All of the above","None"],
+answer:1,
+explanation:"Control Unit directs and coordinates operations."
+},
+{
+q:"The unit that executes programs and controls subsystems is known as",
+options:["CPU","Control Unit","I/O unit","Peripheral unit","None"],
+answer:0,
+explanation:"CPU executes programs and controls operations."
+},
+{
+q:"Which device is called Silico sapiens?",
+options:["Monitor","Hardware","Robot","Computer","None"],
+answer:3,
+explanation:"Computer is referred to as Silico sapiens."
+},
+{
+q:"Which access method is used for cassette tape?",
+options:["Direct","Sequential","Random","All","None"],
+answer:1,
+explanation:"Cassette tapes use sequential access."
+},
+{
+q:"The most important advantage of a video disk is",
+options:["Compactness","Potential capacity","Durability","Cost effectiveness","None"],
+answer:1,
+explanation:"Video disks have large storage capacity."
+},
+{
+q:"Process of entering data into storage location",
+options:["Adds contents","Changes address","Readout","Destructive of previous contents","None"],
+answer:3,
+explanation:"Writing replaces previous contents."
+},
+{
+q:"Compared to diskettes, hard disks are",
+options:["More expensive","More portable","Less rigid","Slowly accessed","None"],
+answer:0,
+explanation:"Hard disks are more expensive."
+},
+{
+q:"Name given to molecular-scale computer",
+options:["Femtocomputer","Nanocomputer","Supercomputer","Microcomputer","None"],
+answer:1,
+explanation:"Nanocomputer works at molecular scale."
+},
+{
+q:"Father of the minicomputer",
+options:["George Tate","Kenneth H. Olsen","Seymour Cray","Basic Pascal","None"],
+answer:1,
+explanation:"Kenneth H. Olsen founded DEC."
+},
+{
+q:"First Intel microprocessors were used in",
+options:["Microwave ovens","Washing machines","Calculators","Personal computers","Robotics"],
+answer:2,
+explanation:"Early microprocessors were used in calculators."
+},
+{
+q:"Printer using laser-beam & electro photographic technique",
+options:["Laser printers","Dot-Matrix","Line printer","Daisy wheel","None"],
+answer:0,
+explanation:"Laser printers use electrophotographic process."
+},
+{
+q:"Backing storage is so named because it",
+options:["Kept at back","Slow","Backs up main memory","Lags behind","None"],
+answer:2,
+explanation:"Secondary storage backs up main memory."
+},
+{
+q:"ASCII code for J is",
+options:["10010001","10011010","01001010","10100001","None"],
+answer:2,
+explanation:"ASCII of J = 74 decimal = 01001010."
+},
+{
+q:"Off-line operation is without control of",
+options:["Memory","CPU","ALU","Control unit","None"],
+answer:1,
+explanation:"Offline devices work without CPU control."
+},
+{
+q:"Dedicated computer means",
+options:["One person use","One specific task","One software","Application only","None"],
+answer:1,
+explanation:"Dedicated computer performs single task."
+},
+{
+q:"User programmed semiconductor memory",
+options:["SRAM","DRAM","EPROM","All","None"],
+answer:2,
+explanation:"EPROM is user programmable."
+},
+{
+q:"Instruction transferring program control to paths",
+options:["Utility","System software","Broadband","Application","None"],
+answer:4,
+explanation:"Correct term is branch instruction."
+},
+{
+q:"Two kinds of main memory are",
+options:["Primary/Secondary","Random/Sequential","ROM and RAM","All","None"],
+answer:2,
+explanation:"Main memory consists of ROM and RAM."
+},
+{
+q:"First guided weapon using programmable computer",
+options:["Sting Ray","Mk 46","ALCM","Tomahawk","None"],
+answer:2,
+explanation:"ALCM used programmable digital computer."
+},
+{
+q:"Programs for specific tasks are called",
+options:["System software","Application software","Utility","OS","None"],
+answer:1,
+explanation:"Application software performs specific tasks."
+},
+{
+q:"Weapons using computerized guidance",
+options:["Guided weapons","Smart weapons","Dumb weapons","Starwars","None"],
+answer:1,
+explanation:"Computerized guidance weapons are smart weapons."
+},
+{
+q:"Time during which job is processed",
+options:["Delay","Real time","Execution time","Down time","None"],
+answer:2,
+explanation:"Execution time is processing time."
+},
+{
+q:"Used to insure high quality output",
+options:["COM","Output controls","Voice output","LCD","None"],
+answer:1,
+explanation:"Output controls ensure quality."
+},
+{
+q:"ASCII stands for",
+options:[
+"American Standard Code for International Interchange",
+"American Standard Code for Information Interchange",
+"American Standard Code for Intelligence Interchange",
+"American Scientific Code for Information Interchange",
+"None"
+],
+answer:1,
+explanation:"ASCII = American Standard Code for Information Interchange."
+},
+{
+q:"Software converting source to object instructions",
+options:["Compiler","Assembler","Interpreter","Language processor","None"],
+answer:3,
+explanation:"Language processor is general term."
+},
+{
+q:"Binary needs more places because",
+options:["Add 0/1","Proper placement","Always big","Base is small","None"],
+answer:3,
+explanation:"Binary base 2 is small."
+},
+{
+q:"Distance between holes in monitor mask",
+options:["Refresh rate","Dot pitch","Resolution","Color depth","None"],
+answer:1,
+explanation:"Dot pitch determines sharpness."
+},
+{
+q:"High speed storage elements in ALU",
+options:["Semiconductor memory","Registers","Hard disk","Magnetic disk","None"],
+answer:1,
+explanation:"Registers are high speed storage."
+},
+{
+q:"Printer printing all A's in line before B's",
+options:["Thermal","Electrostatic","Line printer","Inkjet","None"],
+answer:2,
+explanation:"Line printer prints one line at time."
+},
+{
+q:"Arrangement where multiple disks appear as one",
+options:["Disk","Disk array","Bunch","Disk pack","Spanned drive"],
+answer:1,
+explanation:"Disk array acts as single drive."
+},
+{
+q:"Binary 1010101000010111 in hexadecimal",
+options:["D8F9","A8B9","AA17","D9F8","None"],
+answer:2,
+explanation:"Binary grouped gives AA17."
+},
+{
+q:"Compared to SRAM, DRAM has",
+options:["Lower density/high power","Higher density/high power","Lower density/low power","Higher density/low power","None"],
+answer:3,
+explanation:"DRAM has higher density and lower power."
+},
+{
+q:"Holds data and instructions temporarily",
+options:["ROM","Control unit","Main memory","Coprocessor","None"],
+answer:2,
+explanation:"Main memory holds temporary data."
+},
+{
+q:"Multiprogramming system can",
+options:["Run fast","Share hardware resources","Compute simultaneously","Use many OS","None"],
+answer:1,
+explanation:"It shares hardware resources among programs."
+},
+{
+q:"Input language for translation",
+options:["Assembly","Source language","High-level","Object","None"],
+answer:1,
+explanation:"Source language is input to translator."
+},
+{
+q:"Startup instructions in IBM PCs stored in ROM called",
+options:["RAM BIOS","ROM BIOS","EPROM","POST","None"],
+answer:1,
+explanation:"Startup firmware is ROM BIOS."
+},
+{
+q:"EBCDIC can code up to",
+options:["8","16","32","64","256"],
+answer:4,
+explanation:"8-bit code represents 256 characters."
+},
+{
+q:"Punch cards for weaving invented by",
+options:["Pascal","Hollerith","Babbage","Jacquard","None"],
+answer:3,
+explanation:"Joseph Jacquard introduced punch cards."
+},
+{
+q:"32-bit microprocessor used in IBM PS/2 Model 80",
+options:["8088","80286","80386","80486","None"],
+answer:2,
+explanation:"PS/2 Model 80 used 80386."
+},
+{
+q:"Memory erased by UV light and programmable",
+options:["ROM","PROM","RAM","EPROM","None"],
+answer:3,
+explanation:"EPROM erased by UV light."
+},
+{
+q:"First computer used for programming and playing music",
+options:["ELLIAC","ENIAC","UNIVAC","All","None"],
+answer:0,
+explanation:"ELLIAC was used for music programming."
+},
+{
+q:"Disk address specifies",
+options:["Track","Sector","Surface","All of the above","None"],
+answer:3,
+explanation:"Disk address includes track, sector, surface."
+},
+{
+q:"High speed device used in CPU for temporary storage",
+options:["Register","Bus","Databus","All","None"],
+answer:0,
+explanation:"Register is temporary CPU storage."
+},
+{
+q:"Computers remember only",
+options:["Instruction","Series of 1s and 0s","Boolean algebra","Logic theorems","None"],
+answer:1,
+explanation:"Computers process binary data."
+},
+{
+q:"First electronic digital computer contained",
+options:["Electronic valves","Vacuum tubes","Transistors","Semiconductor memory","None"],
+answer:1,
+explanation:"First computers used vacuum tubes."
+},
+{
+q:"First to develop model of microprocessor chip",
+options:["Marcian Ted Hoff","Victor Poor","Harry Pyle","Both (b) and (c)","None"],
+answer:4,
+explanation:"Correct pair not properly listed."
+}
+],
+// .......Section-4........
+4:  [
+{
+q:"A characteristic of card systems is:",
+options:["Slowness in processing data","Using cards as records of transactions","Needing a larger DP staff","All the above","None of the above"],
+answer:3,
+explanation:"Card systems are slow in processing, use punched cards as transaction records, and require larger data processing staff."
+},
+{
+q:"A directly accessible appointment calendar is a feature of a _____ resident package.",
+options:["CPU","Memory","Buffer","ALU","None of the above"],
+answer:4,
+explanation:"It is a feature of application software, not CPU, Memory, Buffer or ALU."
+},
+{
+q:"1024 bytes represent a:",
+options:["Megabyte","Gigabyte","Kilobyte","None of the above"],
+answer:2,
+explanation:"1024 bytes equal 1 Kilobyte (KB)."
+},
+{
+q:"Which type device receives information from a CPU?",
+options:["Input","Output","CPU","Memory","Storage"],
+answer:1,
+explanation:"An output device receives information from the CPU."
+},
+{
+q:"Computer operators:",
+options:["Write computer programs","Operate input/output devices","Require CS degree","All of the above","None of the above"],
+answer:1,
+explanation:"Computer operators handle input and output devices."
+},
+{
+q:"When was the IBM XT microcomputer released?",
+options:["1970","1971","1987","1986","None of the above"],
+answer:4,
+explanation:"IBM PC/XT was released in 1983, not listed here."
+},
+{
+q:"Which is not used for storage with mainframe computers?",
+options:["Removable disks","Fixed disks","Mass storage systems","Diskettes","None of the above"],
+answer:3,
+explanation:"Diskettes are mainly used with personal computers."
+},
+{
+q:"Which is true for digital computer?",
+options:["Less accurate than analog","Represents decimal numbers as binary digits","Used primarily in scientific applications","Both (a) and (c)","None of the above"],
+answer:1,
+explanation:"Digital computers represent all data using binary digits."
+},
+{
+q:"Which terminal output resembles a plotter?",
+options:["Graphics terminal","POS terminal","Hardcopy terminal","All the above","None of the above"],
+answer:0,
+explanation:"Graphics terminals produce graphical output like plotters."
+},
+{
+q:"Main advantage of magnetic core memory over semiconductor RAM:",
+options:["More compact","More economical","No rewrite after read","Non volatile","None of the above"],
+answer:3,
+explanation:"Magnetic core memory is non-volatile."
+},
+{
+q:"The access method used for cassette tape is:",
+options:["Direct","Random","Sequential","All of the above","None of the above"],
+answer:2,
+explanation:"Cassette tapes use sequential access."
+},
+{
+q:"Arranging data in logical sequence is called:",
+options:["Sorting","Classifying","Reproducing","Summarizing","None of the above"],
+answer:0,
+explanation:"Sorting arranges data logically."
+},
+{
+q:"Creator of PASCAL language:",
+options:["Niklaus Wirth","Dijkstra","Donald Knuth","Basic Pascal","None of the above"],
+answer:0,
+explanation:"Niklaus Wirth developed Pascal."
+},
+{
+q:"Punched-card equipment first used in British census in:",
+options:["1910","1907","1911","1914","None of the above"],
+answer:2,
+explanation:"Used in 1911."
+},
+{
+q:"Hashing scheme is used with:",
+options:["Sequential file organization","Direct file organization","Indexed sequential file organization","Partitioned file organization","None of the above"],
+answer:1,
+explanation:"Hashing is used in direct file organization."
+},
+{
+q:"Used for serial access storage only:",
+options:["RAM","Magnetic tape","Magnetic disk","Core memory","None of the above"],
+answer:1,
+explanation:"Magnetic tape provides sequential access only."
+},
+{
+q:"Temporary storage space for data:",
+options:["PROM","SAM","Scratchpad storage","Buffer","None of the above"],
+answer:3,
+explanation:"Buffer temporarily stores data."
+},
+{
+q:"Logic circuit that adds two binary digits:",
+options:["Full adder","Half adder","Buffer","Register","None of the above"],
+answer:1,
+explanation:"Half adder adds two binary digits."
+},
+{
+q:"Small film plate for microfilming screen output:",
+options:["Microfilm","Microfiche","Film card","COM","None of the above"],
+answer:1,
+explanation:"Microfiche is used for microfilming."
+},
+{
+q:"ALU and control unit combined on single chip is called:",
+options:["Monochip","Microprocessor","ALU","Control Unit","None of the above"],
+answer:1,
+explanation:"It is called a microprocessor."
+},
+{
+q:"Continuous line drawings are produced using:",
+options:["Chain printers","Daisy wheel printers","Plotters","Thermal devices","None of the above"],
+answer:2,
+explanation:"Plotters produce continuous line drawings."
+},
+{
+q:"Register loaded with instruction pointed by PC:",
+options:["Memory Address Register","Memory Data Register","Instruction Register","Program Counter","None of the above"],
+answer:2,
+explanation:"Instruction Register loads instruction from memory."
+},
+{
+q:"Memory loses contents when _____ is lost:",
+options:["Static","Disk space","Power","Both a and b","None of the above"],
+answer:2,
+explanation:"RAM loses data when power is lost."
+},
+{
+q:"One byte encodes integers between 0 and ____ inclusive:",
+options:["16","256","128","255","None of the above"],
+answer:3,
+explanation:"1 byte represents 0–255."
+},
+{
+q:"Why is data bus width important?",
+options:["Narrower = faster","Wider = more memory","Wider = faster processing","Wider = slower","Not important"],
+answer:2,
+explanation:"Wider data bus transfers more bits at once."
+},
+{
+q:"Main purpose of time sharing:",
+options:["CPU","Peripherals","Secondary storage","Floppy disks","None of the above"],
+answer:0,
+explanation:"Time sharing maximizes CPU utilization."
+},
+{
+q:"Temporary storage attached to CPU for I/O:",
+options:["Chip","Buffer","Register","Core","None of the above"],
+answer:1,
+explanation:"Buffer is used during I/O operations."
+},
+{
+q:"Part used for calculating and comparing:",
+options:["Disk unit","Control unit","ALU","Modem","None of the above"],
+answer:2,
+explanation:"ALU performs calculations and comparisons."
+},
+{
+q:"Stored program concept was contributed by:",
+options:["John von Neumann","Charles Babbage","Howard Aiken","Basic Pascal","None of the above"],
+answer:0,
+explanation:"John von Neumann proposed stored-program concept."
+},
+{
+q:"An AND gate:",
+options:["Implements logic addition","Equivalent to series switching circuit","Any or all gate","Parallel switching circuit","None of the above"],
+answer:1,
+explanation:"AND gate works like series switching circuit."
+},
+{
+q:"Daily account corrections processing mode:",
+options:["Batch processing","Real-time processing","Time-sharing","Offline processing","None of the above"],
+answer:0,
+explanation:"This is batch processing."
+},
+{
+q:"Device to directly input printed text:",
+options:["OCR","OMR","MICR","All of the above","None of the above"],
+answer:0,
+explanation:"OCR inputs printed text."
+},
+{
+q:"Memory operating at electronic speed:",
+options:["Semiconductor memory","Magnetic disks","Magnetic drums","Magnetic tapes","None of the above"],
+answer:0,
+explanation:"Semiconductor memory operates at electronic speed."
+}
+],
+// .........Section-5...............
+5: [
+{
+q:"46. The following is true about 2-out of-5 code:",
+options:["it is weighted code","it is unweighted code","it has odd parity","All of the above","None of the above"],
+answer:1,
+explanation:"The 2-out-of-5 code is an unweighted code where exactly two out of five bits are set to 1 for each digit."
+},
+{
+q:"47. The Josephson tunneling device illustrates principles associated with the advanced storage technique:",
+options:["cryogenics","CCD","EBAM","holographing","None of the above"],
+answer:0,
+explanation:"Josephson tunneling devices operate at extremely low temperatures and are associated with cryogenic technology."
+},
+{
+q:"48. Which of the following statements is true?",
+options:["The installation of a computer is favorably received by all employees","Some form of training is necessary for employees who will work with computers","Computers are portrayed solely as society's benefactor","A businessperson is only interested in the computer's accuracy","None of the above"],
+answer:1,
+explanation:"Employees who will work with computers require proper training to use them effectively."
+},
+{
+q:"49. Communication between computers using standard telephone service",
+options:["Requires a change to an analog signal","Is most efficient","Produces little noise and few disturbances","All of the above","None of the above"],
+answer:0,
+explanation:"Standard telephone lines carry analog signals, so digital computer data must be converted to analog using a modem."
+},
+{
+q:"50. A floppy disk contains",
+options:["Circular tracks only","Sectors only","Both circular tracks and sector","All of the above","None of the above"],
+answer:2,
+explanation:"A floppy disk is organized into circular tracks, and each track is divided into sectors."
+},
+{
+q:"41. One of the main feature that distinguish microprocessors from microcomputers is",
+options:["words are usually larger in microprocessors","words are shorter in microprocessors","microprocessor does not contain I/O devices","exactly the same as the machine cycle time","None of the above"],
+answer:2,
+explanation:"A microprocessor is just the CPU on a chip and does not include I/O devices."
+},
+{
+q:"42. Which type of display is the latest to be used for portable computer?",
+options:["LED display","LCD display","Plasma display","Electroluminescent display","None of the above"],
+answer:1,
+explanation:"LCD technology became widely used for portable computers due to low power consumption."
+},
+{
+q:"43. Which of the following is not true of future computers?",
+options:["increased use of CAD/CAM techniques","faster turnaround time","developments in artificial intelligence systems","development of products more suitable for human use","All of the above are true"],
+answer:4,
+explanation:"All the listed statements are true regarding future computer developments."
+},
+{
+q:"44. The EAM device that does not use a control panel is the:",
+options:["collator","reproducer","interpreter","sorter","None of the above"],
+answer:2,
+explanation:"The interpreter in EAM systems does not use a control panel."
+},
+{
+q:"45. Whenever a peripheral is being controlled by the CPU and files are updated immediately, the system is called",
+options:["quick processing system","batch processing system","real time system","remote processing system","None of the above"],
+answer:2,
+explanation:"A real-time system updates files immediately as changes occur."
+},
+{
+q:"36. What does VGA stand for?",
+options:["Extended Graphics Adapter","Enhanced Graphics Array","Video Graphics Array","Color Graphics Array","Video Graphics Adapter"],
+answer:2,
+explanation:"VGA stands for Video Graphics Array."
+},
+{
+q:"37. Which part of the diskette should never be touched?",
+options:["Hub","Centre","Oval slot","Corner","None of the above"],
+answer:2,
+explanation:"The oval slot exposes the magnetic surface of the diskette and should not be touched."
+},
+{
+q:"38. The storage locations in internal storage of a CPU are called",
+options:["contents","addresses","locations","mask","None of the above"],
+answer:1,
+explanation:"Each memory location is identified by a unique address."
+},
+{
+q:"39. Which provides the right information to the right person at the right time?",
+options:["DBMS","MIS","ISO","PSO","None of the above"],
+answer:1,
+explanation:"MIS provides timely information for decision making."
+},
+{
+q:"40. Advantage of using multiple heads on each movable disk arm?",
+options:["Reduced seek time","Less latency time","Reduced search time","Less disk speed","None of the above"],
+answer:0,
+explanation:"Multiple heads reduce seek time."
+},
+{
+q:"31. In a PC, how much memory was available to application software?",
+options:["1024 KB","760 KB","640 KB","560 KB","2048 KB"],
+answer:2,
+explanation:"Early PCs had 640 KB conventional memory available."
+},
+{
+q:"32. For a memory system, cycle time is",
+options:["same as access time","longer than access time","shorter than access time","submultiple of access time","None of the above"],
+answer:1,
+explanation:"Cycle time is usually longer than access time."
+},
+{
+q:"33. Number of records in a block on magnetic tape is defined by",
+options:["block definition","record contain clause","blocking factor","record per block factor","None of the above"],
+answer:2,
+explanation:"Blocking factor specifies records per block."
+},
+{
+q:"34. Binary equivalent of octal 13.54 is",
+options:["1011.1011","1101.1110","1001.1110","All of the above","None of the above"],
+answer:0,
+explanation:"13.54 (octal) = 1011.1011 (binary)."
+},
+{
+q:"35. Process that prepares disk surface with tracks is called",
+options:["Tracking","Formatting","Copying","Sectioning","None of the above"],
+answer:1,
+explanation:"Formatting creates tracks and sectors."
+}
+],
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

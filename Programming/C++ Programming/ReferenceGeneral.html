@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clock - MCQ</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+}
+
+.container{
+    max-width:800px;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+}
+
+h2{
+    margin-bottom:10px;
+}
+
+.topic-list{
+    margin-bottom:20px;
+}
+
+.topic-list div{
+    margin:5px 0;
+}
+
+.question{
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:10px 0;
+    padding:6px;
+    border-radius:4px;
+}
+
+.options label{
+    cursor:pointer;
+}
+
+.explanation{
+    display:none;
+    margin-top:10px;
+    background:#f9fff3;
+    padding:10px;
+    border-left:4px solid green;
+}
+
+.nav{
+    margin-top:20px;
+    text-align:center;
+}
+
+.nav button{
+    padding:6px 12px;
+    margin:0 5px;
+}
+
+.correct{
+    background:#4d6753;
+    color:white;
+}
+
+.wrong{
+    background:#ac0815;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Exercise : Clock - General Questions</h2>
+
+<div class="topic-list">
+    <div>Clock - Formulas</div>
+    <div><b>Clock - General Questions</b></div>
+    <div>Clock - Data Sufficiency 1</div>
+</div>
+</div>
+
+<div id="quiz-container"></div>
+
+<div class="nav">
+    <button onclick="prevPage()">Prev</button>
+    <span id="pageNumbers"></span>
+    <button onclick="nextPage()">Next</button>
+</div>
+
+<script>
+
+// QUESTIONS
+const questions = [
+{
+    question: "6. A reference is declared using the _____ symbol.",
+    options: ["&&", "&", "||", "!"],
+    correct: 2,
+    explanation: "In C++, a reference variable is declared using the single ampersand (&) symbol."
+},
+{
+    question: "7. Which of the following statement is correct?",
+    options: [
+        "Once a reference variable has been defined to refer to a particular variable it can refer to any other variable.",
+        "A reference is indicated by using && operator.",
+        "Once a reference variable has been defined to refer to a particular variable it cannot refer to any other variable.",
+        "A reference can be declared beforehand and initialized later."
+    ],
+    correct: 3,
+    explanation: "Once a reference is initialized to a variable, it cannot be changed to refer to another variable. Also, references must be initialized at the time of declaration."
+},
+{
+    question: "8. Which of the following statements is correct?",
+    options: [
+        "A reference is not a constant pointer.",
+        "A referenced is automatically de-referenced.",
+        "Only 1 is correct.",
+        "Only 2 is correct.",
+        "Both 1 and 2 are correct.",
+        "Both 1 and 2 are incorrect."
+    ],
+    correct: 5,
+    explanation: "A reference behaves like a constant pointer (cannot change the binding) but is automatically dereferenced. So both statements are correct."
+},
+{
+    question: "9. Which of the following statements is correct?",
+    options: [
+        "An array of references is acceptable.",
+        "We can also create a reference to a reference.",
+        "Only 1 is correct.",
+        "Only 2 is correct.",
+        "Both 1 and 2 are correct.",
+        "Both 1 and 2 are incorrect."
+    ],
+    correct: 6,
+    explanation: "C++ does not allow arrays of references and also does not allow references to references. Therefore, both statements are incorrect."
+},
+{
+    question: "10. Which of the following statement is correct?",
+    options: [
+        "A referenced has to be de-referenced to access a value.",
+        "A referenced does not need to be de-referenced to access a value.",
+        "A referenced has to be double de-referenced to access a value.",
+        "Whether a reference should be de-referenced or not depends on the type of the reference."
+    ],
+    correct: 2,
+    explanation: "A reference is automatically dereferenced in C++. You can use it directly like the original variable without using * operator."
+},
+{
+    question: "1. Which of the following statement is correct?",
+    options: [
+        "A reference is stored on heap.",
+        "A reference is stored on stack.",
+        "A reference is stored in a queue.",
+        "A reference is stored in a binary tree."
+    ],
+    correct: 2,
+    explanation: "A reference behaves like a constant pointer and is typically implemented using stack memory, not heap or other data structures."
+},
+{
+    question: "2. Which of the following statements is correct?",
+    options: [
+        "Once a reference variable has been defined to refer to a particular variable it can refer to any other variable.",
+        "A reference is not a constant pointer.",
+        "Only 1 is correct.",
+        "Only 2 is correct.",
+        "Both 1 and 2 are correct.",
+        "Both 1 and 2 are incorrect."
+    ],
+    correct: 6,
+    explanation: "A reference cannot be changed to refer to another variable after initialization. Also, a reference behaves like a constant pointer. Therefore, both statements are incorrect."
+},
+{
+    question: "3. Functions can be declared to return a reference type. There are reasons to make such a declaration. Which of the following reasons are correct?",
+    options: [
+        "The information being returned is a large enough object that returning a reference is more efficient than returning a copy.",
+        "The type of the function must be a R-value.",
+        "Only 1 is correct.",
+        "Only 2 is correct.",
+        "Both 1 and 2 are correct.",
+        "Both 1 and 2 are incorrect."
+    ],
+    correct: 3,
+    explanation: "Returning a reference avoids copying large objects, improving efficiency. However, the function return type does not have to be an R-value. Hence only statement 1 is correct."
+},
+{
+    question: "4. Which of the following statements is correct?",
+    options: [
+        "Change a reference changes the referent.",
+        "We can create an array of references.",
+        "Only 1 is correct.",
+        "Only 2 is correct.",
+        "Both 1 and 2 are correct.",
+        "Both 1 and 2 are incorrect."
+    ],
+    correct: 3,
+    explanation: "Modifying a reference modifies the original variable (referent). However, C++ does not allow arrays of references. So only statement 1 is correct."
+},
+{
+    question: "5. Which of the following statement is correct about the references?",
+    options: [
+        "A reference must always be initialized within functions.",
+        "A reference must always be initialized outside all functions.",
+        "A reference must always be initialized.",
+        "Both A and C."
+    ],
+    correct: 3,
+    explanation: "In C++, a reference must be initialized at the time of declaration, regardless of whether it is inside or outside a function."
+},
+{
+    question: "16. Which of the following statement is correct?",
+    options: [
+        "An array of references is acceptable.",
+        "Once a reference variable has been defined to refer to a particular variable it can refer to any other variable.",
+        "An array of references is not acceptable.",
+        "Reference is like a structure."
+    ],
+    correct: 3,
+    explanation: "C++ does not allow arrays of references. Also, once a reference is bound to a variable, it cannot refer to another variable."
+},
+{
+    question: "17. Which of the following statements is correct?",
+    options: [
+        "Pointer to a reference and reference to a pointer both are valid.",
+        "When we use reference, we are actually referring to a referent.",
+        "Only 1 is correct.",
+        "Only 2 is correct.",
+        "Both 1 and 2 are correct.",
+        "Both 1 and 2 are incorrect."
+    ],
+    correct: 4,
+    explanation: "Pointer to a reference is not valid in C++, but reference to a pointer is valid. Therefore statement 1 is incorrect. Statement 2 is correct because a reference always refers to an existing variable (referent). Hence only 2 is correct."
+},
+{
+    question: "11. Which of the following statements is correct?",
+    options: [
+        "Once the variable and the reference are linked they are tied together.",
+        "Once the reference of a variable is declared another reference of that variable is not allowed.",
+        "Only 1 is correct.",
+        "Only 2 is correct.",
+        "Both 1 and 2 are correct.",
+        "Both 1 and 2 are incorrect."
+    ],
+    correct: 3,
+    explanation: "Once a reference is initialized, it remains bound to that variable permanently. However, a variable can have multiple references. Therefore only statement 1 is correct."
+},
+{
+    question: "12. Which of the following statements is correct?",
+    options: [
+        "We can return a global variable by reference.",
+        "We cannot return a local variable by reference.",
+        "Only 1 is correct.",
+        "Only 2 is correct.",
+        "Both 1 and 2 are correct.",
+        "Both 1 and 2 are incorrect."
+    ],
+    correct: 5,
+    explanation: "A global variable exists throughout the program, so it can safely be returned by reference. A local variable goes out of scope after function execution, so returning it by reference is invalid. Hence both statements are correct."
+},
+{
+    question: "13. Reference is like a _____.",
+    options: [
+        "Pointer",
+        "Structure",
+        "Macro",
+        "Enum"
+    ],
+    correct: 1,
+    explanation: "A reference behaves like a constant pointer because it refers to an existing variable and cannot be reseated."
+},
+{
+    question: "14. Which of the following statement is correct?",
+    options: [
+        "A reference is a constant pointer.",
+        "A reference is not a constant pointer.",
+        "An array of references is acceptable.",
+        "It is possible to create a reference to a reference."
+    ],
+    correct: 1,
+    explanation: "A reference behaves like a constant pointer (cannot be changed once initialized). Arrays of references and references to references are not allowed."
+},
+{
+    question: "15. Which of the following statement is correct?",
+    options: [
+        "A reference is declared using * operator.",
+        "Once a reference variable has been defined to refer to a particular variable it can refer to any other variable.",
+        "A reference must always be initialized within classes.",
+        "A variable can have multiple references."
+    ],
+    correct: 4,
+    explanation: "A reference is declared using the & operator, not *. Once initialized it cannot refer to another variable. A reference must always be initialized at declaration. A variable can have multiple references."
+}
+
+
+
+
+  
+];
+
+const questionsPerPage = 10;
+let currentPage = 1;
+
+function loadQuestions() {
+
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = "";
+
+    const start = (currentPage - 1) * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    const pageQuestions = questions.slice(start, end);
+
+    pageQuestions.forEach((q, index) => {
+
+        const questionNumber = start + index;
+
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <div class="question">${q.question}</div>
+            <ul class="options">
+                ${q.options.map((opt, i) => `
+                    <li>
+                        <label>
+                            <input type="radio" name="q${questionNumber}" value="${i}">
+                            ${String.fromCharCode(65 + i)}. ${opt}
+                        </label>
+                    </li>
+                `).join("")}
+            </ul>
+            <button onclick="checkAnswer(${questionNumber}, ${q.correct}, \`${q.explanation}\`)">
+                Check Answer
+            </button>
+            <div class="explanation" id="exp${questionNumber}"></div>
+            <hr>
+        `;
+        container.appendChild(div);
+    });
+
+    createPageNumbers();
+}
+
+function checkAnswer(qIndex, correctIndex, explanationText) {
+
+    const explanation = document.getElementById(`exp${qIndex}`);
+
+    // TOGGLE SHOW/HIDE
+    if (explanation.style.display === "block") {
+        explanation.style.display = "none";
+        return;
+    }
+
+    const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+    const options = document.querySelectorAll(`input[name="q${qIndex}"]`);
+
+    if (!selected) {
+        alert("Please select an option.");
+        return;
+    }
+
+    let userLetter = "";
+    let correctLetter = "";
+
+    options.forEach(option => {
+        const li = option.closest("li");
+        const letter = String.fromCharCode(65 + parseInt(option.value));
+
+        // Reset colors
+        li.classList.remove("correct", "wrong");
+
+        if (parseInt(option.value) === correctIndex) {
+            li.classList.add("correct");
+            correctLetter = letter;
+        }
+
+        if (option.checked) {
+            userLetter = letter;
+
+            if (parseInt(option.value) !== correctIndex) {
+                li.classList.add("wrong");
+            }
+        }
+    });
+
+    explanation.innerHTML = `
+        <p style="font-weight:bold;">
+            ${parseInt(selected.value) === correctIndex ? "✔ Correct Answer!" : "❌ Wrong Answer!"}
+        </p>
+        <p><b>Your Option:</b> ${userLetter}</p>
+        <p><b>Correct Option:</b> ${correctLetter}</p>
+        <p><b>Explanation:</b> ${explanationText}</p>
+    `;
+
+    explanation.style.display = "block";
+}
+
+function createPageNumbers() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    const pageNumbers = document.getElementById("pageNumbers");
+    pageNumbers.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.innerText = i;
+        btn.onclick = () => {
+            currentPage = i;
+            loadQuestions();
+        };
+
+        if (i === currentPage) {
+            btn.style.background = "#333";
+            btn.style.color = "white";
+        }
+
+        pageNumbers.appendChild(btn);
+    }
+}
+
+function prevPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        loadQuestions();
+    }
+}
+
+function nextPage() {
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
+    if (currentPage < totalPages) {
+        currentPage++;
+        loadQuestions();
+    }
+}
+
+loadQuestions();
+
+</script>
+
+
+</body>
+</html>

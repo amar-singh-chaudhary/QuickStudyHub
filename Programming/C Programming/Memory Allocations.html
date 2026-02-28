@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+q:"1. Which header file should be included to use functions like malloc() and calloc()?",
+options:[
+"memory.h",
+"stdlib.h",
+"string.h",
+"dos.h"
+],
+answer:1,
+explanation:"malloc() and calloc() are declared in stdlib.h."
+},
+{
+q:"2. What function should be used to free the memory allocated by calloc()?",
+options:[
+"dealloc();",
+"malloc(variable_name, 0)",
+"free();",
+"memalloc(variable_name, 0)"
+],
+answer:2,
+explanation:"Memory allocated using malloc() or calloc() must be released using free()."
+},
+{
+q:"3. How will you free the memory allocated by the following program?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+#define MAXROW 3
+#define MAXCOL 4
+
+int main()
+{
+    int **p, i, j;
+    p = (int **) malloc(MAXROW * sizeof(int*));
+    return 0;
+}`,
+options:[
+"memfree(int p);",
+"dealloc(p);",
+"malloc(p, 0);",
+"free(p);"
+],
+answer:3,
+explanation:"Memory allocated using malloc() is freed using free(p);"
+},
+{
+q:"4. Specify the 2 library functions to dynamically allocate memory?",
+options:[
+"malloc() and memalloc()",
+"alloc() and memalloc()",
+"malloc() and calloc()",
+"memalloc() and faralloc()"
+],
+answer:2,
+explanation:"malloc() and calloc() are standard C library functions used for dynamic memory allocation."
+},
+{
+q:"1. What will be the output of the program?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    int *p;
+    p = (int *)malloc(20); /* Assume p has address of 1314 */
+    free(p);
+    printf("%u", p);
+    return 0;
+}`,
+options:[
+"1314",
+"Garbage value",
+"1316",
+"Random address"
+],
+answer:0,
+explanation:"free(p) releases the memory but does not change the value stored in p. The pointer still holds the same address (1314), though it becomes a dangling pointer."
+},
+{
+q:"2. What will be the output of the program (16-bit platform)?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    int *p;
+    p = (int *)malloc(20);
+    printf("%d\\n", sizeof(p));
+    free(p);
+    return 0;
+}`,
+options:[
+"4",
+"2",
+"8",
+"Garbage value"
+],
+answer:1,
+explanation:"On a 16-bit platform, pointer size is 2 bytes. sizeof(p) gives size of pointer, not allocated memory."
+},
+{
+q:"3. What will be the output of the program?",
+code:`#include<stdio.h>
+#include<string.h>
+
+int main()
+{
+    char *s;
+    char *fun();
+    s = fun();
+    printf("%s\\n", s);
+    return 0;
+}
+char *fun()
+{
+    char buffer[30];
+    strcpy(buffer, "RAM");
+    return (buffer);
+}`,
+options:[
+"0xffff",
+"Garbage value",
+"0xffee",
+"Error"
+],
+answer:1,
+explanation:"buffer is a local (auto) array. After function returns, it is destroyed. Returning its address results in undefined behavior, producing garbage value."
+},
+{
+q:"4. What will be the output of the program?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    union test
+    {
+        int i;
+        float f;
+        char c;
+    };
+    union test *t;
+    t = (union test *)malloc(sizeof(union test));
+    t->f = 10.10f;
+    printf("%f", t->f);
+    return 0;
+}`,
+options:[
+"10",
+"Garbage value",
+"10.100000",
+"Error"
+],
+answer:2,
+explanation:"Memory is properly allocated. Float value 10.10f is stored and printed using %f format specifier, producing 10.100000."
+},
+{
+q:"5. Assume integer is 2 bytes wide. How many bytes will be allocated for the following code?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+#define MAXROW 3
+#define MAXCOL 4
+
+int main()
+{
+    int (*p)[MAXCOL];
+    p = (int (*) [MAXCOL])malloc(MAXROW *sizeof(*p));
+    return 0;
+}`,
+options:[
+"56 bytes",
+"128 bytes",
+"24 bytes",
+"12 bytes"
+],
+answer:2,
+explanation:"*p represents an array of 4 integers. Each int is 2 bytes, so 4 × 2 = 8 bytes. MAXROW is 3, so total memory = 3 × 8 = 24 bytes."
+},
+{
+q:"6. Assume integer is 2 bytes wide. What will be the output of the following code?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+#define MAXROW 3
+#define MAXCOL 4
+
+int main()
+{
+    int (*p)[MAXCOL];
+    p = (int (*) [MAXCOL])malloc(MAXROW *sizeof(*p));
+    printf("%d, %d\\n", sizeof(p), sizeof(*p));
+    return 0;
+}`,
+options:[
+"2, 8",
+"4, 16",
+"8, 24",
+"16, 32"
+],
+answer:0,
+explanation:"On a 16-bit system, pointer size is 2 bytes, so sizeof(p)=2. *p is an array of 4 integers. Each int is 2 bytes, so sizeof(*p)=4×2=8."
+},
+{
+q:"7. How many bytes of memory will the following code reserve?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    int *p;
+    p = (int *)malloc(256 * 256);
+    if(p == NULL)
+        printf("Allocation failed");
+    return 0;
+}`,
+options:[
+"65536",
+"Allocation failed",
+"Error",
+"No output"
+],
+answer:1,
+explanation:"256×256 = 65536 bytes. On a 16-bit platform (like Turbo C in DOS), maximum allocatable block is 65535 bytes. Since requested size exceeds this limit, malloc() fails and returns NULL, so 'Allocation failed' is printed."
+},
+{
+q:"1. Point out the error in the following program.",
+code:`#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    int *a[3];
+    a = (int*) malloc(sizeof(int)*3);
+    free(a);
+    return 0;
+}`,
+options:[
+"Error: unable to allocate memory",
+"Error: We cannot store address of allocated memory in a",
+"Error: unable to free memory",
+"No error"
+],
+answer:1,
+explanation:"a is declared as an array of 3 integer pointers (int *a[3]). Arrays cannot be assigned to. The result of malloc() cannot be stored directly in 'a'."
+},
+{
+q:"2. Point out the error in the following program.",
+code:`#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+    char *ptr;
+    *ptr = (char)malloc(30);
+    strcpy(ptr, "RAM");
+    printf("%s", ptr);
+    free(ptr);
+    return 0;
+}`,
+options:[
+"Error: in strcpy() statement.",
+"Error: in *ptr = (char)malloc(30);",
+"Error: in free(ptr);",
+"No error"
+],
+answer:1,
+explanation:"Memory allocation should be done as ptr = (char*)malloc(30);. The statement *ptr = (char)malloc(30); incorrectly assigns the returned address to the value pointed by ptr, which is uninitialized."
+},
+{
+q:"1. Point out the correct statement that lets you access the elements of the array using 'p' in the following program?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    int i, j;
+    int(*p)[3];
+    p = (int(*)[3])malloc(3*sizeof(*p));
+    return 0;
+}`,
+options:[
+"for(i=0; i<3; i++){ for(j=0; j<3; j++) printf(\"%d\", p[i+j]); }",
+"for(i=0; i<3; i++) printf(\"%d\", p[i]);",
+"for(i=0; i<3; i++){ for(j=0; j<3; j++) printf(\"%d\", p[i][j]); }",
+"for(j=0; j<3; j++) printf(\"%d\", p[i][j]);"
+],
+answer:2,
+explanation:"p is a pointer to an array of 3 integers. Therefore elements are accessed using p[i][j]."
+},
+{
+q:"2. Which of the following statement is correct prototype of the malloc() function in C?",
+options:[
+"int* malloc(int);",
+"char* malloc(char);",
+"unsigned int* malloc(unsigned int);",
+"void* malloc(size_t);"
+],
+answer:3,
+explanation:"The correct prototype is void* malloc(size_t size); as declared in stdlib.h."
+},
+{
+q:"3. Point out the correct statement which correctly frees the memory pointed to by 's' and 'p' in the following program?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    struct ex
+    {
+        int i;
+        float j;
+        char *s;
+    };
+    struct ex *p;
+    p = (struct ex *)malloc(sizeof(struct ex));
+    p->s = (char*)malloc(20);
+    return 0;
+}`,
+options:[
+"free(p); , free(p->s);",
+"free(p->s); , free(p);",
+"free(p->s);",
+"free(p);"
+],
+answer:1,
+explanation:"First free the inner dynamically allocated memory (p->s), then free the structure pointer (p)."
+},
+{
+q:"4. Point out the correct statement which correctly allocates memory dynamically for 2D array in the following program?",
+code:`#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+    int *p, i, j;
+    /* Add statement here */
+    for(i=0; i<3; i++)
+    {
+        for(j=0; j<4; j++)
+        {
+            p[i*4+j] = i;
+            printf("%d", p[i*4+j]);
+        }
+    }
+    return 0;
+}`,
+options:[
+"p = (int*) malloc(3, 4);",
+"p = (int*) malloc(3*sizeof(int));",
+"p = malloc(3*4*sizeof(int));",
+"p = (int*) malloc(3*4*sizeof(int));"
+],
+answer:3,
+explanation:"To allocate memory for a 3x4 2D array stored linearly, allocate 3*4 integers: malloc(3*4*sizeof(int))."
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>
+   

@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"Which of the following elements of electrical engineering cannot be analyzed using Ohm’s law?",
+options:["Capacitors","Inductors","Transistors","Resistance"],
+answer:3,
+explanation:"Ohm’s law cannot be used for unilateral networks. Transistor forms a unilateral network."
+},
+{
+q:"What is constant for a charged spherical shell according to basic electrical energy?",
+options:["Electrical potential outside the spherical shell","Electrical potential inside the spherical shell","Electrical field outside the spherical shell","Electrical field inside the spherical shell"],
+answer:2,
+explanation:"The electrical potential inside the spherical shell is constant and equal to the surface potential."
+},
+{
+q:"Where does electro-static shielding occur in a charged spherical shell?",
+options:["When electrical potential outside spherical shell is zero","When electrical potential inside the spherical shell is zero","When electrical field outside the spherical shell","Electrical field inside the spherical shell"],
+answer:4,
+explanation:"Electrostatic shielding occurs because the electric field inside the spherical shell is zero."
+},
+{
+q:"Which of the following is a correct representation of peak value in an AC Circuit?",
+options:["RMS value/Peak factor","RMS value*Form factor","RMS value/Form factor","RMS value*Peak factor"],
+answer:4,
+explanation:"Peak value = RMS value × Peak factor (Crest factor)."
+},
+{
+q:"Which of the following is incorrect about alternating current?",
+options:["Frequency is zero","Magnitude changes with time","Can be transported to larger distances with less loss in power","Flows in both directions"],
+answer:1,
+explanation:"AC has non-zero frequency. Frequency zero applies to DC."
+},
+{
+q:"How many cycles will an AC signal make in 2 seconds if its frequency is 100 Hz?",
+options:["50","100","150","200"],
+answer:4,
+explanation:"Frequency = cycles per second. 100 × 2 = 200 cycles."
+},
+{
+q:"What will be the direction of the drift velocity of electrons with respect to the electric field?",
+options:["Same as electric field","Opposite to electric field","Perpendicular positive direction","Perpendicular negative direction"],
+answer:2,
+explanation:"Electrons move opposite to the applied electric field."
+},
+{
+q:"What will be the current density if 30A flows through 0.5 m2 area?",
+options:["7.5 A/m2","15 A/m2","60 A/m2","120 A/m2"],
+answer:3,
+explanation:"Current density = I/A = 30/0.5 = 60 A/m2."
+},
+{
+q:"If R1 > R2 in series, which consumes more power?",
+options:["R1 consumes more power","R2 consumes more power","Both consume same power","Cannot determine"],
+answer:1,
+explanation:"Power P = I²R. Same current flows, larger resistance consumes more power."
+},
+{
+q:"What is zero for a charged spherical shell?",
+options:["Electrical potential outside","Electrical potential inside","Electrical field outside","Electrical field inside"],
+answer:4,
+explanation:"Electric field inside a charged spherical shell is zero."
+},
+{
+q:"What kind of quantity is Electric potential?",
+options:["Vector","Tensor","Scalar","Dimensionless"],
+answer:3,
+explanation:"Electric potential has magnitude only, so it is scalar."
+},
+{
+q:"What do crowded lines of force indicate?",
+options:["Strong electric field","Weak electric field","Strong electric potential","Weak electric potential"],
+answer:1,
+explanation:"More crowded lines mean stronger electric field."
+},
+{
+q:"What is the direction of the electric field at a point?",
+options:["Perpendicular to field","Tangent to field line","No direction","Random direction"],
+answer:2,
+explanation:"Electric field direction is tangent to the field line at that point."
+},
+{
+q:"What is magnitude of mutually induced emf E2 in transformer?",
+options:["Directly proportional to rate of change of flux and secondary turns","Inversely proportional to both","Proportional to flux and inversely to turns","Inversely proportional to flux and proportional to turns"],
+answer:1,
+explanation:"E2 ∝ N2 × (dΦ/dt)."
+},
+{
+q:"If secondary turns are less than primary turns in transformer?",
+options:["Voltage stepped up","Voltage stepped down","Power stepped up","Power stepped down"],
+answer:2,
+explanation:"Ns < Np gives step-down transformer."
+},
+{
+q:"Number of primary turns in 200/1000V transformer if emf per turn is 10V?",
+options:["5","10","20","40"],
+answer:3,
+explanation:"Primary turns = 200/10 = 20."
+},
+{
+q:"Correct representation of average value in AC circuit?",
+options:["RMS value/Form factor","RMS value*Form factor","RMS value/Peak factor","RMS value*Peak factor"],
+answer:1,
+explanation:"Average value = RMS value / Form factor."
+},
+{
+q:"Who defined electric current and devised method to measure current?",
+options:["Michael Faraday","Andre-Marie Ampere","Nikola Tesla","Alessandro Volta"],
+answer:2,
+explanation:"Andre-Marie Ampere defined electric current and measurement method."
+},
+{
+q:"How many electrons constitute 2 Coulombs?",
+options:["6.24*10^18","12.48*10^18","1.602*10^19","3.204*10^19"],
+answer:2,
+explanation:"1C = 6.24×10^18 electrons. 2C = 12.48×10^18 electrons."
+},
+{
+q:"Which is correct about direct current?",
+options:["Magnitude constant","Frequency zero","Transported long distance with less loss","Flows in one direction"],
+answer:4,
+explanation:"Direct current flows only in one direction."
+},
+{
+q:"Who first witnessed effect of magnetism by electric current?",
+options:["Hans Christian Orsted","Alexander Graham Bell","Michael Faraday","Gustav Kirchhoff"],
+answer:1,
+explanation:"Orsted discovered magnetic effect of electric current."
+},
+{
+q:"What is electrical conductivity?",
+options:["Ratio of current density to electric field","Product of current density and electric field","Ratio of electric field to current density","Reciprocal of product"],
+answer:1,
+explanation:"Conductivity σ = J/E."
+},
+{
+q:"What is responsible for current flow?",
+options:["Protons","Electrons","Nucleus","Protons and electrons"],
+answer:2,
+explanation:"Electrons move to produce current."
+},
+{
+q:"According to KCL what must be zero?",
+options:["Sum of currents in loop","Sum of power in loop","Sum of currents at junction","Sum of voltages input-output"],
+answer:3,
+explanation:"Algebraic sum of currents at a junction is zero."
+},
+{
+q:"How many directions can electric field at a point have?",
+options:["Zero","One","Two","Many"],
+answer:2,
+explanation:"Electric field at a point has only one definite direction."
+},
+{
+q:"If secondary turns greater than primary?",
+options:["Voltage stepped up","Voltage stepped down","Power stepped up","Power stepped down"],
+answer:1,
+explanation:"Ns > Np gives step-up transformer."
+},
+{
+q:"Voltage transformation ratio is?",
+options:["Primary turns/Secondary turns","Secondary emf/Primary emf","Secondary current/Primary current","Primary power/Secondary power"],
+answer:2,
+explanation:"Voltage transformation ratio = E2/E1."
+},
+{
+q:"Induced emf in primary of transformer is?",
+options:["Primary turns/emf per turn","Primary turns × emf per turn","Secondary turns/emf per turn","Secondary turns × emf per turn"],
+answer:2,
+explanation:"E1 = N1 × emf per turn."
+},
+{
+q:"Which current drawn by primary when secondary open in ideal transformer?",
+options:["Secondary current","Leakage current","Magnetizing current","Working current"],
+answer:3,
+explanation:"Only magnetizing current flows when secondary is open."
+},
+{
+q:"What does positive power indicate?",
+options:["Element absorbing power","Element supplying power","May absorb or supply","Neither"],
+answer:1,
+explanation:"Positive power means element absorbs power."
+},
+{
+q:"How does induced emf in DC motor react to supply voltage?",
+options:["Aid supply voltage","Double supply voltage","Oppose supply voltage","Half supply voltage"],
+answer:3,
+explanation:"According to Lenz’s law, induced emf opposes supply voltage."
+},
+{
+q:"Which circuits cannot be analyzed using Ohm’s law?",
+options:["Unilateral","Bilateral","Linear","Conductors"],
+answer:1,
+explanation:"Ohm’s law not applicable to unilateral networks."
+},
+{
+q:"According to KVL what must be zero?",
+options:["Sum of currents in loop","Sum of power in loop","Sum of losses in loop","Sum of voltages in loop"],
+answer:4,
+explanation:"Algebraic sum of voltages in a closed loop is zero."
+}
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"What is the purpose of a transistor in electronic circuits?",
+options:["To regulate voltage","To store data","To filter noise","To amplify or switch electronic signals"],
+answer:4,
+explanation:"Transistors are semiconductor devices used for amplification and switching in electronic circuits."
+},
+{
+q:"Which type of semiconductor device acts as a one-way valve for electric current?",
+options:["Diode","Inductor","Transistor","Capacitor"],
+answer:1,
+explanation:"A diode allows current to flow in one direction while blocking it in the reverse direction."
+},
+{
+q:"What is the purpose of a transistor in electronic circuits?",
+options:["To filter noise","To amplify or switch electronic signals","To regulate voltage","To store data"],
+answer:2,
+explanation:"Transistors are used for amplification and switching of electronic signals."
+},
+{
+q:"The fixed resistors restrict the flow of current up to what level?",
+options:["Variable range","Any range","Certain level","Infinite level"],
+answer:3,
+explanation:"Fixed resistors restrict the flow of current to a certain level and cannot be varied."
+},
+{
+q:"Capacitance is the ratio of electric charge to what?",
+options:["Potential difference","Electric difference","Potential energy","Voltage difference"],
+answer:1,
+explanation:"Capacitance = Charge / Potential difference."
+},
+{
+q:"The ganged capacitor is the combination of what?",
+options:["One variable and one polarized capacitor","One fixed and one variable capacitor","Two fixed capacitors","Two variable capacitors"],
+answer:4,
+explanation:"A ganged capacitor consists of two variable capacitors connected together with a single shaft."
+},
+{
+q:"What is the function of an inductor?",
+options:["Makes change in current","Allows constant current","Opposes change in current","Allows change in current"],
+answer:3,
+explanation:"An inductor opposes the change in current flowing through it."
+},
+{
+q:"If inductance increases then which does not necessarily increase?",
+options:["Cross sectional area","Frequency","Number of windings","Permeability"],
+answer:2,
+explanation:"Inductance depends on permeability, area, and number of turns. Frequency does not necessarily increase."
+},
+{
+q:"Which of the following is an active transducer?",
+options:["Capacitance","Thermistor","Resistance","Thermocouple"],
+answer:4,
+explanation:"Thermocouple is an active transducer as it generates output by itself."
+},
+{
+q:"Which is the most widely used inductance transducer?",
+options:["Linear variable differential transformer","Linear variable transformer","Linear integrated transformer","Linear differential transformer"],
+answer:1,
+explanation:"LVDT (Linear Variable Differential Transformer) is the most widely used inductance transducer."
+},
+{
+q:"The temperature coefficient is linear over a large temperature range for which material?",
+options:["Copper","Tungsten","Platinum","Nickel"],
+answer:3,
+explanation:"Platinum has a linear temperature coefficient over a wide temperature range."
+},
+{
+q:"Hall effect transducers are non-contact devices with what?",
+options:["Low resolution","High resolution","No resolution","Large size"],
+answer:2,
+explanation:"Hall effect transducers are non-contact devices with high resolution."
+},
+{
+q:"Which parameter is not useful for characterizing thermistor?",
+options:["Temperature constant","Resistance ratio","Dissipation constant","Time constant"],
+answer:1,
+explanation:"Temperature constant is not used as a characteristic parameter for thermistors."
+},
+{
+q:"Which is an asymmetric crystalline material?",
+options:["Barium chloride","Barium nitrate","Barium titanite","Sodium nitrate"],
+answer:3,
+explanation:"Barium titanite is an asymmetric crystalline material."
+},
+{
+q:"Which impurity is added to make a semiconductor P-type?",
+options:["Indium","Gallium","Boron","Antimony"],
+answer:3,
+explanation:"Boron is a trivalent impurity used to form P-type semiconductor."
+},
+{
+q:"What is the layer formed at diode junction called?",
+options:["Heterojunction Layer","Depletion Layer","Diffusion Layer","Combination Layer"],
+answer:2,
+explanation:"The depletion layer forms at the junction due to accumulation of charges."
+},
+{
+q:"What is the diffusion current density in given semiconductor problem?",
+options:["187 A/m3","211 A/m3","170 A/m3","145 A/m3"],
+answer:1,
+explanation:"Using Jn = eDn (dn/dx), the diffusion current density is 187 A/m3."
+},
+{
+q:"What type of device is a diode?",
+options:["Isolated","Inappropriate","Unidirectional","Bidirectional"],
+answer:3,
+explanation:"A diode is a unidirectional device allowing current flow in one direction."
+},
+{
+q:"In reverse bias, Zener diode maintains voltage close to what?",
+options:["Threshold voltage","Zener breakdown voltage","Conduction voltage","Knee voltage"],
+answer:2,
+explanation:"In breakdown region, voltage remains close to Zener breakdown voltage."
+},
+{
+q:"Which application widely uses Zener diode?",
+options:["Shunt regulator","Series regulator","Rectifiers","Clamper"],
+answer:1,
+explanation:"Zener diodes are widely used as shunt voltage regulators."
+}
+],
+
+// ........Section-3............
+3:[
+{
+q:"What is Digital Electronics?",
+options:["Field of electronics involving the study of digital signal","Engineering of devices that digital signal","Engineering of devices that produce digital signal","All of the mentioned"],
+answer:4,
+explanation:"Digital electronics involves study of digital signals and design of systems that use or generate them."
+},
+{
+q:"Which of the following is correct for Digital Circuits?",
+options:["Less susceptible to noise or degradation in quality","Use transistors to create logic gates to perform Boolean logic","Easier to perform error detection and correction with digital signal","All of the mentioned"],
+answer:4,
+explanation:"Digital circuits are less susceptible to noise, use logic gates and allow easier error detection and correction."
+},
+{
+q:"What is a Circuit?",
+options:["Open-loop through which electrons can pass","Closed-loop through which electrons can pass","Closed-loop through which Neutrons can pass","None of the mentioned"],
+answer:2,
+explanation:"A circuit is a closed-loop path through which electrons can flow."
+},
+{
+q:"Which of the following is an example of digital electronics?",
+options:["Computers","Information appliances","Digital cameras","All of the mentioned"],
+answer:4,
+explanation:"Computers, digital cameras and appliances are examples of digital electronics."
+},
+{
+q:"Which of the following is a type of digital logic circuit?",
+options:["Combinational logic circuits","Sequential logic circuits","Both Combinational & Sequential logic circuits","None of the mentioned"],
+answer:3,
+explanation:"Digital logic circuits are classified into combinational and sequential circuits."
+},
+{
+q:"Which option comes under non-saturated logic family?",
+options:["Emitter–coupled Logic","High-Threshold Logic","Integrated–injection Logic","Diode–Transistor Logic"],
+answer:1,
+explanation:"Emitter Coupled Logic (ECL) is a non-saturated logic family."
+},
+{
+q:"A switching function with more than one output is called?",
+options:["Multi-gate function","Multi-output function","Multiple-gate function","Multiple-output function"],
+answer:2,
+explanation:"A multi-output function has more than one output."
+},
+{
+q:"Which IC characteristic represents switching time?",
+options:["Fan-out","Fan-in","Power dissipation","Propagation delay"],
+answer:4,
+explanation:"Propagation delay indicates switching speed of a transistor."
+},
+{
+q:"When can one logic gate drive many others?",
+options:["Low output impedance & low input impedance","High output impedance & high input impedance","High output impedance & low input impedance","Low output impedance & high input impedance"],
+answer:4,
+explanation:"Low output impedance and high input impedance allow one gate to drive many others."
+},
+{
+q:"Which circuit can add more than 1-bit simultaneously?",
+options:["Full-adder","Ripple-carry adder","Half-adder","Serial adder"],
+answer:2,
+explanation:"Ripple-carry adder performs multi-bit parallel addition."
+},
+{
+q:"Which gates convert NOR-based SR latch to SR flip-flop?",
+options:["Two 2-input AND gates","Two 3-input AND gates","Two 2-input OR gates","Two 3-input OR gates"],
+answer:1,
+explanation:"Two 2-input AND gates with clock input convert SR latch to flip-flop."
+},
+{
+q:"When does a negative level triggered flip-flop change state?",
+options:["When clock is negative","When clock is positive","When inputs are zero","When inputs are one"],
+answer:1,
+explanation:"Negative level triggered flip-flop changes state when clock is low."
+},
+{
+q:"Synchronous control inputs in SR flip-flop are?",
+options:["S","R","Clock","Both S and R"],
+answer:4,
+explanation:"Both S and R act as synchronous control inputs."
+},
+{
+q:"What must be used with synchronous inputs to trigger change?",
+options:["0","1","Clock","Previous output"],
+answer:3,
+explanation:"Clock signal is required to trigger flip-flop."
+},
+{
+q:"What determines number of emitters in TTL?",
+options:["Fan-in","Fan-out","Propagation delay","Noise immunity"],
+answer:1,
+explanation:"Fan-in determines number of inputs (emitters)."
+},
+{
+q:"Output of D flip-flop if clock low and D=0?",
+options:["0","1","No change","Toggle"],
+answer:3,
+explanation:"When clock is low, D input has no effect."
+},
+{
+q:"Basic gates in MOS logic family?",
+options:["NAND and NOR","AND and OR","NAND and OR","AND and NOR"],
+answer:1,
+explanation:"MOS logic primarily uses NAND and NOR gates."
+},
+{
+q:"TTL gate output when HIGH acts as?",
+options:["Voltage source","Current sink","Current source","Voltage sink"],
+answer:3,
+explanation:"HIGH output in TTL acts as current source."
+},
+{
+q:"Minimum Hamming distance for single error detection?",
+options:["1","2","3","4"],
+answer:2,
+explanation:"Minimum distance 2 required for single error detection."
+},
+{
+q:"Which detects double errors?",
+options:["Parity method","Check sum method","Bit generation method","Odd-Even method"],
+answer:2,
+explanation:"Checksum method can detect double errors."
+},
+{
+q:"Output of D flip-flop if D=1 and clock low?",
+options:["No change","Toggle","0","1"],
+answer:1,
+explanation:"When clock is low, D input does not affect output."
+},
+{
+q:"TTL circuit multi-emitter transistor gives?",
+options:["Low capacitance","High capacitance","Low inductance","High inductance"],
+answer:1,
+explanation:"Smaller area of multi-emitter transistor results in low capacitance."
+},
+{
+q:"Input to S when converting SR to JK?",
+options:["K·Q̅","K·Q","J·Q̅","J·Q"],
+answer:4,
+explanation:"S input = J·Q̅ in JK conversion."
+},
+{
+q:"Value for don't care condition?",
+options:["0","1","Either 0 or 1","Any except 0 and 1"],
+answer:3,
+explanation:"Don't care can be taken as 0 or 1."
+},
+{
+q:"Group of 4 ones in K-map called?",
+options:["Pair","Quad","Octet","Octave"],
+answer:2,
+explanation:"Four grouped 1s form a Quad."
+},
+{
+q:"Frequency of JK flip-flop when J=K=1?",
+options:["Half clock frequency","Equal to clock","Twice clock","Independent"],
+answer:1,
+explanation:"JK flip-flop divides frequency by 2."
+},
+{
+q:"Gate used to convert positive to negative triggered flip-flop?",
+options:["NOR","NOT","Buffer","NAND"],
+answer:2,
+explanation:"NOT gate inverts clock signal."
+},
+{
+q:"Synchronous control input in T flip-flop?",
+options:["T","0","Clock","1"],
+answer:1,
+explanation:"T is synchronous control input."
+},
+{
+q:"TTL multi-emitter transistor results in?",
+options:["Smaller resistance","Larger area","Smaller area","Larger resistance"],
+answer:3,
+explanation:"Multi-emitter transistor has smaller area."
+},
+{
+q:"TTL gate output when LOW acts as?",
+options:["Voltage source","Current sink","Current source","Voltage sink"],
+answer:2,
+explanation:"LOW output in TTL acts as current sink."
+},
+{
+q:"Multiplexers needed for 32x1 mux?",
+options:["Two 16x1 mux","Three 8x1 mux","Two 8x1 mux","Three 16x1 mux"],
+answer:1,
+explanation:"Two 16x1 multiplexers can form 32x1 mux."
+},
+{
+q:"Input to R when converting SR to JK?",
+options:["K·Q̅","K·Q","J·Q̅","J·Q"],
+answer:2,
+explanation:"R input = K·Q in JK conversion."
+},
+{
+q:"Minimum Hamming distance for single error correction?",
+options:["1","2","3","4"],
+answer:3,
+explanation:"Distance 3 required for single error correction."
+},
+{
+q:"Parity method detects?",
+options:["Single error","Double error","Triple error","Multiple errors"],
+answer:1,
+explanation:"Parity detects only single error."
+},
+{
+q:"Group of 8 ones in K-map called?",
+options:["Pair","Quad","Octet","Octave"],
+answer:3,
+explanation:"Eight grouped 1s form an Octet."
+},
+{
+q:"Which flip-flop cannot form serial shift register?",
+options:["D","SR","T","JK"],
+answer:3,
+explanation:"T flip-flop cannot be used as shift register."
+},
+{
+q:"Other name of Inter-Integrated logic?",
+options:["Merged Transistor Logic","Emitter-Coupled Logic","High threshold logic","Resistor-Transistor logic"],
+answer:1,
+explanation:"Inter-Integrated Circuit logic is also called Merged Transistor Logic."
+},
+{
+q:"Current-mode logic?",
+options:["TTL","RTL","ECL","IIC"],
+answer:3,
+explanation:"ECL is a current-mode logic."
+},
+{
+q:"AND gates needed for 4-bit parallel multiplier?",
+options:["Four 2-input","Eight 2-input","Sixteen 2-input","Two 2-input"],
+answer:3,
+explanation:"16 AND gates required for partial products."
+},
+{
+q:"Addition-shifting cycles for 4-bit multiplier?",
+options:["1","2","4","8"],
+answer:3,
+explanation:"4 cycles required for 4-bit multiplication."
+},
+{
+q:"4-bit parallel multiplier requires how many 4-bit adders?",
+options:["1","2","4","8"],
+answer:3,
+explanation:"Four 4-bit adders required."
+},
+{
+q:"JK flip-flop when J=K=1 performs?",
+options:["Preset","Reset","Clear","Toggle"],
+answer:4,
+explanation:"J=K=1 causes toggle operation."
+},
+{
+q:"Which is sequential code?",
+options:["8421","2421","5421","2441"],
+answer:1,
+explanation:"8421 is sequential BCD code."
+},
+{
+q:"Reflective codes?",
+options:["2421 and 5211","2421 and 8421","5211 and 8421","5421 and 2421"],
+answer:1,
+explanation:"2421 and 5211 are reflective codes."
+},
+{
+q:"Excess-3 code characteristic?",
+options:["Reflexive and sequential","Reflexive only","Sequential only","Neither"],
+answer:1,
+explanation:"Excess-3 is both reflexive and sequential."
+},
+{
+q:"X + XY = X follows which law?",
+options:["Consensus","Distributive","Duality","Absorption"],
+answer:4,
+explanation:"Expression follows Absorption law."
+},
+{
+q:"Consensus law expression?",
+options:["AB + AC + BC = AB + AC","AB + AC + BC = AB + BC","AB + AC + BC = AC + BC","AB + AC + BC = AB + AC + BC"],
+answer:1,
+explanation:"Consensus law: AB + AC + BC = AB + AC."
+},
+{
+q:"Which is not correct about Ex-NOR gate?",
+options:["One-bit comparator","Buffer","One-bit inverter","Universal gate"],
+answer:4,
+explanation:"XNOR is not a universal gate."
+},
+{
+q:"Anti-coincidence and coincidence gates respectively?",
+options:["XNOR and XOR","AND and OR","OR and AND","XOR and XNOR"],
+answer:4,
+explanation:"XOR is anti-coincidence and XNOR is coincidence gate."
+},
+{
+q:"Frequency division using 4 flip-flops?",
+options:["2","4","8","16"],
+answer:4,
+explanation:"Frequency division = 2^n, for n=4 gives 16."
+},
+{
+q:"Reduction of XYZ + X̅YZ?",
+options:["0","YZ","X + X̅","2YZ"],
+answer:2,
+explanation:"XYZ + X̅YZ = (X + X̅)YZ = YZ."
+},
+{
+q:"Priority encoder output if I2=1?",
+options:["00","01","10","11"],
+answer:3,
+explanation:"I2 high gives output 10."
+},
+{
+q:"4x1 multiplexer has?",
+options:["Four 3-input AND gates","Four 2-input AND gates","One 3-input AND gate","One 2-input AND gate"],
+answer:1,
+explanation:"Uses four 3-input AND gates."
+},
+{
+q:"Combinational circuit output depends on?",
+options:["Past inputs","Present inputs","Past and present","Future inputs"],
+answer:2,
+explanation:"Depends only on present inputs."
+},
+{
+q:"Pin used to activate/deactivate multiplexer?",
+options:["Enable pin","Selection pin","Logic pin","Preset pin"],
+answer:1,
+explanation:"Enable pin controls activation of multiplexer."
+}
+
+],
+4:[
+  {
+q:"What is Microprocessor?",
+options:["A multipurpose PLD that accepts binary data as input","A multipurpose PLD that accepts an integer as input","A multipurpose PLD that accepts whole numbers as input","A multipurpose PLD that accepts prime numbers as input"],
+answer:1,
+explanation:"A microprocessor is a multipurpose PLD that accepts binary data as input, processes it according to instructions stored in memory, and outputs the result."
+},
+{
+q:"Which of the following is correct about 8086 microprocessor?",
+options:["Intel’s first x86 processor","Motrola’s first x86 processor","STMICROELECTRONICS’s first x86 processor","NanoXplore x86 processor"],
+answer:1,
+explanation:"The Intel 8086 is Intel’s first x86 processor introduced in 1978 with advanced architecture and larger memory addressing capability."
+},
+{
+q:"Which of the following is a type of microprocessor?",
+options:["CISC","RISC","EPIC","All of the mentioned"],
+answer:4,
+explanation:"CISC, RISC and EPIC are types of microprocessor architectures."
+},
+{
+q:"The microprocessor of a computer can operate on any information if it is present in __________ only.",
+options:["Program Counter","Flag","Main Memory","Secondary Memory"],
+answer:3,
+explanation:"The microprocessor can operate only on data present in the main memory (RAM)."
+},
+{
+q:"Which technology was used by Intel to design its first 8-bit microprocessor?",
+options:["NMOS","HMOS","PMOS","TTL"],
+answer:3,
+explanation:"PMOS technology was used in early Intel processors like 4004 and 8008."
+},
+{
+q:"Which addressing method does the instruction MOV AX,[BX] represent?",
+options:["Register indirect addressing mode","Direct addressing mode","Register addressing mode","Register relative addressing mode"],
+answer:1,
+explanation:"In register indirect addressing mode, the address of the operand is stored in a register."
+},
+{
+q:"What is the word length of an 8-bit microprocessor?",
+options:["8-bits – 64 bits","4-bits – 32 bits","8-bits – 16 bits","8-bits – 32 bits"],
+answer:1,
+explanation:"An 8-bit CPU processes 8 bits at a time, and word length may range from 4 to 64 bits."
+},
+{
+q:"In 8-bit microprocessor, how many opcodes are present?",
+options:["246","278","250","256"],
+answer:1,
+explanation:"Although maximum 256 opcodes are possible, only 246 are implemented."
+},
+{
+q:"Which of the following is not true about the address bus?",
+options:["It consists of control PIN 21 to 28","It is a bidirectional bus","It is 16 bits in length","Lower address bus lines (AD0–AD7) are called Line number"],
+answer:2,
+explanation:"The address bus is unidirectional, not bidirectional."
+},
+{
+q:"Which of the following is true about microprocessors?",
+options:["It has an internal memory","It has interfacing circuits","It contains ALU, CU, and registers","It uses Harvard architecture"],
+answer:3,
+explanation:"A microprocessor contains ALU, Control Unit and registers. It does not have internal memory."
+}  
+]
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

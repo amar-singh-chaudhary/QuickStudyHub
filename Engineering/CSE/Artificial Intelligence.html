@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1:  [
+{
+q:"11. Seymour Papert of the MIT AI lab created a programming environment for children called:",
+options:["BASIC","LOGO","MYCIN","FORTRAN","None of the above"],
+answer:1,
+explanation:"Seymour Papert created LOGO at MIT as a programming language designed for children to support learning and problem-solving."
+},
+{
+q:"12. The Strategic Computing Program is a project of the:",
+options:["Defense Advanced Research Projects Agency","National Science Foundation","Jet Propulsion Laboratory","All of the above","None of the above"],
+answer:0,
+explanation:"The Strategic Computing Program was initiated by the Defense Advanced Research Projects Agency (DARPA) to advance AI and military computing technologies."
+},
+{
+q:"13. The original LISP machines produced by both LMI and Symbolics were based on research performed at:",
+options:["CMU","MIT","Stanford University","RAMD","None of the above"],
+answer:1,
+explanation:"The original LISP machines were based on research conducted at MIT."
+},
+{
+q:"14. In LISP, the addition 3 + 2 is entered as",
+options:["3 + 2","3 add 2","3 + 2 =","(+ 3 2)","None of the above"],
+answer:3,
+explanation:"LISP uses prefix notation, so addition is written as (+ 3 2)."
+},
+{
+q:"15. Weak AI is",
+options:[
+"the embodiment of human intellectual capabilities within a computer.",
+"a set of computer programs that produce output that would be considered to reflect intelligence if it were generated by humans.",
+"the study of mental faculties through the use of mental models implemented on a computer.",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Weak AI refers to computer programs designed to simulate intelligent behavior without possessing true human-like understanding."
+},
+{
+q:"11. Seymour Papert of the MIT AI lab created a programming environment for children called:",
+options:["BASIC","LOGO","MYCIN","FORTRAN","None of the above"],
+answer:1,
+explanation:"Correct answer is LOGO."
+},
+{
+q:"12. The Strategic Computing Program is a project of the:",
+options:["Defense Advanced Research Projects Agency","National Science Foundation","Jet Propulsion Laboratory","All of the above","None of the above"],
+answer:0,
+explanation:"Correct answer is Defense Advanced Research Projects Agency."
+},
+{
+q:"13. The original LISP machines produced by both LMI and Symbolics were based on research performed at:",
+options:["CMU","MIT","Stanford University","RAMD","None of the above"],
+answer:1,
+explanation:"Correct answer is MIT."
+},
+{
+q:"14. In LISP, the addition 3 + 2 is entered as",
+options:["3 + 2","3 add 2","3 + 2 =","(+ 3 2)","None of the above"],
+answer:3,
+explanation:"Correct answer is (+ 3 2)."
+},
+{
+q:"15. Weak AI is",
+options:[
+"the embodiment of human intellectual capabilities within a computer.",
+"a set of computer programs that produce output that would be considered to reflect intelligence if it were generated by humans.",
+"the study of mental faculties through the use of mental models implemented on a computer.",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is a set of computer programs that produce output that would be considered to reflect intelligence if generated by humans."
+},
+{
+q:"1. What is the term used for describing the judgmental or commonsense part of problem solving?",
+options:["Heuristic","Critical","Value based","Analytical","None of the above"],
+answer:0,
+explanation:"Correct answer is Heuristic."
+},
+{
+q:"2. What stage of the manufacturing process has been described as 'the mapping of function onto form'?",
+options:["Design","Distribution","project management","field service","None of the above"],
+answer:0,
+explanation:"Correct answer is Design."
+},
+{
+q:"3. Which kind of planning consists of successive representations of different levels of a plan?",
+options:["hierarchical planning","non-hierarchical planning","All of the above","project planning","None of the above"],
+answer:0,
+explanation:"Correct answer is hierarchical planning."
+},
+{
+q:"4. What was originally called the 'imitation game' by its creator?",
+options:["The Turing Test","LISP","The Logic Theorist","Cybernetics","None of the above"],
+answer:0,
+explanation:"Correct answer is The Turing Test."
+},
+{
+q:"5. Decision support programs are designed to help managers make:",
+options:["budget projections","visual presentations","business decisions","vacation schedules","None of the above"],
+answer:2,
+explanation:"Correct answer is business decisions."
+},
+{
+q:"26. A problem is first connected to its proposed solution during the _____ stage.",
+options:["conceptualization","identification","formalization","implementation.","testing"],
+answer:2,
+explanation:"Correct answer is formalization."
+},
+{
+q:"27. What is the name of the computer program that simulates the thought processes of human beings?",
+options:["Human logic","Expert reason","Expert system","Personal information","None of the above"],
+answer:2,
+explanation:"Correct answer is Expert system."
+},
+{
+q:"28. What is the name of the computer program that contains the distilled knowledge of an expert?",
+options:["Data base management system","Management information System","Expert system","Artificial intelligence","None of the above"],
+answer:2,
+explanation:"Correct answer is Expert system."
+},
+{
+q:"29. Claude Shannon described the operation of electronic switching circuits with a system of mathematical logic called:",
+options:["LISP","XLISP","Boolean algebra","neural networking","None of the above"],
+answer:2,
+explanation:"Correct answer is Boolean algebra."
+},
+{
+q:"30. A computer program that contains expertise in a particular domain is called an:",
+options:["intelligent planner","automatic processor","expert system","operational symbolizer","None of the above"],
+answer:2,
+explanation:"Correct answer is expert system."
+},
+{
+q:"31. Ambiguity may be caused by:",
+options:["syntactic ambiguity","multiple word meanings","unclear antecedents","All of the above","None of the above"],
+answer:3,
+explanation:"Correct answer is All of the above."
+},
+{
+q:"32. Which company offers the LISP machine considered to be 'the most powerful symbolic processor available'?",
+options:["LMI","Symbolics","Xerox","Texas Instruments","None of the above"],
+answer:1,
+explanation:"Correct answer is Symbolics."
+},
+{
+q:"33. What of the following is considered to be a pivotal event in the history of AI.",
+options:[
+"1949, Donald O, The Organization of Behaviour",
+"1950, Computing Machinery and Intelligence",
+"1956, Dartmouth University Conference Organized by John McCarthy",
+"1961, Computer and Computer Sense",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is 1956, Dartmouth University Conference Organized by John McCarthy."
+},
+{
+q:"34. Natural language processing is divided into the two subfields of:",
+options:["symbolic and numeric","time and motion","algorithmic and heuristic","understanding and generation","None of the above"],
+answer:3,
+explanation:"Correct answer is understanding and generation."
+},
+{
+q:"35. High-resolution, bit-mapped displays are useful for displaying:",
+options:["clearer characters","graphics","more characters","All of the above","None of the above"],
+answer:3,
+explanation:"Correct answer is All of the above."
+},
+{
+q:"21. In LISP, the function that returns the first element of a list is",
+options:["set","car","first","second","None of the above"],
+answer:1,
+explanation:"Correct answer is car."
+},
+{
+q:"22. Nils Nilsson headed a team at SRI that created a mobile robot named:",
+options:["Robitics","Dedalus","Shakey","Vax","None of the above"],
+answer:2,
+explanation:"Correct answer is Shakey."
+},
+{
+q:"23. An AI technique that allows computers to understand associations and relationships between objects and events is called:",
+options:["heuristic processing","cognitive science","relative symbolism","pattern matching","None of the above"],
+answer:3,
+explanation:"Correct answer is pattern matching."
+},
+{
+q:"24. The new organization established to implement the Fifth Generation Project is called:",
+options:[
+"ICOT (Institute for New Generation Computer Technology)",
+"MITI (Ministry of International Trade and Industry)",
+"MCC (Microelectronics and Computer Technology Corporation)",
+"SCP (Strategic Computing Program)",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is ICOT (Institute for New Generation Computer Technology)."
+},
+{
+q:"25. The field that investigates the mechanics of human intelligence is:",
+options:["history","cognitive science","psychology","sociology","None of the above"],
+answer:1,
+explanation:"Correct answer is cognitive science."
+},
+{
+q:"46. In LISP, the function X(x) = (2x + 1) would be rendered as",
+options:[
+"(lambda (x) (+ (* 2 x) 1))",
+"(lambda (x) (+ 1 (* 2x)))",
+"(+ lambda (x) 1 (* 2x))",
+"(* lambda(x) (+ 2x 1))",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is (lambda (x) (+ (* 2 x) 1))."
+},
+{
+q:"47. A natural language generation program must decide:",
+options:[
+"what to say",
+"when to say something",
+"why it is being used",
+"both (a) and (b)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (a) and (b)."
+},
+{
+q:"48. Who is considered to be the 'father' of artificial intelligence?",
+options:[
+"Fisher Ada",
+"John McCarthy",
+"Allen Newell",
+"Alan Turing",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is John McCarthy."
+},
+{
+q:"49. In which of the following areas may ICAI programs prove to be useful?",
+options:[
+"educational institutions",
+"corporations",
+"department of Defence",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above."
+},
+{
+q:"50. A network with named nodes and labeled arcs that can be used to represent certain natural language grammars to facilitate parsing is called:",
+options:[
+"Tree Network",
+"Star Network",
+"Transition Network",
+"Complete Network",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Transition Network."
+},
+{
+q:"41. The hardware features of LISP machines generally include:",
+options:[
+"large memory and a high-speed processor",
+"letter-quality printers and 8-inch disk drives",
+"a mouse and a specialized keyboard",
+"both (a) and (c)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (a) and (c)."
+},
+{
+q:"42. In 1985, David Levy defeated a world champion chess program. What was the name of the chess program?",
+options:[
+"Kaissa",
+"CRAY BLITZ",
+"Golf",
+"DIGDUG",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is CRAY BLITZ."
+},
+{
+q:"43. The explanation facility of an expert system may be used to:",
+options:[
+"construct a diagnostic model",
+"expedite the debugging process",
+"explain the system's reasoning process",
+"All of the above",
+"both (b) and (c)"
+],
+answer:4,
+explanation:"Correct answer is both (b) and (c)."
+},
+{
+q:"44. A process that is repeated, evaluated, and refined is called:",
+options:[
+"diagnostic",
+"descriptive",
+"interpretive",
+"iterative",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is iterative."
+},
+{
+q:"45. Visual clues that are helpful in computer vision include:",
+options:[
+"colour and motion",
+"depth and texture",
+"height and weight",
+"a and b above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is a and b above."
+},
+
+
+
+],
+// ........Section-2............
+
+2: [
+{
+q:"6. A computer vision technique that relies on image templates is:",
+options:[
+"edge detection",
+"binocular vision",
+"model-based vision",
+"robot vision",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is model-based vision."
+},
+{
+q:"7. DARPA, the agency that has funded a great deal of American AI research, is part of the Department of:",
+options:[
+"Defense",
+"Energy",
+"Education",
+"Justice",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Defense."
+},
+{
+q:"8. Which of these schools was not among the early leaders in AI research?",
+options:[
+"Dartmouth University",
+"Harvard University",
+"Massachusetts Institute of Technology",
+"Stanford University",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Harvard University."
+},
+{
+q:"9. A professor at Stanford University coined the word 'artificial intelligence' in 1956 at a conference held at Dartmouth College. Can you name the Professor?",
+options:[
+"David Levy",
+"John McCarthy",
+"Joseph Weizenbaum",
+"Hans Berliner",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is John McCarthy."
+},
+{
+q:"10. In LISP, the function (copy-list <list>)",
+options:[
+"returns a new list that is equal to <list> by copying the top-level elements",
+"returns the length of <list>",
+"returns t if <list> is empty",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is returns a new list that is equal to <list> by copying the top-level elements."
+},
+{
+q:"1. A series of AI systems developed by Pat Langley to explore the role of heuristics in scientific discovery is:",
+options:[
+"RAMD",
+"BACON",
+"MIT",
+"DU",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is BACON."
+},
+{
+q:"2. A.M. Turing developed a technique for determining whether a computer could demonstrate artificial intelligence. Presently, this technique is called:",
+options:[
+"Turing Test",
+"Algorithm",
+"Boolean Algebra",
+"Logarithm",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Turing Test."
+},
+{
+q:"3. A Personal Consultant knowledge base contains information in the form of:",
+options:[
+"parameters",
+"contexts",
+"production rules",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above."
+},
+{
+q:"4. Which approach to speech recognition avoids the problem caused by variation in speech patterns among different speakers?",
+options:[
+"Continuous speech recognition",
+"Isolated word recognition",
+"Connected word recognition",
+"Speaker-dependent recognition",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Isolated word recognition."
+},
+{
+q:"5. Which of the following is a component of an expert system?",
+options:[
+"inference engine",
+"knowledge base",
+"user interface",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above."
+},
+{
+q:"16. The characteristic of a computer system capable of thinking, reasoning and learning is known as:",
+options:[
+"machine intelligence",
+"human intelligence",
+"artificial intelligence",
+"virtual intelligence",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is artificial intelligence."
+},
+{
+q:"17. What part of the manufacturing process relates to each stage of the process and to the process as a whole?",
+options:[
+"field service",
+"design",
+"distribution",
+"project management",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is project management."
+},
+{
+q:"18. The area of AI that investigates methods of facilitating communication between people and computers is:",
+options:[
+"natural language processing",
+"symbolic processing",
+"decision support",
+"robotics",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is natural language processing."
+},
+{
+q:"19. In the 16th century, a Czech rabbi reportedly created a living clay man whose name has become a synonym for an artificial human. The clay man's name was:",
+options:[
+"Frankenstein",
+"Golem",
+"Paracelsus",
+"Hal",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Golem."
+},
+{
+q:"20. For speech understanding systems to gain widespread acceptance in office automation, they must feature:",
+options:[
+"speaker independence",
+"speaker dependence",
+"isolated word recognition",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is speaker independence."
+},
+{
+q:"11. LISP machines also are known as:",
+options:[
+"AI workstations",
+"time-sharing terminals",
+"super mini computers",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is AI workstations."
+},
+{
+q:"12. Natural language processing can be divided into the two subfields of:",
+options:[
+"context and expectations",
+"generation and understanding",
+"semantics of pragmatics",
+"recognition and synthesis",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is generation and understanding."
+},
+{
+q:"13. How many ALU(s) are controlled by one control unit in SIMD (Single Instruction stream, Multiple Data stream) architecture?",
+options:[
+"one or more ALUs",
+"One ALU",
+"Only two ALU",
+"Impossible to say",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is one or more ALUs."
+},
+{
+q:"14. Which of the following function returns t if the object is a number in LISP?",
+options:[
+"(number <object>)",
+"(numberp <object>)",
+"(numericp <object>)",
+"(numeric <object>)",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is (numberp <object>)."
+},
+{
+q:"15. Which of the following have computers traditionally done better than people?",
+options:[
+"storing information",
+"responding flexibly",
+"computing numerically",
+"both (a) and (c)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (a) and (c)."
+},
+{
+q:"31. In LISP, the function (endp <list>)",
+options:[
+"returns a new list that is equal to <list> by copying the top-level element of <list>",
+"returns the length of <list>",
+"returns t if <list> is empty",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is returns t if <list> is empty."
+},
+{
+q:"32. In LISP, which of the following function assigns the value 10 to the symbol a?",
+options:[
+"(setq a 10)",
+"(a = b) where b = 10",
+"(a = 10)",
+"(setq 10 a)",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is (setq a 10)."
+},
+{
+q:"33. In LISP, the atom that stands for 'False' is:",
+options:[
+"t",
+"nil",
+"y",
+"time",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is nil."
+},
+{
+q:"34. The expert system developed at MIT to solve mathematical problems is known as:",
+options:[
+"RAND",
+"ISIS",
+"MACSYMA",
+"MOLGEN",
+"CMU"
+],
+answer:2,
+explanation:"Correct answer is MACSYMA."
+},
+{
+q:"35. Which approach to speech recognition avoids the problem caused by differences in pronunciation according to context?",
+options:[
+"continuous speech recognition",
+"connected word recognition",
+"isolated word recognition",
+"speaker-dependent recognition",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is connected word recognition."
+},
+{
+q:"46. The first widely-used commercial form of Artificial Intelligence used in products like microwave ovens and automobiles is:",
+options:[
+"Boolean logic",
+"Human logic",
+"Fuzzy logic",
+"Functional logic",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Fuzzy logic."
+},
+{
+q:"47. In his landmark book Cybernetics, Norbert Wiener suggested modeling scientific phenomena using not energy, but:",
+options:[
+"mathematics",
+"intelligence",
+"information",
+"history",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is information."
+},
+{
+q:"48. Input segments of AI programming contain(s):",
+options:[
+"sound",
+"smell",
+"touch",
+"sight and taste",
+"All of the above"
+],
+answer:4,
+explanation:"Correct answer is All of the above."
+},
+{
+q:"49. The applications in the Strategic Computing Program include:",
+options:[
+"battle management",
+"autonomous systems",
+"pilot's associate",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above."
+},
+{
+q:"50. In LISP, the function that evaluates <object> and assigns this value to the unevaluated <sconst> is:",
+options:[
+"(constant <sconst> <object>)",
+"(defconstant <sconst> <object>)",
+"(eva <sconst> <object>)",
+"(eva <object> <sconst>)",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is (defconstant <sconst> <object>)."
+}
+
+
+],
+
+// ........Section-3............
+
+3:[
+{
+q:"36. The symbols used in describing the syntax of a programming language are:",
+options:[
+"()",
+"{}",
+"\"\"",
+"<>",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is <>."
+},
+{
+q:"37. The integrated circuit was invented by Jack Kilby of:",
+options:[
+"MIT",
+"Texas Instruments",
+"Xerox",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Texas Instruments."
+},
+{
+q:"38. People overcome natural language problems by:",
+options:[
+"grouping attributes into frames",
+"understanding ideas in context",
+"identifying with familiar situations",
+"both (b) and (c)",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both (b) and (c)."
+},
+{
+q:"39. The Cedar, BBN Butterfly, Cosmic Cube and Hypercube machines can be characterized as:",
+options:[
+"SISD",
+"MIMD",
+"SIMD",
+"MISD",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is MIMD."
+},
+{
+q:"31. In LISP, the function (list-length <list>)",
+options:[
+"returns a new list that is equal to <list> by copying the top-level element of <list>",
+"returns the length of <list>",
+"returns t if <list> is empty",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is returns the length of <list>."
+},
+{
+q:"32. ART (Automatic Reasoning Tool) is designed to be used on:",
+options:[
+"LISP machines",
+"personal computers",
+"microcomputers",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is LISP machines."
+},
+{
+q:"33. Which particular generation of computers is associated with artificial intelligence?",
+options:[
+"Second",
+"Fourth",
+"Fifth",
+"Third",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Fifth."
+},
+{
+q:"34. Shaping teaching techniques to fit the learning patterns of individual students is the goal of:",
+options:[
+"decision support",
+"automatic programming",
+"intelligent computer-assisted instruction",
+"expert systems",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is intelligent computer-assisted instruction."
+},
+{
+q:"35. Which of the following function returns t if the object is a symbol in LISP?",
+options:[
+"(* <object>)",
+"(symbolp <object>)",
+"(nonnumeric <object>)",
+"(constantp <object>)",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is (symbolp <object>)."
+},
+{
+q:"1. The primary interactive method of communication used by humans is:",
+options:[
+"reading",
+"writing",
+"speaking",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is speaking, as it is the primary interactive method of human communication."
+},
+{
+q:"2. Elementary linguistic units which are smaller than words are:",
+options:[
+"allophones",
+"phonemes",
+"syllables",
+"All of the above",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is phonemes, which are the basic sound units of language."
+},
+{
+q:"3. In LISP, the atom that stands for \"true\" is:",
+options:[
+"t",
+"ml",
+"y",
+"time",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is t, which represents true in LISP."
+},
+{
+q:"4. A mouse device may be:",
+options:[
+"electro-chemical",
+"mechanical",
+"optical",
+"both b and c",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is both b and c, as a mouse can be mechanical or optical."
+},
+{
+q:"5. An expert system differs from a database program in that only an expert system:",
+options:[
+"contains declarative knowledge",
+"contains procedural knowledge",
+"features the retrieval of stored information",
+"expects users to draw their own conclusions",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is contains procedural knowledge, which allows expert systems to mimic decision-making processes."
+},
+{
+q:"6. Arthur Samuel is linked inextricably with a program that played:",
+options:[
+"checkers",
+"chess",
+"cricket",
+"football",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is checkers. Arthur Samuel developed one of the first self-learning checkers programs."
+},
+{
+q:"7. Natural language understanding is used in:",
+options:[
+"natural language interfaces",
+"natural language front ends",
+"text understanding systems",
+"All of the above",
+"(b) and (c) above"
+],
+answer:3,
+explanation:"Correct answer is All of the above, as natural language understanding is used in all these systems."
+},
+{
+q:"8. Which of the following are examples of software development tools?",
+options:[
+"debuggers",
+"editors",
+"assemblers, compilers and interpreters",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above, as all listed options are software development tools."
+},
+{
+q:"9. The first AI programming language was called:",
+options:[
+"BASIC",
+"FORTRAN",
+"IPL",
+"LISP",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is IPL (Information Processing Language), considered the first AI programming language."
+},
+{
+q:"10. The Personal Consultant is based on:",
+options:[
+"EMYCIN",
+"OPS5+",
+"XCON",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is EMYCIN, which served as the basis for the Personal Consultant expert system."
+},
+{
+q:"21. Computers normally solve problem by breaking them down into a series of yes-or-no decisions represented by 1s and 0s. What is the name of the logic that allows computers to assign numerical values that fall somewhere between 0 and 1?",
+options:[
+"Human logic",
+"Fuzzy logic",
+"Boolean logic",
+"Operational logic",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is Fuzzy logic, which allows values between 0 and 1 instead of strict binary values."
+},
+{
+q:"22. The component of an ICAI (Intelligent Computer-Assisted Instruction) presenting information to the student is the:",
+options:[
+"student model",
+"problem-solving expertise",
+"tutoring module",
+"All of the above",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is tutoring module, which presents instructional material to the student."
+},
+{
+q:"23. The company that grew out of research at the MIT AI lab is:",
+options:[
+"AI corp",
+"LMI",
+"Symbolics",
+"both (b) and (c)",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Symbolics, a company formed from MIT AI Lab research."
+},
+{
+q:"24. Which technique is being investigated as an approach to automatic programming?",
+options:[
+"generative CAI",
+"specification by example",
+"All of the above",
+"non-hierarchical planning",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is specification by example, a technique explored for automatic programming."
+},
+{
+q:"25. One definition of AI focuses on problem-solving methods that process:",
+options:[
+"smell",
+"symbols",
+"touch",
+"algorithms",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is symbols, as symbolic processing is central to many AI approaches."
+},
+{
+q:"16. The AI researcher who co-authored both the Handbook of Artificial Intelligence and The Fifth Generation is:",
+options:[
+"Bruce Lee",
+"Randy Davis",
+"Ed Feigenbaum",
+"Mark Fox",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Ed Feigenbaum, a prominent AI researcher and co-author of both books."
+},
+{
+q:"17. Which of the following is being investigated as a means of automating the creation of a knowledge base?",
+options:[
+"automatic knowledge acquisition",
+"simpler tools",
+"discovery of new concepts",
+"All of the above",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is automatic knowledge acquisition, which focuses on automating knowledge base creation."
+},
+{
+q:"18. The CAI (Computer-Assisted Instruction) technique based on programmed instruction is:",
+options:[
+"frame-based CAI",
+"generative CAI",
+"problem-solving CAI",
+"intelligent CAI",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is frame-based CAI, which follows programmed instruction principles."
+},
+{
+q:"19. A robot's \"arm\" is also known as its:",
+options:[
+"end effector",
+"actuator",
+"manipulator",
+"servomechanism",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is manipulator, which refers to the robot's arm mechanism."
+},
+{
+q:"20. KEE is a product of:",
+options:[
+"Teknowledge",
+"IntelliCorpn",
+"Texas Instruments",
+"Tech knowledge",
+"None of the above"
+],
+answer:0,
+explanation:"Correct answer is Teknowledge, the company that developed KEE (Knowledge Engineering Environment)."
+},
+{
+q:"26. Artificial intelligence is:",
+options:[
+"the embodiment of human intellectual capabilities within a computer.",
+"a set of computer programs that produce output that would be considered to reflect intelligence if it were generated by humans.",
+"the study of mental faculties through the use of mental models implemented on a computer.",
+"All of the above",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is All of the above, as AI can be defined in all these ways."
+},
+{
+q:"27. The primary method that people use to sense their environment is:",
+options:[
+"reading",
+"writing",
+"speaking",
+"seeing",
+"None of the above"
+],
+answer:3,
+explanation:"Correct answer is seeing, as vision is the primary human sensory method."
+},
+{
+q:"28. The Newell and Simon program that proved theorems of Principia Mathematica was:",
+options:[
+"Elementary Perceiver",
+"General Problem Solver",
+"Logic Theorist",
+"Boolean Algebra",
+"None of the above"
+],
+answer:2,
+explanation:"Correct answer is Logic Theorist, developed by Allen Newell and Herbert Simon."
+},
+{
+q:"29. In LISP, the function that assigns the value of a to b is:",
+options:[
+"(setq a b)",
+"(setq b a)",
+"(b = a)",
+"(set b = a)",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is (setq b a), which assigns the value of a to b in LISP."
+},
+{
+q:"30. The Cray X-MP, IBM 3090 and Connection Machine can be characterized as:",
+options:[
+"SISD",
+"SIMD",
+"MISD",
+"MIMD",
+"None of the above"
+],
+answer:1,
+explanation:"Correct answer is SIMD (Single Instruction, Multiple Data)."
+},
+
+
+
+]
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

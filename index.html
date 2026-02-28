@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickStudy</title>
+  <link rel="stylesheet" href="CSS/style.css" />
+ 
+
+</head>
+<body>
+<div class="navbar" id="navbar">
+
+    <div class="nav-left">
+        <span class="menu-btn" onclick="toggleMenu()">☰</span>
+
+        <!-- Logo -->
+        <span class="logo">QuickStudy</span>
+
+        <!-- Search container -->
+        <div class="search-container">
+            <input type="text"
+                   id="navSearch"
+                   placeholder="Search ...">
+            <button class="search-btn" onclick="submitSearch()">🔍</button>
+        </div>
+    </div>
+
+    <div class="nav-right">
+        <span class="nav-icon" onclick="toggleSearch()">🔍</span>
+        <span class="nav-icon">🔗</span>
+        <span class="nav-icon" id="darkToggle" onclick="toggleDark()">🌙</span>
+         <a href="/Authentication/Auth.html"><span class="nav-icon login-icon" title="Login / Signup" onclick="openAuth()">👤</span></a>
+    </div>
+
+</div>
+
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <h3>Menu</h3>
+
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      <span>Home</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="#">Dashboard</a>
+      <a href="#">Overview</a>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      <span>All MCQs</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="/General Aptitude/Arithmetic Aptitude/AptitudeList.html">Aptitude</a>
+      <a href="/Verbal and Reasoning/Logical Reasoning/LogicalReasoningList.html">Logical Reasoning</a>
+      <a href="/Verbal and Reasoning/Verbal Reasoning/VerbalReasoningList.html">Verbal Reasoning</a>
+      <a href="#">Technical</a>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      <span>School MCQs</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="#">Class 9</a>
+      <a href="#">Class 10</a>
+      <a href="#">Class 12</a>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      <span>DSA</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="#">Arrays</a>
+      <a href="#">Stacks</a>
+      <a href="#">Trees</a>
+    </div>
+  </div>
+
+  <div class="menu-item">
+    <div class="menu-title" onclick="toggleSubmenu(this)">
+      <span>Online Test</span>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="submenu">
+      <a href="mock-test1.html">Mock Test1</a>
+      <a href="mock-test2.html">Mock Test2</a>
+      <a href="Practice Test1.html">Practice Test1</a>
+      <a href="Practice Test2.html">Practice Test2</a>
+      <a href="Practice Test3.html">Practice Test3</a>
+      <a href="/Online Test/Aptitude Test.html">Arithmetic Test</a>
+      <a href="#">C Programming Test</a>
+      <a href="#">Data Structures Test</a>
+      <a href="#">Java Programming Test</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+
+  <main class="main">
+    <section class="welcome">
+      <h2>Welcome to QuickStudy!</h2>
+      <p>Aptitude questions and answers for placement and competitive exams.</p>
+    </section>
+
+    <section class="cards">
+      <div class="card">        
+        <h3>General Aptitude</h3>
+        <ul >
+          <li>
+            <a href="/General Aptitude/Arithmetic Aptitude/AptitudeList.html">Arithmetic Aptitude</a>
+          </li>
+          
+          <li>Data Interpretation</li>
+          <li>
+            <a href="/Online Test/Arithmetic Test.html">Online Aptitude Test</a>
+          </li>
+         
+          <li>Data Interpretation Test</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Verbal and Reasoning</h3>
+        <ul>
+          <li>
+            <a href="/Verbal and Reasoning/Verbal Reasoning/VerbalReasoningList.html">Verbal Reasoning</a>
+          </li>
+          <li>
+            <a href="/Verbal and Reasoning/Logical Reasoning/LogicalReasoningList.html">Logical Reasoning</a>
+          </li>
+          <li>Non Verbal Reasoning</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Current Affairs & GK</h3>
+        <ul>
+          <li>Current Affairs</li>
+          <li>Basic General Knowledge</li>
+          <li>General Science</li>
+          <li>Read more...</li>
+        </ul>
+      </div>
+
+     
+
+      <div class="card">
+        <h3>Engineering</h3>
+        <ul>
+          <li>Mechanical Engineering</li>
+          <li>Civil Engineering</li>
+          <li>ECE, EEE</li>
+          <li>
+            <a href="/Engineering/CSE/CSETopiceList.html">CSE</a>
+          </li>
+          <li>Chemical Engineering</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Programming</h3>
+        <ul>
+          <li>
+            <a href="/Programming/C Programming/C Programming List.html Programming/C Programming List.html">C Programming</a>
+          </li>
+          <li>
+            <a href="/Programming/C++ Programming/C++ ProgrammingList.html">C++ Programming</a>
+          </li>
+          <li>
+            <a href="/Programming/Java Programming/Java ProgrammingList.html">Java Programming</a>
+          </li>
+          <li>
+            <a href="#">Python Programming</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Technical MCQs</h3>
+        <ul>
+          <li>Networking Questions</li>
+          <li>Database Questions</li>
+          <li>Basic Electronic</li>
+          <li>Digital Electronic</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Online Tests</h3>
+        <ul>
+          <li>
+            <a href="/Online Test/Aptitude Test Series/Arithmetic Test.html">Arithmetic Test Series</a>
+          </li>
+           <li>
+            <a href="/Online Test/Verbal Ability Test.html">Verbal Ability Test</a>
+          </li>
+          <li>
+            <a href="/Online Test/Logical Reasoning Test.html">Logical Reasoning Test</a>
+          </li>
+          <li>
+            <a href="/Online Test/C Programming Test.html">C Programming Test</a>
+          </li>
+        </ul>
+      </div>
+
+       <div class="card">
+        <h3>Interview</h3>
+        <ul>
+          <li>Placement Papers</li>
+          <li>Group Discussion</li>
+          <li>HR Interview</li>
+          <li>Read more...</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</div>
+
+<a href="/Aptitude/Apti.html">Apti</a>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+
+        <h3>QuickStudy</h3>
+
+        <p>
+            Learn smarter with aptitude, MCQs, and placement preparation
+            content in one place.
+        </p>
+
+        <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">MCQs</a></li>
+            <li><a href="#">Practice</a></li>
+            <li><a href="#">Login</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+
+        <div class="social-icons">
+            <a href="#">🌐</a>
+            <a href="#">📘</a>
+            <a href="#">📸</a>
+            <a href="#">🐦</a>
+        </div>
+
+        <div class="footer-bottom">
+            © 2026 QuickStudy | All Rights Reserved
+        </div>
+
+    </div>
+</footer>
+
+
+<script src="JS/javascript.js"></script>
+<script src="JS/mock-test.js"></script>
+</body>
+
+</body>
+</html>

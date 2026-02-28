@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"What is the value of the hypotenuse of a right triangle whose sides are 12 and 18?",
+options:["4.24","3.46","2.16","21.63"],
+answer:3,
+explanation:"Using Pythagoras theorem, hypotenuse = √(12² + 18²) = √(144 + 324) = √468 ≈ 21.63."
+},
+{
+q:"The complex number 6 + j6 is equivalent to",
+options:["6∠45°","3∠645°","8.48∠45°","8.48∠90°"],
+answer:2,
+explanation:"Magnitude = √(6² + 6²) = √72 ≈ 8.48. Angle θ = tan⁻¹(6/6) = 45°. Therefore, 6 + j6 = 8.48∠45°."
+},
+{
+q:"In a parallel RC circuit, there is 100 mA through the resistive branch and 100 mA through the capacitive branch. The total rms current is",
+options:["200 mA","100 mA","282 mA","141 mA"],
+answer:3,
+explanation:"In a parallel RC circuit, branch currents are 90° apart. Total current = √(IR² + IC²) = √(100² + 100²) = √20000 ≈ 141 mA."
+},
+{
+q:"An ac circuit consists of a resistor and a capacitor. To increase the phase angle above 45°, the following condition must exist:",
+options:["R = XC","R > XC","R < XC","R = 5XC"],
+answer:2,
+explanation:"For an RC circuit, tanφ = XC/R. To have φ > 45°, tanφ > 1, so XC > R. Therefore, R < XC."
+},
+{
+q:"What is the angular difference between +j4 and –j4?",
+options:["30°","90°","180°","270°"],
+answer:2,
+explanation:"+j4 lies at +90° and –j4 lies at -90°. The angular difference between them is 180°."
+},
+{
+q:"A 6 kHz sinusoidal voltage is applied to a series RC circuit. The frequency of the voltage across the resistor is",
+options:["0 Hz","12 kHz","6 kHz","18 kHz"],
+answer:2,
+explanation:"In a linear AC circuit, all component voltages have the same frequency as the source. Therefore, the resistor voltage frequency is 6 kHz."
+},
+{
+q:"The voltages in Problem 4 are measured at a certain frequency. To make the capacitor voltage greater than the resistor voltage, the frequency",
+options:["must be increased","must be decreased","is held constant","has no effect"],
+answer:1,
+explanation:"Capacitive reactance XC = 1/(2πfC). Decreasing frequency increases XC, which increases capacitor voltage (VC = IXC). Therefore, frequency must be decreased."
+},
+{
+q:"In the complex plane, the number 4 + j3 is located in the",
+options:["first quadrant","second quadrant","third quadrant","fourth quadrant"],
+answer:0,
+explanation:"Both real part (4) and imaginary part (+3) are positive, so the complex number lies in the first quadrant."
+},
+{
+q:"When the frequency of the source voltage decreases, the impedance of a parallel RC circuit",
+options:["increases","decreases","does not change","decreases to zero"],
+answer:1,
+explanation:"In a parallel RC circuit, decreasing frequency increases XC, reducing capacitive current. This increases overall impedance. However, due to dominant resistive branch behavior, total impedance decreases with increasing frequency and increases with decreasing frequency. Therefore, impedance increases as frequency decreases."
+},
+{
+q:"A 47 Ω resistor and a capacitor with a capacitive reactance of 120 Ω are in series across an ac source. What is the circuit impedance, Z?",
+options:["129 Ω","12.9 Ω","167 Ω","73 Ω"],
+answer:0,
+explanation:"For a series RC circuit, Z = √(R² + XC²) = √(47² + 120²) = √(2209 + 14400) = √16609 ≈ 129 Ω."
+},
+{
+q:"A capacitor with 150 Ω of capacitive reactance is across an ac source. The impedance, expressed in polar form, is",
+options:["Z = 150","Z = 150∠90°","Z = 150∠–90°","Z = 150∠180°"],
+answer:2,
+explanation:"For a pure capacitor, impedance Z = -jXC. In polar form, this is written as Z = XC∠-90°. Therefore, Z = 150∠-90°."
+},
+{
+q:"When the frequency of the voltage applied to a series RC circuit is decreased, the impedance",
+options:["increases","decreases","remains the same","doubles"],
+answer:0,
+explanation:"In a series RC circuit, XC = 1/(2πfC). When frequency decreases, XC increases. Since Z = √(R² + XC²), total impedance increases."
+}
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"In the complex plane, the number 14 – j5 is located in the",
+options:["first quadrant","second quadrant","third quadrant","fourth quadrant"],
+answer:3,
+explanation:"The real part (14) is positive and the imaginary part (-5) is negative. Therefore, the point lies in the fourth quadrant."
+},
+{
+q:"Point +4 on the complex plane is",
+options:["4 units above the origin on the j axis","4 units below the origin on the j axis","4 units right of the origin on the real axis","4 units left of the origin on the real axis"],
+answer:2,
+explanation:"+4 represents a positive real number with no imaginary part, so it lies 4 units to the right of the origin on the real axis."
+},
+{
+q:"A 470 Ω resistor and a 0.2 µF capacitor are in parallel across a 2.5 kHz ac source. The admittance, Y, in rectangular form, is",
+options:["2.12 mS","2.12 mS + j3.14 mS","3.14 mS + j2.12 mS","318.3"],
+answer:1,
+explanation:"Conductance G = 1/R = 1/470 ≈ 2.12 mS. Capacitive susceptance B = 2πfC = 2π(2500)(0.2×10^-6) ≈ 3.14 mS. Therefore, Y = G + jB = 2.12 mS + j3.14 mS."
+},
+{
+q:"A positive angle of 30° is equivalent to a negative angle of",
+options:["–30°","–330°","–60°","–180°"],
+answer:1,
+explanation:"Angles differing by 360° are equivalent. 30° - 360° = -330°. Therefore, 30° is equivalent to -330°."
+},
+{
+q:"In a series RC circuit, 12 V(rms) is measured across the resistor and 15 V(rms) is measured across the capacitor. The rms source voltage is",
+options:["3 V","27 V","19.2 V","1.9 V"],
+answer:2,
+explanation:"In a series RC circuit, source voltage V = √(VR² + VC²) = √(12² + 15²) = √(144 + 225) = √369 ≈ 19.2 V."
+},
+{
+q:"A complex number represents a phasor quantity.",
+options:["True","False"],
+answer:0,
+explanation:"In AC circuit analysis, complex numbers are used to represent phasor quantities, including magnitude and phase angle."
+},
+{
+q:"Complex numbers can be added and subtracted but not multiplied or divided.",
+options:["True","False"],
+answer:1,
+explanation:"Complex numbers can be added, subtracted, multiplied, and divided using algebraic or polar form operations."
+},
+{
+q:"The power factor (PF) indicates how much of the apparent power is true power.",
+options:["True","False"],
+answer:0,
+explanation:"Power factor is the ratio of true (real) power to apparent power, so it indicates how much of the apparent power is true power."
+},
+{
+q:"In an RC circuit, the impedance is determined by both the resistance and the capacitive reactance combined.",
+options:["True","False"],
+answer:0,
+explanation:"In an RC circuit, total impedance depends on both resistance (R) and capacitive reactance (XC), combined vectorially."
+},
+{
+q:"The polar form of a complex number consists of a real part and a j part.",
+options:["True","False"],
+answer:1,
+explanation:"The polar form consists of magnitude and angle (r∠θ), not separate real and imaginary (j) parts. Real and imaginary parts belong to rectangular form."
+}
+]
+
+// ........Section-3............
+
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

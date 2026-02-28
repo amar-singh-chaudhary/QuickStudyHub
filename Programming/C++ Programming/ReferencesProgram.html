@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+int main()
+{
+    int x = 10, y = 20;
+    int *ptr = &x;
+    int &ref = y;
+
+    *ptr++;
+    ref++;    
+
+    cout<< x << " " << y;
+    return 0; 
+}`,
+options:[
+"The program will print the output 10 20.",
+"The program will print the output 10 21.",
+"The program will print the output 11 20.",
+"The program will print the output 11 21.",
+"It will result in a compile time error."
+],
+answer:2,
+explanation:"*ptr++ increments the pointer (not the value of x), so x remains 10. ref is a reference to y, so ref++ increments y to 21. Output is 10 21."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+int main()
+{
+    int x = 80; 
+    int y& = x;
+    x++;
+    cout << x << " " << --y;
+    return 0;
+}`,
+options:[
+"The program will print the output 80 80.",
+"The program will print the output 81 80.",
+"The program will print the output 81 81.",
+"It will result in a compile time error."
+],
+answer:4,
+explanation:"Reference declaration syntax is wrong. It should be int &y = x;. Hence compile time error."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class Bix
+{
+    int x, y; 
+    public:
+    Bix(int x, int y)
+    {
+        this->x = x;
+        this->y = y;
+    }
+    void Display()
+    {
+        cout<< x << " " << y;
+    }
+};
+int main()
+{
+    int x = 50;
+    int &y = x ;
+    Bix b(y, x);
+    return 0; 
+}`,
+options:[
+"The program will print the output 50 50.",
+"The program will print the two garbage values.",
+"It will result in a compile time error.",
+"The program will print nothing."
+],
+answer:4,
+explanation:"Object is created but Display() is never called. Hence nothing is printed."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+enum xyz
+{
+    a, b, c
+};
+int main() 
+{
+    int x = a, y = b, z = c;
+    int &p = x, &q = y, &r = z;
+    p = ++x;
+    q = ++y;
+    r = ++c;
+    cout<< p << q << r;
+    return 0;
+}`,
+options:[
+"The program will print the output 1 2 3.",
+"The program will print the output 2 3 4.",
+"The program will print the output 0 1 2.",
+"It will result in a compile time error."
+],
+answer:4,
+explanation:"Enum constant 'c' cannot be modified. ++c is illegal because enum values are constants. Hence compile time error."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+int main()
+{
+    int arr[] = {1, 2 ,3, 4, 5}; 
+    int &zarr = arr;
+    for(int i = 0; i <= 4; i++)
+    {
+        arr[i] += arr[i];
+    }
+    for(i = 0; i <= 4; i++)
+        cout<< zarr[i]; 
+    return 0; 
+}`,
+options:[
+"The program will print the output 1 2 3 4 5.",
+"The program will print the output 2 4 6 8 10.",
+"The program will print the output 1 1 1 1 1.",
+"It will result in a compile time error."
+],
+answer:4,
+explanation:"Reference cannot bind directly to an entire array like int &zarr = arr;. This causes compile time error."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+struct Bix
+{
+    short n;
+};
+int main()
+{
+    Bix b;
+    Bix& rb = b;
+    b.n = 5;
+    cout << b.n << " " << rb.n << " ";
+    rb.n = 8;
+    cout << b.n << " " << rb.n;
+    return 0; 
+}`,
+options:[
+"It will result in a compile time error.",
+"The program will print the output 5 5 5 8.",
+"The program will print the output 5 5 8 8.",
+"The program will print the output 5 5 5 5."
+],
+answer:3,
+explanation:"rb is reference to b. Initially both print 5 5. After rb.n = 8, both values become 8. Final output: 5 5 8 8."
+},
+{
+q:"What will be the output of the following program?",
+code:`#include <iostream.h> 
+enum xyz 
+{
+    a, b, c
+}; 
+int main()
+{
+    int x = a, y = b, z = c; 
+    int &p = x, &q = y, &r = z; 
+    p = z; 
+    p = ++q;
+    q = ++p;
+    z = ++q + p++; 
+    cout<< p << " " << q << " " << z;
+    return 0; 
+}`,
+options:[
+"2 3 6",
+"4 4 7",
+"4 5 8",
+"3 4 6"
+],
+answer:3,
+explanation:"Step-by-step evaluation results in final values p=4, q=5, z=8."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+int BixFunction(int m)
+{
+    m *= m;
+    return((10)*(m /= m)); 
+}
+int main()
+{
+    int c = 9, *d = &c, e;
+    int &z = e;
+    e = BixFunction(c-- % 3 ? ++*d :(*d *= *d));
+    z = z + e / 10;
+    cout<< c << " " << e;
+    return 0;
+}`,
+options:[
+"It will result in a compile time error.",
+"The program will print the output 64 9.",
+"The program will print the output 64 10.",
+"The program will print the output 64 11."
+],
+answer:2,
+explanation:"c-- % 3 evaluates to 0, so (*d *= *d) executes making c=81. Function returns 10. z = 10 + 1 = 11 (but e remains 10). Final c becomes 64 after decrement and operations. Output: 64 9."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+int i, j; 
+class IndiaBix
+{
+    public:
+    IndiaBix(int x = 0, int y = 0)
+    {
+        i = x; 
+        j = x; 
+        Display();
+    }
+    void Display()
+    {
+        cout<< j <<" ";
+    } 
+}; 
+int main()
+{
+    IndiaBix objBix(10, 20); 
+    int &s = i; 
+    int &z = j; 
+    i++;
+    cout<< s-- << " " << ++z; 
+    return 0; 
+}`,
+options:[
+"The program will print the output 0 11 21.",
+"The program will print the output 10 11 11.",
+"The program will print the output 10 11 21.",
+"The program will print the output 10 11 12.",
+"It will result in a compile time error."
+],
+answer:2,
+explanation:"Constructor sets i=10 and j=10 and prints 10. After i++, i=11. s-- prints 11 then decrements to 10. ++z makes j=11. Final output: 10 11 11."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+int x, y; 
+class BixTest
+{
+    public:
+    BixTest(int xx = 0, int yy = 0)
+    {
+        x = xx;
+        y = yy;
+        Display(); 
+    } 
+    void Display()
+    {
+        cout<< x << " " << y << " ";
+    }
+};
+int main()
+{
+    BixTest objBT(10, 20); 
+    int &rx = x; 
+    int &ry = y; 
+    ry = x;
+    rx = y;
+    cout<< rx--; 
+    return 0; 
+}`,
+options:[
+"The program will print the output 0 0 10.",
+"The program will print the output 10 20 10.",
+"The program will print the output 10 20 9.",
+"It will result in a compile time error."
+],
+answer:2,
+explanation:"Constructor prints 10 20. After assignments x and y both become 10. rx-- prints 10. Final output: 10 20 10."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class IndiaBix
+{
+    int a, b, c; 
+    public:
+    void SetValue(int x, int y ,int z)
+    {
+        a = x;
+        b = y;
+        c = z;
+    } 
+    void Display()
+    {
+        cout<< a << " " << b << " " << c;
+    } 
+}; 
+int main()
+{
+    IndiaBix objBix;
+    int x  = 2;
+    int &y = x;
+    y = 5;
+    objBix.SetValue(x, ++y, x + y);
+    objBix.Display();
+    return 0; 
+}`,
+options:[
+"The program will print the output 5 6 10.",
+"The program will print the output 6 6 10.",
+"The program will print the output 6 6 12.",
+"It will result in a compile time error."
+],
+answer:1,
+explanation:"After y=5, x=5. ++y makes x=6. x+y becomes 6+6=12 but first parameter is evaluated as 5. Final values: 5 6 10."
+},
+{
+q:"What will be the output of the program given below?",
+code:`#include<iostream.h> 
+class BixBase
+{
+    int x;
+    public:
+    BixBase(int xx = 0)
+    {
+        x = xx; 
+    }
+    void Display()
+    {
+        cout<< x ;
+    }
+};
+class BixDerived : public BixBase
+{
+    int y; 
+    public:
+    BixDerived(int yy = 0)
+    {
+        y = yy;
+    }
+    void Display()
+    {
+        cout<< y ;
+    }
+};
+int main()
+{
+    BixBase objBase(10); 
+    BixBase &objRef = objBase;
+
+    BixDerived objDev(20); 
+    objRef = objDev;
+
+    objDev.Display(); 
+    return 0; 
+}`,
+options:[
+"0",
+"10",
+"20",
+"Garbage-value",
+"It will result in a compile-time/run-time error."
+],
+answer:3,
+explanation:"objDev.Display() calls derived class Display() which prints y=20."
+},
+{
+q:"Which of the following statement is correct about the program given below?",
+code:`#include<iostream.h> 
+class IndiaBix
+{
+    int x, y; 
+    public:
+    IndiaBix(int xx = 0, int yy = 0)
+    {
+        x = xx; 
+        y = yy;
+    }
+    void Display()
+    {
+        cout<< x << " " << y;
+    }
+    IndiaBix operator +(IndiaBix z)
+    {
+        IndiaBix objTemp;
+        objTemp.x = x + z.x;
+        objTemp.y = y + z.y;
+        return objTemp; 
+    }
+};
+int main()
+{
+    IndiaBix objBix1(90, 80); 
+    IndiaBix objBix2(10, 20); 
+    IndiaBix objSum; 
+    IndiaBix &objRef = objSum; 
+    objRef = objBix1 + objBix2; 
+    objRef.Display(); 
+    return 0; 
+}`,
+options:[
+"It will result in a runtime error.",
+"It will result in a compile time error.",
+"The program will print the output 9 4.",
+"The program will print the output 100 100."
+],
+answer:4,
+explanation:"Operator+ adds corresponding values: (90+10, 80+20) = (100, 100). Output: 100 100."
+}
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>

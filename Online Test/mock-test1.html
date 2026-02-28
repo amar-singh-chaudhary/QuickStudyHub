@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Mock Test</title>
+    <link rel="stylesheet" href="CSS/mock-test.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h2>Online Mock Test</h2>
+        <div class="timer">
+            Time Left: <span id="time">10:00</span>
+        </div>
+    </header>
+
+    <div id="quiz">
+        <h3 id="question">Question text</h3>
+
+      <ul class="options">
+  <li>
+    <label>
+      <input type="radio" name="option" value="0">
+      <span>Option A</span>
+    </label>
+  </li>
+  <li>
+    <label>
+      <input type="radio" name="option" value="1">
+      <span>Option B</span>
+    </label>
+  </li>
+  <li>
+    <label>
+      <input type="radio" name="option" value="2">
+      <span>Option C</span>
+    </label>
+  </li>
+  <li>
+    <label>
+      <input type="radio" name="option" value="3">
+      <span>Option D</span>
+    </label>
+  </li>
+</ul>
+
+    </div>
+
+    <div class="buttons">
+        <button onclick="prevQuestion()">Previous</button>
+        <button onclick="nextQuestion()">Next</button>
+        <button class="submit" onclick="submitQuiz()">Submit Test</button>
+    </div>
+
+</div>
+
+<script src="JS/mock-test.js"></script>
+</body>
+</html>

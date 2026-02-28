@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"The impedance at the resonant frequency of a series RLC circuit with L = 20 mH, C = 0.02 F, and RW = 90 Ω is",
+options:[
+"0",
+"90",
+"20 k",
+"40 k"
+],
+answer:1,
+explanation:"At resonance in a series RLC circuit, inductive and capacitive reactances cancel each other, so impedance equals the resistance only (90 Ω)."
+},
+{
+q:"A 6.8 kΩ resistor, a 7 mH coil, and a 0.02 µF capacitor are in parallel across a 17 kHz ac source. The coil's internal resistance, RW, is 30 Ω. The equivalent parallel resistance, Rp(eq), is",
+options:[
+"1,878",
+"18,780",
+"18,750",
+"626"
+],
+answer:0,
+explanation:"The equivalent parallel resistance considering the resistive components evaluates to approximately 1,878 Ω."
+},
+{
+q:"Referring to Problem 7, what is the total parallel resistance (Rp(tot))?",
+options:[
+"4.99",
+"499",
+"4,992",
+"6,800"
+],
+answer:0,
+explanation:"Including the effects of reactance in the parallel network, the total parallel resistance is approximately 4.99 Ω."
+},
+{
+q:"A 200 Ω resistor, a coil with 30 Ω of reactance, and a capacitor of unknown reactance are in series across an ac source. The circuit is at resonance. Circuit impedance",
+options:[
+"is 230",
+"is 170",
+"is 200",
+"cannot be determined"
+],
+answer:2,
+explanation:"At resonance in a series circuit, inductive and capacitive reactances cancel, leaving only the resistance. Hence impedance equals 200 Ω."
+},
+{
+q:"Referring to Problem 8, the total current is",
+options:[
+"1.5 A",
+"573 mA",
+"5.73 A",
+"1.19 A"
+],
+answer:2,
+explanation:"Using the total resistance from Problem 8 and applying Ohm’s law, the total current evaluates to approximately 5.73 A."
+},
+{
+q:"A certain series RLC circuit with a 200 Hz, 15 V ac source has the following values: R = 12 Ω, C = 80 µF, and L = 10 mH. The total impedance, expressed in polar form, is",
+options:[
+"12.28∠12.34°",
+"12.57∠12.34°",
+"9.95∠12.34°",
+"12.62∠12.34°"
+],
+answer:0,
+explanation:"For a series RLC circuit, Z = R + j(XL − XC). Calculating XL = 2πfL and XC = 1/(2πfC) at 200 Hz gives a small net inductive reactance. Converting the rectangular form to polar form results in approximately 12.28∠12.34°."
+},
+{
+q:"To tune a parallel resonant circuit to a higher frequency, the capacitance should be",
+options:[
+"increased",
+"decreased",
+"left alone",
+"replaced with inductance"
+],
+answer:1,
+explanation:"Resonant frequency fr = 1/(2π√LC). To increase resonant frequency, capacitance must be decreased."
+},
+{
+q:"In a certain series resonant circuit, VC = 125 V, VL = 125 V, and VR = 40 V. The value of the source voltage is",
+options:[
+"125 V",
+"250 V",
+"290 V",
+"40 V"
+],
+answer:3,
+explanation:"At resonance in a series circuit, VL and VC cancel each other, so the source voltage equals VR, which is 40 V."
+},
+{
+q:"A certain series resonant circuit has a bandwidth of 2 kHz. If the existing coil is replaced with one having a higher value of Q, the bandwidth will",
+options:[
+"increase",
+"remain the same",
+"decrease",
+"be less selective"
+],
+answer:2,
+explanation:"Bandwidth BW = fr / Q. Increasing Q decreases bandwidth and increases selectivity."
+},
+{
+q:"A 9 mH coil is in parallel with a 0.015 µF capacitor across an 18 kHz ac source. The coil's internal resistance, RW, is 60 Ω. The circuit impedance is",
+options:[
+"17,340",
+"1,734",
+"290",
+"1,018"
+],
+answer:1,
+explanation:"At parallel resonance, impedance is high and approximately equals dynamic resistance. Calculated value is approximately 1,734 Ω."
+},
+{
+q:"A 15 Ω resistor, an inductor with 8 Ω inductive reactance, and a capacitor with 12 Ω capacitive reactance are in parallel across an ac voltage source. The circuit impedance is",
+options:[
+"12.7",
+"127",
+"4,436",
+"6,174"
+],
+answer:0,
+explanation:"Using parallel impedance calculations with given reactances and resistance, the equivalent impedance evaluates to approximately 12.7 Ω."
+},
+{
+q:"If the resistance in parallel with a parallel resonant circuit is reduced, the bandwidth",
+options:[
+"disappears",
+"becomes sharper",
+"increases",
+"decreases"
+],
+answer:2,
+explanation:"Reducing the parallel resistance lowers the Q factor, and since BW = fr / Q, the bandwidth increases."
+},
+{
+q:"A 90 Ω resistor, a coil with 30 Ω of reactance, and a capacitor with 50 Ω of reactance are in series across a 12 V ac source. The current through the resistor is",
+options:[
+"9 mA",
+"90 mA",
+"13 mA",
+"130 mA"
+],
+answer:3,
+explanation:"Net reactance = 50 − 30 = 20 Ω (capacitive). Total impedance Z = √(90² + 20²) ≈ 92 Ω. Current I = 12/92 ≈ 0.13 A = 130 mA."
+},
+{
+q:"A resonant circuit has a lower critical frequency of 7 kHz and an upper critical frequency of 13 kHz. The bandwidth of the circuit is",
+options:[
+"7 kHz",
+"13 kHz",
+"20 kHz",
+"6 kHz"
+],
+answer:3,
+explanation:"Bandwidth BW = f_upper − f_lower = 13 kHz − 7 kHz = 6 kHz."
+},
+{
+q:"If the value of C in a series RLC circuit is decreased, the resonant frequency",
+options:[
+"is not affected",
+"increases",
+"is reduced to zero",
+"decreases"
+],
+answer:1,
+explanation:"Resonant frequency fr = 1/(2π√LC). Decreasing C increases the resonant frequency."
+},
+{
+q:"A 24 Ω resistor, an inductor with a reactance of 120 Ω, and a capacitor with a reactance of 120 Ω are in series across a 60 V source. The circuit is at resonance. The voltage across the inductor is",
+options:[
+"60 V",
+"660 V",
+"30 V",
+"300 V"
+],
+answer:3,
+explanation:"At resonance, impedance equals R = 24 Ω. Current I = 60/24 = 2.5 A. Inductor voltage VL = I × XL = 2.5 × 120 = 300 V."
+},
+{
+q:"A 10 Ω resistor, a 90 mH coil, and a 0.015 µF capacitor are in series across an ac source. The impedance magnitude at 1,200 Hz below fr is",
+options:[
+"1,616",
+"161",
+"3,387",
+"1,771"
+],
+answer:0,
+explanation:"At 1,200 Hz below resonance the circuit is capacitive. Calculating XL and XC at that frequency and using Z = √(R² + (XL − XC)²) gives an impedance magnitude of approximately 1,616 Ω."
+},
+{
+q:"In a series RLC circuit that is operating above the resonant frequency, the current",
+options:[
+"lags the applied voltage",
+"leads the applied voltage",
+"is in phase with the applied voltage",
+"is zero"
+],
+answer:0,
+explanation:"Above resonant frequency, inductive reactance dominates (XL > XC), so the circuit behaves inductively and current lags the applied voltage."
+},
+{
+q:"A 15 Ω resistor, a 220 µH coil, and a 60 pF capacitor are in series across an ac source. What is the bandwidth of the circuit?",
+options:[
+"138 MHz",
+"10,866 Hz",
+"1,907 Hz",
+"138 kHz"
+],
+answer:1,
+explanation:"Bandwidth for a series circuit is BW = R / (2πL). Substituting R = 15 Ω and L = 220 µH gives approximately 10,866 Hz."
+},
+{
+q:"A resistor of 3 kΩ, a 0.05 µF capacitor, and a 120 mH coil are in series across a 5 kHz, 20 V ac source. What is the impedance magnitude?",
+options:[
+"636",
+"3,769",
+"433",
+"4,337"
+],
+answer:3,
+explanation:"Compute XL and XC at 5 kHz, then use Z = √(R² + (XL − XC)²). The calculated impedance magnitude is approximately 4,337 Ω."
+},
+{
+q:"A 12 Ω resistor, a 40 µF capacitor, and an 8 mH coil are in series across an ac source. The resonant frequency is",
+options:[
+"28.1 Hz",
+"281 Hz",
+"2,810 Hz",
+"10 kHz"
+],
+answer:1,
+explanation:"Resonant frequency fr = 1/(2π√LC). Substituting L = 8 mH and C = 40 µF gives approximately 281 Hz."
+}
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"What is RAM?",
+options:["Random Access Memory","Read Access Memory","Run Memory","None"],
+answer:0,
+explanation:"Correct full form is Random Access Memory."
+},
+{
+q:"Hard disk is?",
+options:["Input device","Storage device","Output device","Software"],
+answer:1,
+explanation:"Hard disk is a storage device."
+}
+],
+
+// ........Section-3............
+3: [
+  {
+q:"Find the total voltage applied in a series RLC circuit when i=3mA, VL=30V, VC=18V and R=1000 ohms. Note that it’s an AC circuit.",
+options:["3.95V","12.37V","32.67V","6.67V"],
+answer:1,
+explanation:"VR = IR = 1000 × 3 × 10^-3 = 3V. In a series RLC AC circuit, total voltage is V = √(VR^2 + (VL − VC)^2) = √(3^2 + (30 − 18)^2) = √(9 + 144) = √153 = 12.37V."
+},
+{
+q:"In an RLC circuit, which of the following is always used as a vector reference?",
+options:["Voltage","Resistance","Impedance","Current"],
+answer:0,
+explanation:"In RLC circuit analysis, voltage is generally taken as the reference phasor to determine the phase relationship of other quantities."
+},
+{
+q:"In an RLC circuit, the power factor is always ____________",
+options:["Positive","Negative","Depends on the circuit","Zero"],
+answer:2,
+explanation:"Power factor depends on whether the circuit is inductive or capacitive (i.e., XL > XC or XC > XL), so it depends on the circuit."
+},
+{
+q:"In an RLC series phasor, we start drawing the phasor from which quantity?",
+options:["Voltage","Resistance","Impedance","Current"],
+answer:3,
+explanation:"In a series RLC circuit, current is common to all components, so the phasor diagram is usually started with current as the reference."
+},
+{
+q:"What is the correct expression for the phase angle in an RLC series circuit?",
+options:["φ=tan-1(XL-XC)/R","φ=tan-1 (XL+XC)/R","φ=tan(XL-XC)/R","φ=tan-1 (XL-XC)"],
+answer:0,
+explanation:"From the impedance triangle, tanφ = (XL − XC)/R. Therefore, φ = tan^-1((XL − XC)/R)."
+},
+{
+q:"When is tanφ positive?",
+options:["When inductive reactance is less than capacitive reactance","When inductive reactance is greater than capacitive reactance","When inductive reactance is equal to capacitive reactance","When inductive reactance is zero"],
+answer:1,
+explanation:"tanφ is positive when XL > XC, meaning the circuit is inductive and current lags voltage."
+},
+{
+q:"When is tanφ negative?",
+options:["When inductive reactance is less than capacitive reactance","When inductive reactance is greater than capacitive reactance","When inductive reactance is equal to capacitive reactance","When inductive reactance is zero"],
+answer:0,
+explanation:"tanφ is negative when XC > XL, meaning the circuit is capacitive and current leads voltage."
+},
+{
+q:"Which of the following is not ac waveform?",
+options:["sinusoidal","square","constant","triangular"],
+answer:2,
+explanation:"AC waveforms change polarity periodically. A constant waveform does not change polarity, so it is not an AC waveform."
+},
+{
+q:"What is not a frequency for ac current?",
+options:["50 Hz","55 Hz","0Hz","60 Hz"],
+answer:2,
+explanation:"0 Hz represents DC (direct current), which does not alternate. AC must have a frequency greater than zero."
+},
+{
+q:"Which type of ac waveform is given in figure?",
+options:["sinusoidal","triangular","square","complex waveform"],
+answer:0,
+explanation:"The waveform shown changes polarity smoothly in a sine pattern, indicating a sinusoidal waveform."
+},
+ {
+q:"In a series RLC circuit, the phase difference between the current in the capacitor and the current in the resistor is?",
+options:["0°","90°","180°","360°"],
+answer:0,
+explanation:"In a series RLC circuit, the same current flows through all components. Therefore, the current in the capacitor and the current in the resistor are in phase, so the phase difference is 0°."
+},
+{
+q:"In a series RLC circuit, the phase difference between the current in the inductor and the current in the resistor is?",
+options:["0°","90°","180°","360°"],
+answer:0,
+explanation:"Since it is a series circuit, the same current flows through the inductor and the resistor. Hence, there is no phase difference between their currents (0°)."
+},
+{
+q:"In a series RLC circuit, the phase difference between the current in the capacitor and the current in the inductor is?",
+options:["0°","90°","180°","360°"],
+answer:0,
+explanation:"In a series RLC circuit, current is common through all components. Therefore, the current in the capacitor and inductor is the same and has 0° phase difference."
+},
+{
+q:"In a series RLC circuit, the phase difference between the current in the circuit and the voltage across the resistor is?",
+options:["0°","90°","180°","360°"],
+answer:0,
+explanation:"In a resistor, voltage and current are always in phase. Therefore, the phase difference between circuit current and resistor voltage is 0°."
+},
+{
+q:"In a series RLC circuit, the phase difference between the current in the circuit and the voltage across the capacitor is?",
+options:["0°","90°","180°","360°"],
+answer:1,
+explanation:"In a capacitor, current leads voltage by 90°. Hence, the phase difference between circuit current and capacitor voltage is 90°."
+},
+{
+q:"_________ the resonant frequency, the current in the inductor lags the voltage in a series RLC circuit.",
+options:["Above","Below","Equal to","Depends on the circuit"],
+answer:0,
+explanation:"Above the resonant frequency, inductive reactance (XL) is greater than capacitive reactance (XC), making the circuit inductive dominant. In an inductive circuit, current lags voltage."
+},
+{
+q:"_________ the resonant frequency, the current in the capacitor leads the voltage in a series RLC circuit.",
+options:["Above","Below","Equal to","Depends on the circuit"],
+answer:1,
+explanation:"Below the resonant frequency, capacitive reactance (XC) is greater than inductive reactance (XL), making the circuit capacitive dominant. In a capacitive circuit, current leads voltage."
+},
+ 
+]
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

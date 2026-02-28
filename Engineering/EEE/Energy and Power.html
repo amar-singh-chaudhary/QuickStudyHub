@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+
+{
+q:"A given power supply is capable of providing 6 A for 3.5 h. Its ampere-hour rating is",
+options:["0.58 Ah","2.1 Ah","21 Ah","58 Ah"],
+answer:2,
+explanation:"Ampere-hour rating = Current × Time = 6 A × 3.5 h = 21 Ah."
+},
+{
+q:"A 15 V source is connected across a 12 Ω resistor. How much energy is used in three minutes?",
+options:["938 Wh","0.938 Wh","56.25 Wh","5.6 Wh"],
+answer:1,
+explanation:"Power P = V²/R = 15²/12 = 18.75 W. Time = 3 min = 0.05 h. Energy = P × t = 18.75 × 0.05 = 0.9375 Wh ≈ 0.938 Wh."
+},
+{
+q:"At the end of a 14 day period, your utility bill shows that you have used 18 kWh. What is your average daily power?",
+options:["1.286 kWh","12.85 kWh","535 kWh","252 kWh"],
+answer:0,
+explanation:"Average daily usage = Total energy / Days = 18 kWh / 14 ≈ 1.286 kWh per day."
+},
+{
+q:"A 120 Ω resistor must carry a maximum current of 25 mA. Its rating should be at least",
+options:["4.8 W","150 mW","15 mW","480 mW"],
+answer:1,
+explanation:"Power P = I²R = (0.025)² × 120 = 0.075 W = 75 mW. The next safe standard rating is at least 150 mW."
+},
+{
+q:"If you used 400 W of power for 30 h, you have used",
+options:["1.3 kWh","13.3 kWh","1.2 kWh","12 kWh"],
+answer:3,
+explanation:"Energy = Power × Time = 400 W × 30 h = 12000 Wh = 12 kWh."
+},
+{
+q:"A 33 Ω half-watt resistor and a 330 Ω half-watt resistor are connected across a 12 V source. Which one(s) will overheat?",
+options:["33 Ω","330 Ω","both resistors","neither resistor"],
+answer:0,
+explanation:"Power P = V²/R. For 33 Ω: P = 144/33 ≈ 4.36 W (greater than 0.5 W, so it overheats). For 330 Ω: P = 144/330 ≈ 0.44 W (less than 0.5 W, safe). Therefore, only the 33 Ω resistor overheats."
+},
+{
+q:"When the pointer of an analog ohmmeter reads close to zero, the resistor being measured is",
+options:["overheated","shorted","open","reversed"],
+answer:1,
+explanation:"A reading near zero ohms indicates very low resistance, meaning the resistor (or circuit) is shorted."
+},
+{
+q:"In 0.025 W, there are",
+options:["25 kW","0.00025 mW","2,500 µW","25 mW"],
+answer:3,
+explanation:"1 W = 1000 mW. Therefore, 0.025 W = 0.025 × 1000 = 25 mW."
+},
+{
+q:"A certain appliance uses 350 W. If it is allowed to run continuously for 24 days, how many kilowatt-hours of energy does it consume?",
+options:["20.16 kWh","201.6 kWh","2.01 kWh","8.4 kWh"],
+answer:1,
+explanation:"Time = 24 days × 24 h = 576 h. Energy = 350 W × 576 h = 201600 Wh = 201.6 kWh."
+},
+{
+q:"A power supply produces a 0.6 W output with an input of 0.7 W. Its percentage of efficiency is",
+options:["8.57%","42.85%","4.28%","85.7%"],
+answer:3,
+explanation:"Efficiency = (Output/Input) × 100 = (0.6/0.7) × 100 ≈ 85.7%."
+}
+
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"The power rating of a carbon-composition resistor that is to handle up to 1.2 W should be",
+options:["2 W","1 W","5 W","0.5 W"],
+answer:0,
+explanation:"A resistor should be rated higher than its expected dissipation. Since 1.2 W exceeds 1 W, the next safe standard rating is 2 W."
+},
+{
+q:"How much continuous current can be drawn from a 60 Ah battery for 14 h?",
+options:["42.8 A","428 A","4.28 A","4.2 A"],
+answer:2,
+explanation:"Current = Ah ÷ h = 60 Ah ÷ 14 h ≈ 4.28 A."
+},
+{
+q:"A 75 Ω load uses 2 W of power. The output voltage of the power supply is approximately",
+options:["120 V","1.2 V","12 V","6 V"],
+answer:2,
+explanation:"Using P = V²/R, V = √(PR) = √(2 × 75) = √150 ≈ 12.25 V ≈ 12 V."
+},
+{
+q:"When the current through a 12 kΩ resistor is 8 mA, the power is",
+options:["7.68 mW","768 mW","7.68 W","76.8 W"],
+answer:1,
+explanation:"Power P = I²R = (0.008)² × 12000 = 0.000064 × 12000 = 0.768 W = 768 mW."
+},
+{
+q:"A 68 Ω resistor is connected across the terminals of a 3 V battery. The power dissipation of the resistor is",
+options:["132 mW","13.2 mW","22.6 mW","226 mW"],
+answer:0,
+explanation:"Power P = V²/R = 9 ÷ 68 ≈ 0.132 W = 132 mW."
+},
+{
+q:"For 12 V and 40 mA, the power is",
+options:["480 mW","0.480 W","480,000 µW","all of the above"],
+answer:3,
+explanation:"Power P = VI = 12 × 0.04 = 0.48 W. This equals 480 mW and 480,000 µW. Therefore, all of the above are correct."
+},
+{
+q:"A 220 Ω resistor dissipates 3 W. The voltage is",
+options:["73.3 V","2.5 V","25.7 V","257 V"],
+answer:2,
+explanation:"Using P = V²/R, V = √(PR) = √(3 × 220) = √660 ≈ 25.7 V."
+},
+{
+q:"A 3.3 kΩ resistor dissipates 0.25 W. The current is",
+options:["8.7 mA","87 mA","8.7 µA","8.7 A"],
+answer:0,
+explanation:"Using P = I²R, I = √(P/R) = √(0.25 / 3300) ≈ 0.0087 A = 8.7 mA."
+},
+{
+q:"A half-watt is equal to how many milliwatts?",
+options:["5,000 mW","5 mW","500 mW","50 mW"],
+answer:2,
+explanation:"1 W = 1000 mW. Therefore, 0.5 W = 500 mW."
+},
+{
+q:"Three hundred joules of energy are consumed in 15 s. The power is",
+options:["2,000 W","2 W","20 W","200 W"],
+answer:2,
+explanation:"Power P = Energy / Time = 300 J / 15 s = 20 W."
+},
+{
+q:"A 6 V battery is connected to a 300 Ω load. Under these conditions, it is rated at 40 Ah. How long can it supply current to the load?",
+options:["1 h","200 h","2,000 h","10 h"],
+answer:1,
+explanation:"Current I = V/R = 6/300 = 0.02 A (20 mA). Time = Ah / A = 40 / 0.02 = 2000 h."
+},
+{
+q:"In 40 kW, there are",
+options:["0.4 mW","40,000 W","400 W","5,000 W"],
+answer:1,
+explanation:"1 kW = 1000 W. Therefore, 40 kW = 40 × 1000 = 40,000 W."
+},
+{
+q:"If you used 600 W of power for 60 h, you have used",
+options:["36 kWh","3.6 kWh","10 kWh","1 kWh"],
+answer:0,
+explanation:"Energy = Power × Time = 600 W × 60 h = 36,000 Wh = 36 kWh."
+},
+{
+q:"If it takes 400 ms to use 12,000 J of energy, the power is",
+options:["30 kW","30 W","3 W","300 kW"],
+answer:0,
+explanation:"Time = 400 ms = 0.4 s. Power P = Energy / Time = 12,000 / 0.4 = 30,000 W = 30 kW."
+},
+{
+q:"How many watt-hours represent 65 W used for 18 h?",
+options:["11.7 Wh","1,170 Wh","11,700 Wh","117,000 Wh"],
+answer:1,
+explanation:"Energy = Power × Time = 65 × 18 = 1170 Wh."
+}
+
+
+
+]
+
+// ........Section-3............
+
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

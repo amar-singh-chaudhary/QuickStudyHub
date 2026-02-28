@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login & Signup</title>
+    <link rel="stylesheet" href="login_style.css">
+</head>
+<body>
+
+<div class="auth-box">
+    <h2>Login</h2>
+
+    <form id="loginForm">
+        <input type="email" placeholder="Email" id="loginEmail" required>
+        <input type="password" placeholder="Password" id="loginPassword" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <h3>OR</h3>
+
+    <a href="http://localhost:5000/auth/google">
+        <button class="google-btn">Login with Google</button>
+    </a>
+
+    <hr>
+
+    <h2>Signup</h2>
+
+    <form id="signupForm">
+        <input type="text" placeholder="Name" id="name" required>
+        <input type="email" placeholder="Email" id="email" required>
+        <input type="password" placeholder="Password" id="password" required>
+        <button type="submit">Signup</button>
+    </form>
+</div>
+
+<script>
+document.getElementById("signupForm").addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const res = await fetch("/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            name: name.value,
+            email: email.value,
+            password: password.value
+        })
+    });
+
+    const data = await res.json();
+    alert(data.message);
+});
+
+document.getElementById("loginForm").addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            email: loginEmail.value,
+            password: loginPassword.value
+        })
+    });
+
+    const data = await res.json();
+    alert(data.message);
+});
+</script>
+
+</body>
+</html>

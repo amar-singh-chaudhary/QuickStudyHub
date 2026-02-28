@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"A sine wave voltage is applied across an inductor. When the frequency of the voltage is decreased, the current",
+options:["is increased","is decreased","does not change","momentarily goes to zero"],
+answer:0,
+explanation:"Inductive reactance XL = 2πfL. When frequency decreases, reactance decreases. Lower reactance allows more current to flow, so current increases."
+},
+{
+q:"Two 10 H inductors are in parallel and the parallel combination is in series with a third 10 H inductor. What is the approximate total reactance when a voltage with a frequency of 7 kHz is applied across the circuit terminals?",
+options:["219 kΩ","66 kΩ","660 kΩ","1.3 MΩ"],
+answer:2,
+explanation:"Parallel inductance = (10×10)/(10+10) = 5 H. Total inductance = 5 + 10 = 15 H. XL = 2πfL = 2π(7000)(15) ≈ 660,000 Ω = 660 kΩ."
+},
+{
+q:"An ohmmeter is connected across an inductor and the pointer indicates zero ohms. The inductor is",
+options:["good","open","shorted","partly shorted"],
+answer:2,
+explanation:"A reading of zero ohms indicates a short circuit. A good inductor has small but not zero resistance."
+},
+{
+q:"Two inductors, L1 = 25 H and L2 = 50 H, are in parallel. The parallel combination is in series with L3 = 20 H. The circuit is across 60 Vrms at 300 kHz. The total rms current is",
+options:["87 mA","870 mA","87 A","337 mA"],
+answer:0,
+explanation:"Parallel inductance = (25×50)/(25+50) = 16.67 H. Total L = 16.67 + 20 = 36.67 H. XL = 2π(300,000)(36.67) ≈ 69 MΩ. I = V/XL = 60/69,000,000 ≈ 0.000087 A = 87 mA."
+},
+{
+q:"An inductor, a 1 kΩ resistor, and a switch are connected in series across a 6 V battery. At the instant the switch is closed, the inductor voltage is",
+options:["0 V","6 V","12 V","4 V"],
+answer:1,
+explanation:"At the instant the switch is closed, the inductor opposes any change in current. Initial current is zero, so the full 6 V appears across the inductor."
+},
+
+{
+q:"The winding resistance of a coil can be increased by",
+options:["increasing the number of turns","using a thinner wire","changing the core material","increasing the number of turns or using thinner wire"],
+answer:3,
+explanation:"Winding resistance depends on length and thickness of the wire. Increasing the number of turns increases wire length, and using thinner wire increases resistance. Core material does not affect winding resistance."
+},
+{
+q:"An inductance of 0.43 mH is smaller than",
+options:["43 H","430 H","0.05 H","0.00043 H"],
+answer:2,
+explanation:"0.43 mH = 0.00043 H. Comparing values, 0.05 H is greater than 0.00043 H, so 0.43 mH is smaller than 0.05 H."
+},
+{
+q:"An inductor and a resistor are in series with a sine wave voltage source. The frequency is set so that the inductive reactance is equal to the resistance. If the frequency is increased, then",
+options:["VR ≥ VL","VL < VR","VL = VR","VL > VR"],
+answer:3,
+explanation:"Inductive reactance XL = 2πfL. If frequency increases, XL increases. Since VL = IXL and VR = IR, VL becomes greater than VR."
+},
+{
+q:"The current through a 120 mH coil is changing at a rate of 150 mA/s. The voltage induced across the coil is",
+options:["1.8 mV","18 mV","180 mV","1.25 mV"],
+answer:1,
+explanation:"Induced voltage V = L (di/dt). L = 120 mH = 0.12 H, di/dt = 150 mA/s = 0.15 A/s. V = 0.12 × 0.15 = 0.018 V = 18 mV."
+},
+{
+q:"When the current through an inductor decreases, the amount of energy stored in the electromagnetic field",
+options:["increases","decreases","remains the same","doubles"],
+answer:1,
+explanation:"Energy stored in an inductor is W = (1/2)LI². If current decreases, the stored energy decreases."
+}
+
+
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"The inductance of an iron-core coil decreases if",
+options:["the number of turns is decreased","the iron core is removed","the length of the coil decreases","none of the above"],
+answer:1,
+explanation:"Inductance L = (μN²A)/l. Removing the iron core greatly reduces permeability (μ), which significantly decreases inductance."
+},
+{
+q:"The following coils are in parallel: 75 H, 40 H, 25 H, and 15 H. The total inductance is approximately",
+options:["6.9 H","14 H","2.2 H","155 H"],
+answer:0,
+explanation:"For parallel inductors: 1/L = 1/75 + 1/40 + 1/25 + 1/15. Calculating gives L ≈ 6.9 H."
+},
+{
+q:"When the current through an inductor is cut in half, the amount of energy stored in the electromagnetic field",
+options:["is quartered","quadruples","doubles","does not change"],
+answer:0,
+explanation:"Energy stored in an inductor is W = (1/2)LI². If current is reduced to half, energy becomes (1/2)² = 1/4 of original, so it is quartered."
+},
+
+{
+q:"Three 15 mH inductors are in series. The total inductance is",
+options:["15 mH","30 mH","45 mH","5 mH"],
+answer:2,
+explanation:"Inductors in series add directly. Total L = 15 + 15 + 15 = 45 mH."
+},
+{
+q:"An 18 V power supply is connected across a coil with a winding resistance of 180 Ω. Current flow in the coil is",
+options:["1 mA","10 mA","100 mA","1 A"],
+answer:2,
+explanation:"Using Ohm’s law, I = V/R = 18/180 = 0.1 A = 100 mA."
+},
+{
+q:"A switch, a 220 Ω resistor, and a 60 mH inductor are in series across a 20 V battery. What is the current through the inductor two time constants after the switch is closed?",
+options:["91 mA","78 mA","57 mA","400 mA"],
+answer:1,
+explanation:"Final current I = V/R = 20/220 ≈ 0.091 A = 91 mA. At two time constants, current ≈ 86% of final value. 0.86 × 91 mA ≈ 78 mA."
+},
+{
+q:"A 320 H coil is in series with a 3.3 kΩ resistor. How long does it take for current to build up to its full value?",
+options:["0.48 s","0.48 ms","0.48 s","48 s"],
+answer:0,
+explanation:"Time constant τ = L/R = 320 / 3300 ≈ 0.097 s. Full current buildup ≈ 5τ ≈ 0.48 s."
+},
+{
+q:"Five inductors are connected in series. The lowest value is 8 μH. If each inductor is twice the preceding one, connected in ascending order, the total inductance is",
+options:["8 H","32 μH","64 μH","248 μH"],
+answer:3,
+explanation:"Values: 8, 16, 32, 64, 128 μH. Total = 8 + 16 + 32 + 64 + 128 = 248 μH."
+}
+
+
+
+]
+
+// ........Section-3............
+
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

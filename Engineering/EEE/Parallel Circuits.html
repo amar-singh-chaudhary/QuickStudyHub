@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"If there are a total of 120 mA into a parallel circuit consisting of three branches, and two of the branch currents are 40 mA and 10 mA, the third branch current is",
+options:["50 mA","70 mA","120 mA","40 mA"],
+answer:1,
+explanation:"Total current in parallel circuit equals sum of branch currents. Third branch current = 120 − (40 + 10) = 70 mA."
+},
+{
+q:"Three lights are connected in parallel across a 120 volt source. If one light burns out,",
+options:["the remaining two will glow dimmer","the remaining two will glow brighter","the remaining two will not light","the remaining two will glow with the same brightness as before"],
+answer:3,
+explanation:"In a parallel circuit, each branch gets full source voltage. If one branch opens, others are unaffected and glow with same brightness."
+},
+{
+q:"Four equal-value resistors are connected in parallel. Ten volts are applied across the parallel circuit and 2 mA are measured from the source. The value of each resistor is",
+options:["12.5 Ω","200 Ω","20 kΩ","50 Ω"],
+answer:2,
+explanation:"Total resistance Rt = V/I = 10 / 0.002 = 5000 Ω. For four equal resistors in parallel, Rt = R/4. So R = 4 × 5000 = 20,000 Ω = 20 kΩ."
+},
+{
+q:"A set of Christmas tree lights is connected in parallel across a 110 V source. The filament of each light bulb is 1.8 kΩ. The current through each bulb is approximately",
+options:["610 mA","18 mA","110 mA","61 mA"],
+answer:3,
+explanation:"Using Ohm’s law, I = V/R = 110 / 1800 ≈ 0.061 A = 61 mA."
+},
+{
+q:"The power dissipation in each of four parallel branches is 1.2 W. The total power dissipation is",
+options:["1.2 W","4.8 W","0.3 W","12 W"],
+answer:1,
+explanation:"Total power in parallel circuit equals sum of individual branch powers. 1.2 W × 4 = 4.8 W."
+},
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"A 470 Ω resistor, a 220 Ω resistor, and a 100 Ω resistor are all in parallel. The total resistance is approximately",
+options:["790 Ω","470 Ω","60 Ω","30 Ω"],
+answer:2,
+explanation:"Using 1/R = 1/470 + 1/220 + 1/100, the equivalent resistance ≈ 59.98 Ω ≈ 60 Ω."
+},
+{
+q:"Five light bulbs are connected in parallel across 110 V. Each bulb is rated at 200 W. The current through each bulb is approximately",
+options:["2.2 A","137 mA","1.8 A","9.09 A"],
+answer:2,
+explanation:"Using I = P/V, current through each bulb = 200 / 110 ≈ 1.82 A ≈ 1.8 A."
+},
+{
+q:"Four resistors of equal value are connected in parallel. If the total voltage is 15 V and the total resistance is 600 Ω, the current through each parallel resistor is",
+options:["25 mA","100 mA","6.25 mA","200 mA"],
+answer:2,
+explanation:"Total current It = V/Rt = 15/600 = 0.025 A = 25 mA. Since there are four equal branches, current in each = 25/4 = 6.25 mA."
+},
+{
+q:"Five 100 Ω resistors are connected in parallel. If one resistor is removed, the total resistance is",
+options:["25 Ω","500 Ω","100 Ω","20 Ω"],
+answer:0,
+explanation:"With four 100 Ω resistors in parallel: 1/R = 4/100 ⇒ R = 25 Ω."
+},
+{
+q:"Four 8 Ω speakers are connected in parallel to the output of an audio amplifier. If the maximum voltage to the speakers is 12 V, the amplifier must be able to deliver to the speakers",
+options:["18 W","1.5 W","48 W","72 W"],
+answer:3,
+explanation:"Four 8 Ω in parallel gives Rt = 8/4 = 2 Ω. Power P = V²/R = 12² / 2 = 144/2 = 72 W."
+},
+{
+q:"If there are a total of 120 mA into a parallel circuit consisting of three branches, and two of the branch currents are 40 mA and 10 mA, the third branch current is",
+options:["50 mA","70 mA","120 mA","40 mA"],
+answer:1,
+explanation:"In a parallel circuit, total current equals sum of branch currents. Third branch current = 120 − (40 + 10) = 70 mA."
+},
+{
+q:"Three lights are connected in parallel across a 120 volt source. If one light burns out,",
+options:["the remaining two will glow dimmer","the remaining two will glow brighter","the remaining two will not light","the remaining two will glow with the same brightness as before"],
+answer:3,
+explanation:"In a parallel circuit, each branch receives full source voltage. If one branch opens, the others are unaffected and maintain the same brightness."
+},
+{
+q:"Four equal-value resistors are connected in parallel. Ten volts are applied across the parallel circuit and 2 mA are measured from the source. The value of each resistor is",
+options:["12.5 Ω","200 Ω","20 kΩ","50 Ω"],
+answer:2,
+explanation:"Total resistance Rt = V/I = 10 / 0.002 = 5000 Ω. For four equal resistors in parallel, Rt = R/4. Therefore R = 4 × 5000 = 20,000 Ω = 20 kΩ."
+},
+{
+q:"A set of Christmas tree lights is connected in parallel across a 110 V source. The filament of each light bulb is 1.8 kΩ. The current through each bulb is approximately",
+options:["610 mA","18 mA","110 mA","61 mA"],
+answer:3,
+explanation:"Using Ohm’s law, I = V/R = 110 / 1800 ≈ 0.061 A = 61 mA."
+},
+{
+q:"The power dissipation in each of four parallel branches is 1.2 W. The total power dissipation is",
+options:["1.2 W","4.8 W","0.3 W","12 W"],
+answer:1,
+explanation:"Total power in parallel circuits equals sum of branch powers. 1.2 W × 4 = 4.8 W."
+},
+{
+q:"An ammeter has an internal resistance of 50 Ω. The meter movement itself can handle up to 1 mA. If 10 mA is applied to the meter, the shunt resistor, RSH1, is approximately",
+options:["55 Ω","5.5 Ω","50 Ω","9 Ω"],
+answer:1,
+explanation:"Meter current = 1 mA, shunt current = 9 mA. Voltage across meter = 0.001 × 50 = 0.05 V. Shunt resistance = 0.05 / 0.009 ≈ 5.5 Ω."
+},
+{
+q:"The total resistance of a parallel circuit is 50 Ω. If the total current is 120 mA, the current through the 270 Ω resistor that makes up part of the parallel circuit is approximately",
+options:["22 mA","120 mA","220 mA","50 mA"],
+answer:0,
+explanation:"Total voltage = It × Rt = 0.12 × 50 = 6 V. Current through 270 Ω resistor = 6 / 270 ≈ 0.022 A = 22 mA."
+},
+{
+q:"The currents into a junction flow along two paths. One current is 4 A and the other is 3 A. The total current out of the junction is",
+options:["1 A","7 A","unknown","the larger of the two"],
+answer:1,
+explanation:"By Kirchhoff’s Current Law, total current entering a junction equals total current leaving. 4 A + 3 A = 7 A."
+},
+{
+q:"When an additional resistor is connected across an existing parallel circuit, the total resistance",
+options:["remains the same","decreases by the value of the added resistor","increases by the value of the added resistor","decreases"],
+answer:3,
+explanation:"Adding a resistor in parallel provides an additional current path, which always decreases total resistance."
+},
+{
+q:"When a 1.6 kΩ resistor and a 120 Ω resistor are connected in parallel, the total resistance is",
+options:["greater than 1.6 kΩ","greater than 120 Ω but less than 1.6 kΩ","less than 120 Ω but greater than 100 Ω","less than 100 Ω"],
+answer:2,
+explanation:"In parallel, total resistance is always less than the smallest resistor. Since 120 Ω is smallest, total resistance is less than 120 Ω but greater than 100 Ω."
+},
+{
+q:"There is a total of 800 mA of current into four parallel resistors. The currents through three of the resistors are 40 mA, 70 mA, and 200 mA. The current through the fourth resistor is",
+options:["490 mA","800 mA","310 mA","0 A"],
+answer:0,
+explanation:"Total current equals sum of branch currents. Fourth branch = 800 − (40 + 70 + 200) = 490 mA."
+},
+{
+q:"Four resistors are connected in parallel. Fifteen mA flows through resistor R. If the second resistor is 2R, the third resistor 3R, and the fourth resistor 4R, the total current in the circuit is",
+options:["60 mA","15 mA","135 mA","31.25 mA"],
+answer:3,
+explanation:"Current through R is 15 mA. Currents through 2R, 3R, 4R are 15/2 = 7.5 mA, 15/3 = 5 mA, and 15/4 = 3.75 mA. Total current = 15 + 7.5 + 5 + 3.75 = 31.25 mA."
+},
+{
+q:"If one of the resistors in a parallel circuit is removed, the total resistance",
+options:["decreases","increases","remains the same","doubles"],
+answer:1,
+explanation:"Removing a parallel branch reduces the number of current paths, so total resistance increases."
+},
+{
+q:"Six resistors are in parallel. The two lowest-value resistors are both 1.2 kΩ. The total resistance",
+options:["is less than 6 kΩ","is greater than 1.2 kΩ","is less than 1.2 kΩ","is less than 600 Ω"],
+answer:2,
+explanation:"In a parallel circuit, total resistance is always less than the smallest resistor. Since the smallest is 1.2 kΩ, total resistance is less than 1.2 kΩ."
+},
+{
+q:"In a five-branch parallel circuit, there are 12 mA of current in each branch. If one of the branches opens, the current in each of the other four branches is",
+options:["48 mA","12 mA","0 A","3 mA"],
+answer:1,
+explanation:"In a parallel circuit, branch currents depend on branch resistance and supply voltage. If one branch opens, the voltage across remaining branches remains the same, so each still carries 12 mA."
+},
+{
+q:"In a certain three-branch parallel circuit, R1 has 12 mA through it, R2 has 15 mA through it, and R3 has 25 mA through it. After measuring a total of 27 mA, you can say that",
+options:["R3 is open","R1 is open","R2 is open","the circuit is operating properly"],
+answer:0,
+explanation:"Expected total current = 12 + 15 + 25 = 52 mA. Measured total is 27 mA, which equals 12 + 15. Therefore, R3 (25 mA branch) must be open."
+},
+{
+q:"A sudden increase in the total current into a parallel circuit may indicate",
+options:["a drop in source voltage","an open resistor","an increase in source voltage","either a drop in source voltage or an open resistor"],
+answer:2,
+explanation:"An increase in total current in a parallel circuit typically indicates an increase in source voltage or a decrease in total resistance. From the options, increase in source voltage is correct."
+},
+{
+q:"The following currents are measured in the same direction in a three-branch parallel circuit: 200 mA, 340 mA, and 700 mA. The value of the current into the junction of these branches is",
+options:["200 mA","540 mA","1.24 A","900 mA"],
+answer:2,
+explanation:"By Kirchhoff’s Current Law, total current into junction equals sum of branch currents: 200 + 340 + 700 = 1240 mA = 1.24 A."
+},
+{
+q:"The following resistors are in parallel across a voltage source: 220 Ω, 470 Ω, and 560 Ω. The resistor with the least current is",
+options:["220 Ω","470 Ω","560 Ω","impossible to determine without knowing the voltage"],
+answer:2,
+explanation:"In parallel, voltage across each resistor is the same. Current is inversely proportional to resistance. Highest resistance (560 Ω) carries the least current."
+},
+{
+q:"Three 47 Ω resistors are connected in parallel across a 110 volt source. The current drawn from the source is approximately",
+options:["2.3 A","780 mA","47 mA","7.06 A"],
+answer:3,
+explanation:"Equivalent resistance = 47/3 ≈ 15.67 Ω. Total current = 110 / 15.67 ≈ 7.02 A ≈ 7.06 A."
+}
+
+],
+
+// ........Section-3............
+3:[
+{
+q:"In a parallel circuit, we consider _____________ instead of impedance.",
+options:["Resistance","Capacitance","Inductance","Admittance"],
+answer:3,
+explanation:"In a parallel circuit, we consider admittance instead of impedance, where admittance is the reciprocal of impedance."
+},
+{
+q:"In a parallel circuit, we consider admittance instead of _________.",
+options:["Resistance","Capacitance","Inductance","Impedance"],
+answer:3,
+explanation:"In a parallel circuit, we consider admittance instead of impedance because admittance is the reciprocal of impedance."
+},
+{
+q:"Which among the following is the correct expression for impedance?",
+options:["Z = Y","Z = 1/Y","Z = Y²","Z = 1/Y²"],
+answer:1,
+explanation:"Impedance is the reciprocal of admittance. Therefore, Z = 1/Y."
+},
+{
+q:"Which among the following is the correct expression for admittance?",
+options:["Y = Z","Y = 1/Z","Y = Z²","Y = 1/Z²"],
+answer:1,
+explanation:"Admittance is the reciprocal of impedance. Therefore, Y = 1/Z."
+},
+{
+q:"What is the unit of admittance?",
+options:["ohm","henry","farad","ohm⁻¹"],
+answer:3,
+explanation:"The unit of impedance is ohm (Ω). Since admittance is the reciprocal of impedance, its unit is ohm⁻¹ (also called Siemens)."
+},
+{
+q:"As the impedance increases, the admittance ____________.",
+options:["Increases","Decreases","Remains the same","Becomes zero"],
+answer:1,
+explanation:"Admittance is equal to 1/Z. As impedance increases, admittance decreases."
+},
+{
+q:"If the impedance of a system is 4 ohm, calculate its admittance.",
+options:["0.25 ohm⁻¹","4 ohm⁻¹","25 ohm⁻¹","0.4 ohm⁻¹"],
+answer:0,
+explanation:"Using Y = 1/Z, Y = 1/4 = 0.25 ohm⁻¹."
+},
+{
+q:"The admittance of a system is 10 ohm⁻¹. Calculate its impedance.",
+options:["10 ohm","0.1 ohm","1 ohm","1.1 ohm"],
+answer:1,
+explanation:"Using Z = 1/Y, Z = 1/10 = 0.1 ohm."
+},
+{
+q:"In a parallel circuit with any number of impedances, the voltage across each impedance is?",
+options:["Equal","Divided equally","Divided proportionally","Zero"],
+answer:0,
+explanation:"In a parallel circuit, the voltage across each branch remains the same."
+},
+{
+q:"In a parallel circuit, current in each impedance is _____________.",
+options:["Equal","Different","Zero","Infinite"],
+answer:1,
+explanation:"In a parallel circuit, current divides depending on impedance values, so it is different in each branch."
+}
+]
+
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>

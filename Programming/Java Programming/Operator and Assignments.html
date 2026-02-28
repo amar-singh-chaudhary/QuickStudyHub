@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ Practice</title>
+
+<link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet"/>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.options{
+    list-style:none;
+    padding:0;
+}
+
+.options li{
+    margin:8px 0;
+}
+
+.options label{
+    display:block;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    cursor:pointer;
+    position:relative;
+}
+
+.correct{
+    background:#d4edda;
+    border-color:#28a745;
+}
+
+.wrong{
+    background:#f8d7da;
+    border-color:#dc3545;
+}
+
+button{
+    padding:8px 15px;
+    margin:5px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+#explanation{
+    margin-top:15px;
+    padding:10px;
+    background:#f8f9fa;
+    border-left:4px solid #007bff;
+}
+.option-icon{
+    position:absolute;
+    right:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.correct .option-icon{
+    color:#28a745;
+}
+
+.wrong .option-icon{
+    color:#dc3545;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h3 id="questionTitle"></h3>
+
+<pre><code class="language-c" id="codeBlock"></code></pre>
+
+<ul class="options" id="optionsList"></ul>
+
+<div id="explanation"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+
+<script>
+
+// ---------------- QUESTIONS ----------------
+
+const questions = [
+{
+q:"What will be the output of the program?",
+code:`class Test 
+{
+    public static void main(String [] args) 
+    {
+        int x=20;
+        String sup = (x < 15) ? "small" : (x < 22)? "tiny" : "huge";
+        System.out.println(sup);
+    }
+}`,
+options:[
+"small",
+"tiny",
+"huge",
+"Compilation fails"
+],
+answer:2,
+explanation:"This is a nested ternary operator. (x < 15) is false. The second condition (x < 22) is true, so \"tiny\" is assigned."
+},
+{
+q:"What will be the output of the program?",
+code:`class Test 
+{
+    public static void main(String [] args) 
+    {
+        int x= 0;
+        int y= 0;
+        for (int z = 0; z < 5; z++) 
+        {
+            if (( ++x > 2 ) && (++y > 2)) 
+            {
+                x++;
+            }
+        }
+        System.out.println(x + " " + y);
+    }
+}`,
+options:[
+"5 2",
+"5 3",
+"6 3",
+"6 4"
+],
+answer:3,
+explanation:"Because of short-circuit &&, y increments only when ++x > 2 is true. Final values are x = 6 and y = 3."
+},
+{
+q:"What will be the output of the program?",
+code:`class Test 
+{
+    public static void main(String [] args) 
+    {
+        int x= 0;
+        int y= 0;
+        for (int z = 0; z < 5; z++) 
+        {
+            if (( ++x > 2 ) || (++y > 2)) 
+            {
+                x++;
+            }
+        }
+        System.out.println(x + " " + y);
+    }
+}`,
+options:[
+"5 3",
+"8 2",
+"8 3",
+"8 5"
+],
+answer:2,
+explanation:"With short-circuit ||, once ++x > 2 becomes true, ++y stops incrementing. x increments twice in last three iterations. Final values: x = 8 and y = 2."
+},
+{
+q:"What will be the output of the program?",
+code:`class Bitwise 
+{
+    public static void main(String [] args) 
+    {
+        int x = 11 & 9;
+        int y = x ^ 3;
+        System.out.println( y | 12 );
+    }
+}`,
+options:[
+"0",
+"7",
+"8",
+"14"
+],
+answer:4,
+explanation:"11 & 9 = 9, 9 ^ 3 = 10, and 10 | 12 = 14."
+},
+{
+q:"What will be the output of the program?",
+code:`class SSBool 
+{
+    public static void main(String [] args) 
+    {
+        boolean b1 = true;
+        boolean b2 = false;
+        boolean b3 = true;
+        if ( b1 & b2 | b2 & b3 | b2 )
+            System.out.print("ok ");
+        if ( b1 & b2 | b2 & b3 | b2 | b1 )
+            System.out.println("dokey");
+    }
+}`,
+options:[
+"ok",
+"dokey",
+"ok dokey",
+"No output is produced",
+"Compilation error"
+],
+answer:2,
+explanation:"& has higher precedence than |. First condition evaluates to false. In the second condition, the final | b1 makes the expression true, so it prints \"dokey\"."
+},
+{
+q:"What will be the output of the program?",
+code:`class SC2 
+{
+    public static void main(String [] args) 
+    {
+        SC2 s = new SC2();
+        s.start();
+    }
+
+    void start() 
+    {
+        int a = 3;
+        int b = 4;
+        System.out.print(" " + 7 + 2 + " ");
+        System.out.print(a + b);
+        System.out.print(" " + a + b + " ");
+        System.out.print(foo() + a + b + " ");
+        System.out.println(a + b + foo());
+    }
+
+    String foo() 
+    {
+        return "foo";
+    }
+}`,
+options:[
+"9 7 7 foo 7 7foo",
+"72 34 34 foo34 34foo",
+"9 7 7 foo34 34foo",
+"72 7 34 foo34 7foo"
+],
+answer:3,
+explanation:"All expressions are evaluated from left to right. If one operand is String, concatenation happens. Hence output becomes: 72 7 34 foo34 7foo."
+},
+{
+q:"What will be the output of the program?",
+code:`class PassA 
+{
+    public static void main(String [] args) 
+    {
+        PassA p = new PassA();
+        p.start();
+    }
+
+    void start() 
+    {
+        long [] a1 = {3,4,5};
+        long [] a2 = fix(a1);
+        System.out.print(a1[0] + a1[1] + a1[2] + " ");
+        System.out.println(a2[0] + a2[1] + a2[2]);
+    }
+
+    long [] fix(long [] a3) 
+    {
+        a3[1] = 7;
+        return a3;
+    }
+}`,
+options:[
+"12 15",
+"15 15",
+"3 4 5 3 7 5",
+"3 7 5 3 7 5"
+],
+answer:1,
+explanation:"Arrays are passed by reference value. Both a1 and a3 refer to the same array. Element at index 1 becomes 7. So sum becomes 3+7+5 = 15 for both outputs."
+},
+{
+q:"Which two of the following statements could legally be inserted into the missing section?",
+code:`import java.awt.*;
+class Ticker extends Component 
+{
+    public static void main (String [] args) 
+    {
+        Ticker t = new Ticker();
+        /* Missing Statements ? */
+    }
+}`,
+options:[
+"1 and 4",
+"2 and 3",
+"1 and 3",
+"2 and 4"
+],
+answer:3,
+explanation:"(2) boolean test = (t instanceof Ticker); is correct because t is an instance of Ticker. (4) boolean test = (t instanceof Component); is correct because Ticker extends Component. Statements (1) and (3) have incorrect syntax."
+},
+{
+q:"Which two are equal?",
+code:`1) 32/4
+2) (8 >> 2) << 4
+3) 2^5
+4) 128 >>> 2
+5) 2 >> 5`,
+options:[
+"1 and 2",
+"2 and 4",
+"1 and 3",
+"2 and 3"
+],
+answer:1,
+explanation:"(2) (8 >> 2) << 4 evaluates to 32. 8 >> 2 gives 2, and 2 << 4 gives 32. (4) 128 >>> 2 gives 32 because unsigned right shift divides by 4. (1) equals 8, (3) uses XOR so 2^5 = 7, and (5) equals 0. Therefore 2 and 4 are equal."
+}
+
+
+];
+
+// ---------------- SETTINGS ----------------
+
+
+
+const questionsPerPage = 5;
+let currentPage = 0;
+let score = 0;
+
+function loadQuestions(){
+
+const container = document.getElementById("optionsList");
+container.innerHTML = "";
+
+const start = currentPage * questionsPerPage;
+const end = Math.min(start + questionsPerPage, questions.length);
+
+for(let i=start;i<end;i++){
+
+const q = questions[i];
+
+const questionDiv = document.createElement("div");
+questionDiv.style.marginBottom="30px";
+
+questionDiv.innerHTML = `
+<h4>Question ${i+1}: ${q.q}</h4>
+<pre><code class="language-c">${q.code}</code></pre>
+<ul class="options" id="options${i}"></ul>
+
+<button onclick="toggleAnswer(${i})" id="btn${i}">Show Answer</button>
+
+<div id="explanation${i}" style="display:none; margin-top:10px;"></div>
+`;
+
+container.appendChild(questionDiv);
+
+const optionList = questionDiv.querySelector(`#options${i}`);
+
+q.options.forEach((opt,index)=>{
+const li=document.createElement("li");
+li.innerHTML=`
+<label onclick="checkAnswer(${i},${index})">
+<input type="radio" name="question${i}">
+${opt}
+</label>`;
+optionList.appendChild(li);
+});
+
+}
+
+Prism.highlightAll();
+loadPagination();
+}
+
+// ---------------- CHECK ANSWER ----------------
+function checkAnswer(qIndex, selectedIndex){
+
+const q = questions[qIndex];
+const labels = document.querySelectorAll(`#options${qIndex} label`);
+
+// Remove previous icons
+labels.forEach(l=>{
+l.classList.remove("correct","wrong");
+const oldIcon = l.querySelector(".option-icon");
+if(oldIcon) oldIcon.remove();
+});
+
+// If correct
+if(selectedIndex === q.answer){
+labels[selectedIndex].classList.add("correct");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✔</span>`;
+score++;
+}else{
+labels[selectedIndex].classList.add("wrong");
+labels[selectedIndex].innerHTML += `<span class="option-icon">✖</span>`;
+}
+
+}
+
+// ---------------- TOGGLE ANSWER ----------------
+function toggleAnswer(qIndex){
+
+const explanation = document.getElementById("explanation"+qIndex);
+const btn = document.getElementById("btn"+qIndex);
+const q = questions[qIndex];
+
+if(explanation.style.display === "none"){
+
+explanation.style.display="block";
+btn.innerText="Hide Answer";
+
+explanation.innerHTML =
+"<b>Correct Answer:</b> "+q.options[q.answer]+
+"<br><b>Explanation:</b> "+q.explanation;
+
+}else{
+
+explanation.style.display="none";
+btn.innerText="Show Answer";
+
+}
+
+}
+
+// ---------------- PAGINATION ----------------
+function loadPagination(){
+
+let pagination = document.getElementById("pagination");
+
+if(!pagination){
+    pagination = document.createElement("div");
+    pagination.id = "pagination";
+    pagination.style.marginTop = "20px";
+    pagination.style.textAlign = "center";
+    document.querySelector(".container").appendChild(pagination);
+}
+
+pagination.innerHTML = "";
+
+const totalPages = Math.ceil(questions.length / questionsPerPage);
+
+// ---------- PREVIOUS BUTTON ----------
+const prevBtn = document.createElement("button");
+prevBtn.innerText = "Prev";
+
+if(currentPage === 0){
+    prevBtn.disabled = true;
+    prevBtn.style.background = "#ccc";
+}
+
+prevBtn.onclick = () => {
+    if(currentPage > 0){
+        currentPage--;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(prevBtn);
+
+
+// ---------- PAGE NUMBER BUTTONS ----------
+for(let p = 0; p < totalPages; p++){
+
+    const btn = document.createElement("button");
+    btn.innerText = p + 1;
+
+    if(p === currentPage){
+        btn.style.background = "#28a745";
+    }
+
+    btn.onclick = () => {
+        currentPage = p;
+        loadQuestions();
+    };
+
+    pagination.appendChild(btn);
+}
+
+
+// ---------- NEXT BUTTON ----------
+const nextBtn = document.createElement("button");
+nextBtn.innerText = "Next";
+
+if(currentPage === totalPages - 1){
+    nextBtn.disabled = true;
+    nextBtn.style.background = "#ccc";
+}
+
+nextBtn.onclick = () => {
+    if(currentPage < totalPages - 1){
+        currentPage++;
+        loadQuestions();
+    }
+};
+
+pagination.appendChild(nextBtn);
+
+}
+
+loadQuestions();
+
+</script>
+
+
+
+</body>
+</html>

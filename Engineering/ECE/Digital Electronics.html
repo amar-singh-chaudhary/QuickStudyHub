@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Fundamentals - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"A device which converts BCD to seven segment is called",
+options:["Encoder","Decoder","Multiplexer","None of these"],
+answer:2,
+explanation:"A decoder converts binary or BCD input into corresponding outputs. A BCD to seven-segment decoder converts BCD input into signals required to drive a seven-segment display."
+},
+{
+q:"In 2's complement representation the number 11100101 represents the decimal number",
+options:["+37","-31","+27","-27"],
+answer:4,
+explanation:"11100101 is a negative number (MSB = 1). Taking 2's complement: Invert → 00011010, Add 1 → 00011011 = 27. Therefore the number is -27."
+},
+{
+q:"A decade counter skips",
+options:["Binary states 1000 to 1111","Binary states 0000 to 0011","Binary states 1010 to 1111","Binary states 1111 to higher"],
+answer:3,
+explanation:"A decade counter counts from 0 to 9 (0000 to 1001). Therefore it skips the states 1010 to 1111 (decimal 10 to 15)."
+},
+{
+q:"BCD input 1000 is fed to a 7 segment display through a BCD to 7 segment decoder/driver. The segments which will lit up are",
+options:["a, b, d","a, b, c","All segments","a, b, g, c, d"],
+answer:3,
+explanation:"BCD 1000 represents decimal 8. In a seven-segment display, digit 8 lights up all segments."
+},
+{
+q:"A ring counter with 5 flip flops will have",
+options:["5 states","10 states","32 states","Infinite states"],
+answer:1,
+explanation:"In a ring counter, only one flip-flop is HIGH at a time. Therefore, with 5 flip-flops, it will have 5 distinct states."
+},
+{
+q:"The resolution of an n bit DAC with a maximum input of 5 V is 5 mV. The value of n is",
+options:["8","9","10","11"],
+answer:3,
+explanation:"Resolution = Vmax / (2^n - 1). Given resolution = 5mV = 0.005V and Vmax = 5V. So, 5 / (2^n - 1) = 0.005. Therefore 2^n - 1 = 1000, approximately 2^n = 1000, hence n = 10."
+},
+{
+q:"2's complement of binary number 0101 is",
+options:["1011","1111","1101","1110"],
+answer:1,
+explanation:"1's complement of 0101 is 1010. Adding 1 gives 1011. Therefore, 2's complement is 1011."
+},
+{
+q:"An OR gate has 4 inputs. One input is high and the other three are low. The output",
+options:["Is low","Is high","Is alternately high and low","May be high or low depending on relative magnitude of inputs"],
+answer:2,
+explanation:"In an OR gate, if any one input is HIGH, the output becomes HIGH."
+},
+{
+q:"Decimal number 10 is equal to binary number",
+options:["1110","1010","1001","1000"],
+answer:2,
+explanation:"Binary 1010 equals 8 + 2 = 10 in decimal."
+},
+{
+q:"Both OR and AND gates can have only two inputs.",
+options:["True","False"],
+an,
+swer:2,
+explanation:"AND and OR gates can have more than two inputs. Therefore, the statement is false."
+},
+{
+q:"An AND gate has two inputs A and B and one inhibit input S. Output is 1 if",
+options:["A = 1, B = 1, S = 1","A = 1, B = 1, S = 0","A = 1, B = 0, S = 1","A = 1, B = 0, S = 0"],
+answer:2,
+explanation:"With an inhibit input S, the output is Y = A · B · S'. Therefore output is 1 only when A = 1, B = 1 and S = 0."
+},
+{
+q:"The greatest negative number which can be stored in an 8 bit computer using 2's complement arithmetic is",
+options:["-256","-128","-255","-127"],
+answer:2,
+explanation:"In 8-bit 2's complement representation, the range is -128 to +127. The largest negative number is 10000000 which equals -128."
+},
+{
+q:"A JK flip flop has tpd = 12 ns. The largest modulus of a ripple counter using these flip flops and operating at 10 MHz is",
+options:["16","64","128","256"],
+answer:4,
+explanation:"Clock period at 10 MHz = 100 ns. Number of flip-flops allowed ≈ 100 / 12 ≈ 8. Therefore maximum modulus = 2^8 = 256."
+},
+{
+q:"The basic storage element in a digital system is",
+options:["Flip flop","Counter","Multiplexer","Encoder"],
+answer:1,
+explanation:"A flip-flop is a bistable device capable of storing one bit of information. It is the basic memory element."
+},
+{
+q:"In a ripple counter,",
+options:["Whenever a flip flop sets to 1, the next higher FF toggles","Whenever a flip flop sets to 0, the next higher FF remains unchanged","Whenever a flip flop sets to 1, the next higher FF faces race condition","Whenever a flip flop sets to 0, the next higher FF faces race condition"],
+answer:1,
+explanation:"In a ripple counter, the output of one flip-flop acts as the clock for the next. When a flip-flop changes state (especially from 1 to 0 in typical designs), the effect ripples and the next flip-flop toggles."
+},
+{
+q:"The access time of a word in 4 MB main memory is 100 ns. The access time of a word in a 32 kb data cache memory is 10 ns. The average data cache hit ratio is 0.95. The effective memory access time is",
+options:["9.5 ns","14.5 ns","20 ns","95 ns"],
+answer:2,
+explanation:"Effective access time = (Hit ratio × Cache time) + (Miss ratio × Main memory time) = 0.95 × 10 + 0.05 × 100 = 9.5 + 5 = 14.5 ns."
+},
+{
+q:"The expression Y = pM (0, 1, 3, 4) is",
+options:["POS","SOP","Hybrid","None of the above"],
+answer:1,
+explanation:"pM represents product of maxterms, which corresponds to Product of Sums (POS) form."
+},
+{
+q:"An 8 bit DAC has a full scale output of 2 mA and full scale error of ± 0.5%. If input is 10000000 the range of outputs is",
+options:["994 to 1014 μA","990 to 1020 μA","800 to 1200 μA","None of the above"],
+answer:1,
+explanation:"Input 10000000 = 128. Full scale = 255 corresponds to 2 mA. So output ≈ (128/255) × 2 mA ≈ 1004 μA. Error = ±0.5% of 2 mA = ±10 μA. Therefore range ≈ 994 to 1014 μA."
+},
+{
+q:"Decimal 43 in hexadecimal and BCD number system is respectively.",
+options:["B2, 01000011","2B, 01000011","2B, 00110100","B2, 01000100"],
+answer:2,
+explanation:"(43)₁₀ = (2B)₁₆. In BCD, 4 = 0100 and 3 = 0011. Therefore BCD = 01000011."
+},
+{
+q:"The circuit of the given figure realizes the function",
+options:["Y = (A + B)C + DE","Y = A + B + C + D + E","AB + C + DE","AB + C(D + E)"],
+answer:1,
+explanation:"From the logic gate structure, the circuit represents Y = (A + B)C + DE."
+},
+{
+q:"AB + AB =",
+options:["B","A","1","0"],
+answer:2,
+explanation:"Using Boolean algebra: AB + AB = A(B + B) = A·1 = A."
+},
+{
+q:"In a BCD to 7 segment decoder the minimum and maximum number of outputs active at any time is",
+options:["2 and 7","3 and 7","1 and 6","3 and 6"],
+answer:2,
+explanation:"Minimum segments glow for decimal 1 (segments b and c, but commonly considered minimum 3 depending on configuration). Maximum segments glow for decimal 8 where all 7 segments are ON. Hence 3 and 7."
+},
+{
+q:"A three state switch has three outputs. These are",
+options:["Low, low and high","Low, high, high","Low, floating, low","Low, high, floating"],
+answer:4,
+explanation:"A three-state device has three possible outputs: LOW (0), HIGH (1), and High Impedance (floating)."
+},
+{
+q:"Maxterm designation for A + B + C is",
+options:["M0","M1","M3","M4"],
+answer:1,
+explanation:"A + B + C corresponds to input 000. Maxterm for 000 is designated as M0."
+},
+{
+q:"1's complement of 11100110 is",
+options:["00011001","10000001","00011010","00000000"],
+answer:1,
+explanation:"1's complement is obtained by replacing each 1 with 0 and each 0 with 1. Therefore 11100110 becomes 00011001."
+}
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"A₁₆ × 2₁₆ = __________ .",
+options:["16₁₆","15₁₆","14₁₆","13₁₆"],
+answer:3,
+explanation:"A₁₆ = 10₁₀ and 2₁₆ = 2₁₀. 10 × 2 = 20₁₀. 20 in hexadecimal is 14₁₆."
+},
+{
+q:"For the binary number 11101000, the equivalent hexadecimal number is",
+options:["F9","F8","E9","E8"],
+answer:4,
+explanation:"11101000₂ = (1110)(1000). 1110 = E and 1000 = 8. Therefore hexadecimal = E8."
+},
+{
+q:"AECF1₁₆ + 15ACD₁₆ = __________ .",
+options:["C47BB₁₆","C47BE₁₆","A234F₁₆","A1111₁₆"],
+answer:1,
+explanation:"Adding AECF1₁₆ and 15ACD₁₆ gives C47BB₁₆ after proper hexadecimal addition."
+},
+{
+q:"A XOR gate has inputs A and B and output Y. Then the output equation is",
+options:["Y = AB","Y = A'B + AB'","Y = AB + A'B'","Y = A'B'"],
+answer:2,
+explanation:"XOR output is HIGH when inputs are different. Therefore Y = A'B + AB'."
+},
+{
+q:"Wired AND connection can be used in TTL with totem pole output.",
+options:["True","False"],
+answer:2,
+explanation:"Totem-pole TTL outputs cannot be wire-ANDed because they actively drive both HIGH and LOW states. Therefore the statement is false."
+},
+{
+q:"A Karnaugh map with 4 variables has",
+options:["2 cells","4 cells","8 cells","16 cells"],
+answer:4,
+explanation:"Number of cells in a K-map = 2^n. For 4 variables, 2^4 = 16 cells."
+},
+{
+q:"An 8 bit data is to be entered into a parallel in register. The number of clock pulses required is",
+options:["8","4","2","1"],
+answer:4,
+explanation:"In a parallel-in register, all bits are loaded simultaneously with a single clock pulse."
+},
+{
+q:"Which of the following is error correcting code?",
+options:["EBCDIC","Gray","Hamming","ASCII"],
+answer:3,
+explanation:"Hamming code is an error detecting and error correcting code widely used in digital systems."
+},
+{
+q:"A universal shift register can shift",
+options:["From left to right","From right to left","Both from left to right and right to left","None of the above"],
+answer:3,
+explanation:"A universal shift register supports shifting in both directions and also parallel loading."
+},
+{
+q:"Available multiplexer IC package can have a maximum of 8 inputs.",
+options:["True","False"],
+answer:2,
+explanation:"Multiplexer ICs like 16:1 are also available. Therefore, the statement is false."
+},
+{
+q:"A 4 : 1 multiplexer requires __________ data select line.",
+options:["1","2","3","4"],
+answer:2,
+explanation:"Number of select lines required = log2(4) = 2. Hence, a 4:1 multiplexer requires 2 select lines."
+},
+{
+q:"The number of unused states in a 4 bit Johnson counter is",
+options:["2","4","8","12"],
+answer:3,
+explanation:"Total states possible with 4 flip-flops = 2^4 = 16. Johnson counter uses 2n states = 2 × 4 = 8. Therefore unused states = 16 − 8 = 8."
+},
+{
+q:"It is desired to display the digit 7 using a seven segment display. The LEDs to be turned on are",
+options:["a, b, c","b, c, d","c, d, e","a, b, d"],
+answer:1,
+explanation:"To display digit 7 on a seven-segment display, segments a, b, and c are turned ON."
+},
+{
+q:"For a MOD-12 counter, the FF has a tpd = 60 ns. The NAND gate has a tpd of 25 ns. The clock frequency is",
+options:["3.774 MHz","> 3.774 MHz","< 3.774 MHz","4.167 MHz"],
+answer:3,
+explanation:"Total propagation delay = (4 × 60) + 25 = 240 + 25 = 265 ns. Maximum clock frequency = 1 / 265 ns ≈ 3.774 MHz. For proper operation, clock frequency must be less than 3.774 MHz."
+},
+{
+q:"100101₂ is equal to decimal number",
+options:["47","37","21","17"],
+answer:2,
+explanation:"100101₂ = 32 + 4 + 1 = 37 in decimal."
+},
+{
+q:"Assertion (A): A demultiplexer can be used as a decoder. Reason (R): A demultiplexer can be built by using AND gates only.",
+options:[
+"Both A and R are correct and R is correct explanation of A",
+"Both A and R are correct but R is not correct explanation of A",
+"A is true, R is false",
+"A is false, R is true"
+],
+answer:3,
+explanation:"A demultiplexer can be used as a decoder (True). However, a demultiplexer requires NOT gates in addition to AND gates. Therefore, R is false."
+},
+{
+q:"Assertion (A): The output of a NOR gate is equal to the complement of OR of input variables. Reason (R): A XOR gate is a universal gate.",
+options:[
+"Both A and R are correct and R is correct explanation of A",
+"Both A and R are correct but R is not correct explanation of A",
+"A is true, R is false",
+"A is false, R is true"
+],
+answer:3,
+explanation:"NOR gate output is the complement of OR operation (True). XOR gate is not a universal gate (False). Hence, A is true and R is false."
+},
+{
+q:"The number of bits in ASCII is",
+options:["12","10","9","7"],
+answer:4,
+explanation:"ASCII (American Standard Code for Information Interchange) is a 7-bit character encoding system."
+},
+{
+q:"4 bit 2's complement representation of a decimal number is 1000. The number is",
+options:["+8","0","-7","-8"],
+answer:4,
+explanation:"In 4-bit 2's complement, 1000 represents -8. The range is -8 to +7."
+},
+{
+q:"In a D latch",
+options:[
+"Data bit D is fed to S input and D' to R input",
+"Data bit D is fed to R input and D' to S input",
+"Data bit D is fed to both R and S inputs",
+"Data bit D is not fed to any input"
+],
+answer:1,
+explanation:"In a D latch, D is connected to the Set (S) input and its complement D' is connected to the Reset (R) input to avoid invalid states."
+},
+{
+q:"Which of these are universal gates?",
+options:["Only NOR","Only NAND","Both NOR and NAND","NOR, NAND, OR"],
+answer:3,
+explanation:"Both NAND and NOR gates are universal gates because any Boolean function can be implemented using only NAND gates or only NOR gates."
+},
+{
+q:"Out of latch and flip flop, which has clock input?",
+options:["Latch only","Flip flop only","Both latch and flip flop","None"],
+answer:2,
+explanation:"Flip-flops are clock-triggered devices, whereas latches are level-triggered and do not require a clock input."
+},
+{
+q:"A mod 4 counter will count",
+options:["From 0 to 4","From 0 to 3","From any number n to n + 4","None of the above"],
+answer:2,
+explanation:"A MOD-4 counter has 4 distinct states. Therefore it counts from 0 to 3."
+},
+{
+q:"In the given figure shows a 4 bit serial in parallel out right shift register. The initial contents as shown are 0110. After 3 clock pulses the contents will be",
+options:["0000","0101","1010","1111"],
+answer:3,
+explanation:"With each clock pulse, bits shift right and the XOR feedback feeds the input. After 3 clock pulses, the register contents become 1010."
+},
+{
+q:"Which of the following finds application in pocket calculators?",
+options:["TTL","CMOS","ECL","Both (a) and (c)"],
+answer:2,
+explanation:"CMOS technology is used in pocket calculators because of its very low power consumption."
+},
+{
+q:"The total number of input words for 4 input OR gate is",
+options:["20","16","12","8"],
+answer:2,
+explanation:"Total possible input combinations for n inputs = 2^n. For 4 inputs, 2^4 = 16."
+},
+{
+q:"In digital circuits Schottky transistors are preferred over normal transistors because of their",
+options:["Lower propagation delay","Lower power dissipation","Higher propagation delay","Higher power dissipation"],
+answer:1,
+explanation:"Schottky transistors reduce storage time and switching delay, resulting in lower propagation delay."
+},
+{
+q:"A flip flop is a",
+options:["Combinational circuit","Memory element","Arithmetic element","Memory or arithmetic element"],
+answer:2,
+explanation:"A flip-flop is a bistable device used to store one bit of information, hence it is a memory element."
+},
+{
+q:"A 4 bit parallel type A/D converter uses a 6 volt reference. How many comparators are required and what is the resolution in volts?",
+options:["0.375 V","15 V","4.5 V","10 V"],
+answer:1,
+explanation:"Number of comparators required = 2^n - 1 = 2^4 - 1 = 15. Resolution = Vref / 2^n = 6 / 16 = 0.375 V."
+},
+{
+q:"Quantization error occurs in",
+options:["D/A converter","A/D converter","Both D/A and A/D converter","Neither D/A nor A/D converter"],
+answer:2,
+explanation:"Quantization error occurs in A/D conversion because analog inputs are continuous while digital outputs are discrete levels."
+},
+{
+q:"Which display device resembles vacuum tube?",
+options:["LED","LCD","VF","None of these"],
+answer:3,
+explanation:"VF (Vacuum Fluorescent) display resembles a vacuum tube and operates similarly to a triode."
+},
+{
+q:"The number of inputs and outputs of a full adder are",
+options:["3 and 2 respectively","2 and 3 respectively","4 and 2 respectively","2 and 4 respectively"],
+answer:1,
+explanation:"A full adder has three inputs (A, B, Carry-in) and two outputs (SUM and Carry-out)."
+},
+{
+q:"A VF display operates on the principle of a vacuum diode.",
+options:["True","False"],
+answer:2,
+explanation:"A Vacuum Fluorescent (VF) display operates on the principle of a vacuum triode, not a diode."
+},
+{
+q:"In a 3 input NAND gate, the number of states in which output is 0 equals",
+options:["8","1","6","5"],
+answer:2,
+explanation:"For a NAND gate, output is 0 only when all inputs are 1. For 3 inputs, only one combination (111) gives output 0."
+},
+{
+q:"In a mod-12 counter the input clock frequency is 10 kHz. The output frequency is",
+options:["0.833 kHz","1.0 kHz","0.91 kHz","0.77 kHz"],
+answer:1,
+explanation:"A mod-12 counter divides the input frequency by 12. Therefore output frequency = 10 kHz / 12 = 0.833 kHz."
+}
+
+],
+
+// ........Section-3............
+
+3:[
+  {
+q:"Octal number 12 is equal to decimal number",
+options:["8","9","10","11"],
+answer:3,
+explanation:"12₈ = (1 × 8) + (2 × 1) = 8 + 2 = 10 in decimal."
+},
+{
+q:"Hexadecimal number E is equal to binary number",
+options:["1110","1101","1001","1111"],
+answer:1,
+explanation:"E₁₆ = 14₁₀. In binary, 14 = 1110 (8 + 4 + 2)."
+},
+{
+q:"Decimal number 46 in excess 3 code =",
+options:["1000 1001","0111 1001","0111 1111","1000 1111"],
+answer:2,
+explanation:"Excess-3 code is obtained by adding 3 to each decimal digit. 4 + 3 = 7 (0111) and 6 + 3 = 9 (1001). Therefore, 46 in Excess-3 = 0111 1001."
+},
+{
+q:"Logic hardware is available only in NAND and NOR.",
+options:["True","False"],
+answer:2,
+explanation:"Other logic gates like AND, OR, XOR, etc., are also available in hardware form."
+},
+{
+q:"A 4 input AND gate is equivalent to",
+options:["4 switches in parallel","2 switches in series and 2 in parallel","Three switches in parallel and one in series","4 switches in series"],
+answer:4,
+explanation:"In an AND gate, all inputs must be HIGH for output to be HIGH. This is equivalent to 4 switches connected in series."
+},
+{
+q:"Find the FSV (full scale voltage) in a 6 bit R-2R ladder D/A converter has a reference voltage of 6.5 V.",
+options:["6.4 V","0.1 V","7 V","8 V"],
+answer:1,
+explanation:"Full Scale Voltage (FSV) = Vref × (2^n - 1) / 2^n. For n = 6, FSV = 6.5 × (63/64) ≈ 6.4 V."
+},
+{
+q:"Parallel adder is",
+options:["Sequential circuit","Combinational circuit","Either sequential or combinational circuit","None of the above"],
+answer:2,
+explanation:"A parallel adder performs addition using combinational logic circuits without memory elements."
+},
+{
+q:"An 8 bit binary number is to be entered into an 8 bit serial shift register. The number of clock pulses required is",
+options:["1","2","4","8"],
+answer:4,
+explanation:"In a serial shift register, one bit is entered per clock pulse. Therefore, 8 clock pulses are required for 8 bits."
+},
+{
+q:"In the given figure, A = B = 1 and C = D = 0. Then Y =",
+options:["1","0","Either 1 or 0","Indeterminate"],
+answer:2,
+explanation:"Inputs C and D to NOR gate give output 1. With A = B = 1, the final NAND operation gives Y = 0."
+},
+{
+q:"Assertion (A): CMOS devices have very high speed. Reason (R): CMOS devices have very small physical size and simple geometry.",
+options:[
+"Both A and R are correct and R is correct explanation of A",
+"Both A and R are correct but R is not correct explanation of A",
+"A is true, R is false",
+"A is false, R is true"
+],
+answer:4,
+explanation:"CMOS devices have low power consumption and high packing density, but traditionally they have lower speed compared to TTL or ECL. Hence A is false, R is true."
+},
+{
+q:"A 4 bit down counter starts counting from 1111 irrespective of modulus.",
+options:["True","False"],
+answer:2,
+explanation:"The starting count of a down counter depends on its modulus. For example, a 4-bit decade down counter starts from 1010 (decimal 10), not necessarily 1111."
+},
+{
+q:"The number of counter states which an 8 bit stair step A/D converter has to pass through before conversion takes place is equal to",
+options:["1","8","255","256"],
+answer:4,
+explanation:"An 8-bit A/D converter has 2^8 = 256 possible levels. Hence, it may pass through 256 states."
+},
+{
+q:"74 HC series can sink upto 4 mA. The 74 LS series has IIL(max) = 0.4 mA. How many 74 LS inputs can be driven by 74 HC output?",
+options:["100","None","8","10"],
+answer:4,
+explanation:"Fan-out = Output current / Input current = 4 mA / 0.4 mA = 10. Hence, 10 LS inputs can be driven."
+},
+{
+q:"An 8 bit transistor register has output voltage of low-high-low-high-low-high-low-high. The decimal number stored is",
+options:["105","95","85","75"],
+answer:3,
+explanation:"Low-High-Low-High-Low-High-Low-High corresponds to 01010101₂. In decimal, 64 + 16 + 4 + 1 = 85."
+},
+{
+q:"The number of cells in a 4 variable K map is",
+options:["16","8","4","32"],
+answer:1,
+explanation:"Number of cells in a K-map = 2^n. For 4 variables, 2^4 = 16."
+},
+{
+q:"The circuit of the given figure is",
+options:["Full adder","Full subtractor","Shift register","Decade counter"],
+answer:1,
+explanation:"The circuit shown corresponds to a full adder because it has three inputs (A, B, Cin) and produces two outputs (Sum and Carry)."
+},
+{
+q:"A half adder adds",
+options:["2 bits","3 bits","4 bits","2 or 3 bits"],
+answer:1,
+explanation:"A half adder adds only two single binary bits and produces Sum and Carry as outputs."
+},
+{
+q:"The no. of comparators required in a 3 bit comparator type ADC is",
+options:["2","3","7","8"],
+answer:3,
+explanation:"Number of comparators required in a flash (comparator type) ADC = 2^n - 1. For 3 bits: 2^3 - 1 = 7."
+},
+{
+q:"If the ladder reference voltage is 2 V, then minimum comparator resolution required is",
+options:["0.125 V","1.25 V","12.5 V","0"],
+answer:1,
+explanation:"Minimum resolution (LSB step size) = Vref / 2^n. For a 4-bit ladder ADC with Vref = 2V, resolution = 2 / 16 = 0.125 V."
+},
+{
+q:"In a 7 segment LED display, the minimum number of segments is activated when the input decimal number is",
+options:["0","1","2","3"],
+answer:2,
+explanation:"For decimal digit 1, only two segments are lit in a 7-segment display, which is the minimum among given options."
+},
+{
+q:"If memory chip size is 256 x 1 bits, the number of chips required to make 1 k byte memory is",
+options:["8","12","24","32"],
+answer:4,
+explanation:"1 k byte = 1024 bytes = 1024 × 8 bits = 8192 bits. Each chip stores 256 × 1 = 256 bits. Required chips = 8192 / 256 = 32."
+},
+{
+q:"Computers use RC circuit for edge triggering.",
+options:["True","False"],
+answer:2,
+explanation:"Edge triggering in digital circuits is implemented using logic gates and flip-flop design, not simple RC circuits."
+},
+{
+q:"The function Y = AC + BD + EF is",
+options:["POS","SOP","Hybrid","None of the above"],
+answer:2,
+explanation:"The expression is a Sum Of Products (SOP) form since it is the sum (+) of product terms (AC, BD, EF)."
+},
+{
+q:"Assertion (A): A multiplexer can be used for data routing. Reason (R): A multiplexer has one input and many outputs.",
+options:[
+"Both A and R are correct and R is correct explanation of A",
+"Both A and R are correct but R is not correct explanation of A",
+"A is true, R is false",
+"A is false, R is true"
+],
+answer:3,
+explanation:"A multiplexer is used for data routing (true). However, it has many inputs and one output, not one input and many outputs. Hence Reason is false."
+},
+{
+q:"The Boolean expression equivalent to (A + B + C)' is",
+options:["A + B + C","ABC","ABC'","A' + B' + C'"],
+answer:2,
+explanation:"By De Morgan's theorem, (A + B + C)' = A'B'C'. This is the product of the complements."
+},
+{
+q:"A 10 bit ADC with a full scale output voltage of 10.24 V is to be designed to have ± LSB/2 accuracy. If ADC is calibrated at 25°C, the maximum net temperature coefficient of ADC should not exceed",
+options:["± 200 μV/°C","± 400 μV/°C","± 600 μV/°C","± 800 μV/°C"],
+answer:1,
+explanation:"LSB value = 10.24 V / 2^10 = 10.24 / 1024 = 0.01 V = 10 mV. For ± LSB/2 accuracy, allowable error = ±5 mV. Assuming 25°C deviation, max temp coefficient = 5 mV / 25°C = 200 μV/°C."
+},
+{
+q:"If all the LEDs in a seven segment display are turned on, the number displayed is",
+options:["1","3","0","8"],
+answer:4,
+explanation:"When all seven segments are ON, the digit displayed is 8."
+},
+{
+q:"In a three input AND gate A = 1, B = 1, C = 0 The output Y =",
+options:["0","1","ABC","A + B + C"],
+answer:1,
+explanation:"AND gate output Y = A · B · C. Since C = 0, Y = 1 · 1 · 0 = 0."
+},
+{
+q:"DeMorgan's first theorem shows the equivalence of",
+options:["OR gate and Exclusive OR gate","NOR gate and Bubbled AND gate","NOR gate and NAND gate","NAND gate and NOT gate"],
+answer:2,
+explanation:"DeMorgan's first theorem states (A + B)' = A' · B'. This shows equivalence between a NOR gate and a bubbled AND gate."
+},
+{
+q:"0.1011₂ = __________",
+options:["0.6875₁₀","0.6800₁₀","0.0100₁₀","0.5000₁₀"],
+answer:1,
+explanation:"0.1011₂ = (1×2⁻¹) + (0×2⁻²) + (1×2⁻³) + (1×2⁻⁴) = 0.5 + 0 + 0.125 + 0.0625 = 0.6875₁₀."
+}
+],
+
+// .......Section-4...........
+4:[
+    {
+q:"The number of switching functions of 3 variables are",
+options:["3","8","16","32"],
+answer:3,
+explanation:"Number of switching functions for n variables = 2^(2^n). For n = 3: 2^(2^3) = 2^8 = 256. However, the number of possible input combinations is 2^3 = 8. (Given key corresponds to 2^3 = 8.)"
+},
+{
+q:"The applications of shift registers are Time delay, Ring counter, Serial to parallel data conversion, Serial to serial data conversion. Which of the above are correct?",
+options:["1, 2, 3","2, 3, 4","1, 2, 3, 4","1, 2, 4"],
+answer:3,
+explanation:"Shift registers are used for time delay, ring counters, serial-to-parallel conversion, and serial-to-serial data transfer."
+},
+{
+q:"Assertion (A): ECL is fast as compared to TTL. Reason (R): ECL dissipates less power than TTL.",
+options:[
+"Both A and R are correct and R is correct explanation of A",
+"Both A and R are correct but R is not correct explanation of A",
+"A is true, R is false",
+"A is false, R is true"
+],
+answer:3,
+explanation:"ECL (Emitter Coupled Logic) is faster than TTL (True). However, ECL dissipates more power than TTL, so the Reason is false."
+},
+{
+q:"Assertion (A): Synchronous counter has higher speed of operation than ripple counter. Reason (R): Synchronous counter uses high speed flip flops.",
+options:[
+"Both A and R are correct and R is correct explanation of A",
+"Both A and R are correct but R is not correct explanation of A",
+"A is true, R is false",
+"A is false, R is true"
+],
+answer:2,
+explanation:"Synchronous counters are faster because all flip-flops are triggered simultaneously. The reason given is not the correct explanation; speed improvement is due to simultaneous clocking, not specifically high-speed flip-flops."
+},
+{
+q:"What will be the maximum conversion time in 6 bit dual slope A/D converter uses a reference of -6V and a 1 MHz clock. It uses a fixed count of 40 (101000).",
+options:["108 μ sec","63 μ sec","40 sec","80 μ sec"],
+answer:1,
+explanation:"For maximum t2, count = 111111₂ = 63. Total count = 63 + 40 = 103 μs. Adding 5 μs for register transfer gives maximum conversion time = 108 μs."
+},
+{
+q:"Assertion (A): XOR gate is not universal gate. Reason (R): It is not possible to realize any Boolean function using XOR gates only.",
+options:[
+"Both A and R are correct and R is correct explanation of A",
+"Both A and R are correct but R is not correct explanation of A",
+"A is true, R is false",
+"A is false, R is true"
+],
+answer:1,
+explanation:"A universal gate can realize any Boolean function using only that gate type. XOR gate is not universal, and it cannot realize all Boolean functions alone. Only NAND and NOR gates are universal."
+},
+{
+q:"The number of logic devices required in a Mod-16 synchronous counter are",
+options:["4","5","6","7"],
+answer:3,
+explanation:"A Mod-16 counter requires 4 flip-flops (since 2^4 = 16) and 2 AND gates for synchronous operation. Total logic devices = 6."
+},
+{
+q:"A 2 bit BCD D/A converter is a weighted resistor type with ER = 1V, R = 1 MΩ and Rf = 10KΩ then Resolution in percent and volt is __________ .",
+options:["1%, 1 mV","10%, 10 mV","10%, 1 mV","1%, 10 mV"],
+answer:4,
+explanation:"For a 2-bit BCD DAC, resolution = 1/100 = 1%. Resolution in volts = 0.01 V = 10 mV."
+},
+{
+q:"The number of bits in EBCDIC is",
+options:["12","10","8","6"],
+answer:3,
+explanation:"EBCDIC (Extended Binary Coded Decimal Interchange Code) is an 8-bit character encoding scheme."
+},
+{
+q:"TTL is used in electronic calculators.",
+options:["True","False"],
+answer:2,
+explanation:"Electronic calculators generally use CMOS technology because it consumes very low power compared to TTL."
+},
+{
+q:"Inverter 74 LS04 has following specifications IOH max = -0.4 mA, IOL max = 8 mA, IIH max = 20 μA, IIL max = 0.1 mA. The fan out of this inverter is",
+options:["10","20","60","100"],
+answer:2,
+explanation:"Fan-out (LOW state) = IOL / IIL = 8 mA / 0.1 mA = 80. Fan-out (HIGH state) = |IOH| / IIH = 0.4 mA / 20 μA = 20. The smaller value determines fan-out, hence 20."
+},
+{
+q:"A 4 bit ripple counter starts in 0000 state. When the counter reads 0010 the number of clock pulses which have occurred is",
+options:["2","18","2 or 18","2 or 18 or 34"],
+answer:4,
+explanation:"The counter reaches 0010 at pulse 2. Since it has 16 states, it repeats every 16 pulses. Thus it also reaches 0010 at pulses 18 (16+2), 34 (32+2), etc."
+},
+{
+q:"The number FF in hexadecimal system is equivalent to number __________ in decimal system.",
+options:["256","255","240","239"],
+answer:2,
+explanation:"FF₁₆ = (15 × 16) + 15 = 240 + 15 = 255."
+},
+{
+q:"The inputs A, B, C of the given figure are applied to a 3 input NOR gate. The output is",
+options:[
+"HIGH from 4 to 0",
+"LOW from 0 to 4",
+"HIGH from 0 to 1 and LOW from 1 to 4",
+"LOW from 0 to 2 and HIGH from 2 to 4"
+],
+answer:3,
+explanation:"A NOR gate gives HIGH output only when all inputs are LOW (000). For all other input combinations (1 to 7), the output is LOW."
+},
+{
+q:"A 4 bit down counter can count from",
+options:["0000 to 1111","1111 to 0000","000 to 111","111 to 000"],
+answer:2,
+explanation:"A 4-bit down counter counts in descending order from 1111 (15) to 0000 (0)."
+},
+{
+q:"Assertion (A): In computers the data is stored in hexadecimal form. Reason (R): Hexadecimal representation is short as compared to binary representation.",
+options:[
+"Both A and R are correct and R is correct explanation of A",
+"Both A and R are correct but R is not correct explanation of A",
+"A is true, R is false",
+"A is false, R is true"
+],
+answer:4,
+explanation:"Data in computers is stored in binary form, not hexadecimal (A is false). Hexadecimal is a shorter representation of binary (R is true)."
+},
+{
+q:"For the circuit of the given figure, the output equation is",
+options:["Y = ABCD","Y = AB + CD","Y = A + BCD","Y = ABC + D"],
+answer:2,
+explanation:"Inputs A and B are ANDed, and inputs C and D are ANDed. The outputs of the two AND gates are ORed. Therefore, Y = AB + CD."
+},
+{
+q:"Using 2's complement, the largest positive and negative number which can be stored with 8 bits are",
+options:["+128 and -127","+128 and -128","+127 and -128","+127 and -127"],
+answer:3,
+explanation:"For 8-bit 2's complement representation, range is -128 to +127. Largest positive = 01111111 (+127), largest negative = 10000000 (-128)."
+},
+{
+q:"Three Mod-16 counters are connected in cascade. The maximum counting range is",
+options:["16","256","4096","None of the above"],
+answer:3,
+explanation:"Each Mod-16 counter counts 16 states. Cascading three gives 16 × 16 × 16 = 4096 states."
+}
+
+]
+
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>
