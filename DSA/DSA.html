@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA-Array - Sections</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    padding:15px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#ffffff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-list{
+    max-height:200px;
+    overflow-y:auto;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.section-item{
+    display:block;
+    padding:8px;
+    margin:5px 0;
+    cursor:pointer;
+}
+
+.section-content{
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #4CAF50;
+    background:#f9fff9;
+}
+
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.options label{
+    display:block;
+    padding:6px;
+    margin:4px 0;
+    cursor:pointer;
+}
+
+.correct{
+    background:#d4edda;
+}
+
+.wrong{
+    background:#f8d7da;
+}
+
+button{
+    padding:6px 10px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.show-btn{
+    background:#2196F3;
+    color:white;
+}
+
+.pagination{
+    text-align:center;
+    margin-top:20px;
+}
+
+.pagination button{
+    background:#4CAF50;
+    color:white;
+    margin:3px;
+}
+
+.pagination button.active{
+    background:#2e7d32;
+}
+.mark{
+    font-weight:bold;
+    margin-left:8px;
+    font-size:16px;
+}
+
+.correct-mark{
+    color:green;
+}
+
+.wrong-mark{
+    color:red;
+}
+.section-name{
+    color:#4CAF50;
+}
+</style>
+</head>
+
+<body>
+<!-- ...Sectionn set............ -->
+<div class="container">
+
+<h2 id="sectionTitle">
+Exercise : <span class="section-name">Computer Fundamentals - Section 1</span>
+</h2>
+
+<div class="section-list">
+
+<label class="section-item">
+   <input type="checkbox" id="defaultSection" onchange="selectSection(this,1)">
+    Section 1
+</label>
+
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,2)">
+    Section 2
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,3)">
+    Section 3
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,4)">
+    Section 4
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,5)">
+    Section 5
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,6)">
+    Section 6
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,7)">
+    Section 7
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,8)">
+    Section 8
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,9)">
+    Section 9
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,10)">
+    Section 10
+</label>
+<label class="section-item">
+    <input type="checkbox" onchange="selectSection(this,11)">
+    Section 17
+</label>
+
+</div>
+
+<div id="sectionContent" class="section-content">
+Select a section to view content.
+</div>
+
+<div id="pagination" class="pagination"></div>
+
+</div>
+
+
+<script>
+
+let currentSection = 1;
+let currentPage = 0;
+const questionsPerPage = 10;
+let userAnswers = {};
+
+const sections = {
+// ........Section-1............
+
+1: [
+{
+q:"What is a data structure?",
+options:["A programming language","A collection of algorithms","A way to store and organize data","A type of computer hardware"],
+answer:3,
+explanation:"A data structure is a way to store and organize data efficiently for better access and manipulation."
+},
+{
+q:"What are the disadvantages of arrays?",
+options:["Index value of an array can be negative","Elements are sequentially accessed","Data structure like queue or stack cannot be implemented","There are chances of wastage of memory space if elements inserted are lesser than allocated size"],
+answer:4,
+explanation:"Arrays are of fixed size. If allocated space is more than required, unused memory gets wasted."
+},
+{
+q:"Which data structure is used for implementing recursion?",
+options:["Stack","Queue","List","Array"],
+answer:1,
+explanation:"Recursion uses stack memory to store function calls, return addresses and local variables."
+},
+{
+q:"The data structure required to check whether an expression contains a balanced parenthesis is?",
+options:["Queue","Stack","Tree","Array"],
+answer:2,
+explanation:"Stack follows LIFO principle and is used to push opening brackets and pop them when matching closing brackets appear."
+},
+{
+q:"Which of the following is not the application of stack?",
+options:["Data Transfer between two asynchronous process","Compiler Syntax Analyzer","Tracking of local variables at run time","A parentheses balancing program"],
+answer:1,
+explanation:"Data transfer between asynchronous processes uses Queue, not Stack."
+},
+{
+q:"Which data structure is needed to convert infix notation to postfix notation?",
+options:["Tree","Branch","Stack","Queue"],
+answer:3,
+explanation:"Stack is used to temporarily store operators while converting infix to postfix expression."
+},
+{
+q:"What is the value of the postfix expression 6 3 2 4 + – *?",
+options:["74","-18","22","40"],
+answer:2,
+explanation:"The postfix evaluates to 6*(3-(2+4)) = 6*(-3) = -18."
+},
+{
+q:"What data structure would you most likely see in non recursive implementation of a recursive algorithm?",
+options:["Stack","Linked List","Tree","Queue"],
+answer:1,
+explanation:"Non-recursive implementations use an explicit Stack to simulate recursion."
+},
+{
+q:"Which of the following statement(s) about stack data structure is/are NOT correct?",
+options:["Top of the Stack always contain the new node","Stack is the FIFO data structure","Null link is present in the last node at the bottom of the stack","Linked List are used for implementing Stacks"],
+answer:2,
+explanation:"Stack follows LIFO (Last In First Out), not FIFO."
+},
+{
+q:"The data structure required for Breadth First Traversal on a graph is?",
+options:["Array","Stack","Tree","Queue"],
+answer:4,
+explanation:"BFS follows FIFO principle, so Queue is used."
+},
+{
+q:"The prefix form of A-B/(C*D^E) is?",
+options:["-A/B*C^DE","-A/BC*^DE","-ABCD*^DE","-/*^ACBDE"],
+answer:1,
+explanation:"The prefix expression of A-(B/(C*(D^E))) is -A/B*C^DE."
+},
+{
+q:"Which of the following points is/are not true about Linked List compared with array?",
+options:["Random access is not allowed","Access takes less time than arrays","Arrays have better cache locality","Easy insertion and deletion"],
+answer:2,
+explanation:"Accessing elements in linked list requires traversal, so it takes more time than arrays."
+},
+{
+q:"Which data structure is based on LIFO principle?",
+options:["Tree","Linked List","Stack","Queue"],
+answer:3,
+explanation:"Stack follows Last In First Out (LIFO) principle."
+},
+{
+q:"Which application makes use of circular linked list?",
+options:["Recursive function calls","Undo operation in text editor","Implement Hash Tables","Allocating CPU to resources"],
+answer:4,
+explanation:"Round Robin CPU scheduling uses circular linked list."
+},
+{
+q:"What is a bit array?",
+options:["Data structure that compactly stores bits","Data structure for representing arrays of records","Array not in continuous locations","Array with most elements same value"],
+answer:1,
+explanation:"Bit array efficiently stores bits and uses bit-level parallelism."
+},
+{
+q:"Which of the following tree data structures is not a balanced binary tree?",
+options:["Splay tree","B-tree","AVL tree","Red-black tree"],
+answer:2,
+explanation:"B-tree is balanced but not binary; it can have more than two children."
+},
+{
+q:"Which of the following is not the type of queue?",
+options:["Priority queue","Circular queue","Single ended queue","Ordinary queue"],
+answer:3,
+explanation:"Queue always has two ends, so single ended queue is not valid."
+},
+{
+q:"Which data structure can be used for parentheses matching?",
+options:["n-ary tree","queue","priority queue","stack"],
+answer:4,
+explanation:"Stack is used to push opening brackets and pop when closing brackets are found."
+},
+{
+q:"Which algorithm is used in the top tree data structure?",
+options:["Backtracking","Divide and Conquer","Branch","Greedy"],
+answer:2,
+explanation:"Top tree uses Divide and Conquer technique."
+},
+{
+q:"What is the need for a circular queue?",
+options:["easier computations","implement LIFO principle","effective usage of memory","delete elements based on priority"],
+answer:3,
+explanation:"Circular queue reuses freed memory space efficiently."
+}
+
+],
+
+// ........Section-2............
+
+2: [
+{
+q:"Which of the following is the most widely used external memory data structure?",
+options:["B-tree","Red-black tree","AVL tree","Both AVL tree and Red-black tree"],
+answer:1,
+explanation:"B-tree is widely used in external memory because it stores data in blocks and minimizes disk access."
+},
+{
+q:"Which of the following is also known as Rope data structure?",
+options:["Linked List","Array","String","Cord"],
+answer:4,
+explanation:"Rope data structure is also known as Cord and is used for efficient string manipulation."
+},
+{
+q:"What will be the output of the given stack program with string 'san foundry'?",
+options:["yrdnuof nas","foundry nas","sanfoundry","san foundry"],
+answer:1,
+explanation:"Stack follows LIFO principle, so the string is reversed and becomes 'yrdnuof nas'."
+},
+{
+q:"Which of the following data structure can provide efficient searching of the elements?",
+options:["Binary search tree","Unordered lists","2-3 tree","Treap"],
+answer:3,
+explanation:"2-3 tree guarantees O(log n) time complexity even in worst case."
+},
+{
+q:"What is an AVL tree?",
+options:["A tree which is unbalanced and height balanced","A tree which is balanced and height balanced","A tree with at most 3 children","A tree with three children"],
+answer:2,
+explanation:"AVL tree is a self-balancing binary search tree where height difference between subtrees is at most 1."
+},
+{
+q:"What is the time complexity for searching a key in Van Emde Boas data structure?",
+options:["O(M!)","O(log M!)","O(log (log M))","O(M^2)"],
+answer:3,
+explanation:"Van Emde Boas tree supports search in O(log log M) time."
+},
+{
+q:"The optimal data structure used to solve Tower of Hanoi is _________",
+options:["Tree","Heap","Priority queue","Stack"],
+answer:4,
+explanation:"Tower of Hanoi is efficiently solved using Stack following LIFO principle."
+},
+{
+q:"What is the use of the bin data structure?",
+options:["Efficient traversal","Efficient region query","Efficient deletion","Efficient insertion"],
+answer:2,
+explanation:"Bin data structure is used to perform efficient region queries."
+},
+{
+q:"Which is the most appropriate data structure for reversing a word?",
+options:["Stack","Queue","Graph","Tree"],
+answer:1,
+explanation:"Stack follows LIFO principle which reverses the order of elements."
+},
+{
+q:"What is the functionality of the given display() code?",
+options:["Display the list","Reverse the list","Reverse the list excluding top element","Display the list excluding top element"],
+answer:1,
+explanation:"The code traverses the linked list and prints each element."
+},
+{
+q:"Which of the following is the simplest data structure that supports range searching?",
+options:["AA-trees","K-d trees","Heaps","Binary search trees"],
+answer:4,
+explanation:"Binary Search Trees support efficient range searching by in-order traversal."
+},
+{
+q:"What is the advantage of a hash table as a data structure?",
+options:["Easy to implement","Faster access of data","Good locality of reference","Efficient for less number of entries"],
+answer:2,
+explanation:"Hash tables provide average O(1) time complexity for search operations."
+},
+{
+q:"Which type of data structure is a ternary heap?",
+options:["Hash","Array","Priority Stack","Priority Queue"],
+answer:4,
+explanation:"Ternary heap is a variation of heap and is used as a priority queue."
+},
+{
+q:"What is a deque?",
+options:["Queue implemented with singly and doubly linked lists","Queue with insert/delete only at front","Queue with insert/delete at both front and rear","Queue implemented with doubly linked list"],
+answer:3,
+explanation:"Deque (Double Ended Queue) allows insertion and deletion at both ends."
+},
+{
+q:"A data structure in which elements can be inserted or deleted at/from both ends but not in the middle is?",
+options:["Priority queue","Deque","Circular queue","Queue"],
+answer:2,
+explanation:"Deque allows insertion and deletion from both ends."
+},
+{
+q:"What is the output of the given Java array code?",
+options:["4 and 2","2 and 4","5 and 3","3 and 5"],
+answer:4,
+explanation:"Array indexing starts from 0. arr[2]=3 and arr[4]=5."
+},
+{
+q:"In simple chaining, what data structure is appropriate?",
+options:["Doubly linked list","Circular linked list","Singly linked list","Binary trees"],
+answer:1,
+explanation:"Doubly linked list makes deletion easier in hash table chaining."
+}
+],
+
+// ........Section-3............
+3: [
+{
+q:"Which of these best describes an array?",
+options:["A data structure that shows a hierarchical behavior","Container of objects of similar types","Arrays are immutable once initialised","Array is not a data structure"],
+answer:2,
+explanation:"Array contains elements only of the same type."
+},
+{
+q:"How do you initialize an array in C?",
+options:["int arr[3] = (1,2,3);","int arr(3) = {1,2,3};","int arr[3] = {1,2,3};","int arr(3) = (1,2,3);"],
+answer:3,
+explanation:"int arr[3] = {1,2,3}; is the correct syntax to initialize an array in C."
+},
+{
+q:"How do you instantiate an array in Java?",
+options:["int arr[] = new int(3);","int arr[];","int arr[] = new int[3];","int arr() = new int(3);"],
+answer:3,
+explanation:"int arr[] = new int[3]; is used to instantiate an array in Java."
+},
+{
+q:"Which of the following is the correct way to declare a multidimensional array in Java?",
+options:["int[] arr;","int arr[[]];","int[][] arr;","int[[]] arr;"],
+answer:3,
+explanation:"int[][] arr; or int arr[][]; is correct syntax for multidimensional array in Java.code:"
+},
+{
+q:"What is the output of the given Java code with array {1,2,3,4,5} printing arr[2] and arr[4]?",
+options:["3 and 5","5 and 3","2 and 4","4 and 2"],
+answer:1,
+explanation:"Array indexing starts from 0. arr[2]=3 and arr[4]=5."
+},
+{
+q:"What is the output of the Java code printing arr[5] when array size is 5?",
+options:["4","5","ArrayIndexOutOfBoundsException","InvalidInputException"],
+answer:3,
+explanation:"Accessing index beyond array size causes ArrayIndexOutOfBoundsException."
+},
+{
+q:"When does the ArrayIndexOutOfBoundsException occur?",
+options:["Compile-time","Run-time","Not an error","Not an exception at all"],
+answer:2,
+explanation:"ArrayIndexOutOfBoundsException occurs at run-time."
+},
+{
+q:"Which of the following concepts make extensive use of arrays?",
+options:["Binary trees","Scheduling of processes","Caching","Spatial locality"],
+answer:4,
+explanation:"Arrays are stored in contiguous memory locations which support spatial locality."
+},
+{
+q:"What are the advantages of arrays?",
+options:["Objects of mixed data types can be stored","Elements in an array cannot be sorted","Index of first element is 1","Easier to store elements of same data type"],
+answer:4,
+explanation:"Arrays store elements of the same data type in continuous memory."
+},
+{
+q:"What are the disadvantages of arrays?",
+options:["Queue or stack cannot be implemented","Wastage of memory if allocated size is more than required","Index value can be negative","Elements are sequentially accessed"],
+answer:2,
+explanation:"Arrays are fixed in size, so unused allocated memory may be wasted."
+},
+{
+q:"Assuming int is of 4 bytes, what is the size of int arr[15];?",
+options:["15","19","11","60"],
+answer:4,
+explanation:"Each int takes 4 bytes. 15 × 4 = 60 bytes."
+},
+{
+q:"In general, the index of the first element in an array is __________",
+options:["0","-1","2","1"],
+answer:1,
+explanation:"Array indexing usually starts from 0."
+},
+{
+q:"Elements in an array are accessed _____________",
+options:["randomly","sequentially","exponentially","logarithmically"],
+answer:1,
+explanation:"Arrays support random access using index."
+}
+],
+// ...........Section-4......................
+4:[
+{
+q:"Process of inserting an element in stack is called ____________",
+options:["Create","Push","Evaluation","Pop"],
+answer:2,
+explanation:"Push operation is used to insert an element into the stack."
+},
+{
+q:"Process of removing an element from stack is called __________",
+options:["Create","Push","Evaluation","Pop"],
+answer:4,
+explanation:"Pop operation removes the top-most element from the stack."
+},
+{
+q:"In a stack, if a user tries to remove an element from an empty stack it is called _________",
+options:["Underflow","Empty collection","Overflow","Garbage Collection"],
+answer:1,
+explanation:"Underflow occurs when a pop operation is performed on an empty stack."
+},
+{
+q:"Pushing an element into stack already having five elements and stack size of 5, then stack becomes ___________",
+options:["Overflow","Crash","Underflow","User flow"],
+answer:1,
+explanation:"If the stack is full and another push is attempted, stack overflow occurs."
+},
+{
+q:"Entries in a stack are 'ordered'. What is the meaning of this statement?",
+options:["A collection of stacks is sortable","Stack entries may be compared with '<' operation","The entries are stored in a linked list","There is a sequential entry one by one"],
+answer:4,
+explanation:"Stack elements are entered sequentially and follow LIFO order."
+},
+{
+q:"Which of the following is not the application of stack?",
+options:["A parentheses balancing program","Tracking of local variables at run time","Compiler Syntax Analyzer","Data Transfer between two asynchronous process"],
+answer:4,
+explanation:"Data transfer between asynchronous processes uses queue, not stack."
+},
+{
+q:"Maximum number of parentheses on stack at any time for expression (()(())(()))?",
+options:["1","2","3","4 or more"],
+answer:3,
+explanation:"Maximum three '(' are present in the stack at one time."
+},
+{
+q:"If sequence contains 2 left parentheses and 3 right parentheses, maximum number of parentheses on stack at any time?",
+options:["1","2","3","4 or more"],
+answer:2,
+explanation:"Only two left parentheses can be pushed onto the stack at maximum."
+},
+{
+q:"What is the value of the postfix expression 6 3 2 4 + – *?",
+options:["1","40","74","-18"],
+answer:4,
+explanation:"The postfix evaluates to 6*(3-(2+4)) = 6*(-3) = -18."
+},
+{
+q:"Maximum number of symbols on stack during infix to postfix conversion of 4 + 3*(6*3-12)?",
+options:["1","2","3","4"],
+answer:4,
+explanation:"Maximum of 4 symbols (+, *, (, *) appear on stack at one time."
+}
+],
+// ...........Section-5.......................
+5:[
+{
+q:"The postfix form of the expression (A+ B)*(C*D- E)*F / G is?",
+options:["AB+ CD*E – FG /**","AB + CD* E – F **G /","AB+CD*E-*F*G/","AB + CDE * – * F *G /"],
+answer:3,
+explanation:"The postfix expression of ((A+B)*(C*D-E)*F)/G is AB+CD*E-*F*G/."
+},
+{
+q:"The data structure required to check whether an expression contains a balanced parenthesis is?",
+options:["Stack","Queue","Array","Tree"],
+answer:1,
+explanation:"Stack follows LIFO principle and is used to match opening and closing parentheses."
+},
+{
+q:"What data structure would you most likely see in non recursive implementation of a recursive algorithm?",
+options:["Linked List","Stack","Queue","Tree"],
+answer:2,
+explanation:"Non-recursive implementations of recursion use an explicit stack."
+},
+{
+q:"The process of accessing data stored in a serial access memory is similar to manipulating data on a ________",
+options:["Heap","Binary Tree","Array","Stack"],
+answer:4,
+explanation:"Serial access memory works sequentially similar to stack operations."
+},
+{
+q:"The postfix form of A*B+C/D is?",
+options:["*AB/CD+","AB*CD/+","A*BC+/D","ABCD+/*"],
+answer:2,
+explanation:"Infix (A*B)+(C/D) converts to postfix AB*CD/+."
+},
+{
+q:"Which data structure is needed to convert infix notation to postfix notation?",
+options:["Branch","Tree","Queue","Stack"],
+answer:4,
+explanation:"Stack is used to temporarily hold operators during infix to postfix conversion."
+},
+{
+q:"The prefix form of A-B/(C * D ^ E) is?",
+options:["-/*^ACBDE","-ABCD*^DE","-A/B*C^DE","-A/BC*^DE"],
+answer:3,
+explanation:"The prefix expression of A-(B/(C*(D^E))) is -A/B*C^DE."
+},
+{
+q:"What is the result of the following operation? Top (Push (S, X))",
+options:["X","X+S","S","XS"],
+answer:1,
+explanation:"Push(S, X) inserts X on top of stack S. Top operation returns the top element, which is X."
+},
+{
+q:"The prefix form of an infix expression (p + q) – (r * t) is?",
+options:["+ pq – *rt","– +pqr * t","-+pq*rt","– + * pqrt"],
+answer:3,
+explanation:"The prefix expression of ((p+q)-(r*t)) is -+pq*rt."
+},
+{
+q:"Which data structure is used for implementing recursion?",
+options:["Queue","Stack","Array","List"],
+answer:2,
+explanation:"Recursion uses stack to store function calls and return addresses."
+}
+],
+// .............Section-6..................
+6:[
+   {
+  q: "The result of evaluating the postfix expression 5, 4, 6, +, *, 4, 9, 3, /, +, * is?",
+  options: ["600", "350", "650", "588"],
+  answer: 2,
+  explanation: "The postfix expression evaluates to (5*(4+6))*(4+9/3) = (5*10)*(4+3) = 50*7 = 350."
+},
+{
+  q: "Convert the following infix expression into its equivalent postfix expression: (A + B ^ D)/(E – F)+G",
+  options: ["A B D ^ + E F – / G +", "A B D + ^ E F – / G +", "A B D ^ + E F / – G +", "A B D E F + ^ / – G +"],
+  answer: 1,
+  explanation: "Using operator precedence and stack method, the postfix expression becomes A B D ^ + E F – / G +."
+},
+{
+  q: "Convert the following Infix expression to Postfix form: x + y * z + (p * q + r) * s",
+  options: ["xyz*+pq*r+s*+", "xyz*+pq*r+s+*", "xyz+*pq*r+s*+", "xyzp+**qr+s*+"],
+  answer: 1,
+  explanation: "Applying precedence rules (* before +) and stack operations, the postfix form is x y z * + p q * r + s * +."
+},
+{
+  q: "Which of the following statement(s) about stack data structure is/are NOT correct?",
+  options: ["Linked List are used for implementing Stacks", "Top of the Stack always contain the new node", "Stack is the FIFO data structure", "Null link is present in the last node at the bottom of the stack"],
+  answer: 3,
+  explanation: "Stack follows LIFO (Last In First Out), not FIFO."
+},
+{
+  q: "After performing the following stack operations, how many elements are present? Push(1), Pop(), Push(2), Push(3), Pop(), Push(4), Pop(), Pop(), Push(5)",
+  options: ["1", "2", "3", "4"],
+  answer: 1,
+  explanation: "Number of elements equals total pushes minus total pops. There are 5 pushes and 4 pops, so 1 element remains."
+},
+{
+  q: "Which of the following is not an inherent application of stack?",
+  options: ["Reversing a string", "Evaluation of postfix expression", "Implementation of recursion", "Job scheduling"],
+  answer: 4,
+  explanation: "Job scheduling is typically implemented using queues or priority queues, not stacks."
+},
+{
+  q: "The type of expression in which operator succeeds its operands is?",
+  options: ["Infix Expression", "Prefix Expression", "Postfix Expression", "Both Prefix and Postfix Expressions"],
+  answer: 3,
+  explanation: "In postfix expression, the operator comes after its operands."
+},
+{
+  q: "The postfix expression for the infix expression a + b x c – d ^ e ^ f is?",
+  options: ["a b c x + d e f ^ ^ –", "a b c x + d e ^ f ^ –", "a b + c x d – e ^ f ^", "– + a x b c ^ ^ d e f"],
+  answer: 1,
+  explanation: "Considering precedence (^ highest and right associative), the postfix form is a b c x + d e f ^ ^ –."
+},
+{
+  q: "If the elements A, B, C and D are placed in a stack and deleted one at a time, what is the order of removal?",
+  options: ["ABCD", "DCBA", "DCAB", "ABDC"],
+  answer: 2,
+  explanation: "Stack follows LIFO (Last In First Out), so elements are removed in reverse order: D, C, B, A."
+} 
+],
+// ............Section-7..................
+7:[
+  {
+  q: "A linear list of elements in which deletion can be done from one end (front) and insertion can take place only at the other end (rear) is known as _____________",
+  options: ["Queue", "Stack", "Tree", "Linked list"],
+  answer: 1,
+  explanation: "A queue is a linear list where insertion takes place at the rear and deletion occurs at the front."
+},
+{
+  q: "The data structure required for Breadth First Traversal on a graph is?",
+  options: ["Stack", "Array", "Queue", "Tree"],
+  answer: 3,
+  explanation: "Breadth First Search (BFS) follows FIFO order, which is implemented using a queue."
+},
+{
+  q: "A queue follows __________",
+  options: ["FIFO (First In First Out) principle", "LIFO (Last In First Out) principle", "Ordered array", "Linear tree"],
+  answer: 1,
+  explanation: "In a queue, the element inserted first is removed first, following FIFO principle."
+},
+{
+  q: "Circular Queue is also known as ________",
+  options: ["Ring Buffer", "Square Buffer", "Rectangle Buffer", "Curve Buffer"],
+  answer: 1,
+  explanation: "A circular queue is also called a Ring Buffer because the last position connects back to the first, forming a circular structure."
+},
+{
+  q: "If the elements A, B, C and D are placed in a queue and are deleted one at a time, in what order will they be removed?",
+  options: ["ABCD", "DCBA", "DCAB", "ABDC"],
+  answer: 1,
+  explanation: "Queue follows FIFO (First In First Out), so elements are removed in the same order they were inserted."
+},
+{
+  q: "A data structure in which elements can be inserted or deleted at/from both ends but not in the middle is?",
+  options: ["Queue", "Circular queue", "Dequeue", "Priority queue"],
+  answer: 3,
+  explanation: "A dequeue (double-ended queue) allows insertion and deletion from both ends."
+},
+{
+  q: "A normal queue, if implemented using an array of size MAX_SIZE, gets full when?",
+  options: ["Rear = MAX_SIZE – 1", "Front = (rear + 1) mod MAX_SIZE", "Front = rear + 1", "Rear = front"],
+  answer: 1,
+  explanation: "In a linear queue implemented using an array, the queue becomes full when rear reaches MAX_SIZE – 1."
+},
+{
+  q: "Queues serve major role in ______________",
+  options: ["Simulation of recursion", "Simulation of arbitrary linked list", "Simulation of limited resource allocation", "Simulation of heap sort"],
+  answer: 3,
+  explanation: "Queues are used in simulation of limited resource allocation where requests are processed in FIFO order."
+},
+{
+  q: "Which of the following is not the type of queue?",
+  options: ["Ordinary queue", "Single ended queue", "Circular queue", "Priority queue"],
+  answer: 2,
+  explanation: "Queue always has two ends (front and rear). Single ended queue is not a valid queue type."
+}  
+],
+// ..........Section-8.....................
+8:[
+    {
+  q: "A linear collection of data elements where the linear node is given by means of pointer is called?",
+  options: ["Linked list", "Node list", "Primitive list", "Unordered list"],
+  answer: 1,
+  explanation: "In a linked list, each node contains data and a pointer to the next node. Nodes are connected using pointers."
+},
+{
+  q: "Consider an unsorted singly linked list with only a head pointer. Which operations can be implemented in O(1) time? i) Insertion at front ii) Insertion at end iii) Deletion at front iv) Deletion at last",
+  options: ["I and II", "I and III", "I, II and III", "I, II and IV"],
+  answer: 2,
+  explanation: "With only a head pointer, insertion and deletion at the front take O(1) time. Operations at the end require traversal and take O(n)."
+},
+{
+  q: "In a linked list each node contains at least two fields: one is data field and the second field is?",
+  options: ["Pointer to character", "Pointer to integer", "Pointer to node", "Node"],
+  answer: 3,
+  explanation: "Each node contains data and a pointer (reference) to the next node in the list."
+},
+{
+  q: "What is the asymptotic time complexity to add a node at the end of a singly linked list if only head pointer is available?",
+  options: ["O(1)", "O(n)", "θ(n)", "Both O(n) and θ(n)"],
+  answer: 4,
+  explanation: "To insert at the end, we must traverse all n nodes. Hence the time complexity is linear, represented as both O(n) and θ(n)."
+},
+{
+  q: "What is the asymptotic time complexity to insert an element at the front of the linked list (head is known)?",
+  options: ["O(1)", "O(n)", "O(n2)", "O(n3)"],
+  answer: 1,
+  explanation: "Insertion at the front only requires updating pointers and does not require traversal, so it takes O(1) time."
+},
+{
+  q: "What is the asymptotic time complexity to find an element in a linked list?",
+  options: ["O(1)", "O(n)", "O(n2)", "O(n4)"],
+  answer: 2,
+  explanation: "Searching may require traversing all n elements in the worst case, so the time complexity is O(n)."
+},
+{
+  q: "What is the asymptotic time complexity to insert an element at the second position in a linked list?",
+  options: ["O(1)", "O(n)", "O(n2)", "O(n3)"],
+  answer: 1,
+  explanation: "Since the head pointer is known, inserting at the second position requires only pointer updates and takes O(1) time."
+},
+{
+  q: "The concatenation of two lists can be performed in O(1) time. Which variation of linked list can be used?",
+  options: ["Singly linked list", "Doubly linked list", "Circular doubly linked list", "Array implementation of list"],
+  answer: 3,
+  explanation: "In a circular doubly linked list, we can easily adjust links between the last and first nodes of two lists to concatenate them in O(1) time."
+},
+{
+  q: "Given the C structure definition for a node, which code correctly creates a new node?",
+  options: ["ptr = (NODE*)malloc(sizeof(NODE));", "ptr = (NODE*)malloc(NODE);", "ptr = (NODE*)malloc(sizeof(NODE*));", "ptr = (NODE)malloc(sizeof(NODE));"],
+  answer: 1,
+  explanation: "malloc(sizeof(NODE)) correctly allocates memory equal to the size of the structure NODE."
+}
+],
+// .........Section-9...............
+9:[
+  {
+  q: "What kind of linked list is best to answer questions like 'What is the item at position n?'",
+  options: ["Singly linked list", "Doubly linked list", "Circular linked list", "Array implementation of linked list"],
+  answer: 4,
+  explanation: "Arrays provide random access using index positions, allowing direct access to the nth element in O(1) time, unlike linked lists which require traversal."
+},
+{
+  q: "Linked lists are not suitable for the implementation of ___________",
+  options: ["Insertion sort", "Radix sort", "Polynomial manipulation", "Binary search"],
+  answer: 4,
+  explanation: "Binary search requires random access to elements, which is not efficiently supported in linked lists."
+},
+{
+  q: "Linked list is considered as an example of ___________ type of memory allocation.",
+  options: ["Dynamic", "Static", "Compile time", "Heap"],
+  answer: 1,
+  explanation: "Linked lists use dynamic memory allocation where memory is allocated at runtime."
+},
+{
+  q: "In Linked List implementation, a node carries information regarding ___________",
+  options: ["Data", "Link", "Data and Link", "Node"],
+  answer: 3,
+  explanation: "Each node in a linked list contains both data and a link (reference) to the next node."
+},
+{
+  q: "Linked list data structure offers considerable saving in _____________",
+  options: ["Computational Time", "Space Utilization", "Space Utilization and Computational Time", "Speed Utilization"],
+  answer: 3,
+  explanation: "Linked lists save space due to dynamic allocation and can save computational time for insertion and deletion operations."
+},
+{
+  q: "Which of the following is not true about Linked List compared to an array?",
+  options: ["Arrays have better cache locality that can improve performance", "It is easy to insert and delete elements in Linked List", "Random access is not allowed in typical Linked Lists", "Access of elements in linked list takes less time than arrays"],
+  answer: 4,
+  explanation: "Accessing elements in a linked list requires traversal and takes more time compared to arrays which support direct indexing."
+},
+{
+  q: "What does the given recursive function do for a linked list?",
+  options: ["Prints all nodes of linked lists", "Prints all nodes of linked list in reverse order", "Prints alternate nodes of Linked List", "Prints alternate nodes in reverse order"],
+  answer: 2,
+  explanation: "The function recursively calls itself until the end of the list and prints data while returning, resulting in reverse order printing."
+},
+{
+  q: "Which sorting algorithm can be used to sort a random linked list with minimum time complexity?",
+  options: ["Insertion Sort", "Quick Sort", "Heap Sort", "Merge Sort"],
+  answer: 4,
+  explanation: "Merge Sort works efficiently on linked lists with O(n log n) time complexity and does not require random access."
+}  
+]
+};
+
+function selectSection(checkbox, section){
+
+    document.querySelectorAll(".section-item input")
+        .forEach(cb => cb.checked = false);
+
+    checkbox.checked = true;
+
+    loadSection(section);
+}
+
+function loadSection(section){
+    currentSection = section;
+    currentPage = 0;
+    userAnswers = {};
+
+    document.getElementById("sectionTitle").innerHTML =
+    "Exercise : <span style='color:#4CAF50'>Computer Fundamentals - Section "
+    + section + "</span>";
+
+    renderQuestions();
+}
+
+function renderQuestions(){
+
+    const content = document.getElementById("sectionContent");
+    content.innerHTML = "";
+
+    const questions = sections[currentSection];
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+
+    questions.slice(start, end).forEach((item, index)=>{
+
+        const qIndex = start + index;
+
+        const div = document.createElement("div");
+        div.classList.add("question");
+
+        let optionsHTML = "";
+       item.options.forEach((opt, i)=>{
+
+    const letter = String.fromCharCode(65 + i); // 65 = A
+
+    optionsHTML += `
+    <label>
+        <input type="radio" name="q${qIndex}" 
+        onclick="saveAnswer(${qIndex},${i})">
+        <strong>${letter}.</strong> ${opt}
+    </label>`;
+});
+
+        div.innerHTML = `
+        <h4>${qIndex+1}. ${item.q}</h4>
+        <div class="options">${optionsHTML}</div>
+        <button class="show-btn" onclick="toggleAnswer(${qIndex})">Show Answer</button>
+        <div id="answer${qIndex}" style="display:none;margin-top:10px;"></div>
+        `;
+
+        content.appendChild(div);
+    });
+
+    renderPagination();
+}
+
+function renderPagination(){
+
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    const totalQuestions = sections[currentSection].length;
+    const totalPages = Math.ceil(totalQuestions / questionsPerPage);
+
+    let prev = document.createElement("button");
+    prev.innerText = "Prev";
+    prev.onclick = prevPage;
+    pagination.appendChild(prev);
+
+    for(let i=0;i<totalPages;i++){
+        let btn = document.createElement("button");
+        btn.innerText = i+1;
+        btn.onclick = ()=>{
+            currentPage = i;
+            renderQuestions();
+        };
+        if(i === currentPage) btn.classList.add("active");
+        pagination.appendChild(btn);
+    }
+
+    let next = document.createElement("button");
+    next.innerText = "Next";
+    next.onclick = nextPage;
+    pagination.appendChild(next);
+}
+
+function saveAnswer(qIndex, optionIndex){
+    userAnswers[qIndex] = optionIndex;
+}
+
+function toggleAnswer(qIndex){
+
+    const question = sections[currentSection][qIndex];
+    const answerDiv = document.getElementById("answer"+qIndex);
+    const button = answerDiv.previousElementSibling;
+
+    const radios = document.getElementsByName("q"+qIndex);
+
+    if(answerDiv.style.display === "none"){
+
+        const selected = userAnswers[qIndex];
+        const correct = question.answer;
+
+        radios.forEach((radio, index)=>{
+
+            const label = radio.parentElement;
+
+            // Remove old marks
+            label.classList.remove("correct","wrong");
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+
+            if(index === correct){
+                label.classList.add("correct");
+
+                // Add ✓ mark
+                const tick = document.createElement("span");
+                tick.className = "mark correct-mark";
+                tick.innerHTML = "✔";
+                label.appendChild(tick);
+            }
+
+            if(index === selected && selected !== correct){
+                label.classList.add("wrong");
+
+                // Add ❌ mark
+                const cross = document.createElement("span");
+                cross.className = "mark wrong-mark";
+                cross.innerHTML = "✖";
+                label.appendChild(cross);
+            }
+        });
+
+       const selectedLetter = selected !== undefined 
+    ? String.fromCharCode(65 + selected) 
+    : "";
+
+const correctLetter = String.fromCharCode(65 + correct);
+
+answerDiv.innerHTML = `
+<b>Your Answer:</b> ${
+selected !== undefined 
+? selectedLetter + ". " + question.options[selected] 
+: "Not Selected"
+}<br>
+
+<b>Correct Answer:</b> ${correctLetter}. ${question.options[correct]}<br>
+<b>Explanation:</b> ${question.explanation}
+`;
+
+        answerDiv.style.display = "block";
+        button.innerText = "Hide Answer";
+
+    } else {
+
+        answerDiv.style.display = "none";
+        button.innerText = "Show Answer";
+
+        radios.forEach(radio=>{
+            const label = radio.parentElement;
+            label.classList.remove("correct","wrong");
+
+            const oldMark = label.querySelector(".mark");
+            if(oldMark) oldMark.remove();
+        });
+    }
+}
+function nextPage(){
+    const totalPages = Math.ceil(
+        sections[currentSection].length / questionsPerPage
+    );
+    if(currentPage < totalPages-1){
+        currentPage++;
+        renderQuestions();
+    }
+}
+
+function prevPage(){
+    if(currentPage > 0){
+        currentPage--;
+        renderQuestions();
+    }
+}
+
+// Auto check Section 16 on first load
+document.getElementById("defaultSection").checked = true;
+loadSection(1);
+
+</script>
+
+</body>
+</html>
