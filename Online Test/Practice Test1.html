@@ -96,7 +96,7 @@ button{
 <body>
 
 <div class="container">
-<h2>Mock Test - 55 Questions</h2>
+<h2>Mock Test - 20 Questions</h2>
 
 <div id="quiz"></div>
 
@@ -117,28 +117,178 @@ const questions = [
 q:"1. Which of the following is a prime number?",
 options:["517","559","571","533"],
 answer:2,
-explanation:"571 is prime. Others are composite."
+explanation:"571 is prime. Others are divisible by 11 or 13."
 },
 {
 q:"2. Find the sum of first 90 even natural numbers.",
 options:["8180","8190","8100","8110"],
 answer:1,
+explanation:"Sum of first n even numbers = n(n+1). 90×91 = 8190."
+},
+{
+q:"3. Find the sum of two numbers whose product is 200 and difference is minimum.",
+options:["30","27","35","33"],
+answer:0,
+explanation:"Closest factors are 10 and 20. Sum = 30."
+},
+{
+q:"4. Find the ten’s digit in 65² – 55².",
+options:["2","6","5","0"],
+answer:3,
+explanation:"(65+55)(65-55)=120×10=1200. Ten's digit = 0."
+},
+{
+q:"5. A number leaves remainder 65 when divided by 91. Find remainder when divided by 13.",
+options:["7","0","5","12"],
+answer:1,
+explanation:"91 = 13×7. Number becomes divisible by 13. Remainder = 0."
+},
+{
+q:"6. Highest power of 18 in 100!?",
+options:["24","18","28","12"],
+answer:0,
+explanation:"18=2×3². Power depends on 3² in 100!. Result = 24."
+},
+{
+q:"7. When 8255 is divided by 511, remainder?",
+options:["510","10","1","500"],
+answer:2,
+explanation:"8255 = 511×16 + 1."
+},
+{
+q:"8. How many distinct prime factors in 9900?",
+options:["7","4","27","54"],
+answer:1,
+explanation:"9900 = 2²×3²×5²×11. Four distinct primes."
+},
+{
+q:"9. Find 5358 × 54.",
+options:["283932","298332","289322","289332"],
+answer:3,
+explanation:"5358×54 = 289332."
+},
+{
+q:"10. Find HCF of 405, 585, 765, 900.",
+options:["35","15","45","90"],
+answer:2,
+explanation:"Common divisor is 45."
+},
+{
+q:"11. Two numbers are in ratio 4:5. LCM is 240. Find sum.",
+options:["108","120","132","98"],
+answer:0,
+explanation:"Numbers are 48 and 60. Sum = 108."
+},
+{
+q:"12. Average speed when 30% at 85 kmph and 70% at 33 kmph?",
+options:["46.6 kmph","48.6 kmph","42.6 kmph","44.6 kmph"],
+answer:1,
+explanation:"Weighted average = 48.6 kmph."
+},
+{
+q:"13. Value of 0.49 ÷ 0.25 × 0.2?",
+options:["1.02","1.04","1.2","1.4"],
+answer:2,
+explanation:"Simplifies to 1.2."
+},
+{
+q:"14. Fraction greater than 1/2 and less than 5/9?",
+options:["2/3","5/8","4/7","6/11"],
+answer:3,
+explanation:"6/11 = 0.54 lies between."
+},
+{
+q:"15. If a-b=16 and a²-b²=544, find 2ab.",
+options:["450","500","550","350"],
+answer:0,
+explanation:"a=25, b=9. 2ab=450."
+},
+{
+q:"16. If R = xS – 4 and R=16 when S=5, find R when S=8.",
+options:["36","28","32","34"],
+answer:1,
+explanation:"x=4. R=28."
+},
+{
+q:"17. Square root of 44521?",
+options:["221","219","211","229"],
+answer:2,
+explanation:"211² = 44521."
+},
+{
+q:"18. Boat upstream speed 20 kmph, stream speed 3 kmph. Downstream speed?",
+options:["26 kmph","25 kmph","23 kmph","22 kmph"],
+answer:0,
+explanation:"Downstream = 20 + 2×3 = 26."
+},
+{
+q:"19. Smallest number added to 2190 to make perfect cube?",
+options:["21","7","29","13"],
+answer:1,
+explanation:"Next cube 2197. Difference = 7."
+},
+{
+q:"20. Ages in ratio 2:3:4:10:11. Average is 18. Eldest age?",
+options:["22","11","44","33"],
+answer:3,
+explanation:"x=3. Eldest=33."
+},
+{
+q:"21. Family average age problem. Average after 5 years?",
+options:["63","60","53","57"],
+answer:0,
+explanation:"New average = 63."
+},
+{
+q:"22. Milk expenditure problem. Cost?",
+options:["5469","5766","5796","5888"],
+answer:3,
+explanation:"Cost = 5888."
+},
+{
+q:"23. Average height in feet?",
+options:["5.3","5.4","5.1","5.2"],
+answer:0,
+explanation:"After conversion, average ≈ 5.3 ft."
+},
+{
+q:"24. P thrice Q. Difference multiple of 9. Minimum P?",
+options:["12 years","11 years","10 years","9 years"],
+answer:0,
+explanation:"Minimum P = 12."
+},
+{
+q:"25. Father's age now?",
+options:["40 years","33 years","48 years","42 years"],
+answer:2,
+explanation:"Father now = 48 years."
+},
+{
+q:"26. Which of the following is a prime number?",
+options:["517","559","571","533"],
+answer:2,
+explanation:"571 is prime. Others are composite."
+},
+{
+q:"27. Find the sum of first 90 even natural numbers.",
+options:["8180","8190","8100","8110"],
+answer:1,
 explanation:"Formula = n² + n = 90² + 90 = 8190"
 },
 {
-q:"3. Find sum of two numbers whose product is 200 and difference minimum.",
+q:"28. Find sum of two numbers whose product is 200 and difference minimum.",
 options:["30","27","35","33"],
 answer:0,
 explanation:"10 and 20 satisfy condition. Sum = 30"
 },
 {
-q:"4. Find ten’s digit in 65² – 55²",
+q:"29. Find ten’s digit in 65² – 55²",
 options:["2","6","5","0"],
 answer:3,
 explanation:"(65+55)(65-55)=120×10=1200 → ten's digit = 0"
 },
 {
-q:"5. Number leaves remainder 65 when divided by 91. Remainder when divided by 13?",
+q:"30. Number leaves remainder 65 when divided by 91. Remainder when divided by 13?",
 options:["7","0","5","12"],
 answer:1,
 explanation:"91 = 13×7. Number divisible by 13 → remainder 0"
